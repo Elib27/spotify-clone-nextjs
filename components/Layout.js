@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Navbar from "./NavBar"
+import Sidebar from "./SideBar"
 
 const MainWrapper = styled.div`
   display: flex;
@@ -9,7 +9,7 @@ const MainWrapper = styled.div`
 export default function Layout({ children }) {
   return (
     <MainWrapper>
-      <Navbar />
+      <Sidebar />
       {children}
     </MainWrapper>
   )

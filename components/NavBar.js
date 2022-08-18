@@ -1,49 +1,34 @@
 import styled from 'styled-components'
-import Image from 'next/image'
-import Link from 'next/link'
+import NavButton from './NavButton'
 
-const Container = styled.div`
-  height: 100vh;
-  width: 241px;
-  padding-top: 24px;
-  background-color: #000;
-  position: relative;
+const NavContainer = styled.div`
+  
 `
-const TopContainer = styled.div`
-
-`
-const Separator = styled.div`
-  height: 1px;
-  width: 100%;
-  background-color: #282828;
-  margin: 0 8px;
-`
-const InstallButton = styled.button`
-  height: 40px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-`
-const InstallLabel = styled.p`
-  font-size: 14px;
-  margin-left: 16px;
+const CreationContainer = styled.div`
+  margin-top: 24px;
 `
 
-export default function Navbar() {
+export default function NavBar() {
   return (
-    <Container>
-      <Image src="/spotify_logo.svg" alt="logo" width={131} height={40} />
-      <TopContainer>
-        <Separator />
-      </TopContainer>
-      <InstallButton>
-        <Link href="/download">
-          <Image src="/download.svg" alt="download" width={24} height={24} />
-        </Link>
-        <InstallLabel>Installer l&apos;appli</InstallLabel>
-      </InstallButton>
-    </Container>
+    <NavContainer>
+      <NavButton 
+          label="Accueil"
+          link="/"
+          imageSrc="/download.svg"
+          imageAlt="download"
+      />
+      <NavButton 
+        label="Rechercher"
+        link="/"
+        imageSrc="/download.svg"
+        imageAlt="download"
+      />
+      <NavButton 
+        label="Bibliothèque"
+        link="/"
+        imageSrc="/download.svg"
+        imageAlt="download"
+      />
+    </NavContainer>
   )
 }
-
-// pb svg ?
