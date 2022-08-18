@@ -24,7 +24,6 @@ const Separator = styled.div`
   height: 1px;
   width: 100%;
   background-color: #282828;
-  margin: 0 8px;
 `
 const InstallButtonContainer = styled.div`
   display: flex;

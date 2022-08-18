@@ -16,6 +16,7 @@ const NavLinkButton = styled.button`
   display: flex;
   align-items: center;
   background-color: transparent;
+  border: 0;
   &:hover ${LinkLabel}{
     color: #fff;
   } 
