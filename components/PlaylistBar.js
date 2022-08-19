@@ -9,6 +9,8 @@ const PlaylistLabel = styled.p`
   color: #b3b3b3;
   font-weight: 500;
   text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `
 const PlaylistButton = styled.button`
   height: 32px;

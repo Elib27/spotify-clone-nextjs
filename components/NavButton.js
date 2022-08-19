@@ -8,6 +8,8 @@ const LinkLabel = styled.p`
   color: #b3b3b3;
   font-weight: 600;
   transition: color 0.3s ease-out;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `
 const NavLinkButton = styled.button`
   height: 40px;
@@ -20,13 +22,16 @@ const NavLinkButton = styled.button`
   &:hover ${LinkLabel}{
     color: #fff;
   } 
+  & .button-logo:hover {
+    color: #fff;
+  }
 `
 
 export default function NavButton({ label, link, imageSrc, imageAlt }) {
   return (
     <Link href={link}>
       <NavLinkButton>
-        <Image src={imageSrc} alt={imageAlt} width={24} height={24} />
+        <Image className="button-logo" src={imageSrc} alt={imageAlt} width={24} height={24} />
         <LinkLabel>{label}</LinkLabel>
       </NavLinkButton>
     </Link>

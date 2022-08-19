@@ -6,8 +6,8 @@ import PlaylistBar from './PlaylistBar'
 import NavButton from './NavButton'
 
 const Container = styled.div`
-  height: 100vh;
-  width: 241px;
+  height: calc(100vh - 90px);
+  width: 242px;
   padding: 24px 8px 0 8px;
   background-color: #000;
   position: relative;
@@ -22,8 +22,9 @@ const NavigationContainer = styled.div`
 `
 const Separator = styled.div`
   height: 1px;
-  width: 100%;
+  width: calc(100% - 32px);
   background-color: #282828;
+  margin: 0 16px;
 `
 const InstallButtonContainer = styled.div`
   display: flex;
@@ -45,7 +46,7 @@ export default function Sidebar() {
         <NavButton 
           label="Installer l&apos;appli"
           link="/download"
-          imageSrc="/download.svg"
+          imageSrc="/sideBar_logos/download.svg"
           imageAlt="download"
         />
       </InstallButtonContainer>
@@ -53,4 +54,4 @@ export default function Sidebar() {
   )
 }
 
-// pb svg ?
+// pb couleur svg

@@ -14,19 +14,19 @@ export default function NavBar() {
       <NavButton 
           label="Accueil"
           link="/"
-          imageSrc="/download.svg"
+          imageSrc="/sideBar_logos/house.svg"
           imageAlt="download"
       />
       <NavButton 
         label="Rechercher"
         link="/"
-        imageSrc="/download.svg"
+        imageSrc="/sideBar_logos/search.svg"
         imageAlt="download"
       />
       <NavButton 
         label="Bibliothèque"
         link="/"
-        imageSrc="/download.svg"
+        imageSrc="/sideBar_logos/books.svg"
         imageAlt="download"
       />
     </NavContainer>

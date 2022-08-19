@@ -1,16 +1,21 @@
 import styled from 'styled-components'
 import Sidebar from "./SideBar"
+import MusicBar from "./MusicBar"
 
-const MainWrapper = styled.div`
+const TopWrapper = styled.div`
   display: flex;
   flex-direction: flex-start;
+  position: relative;
 `
 
 export default function Layout({ children }) {
   return (
-    <MainWrapper>
-      <Sidebar />
-      {children}
-    </MainWrapper>
+    <div>
+      <TopWrapper>
+        <Sidebar />
+        {children}
+      </TopWrapper>
+      <MusicBar />
+    </div>
   )
 }
