@@ -17,6 +17,10 @@ const Container = styled.div`
 `
 const TopContainer = styled.div`
 `
+const SpotifyLogo = styled.div`
+  padding: 0 16px;
+  padding-bottom: 4px;
+`
 const NavigationContainer = styled.div`
   margin-top: 18px;
 `
@@ -24,7 +28,7 @@ const Separator = styled.div`
   height: 1px;
   width: calc(100% - 32px);
   background-color: #282828;
-  margin: 0 16px;
+  margin: 8px 16px 0 16px;
 `
 const InstallButtonContainer = styled.div`
   display: flex;
@@ -34,7 +38,9 @@ export default function Sidebar() {
   return (
     <Container>
       <TopContainer>
-        <Image src="/spotify_logo.svg" alt="logo" width={131} height={40} />
+        <SpotifyLogo>
+          <Image src="/sideBar_logos/spotify_logo.svg" alt="logo" width={131} height={40} />
+        </SpotifyLogo>
         <NavigationContainer>
           <NavBar />
           <CreationBar />
@@ -53,5 +59,3 @@ export default function Sidebar() {
     </Container>
   )
 }
-
-// pb couleur svg

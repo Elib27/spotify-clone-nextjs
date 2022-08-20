@@ -3,12 +3,15 @@ import Link from "next/link"
 import Image from "next/image"
 
 const LinkLabel = styled.p`
-  font-size: 14px;
+  font-size: 0.875rem;
   margin-left: 16px;
+  width: 100%;
+  text-align: left;
   color: #b3b3b3;
   font-weight: 600;
   transition: color 0.3s ease-out;
   white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 `
 const NavLinkButton = styled.button`
@@ -19,11 +22,16 @@ const NavLinkButton = styled.button`
   align-items: center;
   background-color: transparent;
   border: 0;
+  cursor: pointer;
   &:hover ${LinkLabel}{
     color: #fff;
-  } 
-  & .button-logo:hover {
-    color: #fff;
+  }
+`
+const LogoContainer = styled.div`
+  opacity: 0.7;
+  flex-shrink: 0;
+  &:hover {
+    opacity: 1;
   }
 `
 
@@ -31,7 +39,9 @@ export default function NavButton({ label, link, imageSrc, imageAlt }) {
   return (
     <Link href={link}>
       <NavLinkButton>
-        <Image className="button-logo" src={imageSrc} alt={imageAlt} width={24} height={24} />
+        <LogoContainer>
+          <Image src={imageSrc} alt={imageAlt} width={24} height={24} />
+        </LogoContainer>
         <LinkLabel>{label}</LinkLabel>
       </NavLinkButton>
     </Link>
