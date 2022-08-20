@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import Link from "next/link"
 
 const PlaylistContainer = styled.div`
   padding: 8px 0;
@@ -24,15 +25,31 @@ const PlaylistButton = styled.button`
   }
 `
 
-const PlayLists = ['Ma playlist n°3', 'Ma playlist n°2', 'musique de soirée']
+const PlayLists = [
+  {
+    name: 'Ma playlist n°3',
+    id: '3s62EBUhNMW7rWt6NTpvx9'
+  },
+  {
+    name: 'Ma playlist n°2',
+    id: 'edffBUhNMW7rWt6NTpvx9'
+  },
+  {
+    name: 'musique de soirée',
+    id: '8jbdhW7rWt6NTpvx9'
+  },
+
+]
 
 export default function PlaylistBar() {
   return (
     <PlaylistContainer>
       {PlayLists.map((playlist) => (
-        <PlaylistButton key={playlist}>
-          <PlaylistLabel>{playlist}</PlaylistLabel>
-        </PlaylistButton>
+        <Link href={`/playlist/${playlist.id}`} key={playlist.id}>
+          <PlaylistButton>
+            <PlaylistLabel>{playlist.name}</PlaylistLabel>
+          </PlaylistButton>
+        </Link>
       ))}
     </PlaylistContainer>
   )

@@ -19,13 +19,13 @@ export default function NavBar() {
       />
       <NavButton 
         label="Rechercher"
-        link="/"
+        link="/search"
         imageSrc="/sideBar_logos/search.svg"
         imageAlt="download"
       />
       <NavButton 
         label="Bibliothèque"
-        link="/"
+        link="/collection/playlists"
         imageSrc="/sideBar_logos/books.svg"
         imageAlt="download"
       />

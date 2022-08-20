@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import Image from 'next/image'
+import Link from 'next/image'
 import NavBar from './NavBar'
 import CreationBar from './CreationBar'
 import PlaylistBar from './PlaylistBar'
 import NavButton from './NavButton'
 
 const Container = styled.div`
-  height: calc(100vh - 90px);
+  height: 100%;
   width: 242px;
   padding: 24px 8px 0 8px;
   background-color: #000;
@@ -39,7 +40,9 @@ export default function Sidebar() {
     <Container>
       <TopContainer>
         <SpotifyLogo>
-          <Image src="/sideBar_logos/spotify_logo.svg" alt="logo" width={131} height={40} />
+          <Link href="/">
+            <Image src="/sideBar_logos/spotify_logo.svg" alt="logo" width={131} height={40} />
+          </Link>
         </SpotifyLogo>
         <NavigationContainer>
           <NavBar />
@@ -49,7 +52,7 @@ export default function Sidebar() {
         </NavigationContainer>
       </TopContainer>
       <InstallButtonContainer>
-        <NavButton 
+        <NavButton
           label="Installer l&apos;appli"
           link="/download"
           imageSrc="/sideBar_logos/download.svg"

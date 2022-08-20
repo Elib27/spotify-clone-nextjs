@@ -1,5 +1,5 @@
 
-export default function Download() {
+export default function download() {
   return (
     <div>Download Page</div>
   )
