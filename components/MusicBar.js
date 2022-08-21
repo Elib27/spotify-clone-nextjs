@@ -1,23 +1,35 @@
 import styled from "styled-components"
+import CurrentMusicInformations from "./CurrentMusicInformations"
 import MusicControls from "./MusicControls"
+import SoundConfiguration from "./SoundConfiguration"
 
-const MusicBarContainer = styled.footer`
+const MusicBarWrapper = styled.footer`
   height: 90px;
-  width: max(100vw, 620px);
+  width: 100vw;
+  min-width: 768px;
   padding: 0 16px;
   background-color: #181818;
   border-top: 1px solid #282828;
-  position: relative;
-  z-index: 1;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+  position: relative;
+`
+const MusicBarContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
   align-items: center;
 `
 
 export default function MusicBar() {
   return (
-    <MusicBarContainer>
-      <MusicControls />
-    </MusicBarContainer>
+    <MusicBarWrapper>
+      <MusicBarContainer>
+        <CurrentMusicInformations />
+        <MusicControls />
+        <SoundConfiguration />
+      </MusicBarContainer>
+    </MusicBarWrapper>
   )
 }
