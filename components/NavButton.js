@@ -13,6 +13,7 @@ const LinkLabel = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  letter-spacing: 0.25px;
 `
 const NavLinkButton = styled.button`
   height: 40px;

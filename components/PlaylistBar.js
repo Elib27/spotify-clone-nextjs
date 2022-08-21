@@ -5,14 +5,15 @@ const PlaylistContainer = styled.div`
   padding: 8px 0;
 `
 const PlaylistLabel = styled.p`
-  font-size: 14px;
+  font-size: 0.85rem;
   margin:  0;
   color: #b3b3b3;
-  font-weight: 500;
+  font-weight: 400;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  letter-spacing: 0.35px;
 `
 const PlaylistButton = styled.button`
   height: 32px;

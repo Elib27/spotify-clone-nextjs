@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef} from 'react';
 import styled from "styled-components"
 import Link from "next/link"
 import Image from "next/image"
@@ -37,7 +38,7 @@ const NavigationButton = styled.button`
 `
 const RightContainer = styled.div`
   display:flex;
-  gap: 16px;
+  gap: 32px;
 `
 const SubscribeButton = styled.button`
   font-size: 0.875rem;
@@ -65,7 +66,6 @@ const AccountButton = styled.button`
   justify-content: center;
   align-items: center;
   gap: 8px;
-  position: relative;
   cursor: pointer;
   &:hover {
     background-color: #282828;
@@ -80,7 +80,7 @@ const AccountImage = styled.div`
   justify-content: center;
   align-items: center;
   `
-const AccountImageContainer = styled.figure`
+const AccountImageContainer = styled.div`
   padding-bottom: 1px;
 `
 const Username = styled.span`
@@ -97,8 +97,48 @@ const TriangleLogoContainer = styled.div`
 
 const user = 'eliot';
 
+const TestPannel = styled.div`
+  height: 200px;
+  width: 100px;
+  background-color: red;
+  position: absolute;
+  top: 64px;
+  right: 400px;
+  z-index: 10000;
+`
 
 export default function PageHeader() {
+
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const panel = useRef(null)
+
+  function openPanel() {
+    setTimeout(() => {
+      setIsPanelOpen(true);
+    }, 10)
+  }
+
+  function handleClickOutside(e) {
+    // console.log('isPanelOpen: ', isPanelOpen)
+    if (panel.current && !panel.current.contains(e.target)){
+      if (isPanelOpen) {
+        setIsPanelOpen(false)
+        console.log('clicked outside', e.target)
+      }
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log('isPanelOpen: ', isPanelOpen)
+  }, [isPanelOpen])
+
   return (
     <HeaderContainer>
       <LeftContainer>
@@ -114,8 +154,10 @@ export default function PageHeader() {
         </Link>
       </LeftContainer>
       <RightContainer>
-        <SubscribeButton>S&apos;abonner</SubscribeButton>
-        <AccountButton>
+        <a href="https://www.spotify.com/fr/premium/" target="blank_" rel='noreferrer'>
+          <SubscribeButton>S&apos;abonner</SubscribeButton>
+        </a>
+        <AccountButton onClick={openPanel}>
           <AccountImage>
             <AccountImageContainer>
               <Image src="/header_logos/default_avatar.svg" alt="account button" width={16} height={16} />
@@ -127,7 +169,12 @@ export default function PageHeader() {
           </TriangleLogoContainer>
         </AccountButton>
       </RightContainer>
-      <Pannel />
+      {/* <Pannel /> */}
+      {/* { isPanelOpen && (
+        <TestPannel ref={panel}>
+          <p>TestPannel</p>
+        </TestPannel>
+      )} */}
     </HeaderContainer>
   )
 }

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Image from 'next/image'
-import Link from 'next/image'
+import Link from 'next/link'
 import NavBar from './NavBar'
 import CreationBar from './CreationBar'
 import PlaylistBar from './PlaylistBar'
@@ -21,6 +21,7 @@ const TopContainer = styled.div`
 const SpotifyLogo = styled.div`
   padding: 0 16px;
   padding-bottom: 4px;
+  cursor: pointer;
 `
 const NavigationContainer = styled.div`
   margin-top: 18px;

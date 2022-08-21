@@ -9,6 +9,9 @@ const MusicBarContainer = styled.footer`
   border-top: 1px solid #282828;
   position: relative;
   z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `
 
 export default function MusicBar() {

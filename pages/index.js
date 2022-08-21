@@ -1,6 +1,5 @@
-import Head from 'next/head'
+// import Head from 'next/head'
 import styled from 'styled-components'
-import Image from 'next/image'
 import PageHeader from '../components/PageHeader'
 
 const HomeWrapper = styled.div`
@@ -28,7 +27,7 @@ export default function Home() {
     <HomeWrapper>
       <PageHeader />
       <HomePageContainer>
-        <Title>Bonsoir</Title>
+        <Title>Bonjour</Title>
         <MoreContent>
           <p>Ceci est une phrase pour remplir la page</p>
           <p>Ceci est une phrase pour remplir la page</p>

@@ -12,10 +12,10 @@ export default function NavBar() {
   return (
     <NavContainer>
       <NavButton 
-          label="Accueil"
-          link="/"
-          imageSrc="/sideBar_logos/house.svg"
-          imageAlt="download"
+        label="Accueil"
+        link="/"
+        imageSrc="/sideBar_logos/house.svg"
+        imageAlt="download"
       />
       <NavButton 
         label="Rechercher"
