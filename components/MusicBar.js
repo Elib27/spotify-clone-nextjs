@@ -4,7 +4,7 @@ import MusicControls from "./MusicControls"
 import SoundConfiguration from "./SoundConfiguration"
 
 const MusicBarWrapper = styled.footer`
-  height: 90px;
+  height: 91px;
   width: 100vw;
   min-width: 768px;
   padding: 0 16px;

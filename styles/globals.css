@@ -8,6 +8,9 @@ body {
   /* font-family: CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek,
   CircularSp-Deva, Segoe UI, Roboto, Arial; */
 }
+body {
+  overflow: hidden;
+}
 
 * {
   box-sizing: border-box;

@@ -6,7 +6,7 @@ import CreationBar from './CreationBar'
 import PlaylistBar from './PlaylistBar'
 import NavButton from './NavButton'
 
-const Container = styled.div`
+const Container = styled.nav`
   height: 100%;
   width: 242px;
   padding: 24px 8px 0 8px;
