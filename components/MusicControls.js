@@ -1,3 +1,4 @@
+import { useState } from "react"
 import styled from "styled-components"
 import RandomMusicLogo from "../public/musicBar_logos/random_music.svg"
 import PrevMusicLogo from '../public/musicBar_logos/prev_music.svg'
@@ -6,6 +7,8 @@ import PlayMusicLogo from '../public/musicBar_logos/play_music.svg'
 import PauseMusicLogo from '../public/musicBar_logos/pause_music.svg'
 import LoopMusic1Logo from '../public/musicBar_logos/loop_music1.svg'
 import LoopMusic2Logo from '../public/musicBar_logos/loop_music2.svg'
+import Next15secLogo from '../public/musicBar_logos/next15s.svg'
+import Prev15secLogo from '../public/musicBar_logos/prev15s.svg'
 import MusicProgressionBar from "./MusicProgressionBar"
 
 const MusicControlsContainer = styled.div`
@@ -45,6 +48,9 @@ const PlayButton = styled(ControlButton)`
   &:hover {
     transform: scale(1.06);
   }
+  &:active {
+    transform: scale(1);
+  }
 `
 const SideContainer = styled.div`
   display: flex;
@@ -62,42 +68,64 @@ const TimerContainer = styled.div`
   font-weight: 400;
   color: #a7a7a7;
   text-align: left;
+  user-select: none;
   &:first-of-type {
     text-align: right;
   }
 `
 
-export default function MusicControls() {
+export default function MusicControls({ soundType }) {
+
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  function tooglePlaying() {
+    setIsPlaying(currVal => !currVal)
+  }
+
   return (
     <MusicControlsContainer>
       <ControlsContainer>
         <SideContainer>
-          <ControlButton>
-            <RandomMusicLogo />
-          </ControlButton>
+        { soundType === 'music' ? 
+            (
+              <ControlButton>
+                <RandomMusicLogo />
+              </ControlButton>
+            ) : (
+              <ControlButton>
+                <Prev15secLogo />
+              </ControlButton>
+            )
+        }
           <ControlButton>
             <PrevMusicLogo />
           </ControlButton>
         </SideContainer>
-        <PlayButton>
-          <PlayMusicLogo />
+        <PlayButton onClick={tooglePlaying}>
+          {isPlaying ? <PauseMusicLogo /> : <PlayMusicLogo />}
         </PlayButton>
         <SideContainer>
           <ControlButton>
             <NextMusicLogo />
           </ControlButton>
-          <ControlButton>
-            <LoopMusic1Logo />
-          </ControlButton>
+          { soundType === 'music' ? 
+            (
+              <ControlButton>
+                <LoopMusic1Logo />
+              </ControlButton>
+            ) : (
+              <ControlButton>
+                  <Next15secLogo />
+              </ControlButton>
+            )
+          }
         </SideContainer>
       </ControlsContainer>
       <MusicProgressionBarContainer>
         <TimerContainer>1:27</TimerContainer>
-          <MusicProgressionBar />
+        <MusicProgressionBar />
         <TimerContainer>3:23</TimerContainer>
       </MusicProgressionBarContainer>
     </MusicControlsContainer>
   )
 }
-
-// ajouter intéractivité barre de progression

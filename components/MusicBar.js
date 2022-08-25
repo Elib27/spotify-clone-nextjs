@@ -28,7 +28,9 @@ export default function MusicBar() {
       <MusicBarContainer>
         <CurrentMusicInformations />
         <MusicControls />
-        <SoundConfiguration />
+        <SoundConfiguration
+          soundType="music"
+        />
       </MusicBarContainer>
     </MusicBarWrapper>
   )
