@@ -1,5 +1,5 @@
 import { useState } from "react"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 import RandomMusicLogo from "../public/musicBar_logos/random_music.svg"
 import PrevMusicLogo from '../public/musicBar_logos/prev_music.svg'
 import NextMusicLogo from '../public/musicBar_logos/next_music.svg'
@@ -36,9 +36,75 @@ const ControlButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   &:hover {
     opacity: 1;
   }
+  &:active {
+    opacity: 0.7;
+  }
+  &::before {
+    content: attr(data-hover);
+    background-color: #282828;
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0 !important;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0px 6px 12px 0px rgb(0 0 0 / 50%);
+    pointer-events: none;
+    user-select: none;
+    transition: none;
+  }
+  &:active::before {
+    display: none;
+  }
+  &:hover::before {
+    opacity: 1 !important;
+    transition: opacity 0.3s ease-in-out 0.3s;
+  }
+`
+const RandomButton = styled(ControlButton)`
+  ${({ isPlayingRandom }) => isPlayingRandom && `
+    color: #1db954;
+    opacity: 1;
+    &::after {
+      content: "";
+      background-color: #1db954;
+      height: 4px;
+      width: 4px;
+      display: block;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+    }
+  `}
+`
+const LoopButton = styled(ControlButton)`
+  ${({ loopMode }) => (loopMode !== 'no_loop') && `
+    color: #1db954;
+    opacity: 1;
+    &::after {
+      content: "";
+      background-color: #1db954;
+      height: 4px;
+      width: 4px;
+      display: block;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+    }
+  `}
 `
 const PlayButton = styled(ControlButton)`
   background-color: #fff;
@@ -77,9 +143,36 @@ const TimerContainer = styled.div`
 export default function MusicControls({ soundType }) {
 
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isPlayingRandom, setIsPlayingRandom] = useState(false)
+  const [loopMode, setLoopMode] = useState('no_loop')
 
   function tooglePlaying() {
-    setIsPlaying(currVal => !currVal)
+    setIsPlaying(curr => !curr)
+  }
+
+  function changeLoopMode() {
+    switch(loopMode) {
+      case 'no_loop':
+        setLoopMode('loop_1')
+        break
+      case 'loop_1':
+        setLoopMode('loop_2')
+        break
+      case 'loop_2':
+        setLoopMode('no_loop')
+        break
+    }
+  }
+
+  function getLoopModeDataHover() {
+    switch(loopMode) {
+      case 'no_loop':
+        return 'Activer la répétition'
+      case 'loop_1':
+        return 'Autoriser la répétition'
+      case 'loop_2':
+        return 'Désactiver la répétition'
+    }
   }
 
   return (
@@ -88,31 +181,44 @@ export default function MusicControls({ soundType }) {
         <SideContainer>
         { soundType === 'music' ? 
             (
-              <ControlButton>
+              <RandomButton
+                isPlayingRandom={isPlayingRandom}
+                onClick={() => setIsPlayingRandom(curr => !curr)}
+                data-hover="Activer la lecture aléatoire"
+              >
                 <RandomMusicLogo />
-              </ControlButton>
+              </RandomButton>
             ) : (
               <ControlButton>
                 <Prev15secLogo />
               </ControlButton>
             )
         }
-          <ControlButton>
+          <ControlButton data-hover="Précédent">
             <PrevMusicLogo />
           </ControlButton>
         </SideContainer>
-        <PlayButton onClick={tooglePlaying}>
+        <PlayButton
+          onClick={tooglePlaying}
+          data-hover={isPlaying ? "Pause" : "Lecture"}
+        >
           {isPlaying ? <PauseMusicLogo /> : <PlayMusicLogo />}
         </PlayButton>
         <SideContainer>
-          <ControlButton>
+          <ControlButton
+            data-hover="Suivant"
+          >
             <NextMusicLogo />
           </ControlButton>
           { soundType === 'music' ? 
             (
-              <ControlButton>
-                <LoopMusic1Logo />
-              </ControlButton>
+              <LoopButton
+                onClick={changeLoopMode}
+                loopMode={loopMode}
+                data-hover={getLoopModeDataHover()}
+              >
+                {loopMode === 'loop_2' ? <LoopMusic2Logo /> : <LoopMusic1Logo /> }
+              </LoopButton>
             ) : (
               <ControlButton>
                   <Next15secLogo />

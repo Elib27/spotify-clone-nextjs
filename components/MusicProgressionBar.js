@@ -30,6 +30,7 @@ const MusicBarCircle = styled.div`
   transform: translateY(-50%);
   z-index: 100;
   display: none;
+  user-select: none;
   ${({active}) => active && `
     display: block;
   `}

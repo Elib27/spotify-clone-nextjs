@@ -30,6 +30,7 @@ const SoundBarCircle = styled.div`
   transform: translateY(-50%);
   z-index: 100;
   display: none;
+  user-select: none;
   ${({ active }) => active && `
     display: block;
   `}
@@ -56,39 +57,43 @@ const SoundProgressionBarWrapper = styled.div`
   position: relative;
 `
 
-export default function SoundBar({ volume, setVolume, muted, setMuted }) {
+export default function SoundBar({ volume, setVolume, volumeValue, setVolumeValue, setStoredVolumeValue}) {
   const [barCircleActive, setBarCircleActive] = useState(false)
   const soundBarContainer = useRef(null)
-
+  
   function updateProgressionBar(e) {
-    const barWidth = soundBarContainer.current.offsetWidth;
-    const barOffset = soundBarContainer.current.getBoundingClientRect().left;
-    let newProgressionPercentage = (e.clientX - barOffset) / barWidth * 100;
-    if (newProgressionPercentage < 0) {
-      newProgressionPercentage = 0;
+    const barWidth = soundBarContainer.current.offsetWidth
+    const barOffset = soundBarContainer.current.getBoundingClientRect().left
+    let newVolumeValue = (e.clientX - barOffset) / barWidth * 100
+
+    if (newVolumeValue < 0) {
+      newVolumeValue = 0
     }
-    else if (newProgressionPercentage > 100) {
-      newProgressionPercentage = 100;
+    else if (newVolumeValue > 100) {
+      newVolumeValue = 100
     }
 
-    soundBarContainer.current.style.setProperty("--sound-progression-bar-fill", newProgressionPercentage + '%')
-
-    if (newProgressionPercentage === 0 && volume !== 'muted') {
-      setMuted(true)
-    }
-    else if ((newProgressionPercentage > 0 && newProgressionPercentage <= 30) && volume !== 'low') {
-      setVolume('low')
-      setMuted(false)
-    }
-    else if ((newProgressionPercentage > 30 && newProgressionPercentage <= 70) && volume !== 'medium') {
-      setVolume('medium')
-      setMuted(false)
-    }
-    else if (newProgressionPercentage > 70 && volume !== 'high') {
-      setVolume('high')
-      setMuted(false)
-    }
+    setVolumeValue(newVolumeValue)
   }
+
+  useEffect(() => {
+    console.log(volumeValue)
+
+    soundBarContainer.current.style.setProperty("--sound-progression-bar-fill", volumeValue + '%')
+
+    if (volumeValue === 0 && volume !== 'muted') {
+      setVolume('muted')
+    }
+    else if ((volumeValue > 0 && volumeValue <= 30) && volume !== 'low') {
+      setVolume('low')
+    }
+    else if ((volumeValue > 30 && volumeValue <= 70) && volume !== 'medium') {
+      setVolume('medium')
+    }
+    else if (volumeValue > 70 && volume !== 'high') {
+      setVolume('high')
+    }
+  }, [volumeValue]) 
 
   function handleMouseMoveSound(e) {
     updateProgressionBar(e)
@@ -114,12 +119,6 @@ export default function SoundBar({ volume, setVolume, muted, setMuted }) {
     }
   }, [])
 
-  useEffect(() => {
-    if (muted) {
-      soundBarContainer.current.style.setProperty("--sound-progression-bar-fill", '0%')
-    }
-  }, [muted])
-
   return (
     <SoundProgressionBar ref={soundBarContainer}>
       <SoundBarCircle active={barCircleActive} />
@@ -130,6 +129,3 @@ export default function SoundBar({ volume, setVolume, muted, setMuted }) {
     </SoundProgressionBar>
   )
 }
-
-// voir fonctionnement slider
-// corriger bug changement d'icone en fonction du volume

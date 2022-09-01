@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import SearchCard from '../components/SearchCard'
 
 const Container = styled.div`
-  height: 100%;
   width: 100%;
   background-color: #121212;
   padding: 32px 16px 0 16px;
@@ -38,34 +37,38 @@ const CategoriesContainer = styled.div`
 `
 
 const CategoryCards = [
-  {title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg"},
-  {title: "Conçu spécialement pour vous", backgroundColor: "rgb(30, 50, 100)", cover: "/categoryCover.jpg"},
-  {title: "Classements", backgroundColor: "rgb(141, 103, 171)", cover: "/categoryCover.jpg"},
-  {title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg"},
-  {title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg"},
-  {title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg"},
-  {title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg"}
+  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
+  { title: "Conçu spécialement pour vous", backgroundColor: "rgb(30, 50, 100)", cover: "/categoryCover.jpg" },
+  { title: "Classements", backgroundColor: "rgb(141, 103, 171)", cover: "/categoryCover.jpg" },
+  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
+  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
+  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
+  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
+  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
+  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
+  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
+  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" }
 ]
 
 export default function search() {
   return (
     <Container>
       <SearchSection>
-      <SectionTitle>Vos genres préférés</SectionTitle>
-      <MusicStyleContainer>
-        <SearchCard
-          title="Variété française"
-          isBigCard
-          cardBackgroundColor="#b49bc8"
-          imageSrc="/search_cover.jpg"
-        />
-        <SearchCard
-          title="Hip-Hop"
-          isBigCard
-          cardBackgroundColor="#ba5d07"
-          imageSrc="/search_cover2.jpg"
-        />
-      </MusicStyleContainer>
+        <SectionTitle>Vos genres préférés</SectionTitle>
+        <MusicStyleContainer>
+          <SearchCard
+            title="Variété française"
+            isBigCard
+            cardBackgroundColor="#b49bc8"
+            imageSrc="/search_cover.jpg"
+          />
+          <SearchCard
+            title="Hip-Hop"
+            isBigCard
+            cardBackgroundColor="#ba5d07"
+            imageSrc="/search_cover2.jpg"
+          />
+        </MusicStyleContainer>
       </SearchSection>
       <SearchSection>
         <SectionTitle>Parcourir tout</SectionTitle>
@@ -75,7 +78,7 @@ export default function search() {
               title={category.title}
               cardBackgroundColor={category.backgroundColor}
               imageSrc={category.cover}
-              key={category.title}
+              key={index}
             />
           ))}
         </CategoriesContainer>

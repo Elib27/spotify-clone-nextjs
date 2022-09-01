@@ -29,12 +29,55 @@ const Button = styled.button`
   align-items: center;
   opacity: 0.7;
   flex-shrink: 0;
+  position: relative;
   &:hover {
+    transform: scale(1.04);
     opacity: 1;
   }
-  &:last-of-type {
-    opacity: 1;
+  &:active {
+    transform: scale(1);
+    opacity: 0.7;
   }
+  &:last-of-type:hover {
+    transform: scale(1);
+  }
+  `
+const MicroButton = styled(Button)`
+  ${({ isLyricsPannelOpen }) => isLyricsPannelOpen && `
+    color: #1db954;
+    opacity: 1;
+    &::after {
+      content: "";
+      background-color: #1db954;
+      height: 4px;
+      width: 4px;
+      display: block;
+      inline-size: 16px;
+      border-radius: 50%;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      transform: translateX(-50%);
+    }
+  `}
+`
+const WaitListButton = styled(Button)`
+  ${({ isWaitListOpen }) => isWaitListOpen && `
+    color: #1db954;
+    opacity: 1;
+    &::after {
+      content: "";
+      background-color: #1db954;
+      height: 4px;
+      width: 4px;
+      display: block;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+    }
+  `}
 `
 const VolumeBarContainer = styled.div`
   width: 125px;
@@ -45,31 +88,56 @@ const VolumeBarContainer = styled.div`
 
 export default function SoundConfiguration() {
   const [volume, setVolume] = useState('low')
-  const [muted, setMuted] = useState(false)
+  const [volumeValue, setVolumeValue] = useState(50)
+  const [storedVolumeValue, setStoredVolumeValue] = useState(30)
+
+  const [isLyricsPannelOpen, setIsLyricsOpen] = useState(true)
+  const [isWaitListOpen, setIsWaitListOpen] = useState(true)
+
+  function handleClickToogleMute() {
+    if(volume === 'muted') {
+      setVolumeValue(storedVolumeValue !== 0 ? storedVolumeValue : 50)
+    }
+    else {
+      setVolume('muted')
+      setStoredVolumeValue(volumeValue)
+      setVolumeValue(0)
+    }
+  }
 
   return (
     <Container>
-      <Button>
+      <MicroButton
+        isLyricsPannelOpen={isLyricsPannelOpen}
+        onClick={() => setIsLyricsOpen(curr => !curr)}
+      >
         <Microphone />
-      </Button>
-      <Button>
+      </MicroButton>
+      <WaitListButton
+        isWaitListOpen={isWaitListOpen}
+        onClick={() => setIsWaitListOpen(curr => !curr)}
+      >
         <WaitList />
-      </Button>
+      </WaitListButton>
       <Button>
         <Speaker />
       </Button>
       <VolumeBarContainer>
-        <Button onClick={() => setMuted(currVal => !currVal)}>
-          {muted && <MutedVolume />}
-          {!muted && (volume === 'low' && <LowVolume />)}
-          {!muted && (volume === 'medium' && <MediumVolume />)}
-          {!muted && (volume === 'high' && <HighVolume />)}
+        <Button onClick={handleClickToogleMute}>
+          {volume === 'muted' && <MutedVolume />}
+          {volume === 'low' && <LowVolume />}
+          {volume === 'medium' && <MediumVolume />}
+          {volume === 'high' && <HighVolume />}
         </Button>
-        <SoundBar volume={volume} setVolume={setVolume} muted={muted} setMuted={setMuted} />
+        <SoundBar
+          volume={volume}
+          setVolume={setVolume}
+          volumeValue={volumeValue}
+          setVolumeValue={setVolumeValue}
+          storedVolumeValue={storedVolumeValue}
+          setStoredVolumeValue={setStoredVolumeValue}
+        />
       </VolumeBarContainer>
     </Container>
   )
 }
-
-// ajouter mute au clic
-// pas d'apparition de lowvolume
