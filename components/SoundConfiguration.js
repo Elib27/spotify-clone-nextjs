@@ -91,8 +91,8 @@ export default function SoundConfiguration() {
   const [volumeValue, setVolumeValue] = useState(50)
   const [storedVolumeValue, setStoredVolumeValue] = useState(30)
 
-  const [isLyricsPannelOpen, setIsLyricsOpen] = useState(true)
-  const [isWaitListOpen, setIsWaitListOpen] = useState(true)
+  const [isLyricsPannelOpen, setIsLyricsOpen] = useState(false)
+  const [isWaitListOpen, setIsWaitListOpen] = useState(false)
 
   function handleClickToogleMute() {
     if(volume === 'muted') {

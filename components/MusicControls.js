@@ -1,5 +1,5 @@
-import { useState } from "react"
-import styled, { keyframes } from "styled-components"
+import { useState, useEffect, useRef } from "react"
+import styled from "styled-components"
 import RandomMusicLogo from "../public/musicBar_logos/random_music.svg"
 import PrevMusicLogo from '../public/musicBar_logos/prev_music.svg'
 import NextMusicLogo from '../public/musicBar_logos/next_music.svg'
@@ -10,6 +10,8 @@ import LoopMusic2Logo from '../public/musicBar_logos/loop_music2.svg'
 import Next15secLogo from '../public/musicBar_logos/next15s.svg'
 import Prev15secLogo from '../public/musicBar_logos/prev15s.svg'
 import MusicProgressionBar from "./MusicProgressionBar"
+
+import { songsData } from '../public/musics/musics_catalog.json'
 
 const MusicControlsContainer = styled.div`
   display: flex;
@@ -31,12 +33,14 @@ const ControlButton = styled.button`
   width: 32px;
   opacity: 0.7;
   border: none;
+  outline: none;
   background-color: transparent;
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  z-index: 10;
   &:hover {
     opacity: 1;
   }
@@ -61,6 +65,7 @@ const ControlButton = styled.button`
     pointer-events: none;
     user-select: none;
     transition: none;
+    z-index: 10;
   }
   &:active::before {
     display: none;
@@ -145,9 +150,59 @@ export default function MusicControls({ soundType }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isPlayingRandom, setIsPlayingRandom] = useState(false)
   const [loopMode, setLoopMode] = useState('no_loop')
+  const [audioCurrentTime, setAudioCurrentTime] = useState(0)
+  const [audioCurrentTimeInMinSec, setAudioCurrentTimeInMinSec] = useState('00:00')
+  const [audioDurationInMinSec, setAudioDurationInMinSec] = useState('00:00')
+
+  const audio = useRef(null)
+
+  // useEffect(() => {
+  //   setAudio(new Audio(songsData[0].link))
+  // }, [])
+
+  // useEffect(() => {
+  //   if (audio) {
+  //     const currMin = Math.floor(audio.currentTime / 60).toString().padStart(2, '0')
+  //     const currSec = Math.floor(audio.currentTime % 60).toString().padStart(2, '0')
+  //     setAudioDuration(`${currMin}:${currSec}`)
+  //   }
+  //   audio.addEventListener('timeupdate', () => {
+  //     if (audio) {
+  //       const currMin = Math.floor(audio.currentTime / 60).toString().padStart(2, '0')
+  //       const currSec = Math.floor(audio.currentTime % 60).toString().padStart(2, '0')
+  //       setAudioCurrentTime(`${currMin}:${currSec}`)
+  //     }
+  //   })
+  //   return () => {
+  //     audio.removeEventListener('timeupdate', () => {
+  //       if (audio) {
+  //         const currMin = Math.floor(audio.currentTime / 60).toString().padStart(2, '0')
+  //         const currSec = Math.floor(audio.currentTime % 60).toString().padStart(2, '0')
+  //         setAudioCurrentTime(`${currMin}:${currSec}`)
+  //       }
+  //     })
+  //   }
+  // }, [audio])
 
   function tooglePlaying() {
-    setIsPlaying(curr => !curr)
+      setIsPlaying(curr => !curr)
+  }
+
+  useEffect(() => {
+    if (audio) {
+      isPlaying ? audio.current.play() : audio.current.pause()
+    }
+  },[isPlaying, audio])
+
+  function updateCurrentTime() {
+    if (audio.current) {
+      const currMin = Math.floor(audio.current.currentTime / 60).toString().padStart(2, '0')
+      const currSec = Math.floor(audio.current.currentTime % 60).toString().padStart(2, '0')
+      if (audioCurrentTime !== `${currMin}:${currSec}`) {
+        setAudioCurrentTime(`${currMin}:${currSec}`)
+        console.log(`${currMin}:${currSec}`)
+      }
+    }
   }
 
   function changeLoopMode() {
@@ -227,8 +282,9 @@ export default function MusicControls({ soundType }) {
           }
         </SideContainer>
       </ControlsContainer>
+      <audio ref={audio} src={songsData[0].link} onTimeUpdate={updateCurrentTime}></audio>
       <MusicProgressionBarContainer>
-        <TimerContainer>1:27</TimerContainer>
+        <TimerContainer>{audioCurrentTime}</TimerContainer>
         <MusicProgressionBar />
         <TimerContainer>3:23</TimerContainer>
       </MusicProgressionBarContainer>

@@ -1,0 +1,18 @@
+{
+  "songsData": [
+    {
+      "id": 1,
+      "name": "Monégasque",
+      "artist": "PLK",
+      "duration": 203,
+      "link": "/musics/PLK_Monegasque.mp3"
+    },
+    {
+      "id": 2,
+      "name": "Peon",
+      "artist": "Vald",
+      "duration": 226,
+      "link": "/musics/Vald _Peon_feat._Orelsan.mp3"
+    }
+  ]
+}

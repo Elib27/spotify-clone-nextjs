@@ -77,7 +77,6 @@ export default function SoundBar({ volume, setVolume, volumeValue, setVolumeValu
   }
 
   useEffect(() => {
-    console.log(volumeValue)
 
     soundBarContainer.current.style.setProperty("--sound-progression-bar-fill", volumeValue + '%')
 

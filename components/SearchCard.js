@@ -14,8 +14,8 @@ const Container = styled.div`
   background-color: ${({cardBackgroundColor}) => cardBackgroundColor};
   border-radius: 8px;
   position: relative;
-  cursor: pointer;
   overflow: hidden;
+  cursor: pointer;
 `
 const CardTitle = styled.h3`
   ${({ isBigCard }) => isBigCard ? 'font-size: 2.5rem;' : 'font-size: 1.5rem;'}
@@ -27,9 +27,18 @@ const CardTitle = styled.h3`
   top: 0;
   left: 0;
   padding: 16px;
-  z-index: 2;
+  z-index: 1;
 `
 const CardImage = styled.div`
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+  -webkit-box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+  transform: rotate(25deg) translate(18%,-2%);
+  position: absolute;
+  bottom: 0;
+  right: 0;
   ${({ isBigCard }) => isBigCard ?
     `
       height: 128px;
@@ -41,14 +50,6 @@ const CardImage = styled.div`
     width: 100px;
     `
   }
-  
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-  -webkit-box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-  transform: rotate(25deg) translate(18%,-2%);
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 1;
 `
 
 export default function SearchCard({title, cardBackgroundColor, isBigCard, imageSrc}) {
