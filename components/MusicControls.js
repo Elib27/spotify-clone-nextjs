@@ -11,7 +11,7 @@ import Next15secLogo from '../public/musicBar_logos/next15s.svg'
 import Prev15secLogo from '../public/musicBar_logos/prev15s.svg'
 import MusicProgressionBar from "./MusicProgressionBar"
 
-import { songsData } from '../public/musics/musics_catalog.json'
+import songsData from '../public/musics/musics_catalog.json'
 
 const MusicControlsContainer = styled.div`
   display: flex;
@@ -151,41 +151,43 @@ export default function MusicControls({ soundType }) {
   const [isPlayingRandom, setIsPlayingRandom] = useState(false)
   const [loopMode, setLoopMode] = useState('no_loop')
   const [audioCurrentTime, setAudioCurrentTime] = useState(0)
+  const [currentMusic, setCurrentMusic] = useState(0)
   const [audioCurrentTimeInMinSec, setAudioCurrentTimeInMinSec] = useState('00:00')
+  const [audioDuration, setAudioDuration] = useState(0)
   const [audioDurationInMinSec, setAudioDurationInMinSec] = useState('00:00')
 
   const audio = useRef(null)
 
-  // useEffect(() => {
-  //   setAudio(new Audio(songsData[0].link))
-  // }, [])
+  function getMinSecFromSec(time) {
+    const min = Math.floor(time / 60).toString().padStart(2, '0')
+    const sec = Math.floor(time % 60).toString().padStart(2, '0')
+    return `${min}:${sec}`
+  }
 
-  // useEffect(() => {
-  //   if (audio) {
-  //     const currMin = Math.floor(audio.currentTime / 60).toString().padStart(2, '0')
-  //     const currSec = Math.floor(audio.currentTime % 60).toString().padStart(2, '0')
-  //     setAudioDuration(`${currMin}:${currSec}`)
-  //   }
-  //   audio.addEventListener('timeupdate', () => {
-  //     if (audio) {
-  //       const currMin = Math.floor(audio.currentTime / 60).toString().padStart(2, '0')
-  //       const currSec = Math.floor(audio.currentTime % 60).toString().padStart(2, '0')
-  //       setAudioCurrentTime(`${currMin}:${currSec}`)
-  //     }
-  //   })
-  //   return () => {
-  //     audio.removeEventListener('timeupdate', () => {
-  //       if (audio) {
-  //         const currMin = Math.floor(audio.currentTime / 60).toString().padStart(2, '0')
-  //         const currSec = Math.floor(audio.currentTime % 60).toString().padStart(2, '0')
-  //         setAudioCurrentTime(`${currMin}:${currSec}`)
-  //       }
-  //     })
-  //   }
-  // }, [audio])
+  function updateMusicDuration() {
+    if (audio.current) {
+      setAudioDuration(audio.current.duration)
+      setAudioDurationInMinSec(getMinSecFromSec(audio.current.duration))
+    }
+  }
+
+  function updateCurrentTime() {
+    if (audio.current) {
+      setAudioCurrentTime(audio.current.currentTime)
+      if (audioCurrentTime !== audio.current.currentTime) {
+        setAudioCurrentTime(audio.current.currentTime)
+        setAudioCurrentTimeInMinSec(getMinSecFromSec(audio.current.currentTime))
+      }
+    }
+  }
+
+  useEffect(() => {
+    updateMusicDuration()
+    updateCurrentTime()
+  }, [])
 
   function tooglePlaying() {
-      setIsPlaying(curr => !curr)
+    setIsPlaying(curr => !curr)
   }
 
   useEffect(() => {
@@ -194,16 +196,28 @@ export default function MusicControls({ soundType }) {
     }
   },[isPlaying, audio])
 
-  function updateCurrentTime() {
-    if (audio.current) {
-      const currMin = Math.floor(audio.current.currentTime / 60).toString().padStart(2, '0')
-      const currSec = Math.floor(audio.current.currentTime % 60).toString().padStart(2, '0')
-      if (audioCurrentTime !== `${currMin}:${currSec}`) {
-        setAudioCurrentTime(`${currMin}:${currSec}`)
-        console.log(`${currMin}:${currSec}`)
-      }
-    }
+
+  function resetMusic(){
+    audio.current.currentTime = 0
+    updateMusicDuration()
+    setAudioCurrentTime(0)
+    setAudioCurrentTimeInMinSec('00:00')
+    setIsPlaying(true)
   }
+
+  function handleClickPrevMusic() {
+    setCurrentMusic(curr => curr - 1)
+  }
+
+  function handleClickNextMusic() {
+    setCurrentMusic(curr => curr + 1)
+  }
+
+  useEffect(() => {
+    audio.current.play()
+    console.log(audio.current.duration)
+    resetMusic()
+  }, [currentMusic])
 
   function changeLoopMode() {
     switch(loopMode) {
@@ -249,7 +263,10 @@ export default function MusicControls({ soundType }) {
               </ControlButton>
             )
         }
-          <ControlButton data-hover="Précédent">
+          <ControlButton
+            onClick={handleClickPrevMusic}
+            data-hover="Précédent"
+          >
             <PrevMusicLogo />
           </ControlButton>
         </SideContainer>
@@ -261,6 +278,7 @@ export default function MusicControls({ soundType }) {
         </PlayButton>
         <SideContainer>
           <ControlButton
+            onClick={handleClickNextMusic}
             data-hover="Suivant"
           >
             <NextMusicLogo />
@@ -282,11 +300,15 @@ export default function MusicControls({ soundType }) {
           }
         </SideContainer>
       </ControlsContainer>
-      <audio ref={audio} src={songsData[0].link} onTimeUpdate={updateCurrentTime}></audio>
+      <audio ref={audio} src={songsData.musics[currentMusic].link} onTimeUpdate={updateCurrentTime}></audio>
       <MusicProgressionBarContainer>
-        <TimerContainer>{audioCurrentTime}</TimerContainer>
-        <MusicProgressionBar />
-        <TimerContainer>3:23</TimerContainer>
+        <TimerContainer>{audioCurrentTimeInMinSec}</TimerContainer>
+        <MusicProgressionBar
+          audioCurrentTime={audioCurrentTime}
+          setAudioCurrentTime={setAudioCurrentTime}
+          audioDuration={audioDuration}
+        />
+        <TimerContainer>{audioDurationInMinSec}</TimerContainer>
       </MusicProgressionBarContainer>
     </MusicControlsContainer>
   )

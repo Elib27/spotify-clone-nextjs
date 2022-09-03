@@ -57,9 +57,14 @@ const MusicProgressionBarWrapper = styled.div`
   position: relative;
 `
 
-export default function MusicProgressionBar() {
+export default function MusicProgressionBar({ audioCurrentTime, setAudioCurrentTime, audioDuration }) {
   const [barCircleActive, setBarCircleActive] = useState(false)
+  const [progressionPercentage, setProgressionPercentage] = useState(0)
   const barContainer = useRef(null)
+
+  function convertPercentageToTimeInSec(percentage, duration) {
+    return Math.floor((percentage * duration) / 100)
+  }
 
   function updateProgressionBar(e) {
     const barWidth = barContainer.current.offsetWidth;
@@ -71,8 +76,17 @@ export default function MusicProgressionBar() {
     else if (newProgressionPercentage > 100) {
       newProgressionPercentage = 100;
     }
-    barContainer.current.style.setProperty("--progression-bar-fill", newProgressionPercentage + '%')
+    setProgressionPercentage(newProgressionPercentage);
+    setAudioCurrentTime(convertPercentageToTimeInSec(newProgressionPercentage, audioDuration));
   }
+
+  useEffect(() => {
+    setProgressionPercentage(audioCurrentTime / audioDuration * 100)
+  }, [audioCurrentTime, audioDuration])
+
+  useEffect(() => {
+    barContainer.current.style.setProperty("--progression-bar-fill", progressionPercentage + '%')
+  }, [progressionPercentage])
 
   function handleMouseMove(e) {
     updateProgressionBar(e)
