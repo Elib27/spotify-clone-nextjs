@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef} from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { changeTime } from '../store/store'
 import styled from "styled-components"
 
 const MusicProgressionBarBackground = styled.div`
@@ -57,10 +59,13 @@ const MusicProgressionBarWrapper = styled.div`
   position: relative;
 `
 
-export default function MusicProgressionBar({ audioCurrentTime, setAudioCurrentTime, audioDuration }) {
+export default function MusicProgressionBar() {
   const [barCircleActive, setBarCircleActive] = useState(false)
   const [progressionPercentage, setProgressionPercentage] = useState(0)
   const barContainer = useRef(null)
+
+  const music = useSelector( state => state.music)
+  const dispatch = useDispatch()
 
   function convertPercentageToTimeInSec(percentage, duration) {
     return Math.floor((percentage * duration) / 100)
@@ -77,12 +82,12 @@ export default function MusicProgressionBar({ audioCurrentTime, setAudioCurrentT
       newProgressionPercentage = 100;
     }
     setProgressionPercentage(newProgressionPercentage);
-    setAudioCurrentTime(convertPercentageToTimeInSec(newProgressionPercentage, audioDuration));
+    dispatch(changeTime(convertPercentageToTimeInSec(newProgressionPercentage, music.duration)));
   }
 
   useEffect(() => {
-    setProgressionPercentage(audioCurrentTime / audioDuration * 100)
-  }, [audioCurrentTime, audioDuration])
+    setProgressionPercentage(music.time / music.duration * 100)
+  }, [music.time, music.duration])
 
   useEffect(() => {
     barContainer.current.style.setProperty("--progression-bar-fill", progressionPercentage + '%')
@@ -110,6 +115,12 @@ export default function MusicProgressionBar({ audioCurrentTime, setAudioCurrentT
       barContainer.current.removeEventListener('mousedown', handleMouseDown)
     }
   },[])
+
+  // useEffect(() => {
+  //   console.log('progressionPercentage :', progressionPercentage)
+  //   console.log('time :', music.time)
+  //   console.log('duration :', music.duration)
+  // }, [progressionPercentage, music.time, music.duration])
 
   return (
     <ProgressionBar ref={barContainer}>

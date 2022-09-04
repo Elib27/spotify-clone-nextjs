@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { changeVolume, changeVolumeCategory, changePrevVolume } from "../store/store"
 import styled from "styled-components"
 import Microphone from '../public/musicBar_logos/microphone.svg'
 import WaitList from '../public/musicBar_logos/wait_list.svg'
@@ -87,21 +89,21 @@ const VolumeBarContainer = styled.div`
 `
 
 export default function SoundConfiguration() {
-  const [volume, setVolume] = useState('low')
-  const [volumeValue, setVolumeValue] = useState(50)
-  const [storedVolumeValue, setStoredVolumeValue] = useState(30)
+
+  const music = useSelector(state => state.music)
+  const dispatch = useDispatch()
 
   const [isLyricsPannelOpen, setIsLyricsOpen] = useState(false)
   const [isWaitListOpen, setIsWaitListOpen] = useState(false)
 
   function handleClickToogleMute() {
-    if(volume === 'muted') {
-      setVolumeValue(storedVolumeValue !== 0 ? storedVolumeValue : 50)
+    if(music.volumeCategory === 'muted') {
+      dispatch(changeVolume(music.prevVolume !== 0 ? music.prevVolume : 50))
     }
     else {
-      setVolume('muted')
-      setStoredVolumeValue(volumeValue)
-      setVolumeValue(0)
+      dispatch(changeVolumeCategory('muted'))
+      dispatch(changePrevVolume(music.volume))
+      dispatch(changeVolume(0))
     }
   }
 
@@ -124,19 +126,12 @@ export default function SoundConfiguration() {
       </Button>
       <VolumeBarContainer>
         <Button onClick={handleClickToogleMute}>
-          {volume === 'muted' && <MutedVolume />}
-          {volume === 'low' && <LowVolume />}
-          {volume === 'medium' && <MediumVolume />}
-          {volume === 'high' && <HighVolume />}
+          {music.volumeCategory === 'muted' && <MutedVolume />}
+          {music.volumeCategory === 'low' && <LowVolume />}
+          {music.volumeCategory === 'medium' && <MediumVolume />}
+          {music.volumeCategory === 'high' && <HighVolume />}
         </Button>
-        <SoundBar
-          volume={volume}
-          setVolume={setVolume}
-          volumeValue={volumeValue}
-          setVolumeValue={setVolumeValue}
-          storedVolumeValue={storedVolumeValue}
-          setStoredVolumeValue={setStoredVolumeValue}
-        />
+        <SoundBar />
       </VolumeBarContainer>
     </Container>
   )

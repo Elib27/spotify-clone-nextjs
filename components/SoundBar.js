@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { changeVolume, changeVolumeCategory } from "../store/store"
 import styled from "styled-components"
 
 const SoundProgressionBarBackground = styled.div`
@@ -57,42 +59,33 @@ const SoundProgressionBarWrapper = styled.div`
   position: relative;
 `
 
-export default function SoundBar({ volume, setVolume, volumeValue, setVolumeValue, setStoredVolumeValue}) {
+export default function SoundBar() {
+
+  const music = useSelector(state => state.music)
+  const dispatch = useDispatch()
+
   const [barCircleActive, setBarCircleActive] = useState(false)
   const soundBarContainer = useRef(null)
   
   function updateProgressionBar(e) {
     const barWidth = soundBarContainer.current.offsetWidth
     const barOffset = soundBarContainer.current.getBoundingClientRect().left
-    let newVolumeValue = (e.clientX - barOffset) / barWidth * 100
+    let newVolume = Math.floor((e.clientX - barOffset) / barWidth * 100)
 
-    if (newVolumeValue < 0) {
-      newVolumeValue = 0
+    if (newVolume < 0) {
+      newVolume = 0
     }
-    else if (newVolumeValue > 100) {
-      newVolumeValue = 100
+    else if (newVolume > 100) {
+      newVolume = 100
     }
 
-    setVolumeValue(newVolumeValue)
+    dispatch(changeVolume(newVolume))
   }
 
   useEffect(() => {
-
-    soundBarContainer.current.style.setProperty("--sound-progression-bar-fill", volumeValue + '%')
-
-    if (volumeValue === 0 && volume !== 'muted') {
-      setVolume('muted')
-    }
-    else if ((volumeValue > 0 && volumeValue <= 30) && volume !== 'low') {
-      setVolume('low')
-    }
-    else if ((volumeValue > 30 && volumeValue <= 70) && volume !== 'medium') {
-      setVolume('medium')
-    }
-    else if (volumeValue > 70 && volume !== 'high') {
-      setVolume('high')
-    }
-  }, [volumeValue]) 
+    soundBarContainer.current.style.setProperty("--sound-progression-bar-fill", music.volume + '%')
+    dispatch(changeVolumeCategory())
+  }, [music.volume]) 
 
   function handleMouseMoveSound(e) {
     updateProgressionBar(e)

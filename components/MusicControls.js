@@ -1,4 +1,15 @@
 import { useState, useEffect, useRef } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import {
+  togglePlaying,
+  playMusic,
+  tooglePlayingRandom,
+  changeLoopMode,
+  changeTime,
+  updateTimeInMinSecs,
+  changeDuration,
+  updateDurationInMinSecs
+} from '../store/store'
 import styled from "styled-components"
 import RandomMusicLogo from "../public/musicBar_logos/random_music.svg"
 import PrevMusicLogo from '../public/musicBar_logos/prev_music.svg'
@@ -147,62 +158,59 @@ const TimerContainer = styled.div`
 
 export default function MusicControls({ soundType }) {
 
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isPlayingRandom, setIsPlayingRandom] = useState(false)
-  const [loopMode, setLoopMode] = useState('no_loop')
-  const [audioCurrentTime, setAudioCurrentTime] = useState(0)
   const [currentMusic, setCurrentMusic] = useState(0)
-  const [audioCurrentTimeInMinSec, setAudioCurrentTimeInMinSec] = useState('00:00')
-  const [audioDuration, setAudioDuration] = useState(0)
-  const [audioDurationInMinSec, setAudioDurationInMinSec] = useState('00:00')
+
+  const music = useSelector( state => state.music)
+  const dispatch = useDispatch()
 
   const audio = useRef(null)
 
-  function getMinSecFromSec(time) {
-    const min = Math.floor(time / 60).toString().padStart(2, '0')
-    const sec = Math.floor(time % 60).toString().padStart(2, '0')
-    return `${min}:${sec}`
-  }
+  // probleme NaN quand on recupere la duree de la musique
 
   function updateMusicDuration() {
     if (audio.current) {
-      setAudioDuration(audio.current.duration)
-      setAudioDurationInMinSec(getMinSecFromSec(audio.current.duration))
+      let newDuration = null;
+      while (isNaN(newDuration)) {
+        newDuration = audio.current.duration
+        console.log(newDuration)
+      }
+      dispatch(changeDuration(audio.current.duration))
     }
   }
 
+  useEffect(() => {
+    dispatch(updateDurationInMinSecs())
+  }, [music.duration])
+
   function updateCurrentTime() {
     if (audio.current) {
-      setAudioCurrentTime(audio.current.currentTime)
-      if (audioCurrentTime !== audio.current.currentTime) {
-        setAudioCurrentTime(audio.current.currentTime)
-        setAudioCurrentTimeInMinSec(getMinSecFromSec(audio.current.currentTime))
+      if (music.time !== audio.current.currentTime) {
+        dispatch(changeTime(audio.current.currentTime))
       }
     }
   }
+
+  useEffect(() => {
+    dispatch(updateTimeInMinSecs())
+  }, [music.time])
 
   useEffect(() => {
     updateMusicDuration()
     updateCurrentTime()
   }, [])
 
-  function tooglePlaying() {
-    setIsPlaying(curr => !curr)
-  }
-
   useEffect(() => {
     if (audio) {
-      isPlaying ? audio.current.play() : audio.current.pause()
+      music.isPlaying ? audio.current.play() : audio.current.pause()
     }
-  },[isPlaying, audio])
+  },[music.isPlaying, audio])
 
 
   function resetMusic(){
     audio.current.currentTime = 0
+    dispatch(changeTime(0))
     updateMusicDuration()
-    setAudioCurrentTime(0)
-    setAudioCurrentTimeInMinSec('00:00')
-    setIsPlaying(true)
+    dispatch(playMusic())
   }
 
   function handleClickPrevMusic() {
@@ -214,27 +222,18 @@ export default function MusicControls({ soundType }) {
   }
 
   useEffect(() => {
-    audio.current.play()
-    console.log(audio.current.duration)
     resetMusic()
+    audio.current.play()
   }, [currentMusic])
 
-  function changeLoopMode() {
-    switch(loopMode) {
-      case 'no_loop':
-        setLoopMode('loop_1')
-        break
-      case 'loop_1':
-        setLoopMode('loop_2')
-        break
-      case 'loop_2':
-        setLoopMode('no_loop')
-        break
+  useEffect(() => {
+    if(audio.current) {
+      audio.current.volume = (music.volume / 100) ** 3
     }
-  }
+  }, [music.volume])
 
   function getLoopModeDataHover() {
-    switch(loopMode) {
+    switch(music.loopMode) {
       case 'no_loop':
         return 'Activer la répétition'
       case 'loop_1':
@@ -251,9 +250,9 @@ export default function MusicControls({ soundType }) {
         { soundType === 'music' ? 
             (
               <RandomButton
-                isPlayingRandom={isPlayingRandom}
-                onClick={() => setIsPlayingRandom(curr => !curr)}
-                data-hover="Activer la lecture aléatoire"
+                isPlayingRandom={music.isPlayingRandom}
+                onClick={() => dispatch(tooglePlayingRandom())}
+                data-hover={`${ music.isPlayingRandom ? 'Désactiver' : 'Activer'} la lecture aléatoire`}
               >
                 <RandomMusicLogo />
               </RandomButton>
@@ -270,11 +269,11 @@ export default function MusicControls({ soundType }) {
             <PrevMusicLogo />
           </ControlButton>
         </SideContainer>
-        <PlayButton
-          onClick={tooglePlaying}
-          data-hover={isPlaying ? "Pause" : "Lecture"}
+        <PlayButton 
+          onClick={() => dispatch(togglePlaying())}
+          data-hover={music.isPlaying ? "Pause" : "Lecture"}
         >
-          {isPlaying ? <PauseMusicLogo /> : <PlayMusicLogo />}
+          {music.isPlaying ? <PauseMusicLogo /> : <PlayMusicLogo />}
         </PlayButton>
         <SideContainer>
           <ControlButton
@@ -286,11 +285,11 @@ export default function MusicControls({ soundType }) {
           { soundType === 'music' ? 
             (
               <LoopButton
-                onClick={changeLoopMode}
-                loopMode={loopMode}
+                onClick={() => dispatch(changeLoopMode())}
+                loopMode={music.loopMode}
                 data-hover={getLoopModeDataHover()}
               >
-                {loopMode === 'loop_2' ? <LoopMusic2Logo /> : <LoopMusic1Logo /> }
+                {music.loopMode === 'loop_2' ? <LoopMusic2Logo /> : <LoopMusic1Logo /> }
               </LoopButton>
             ) : (
               <ControlButton>
@@ -302,13 +301,9 @@ export default function MusicControls({ soundType }) {
       </ControlsContainer>
       <audio ref={audio} src={songsData.musics[currentMusic].link} onTimeUpdate={updateCurrentTime}></audio>
       <MusicProgressionBarContainer>
-        <TimerContainer>{audioCurrentTimeInMinSec}</TimerContainer>
-        <MusicProgressionBar
-          audioCurrentTime={audioCurrentTime}
-          setAudioCurrentTime={setAudioCurrentTime}
-          audioDuration={audioDuration}
-        />
-        <TimerContainer>{audioDurationInMinSec}</TimerContainer>
+        <TimerContainer>{music.timeInMinSecs}</TimerContainer>
+        <MusicProgressionBar />
+        <TimerContainer>{music.durationInMinSecs}</TimerContainer>
       </MusicProgressionBarContainer>
     </MusicControlsContainer>
   )
