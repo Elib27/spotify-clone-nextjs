@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import {
   togglePlaying,
   playMusic,
-  tooglePlayingRandom,
+  togglePlayingRandom,
   changeLoopMode,
   changeTime,
   updateTimeInMinSecs,
@@ -159,22 +159,18 @@ const TimerContainer = styled.div`
 export default function MusicControls({ soundType }) {
 
   const [currentMusic, setCurrentMusic] = useState(0)
+  const [isProgressionBarMoving, setIsProgressionBarMoving] = useState(false)
 
   const music = useSelector( state => state.music)
   const dispatch = useDispatch()
 
   const audio = useRef(null)
 
-  // probleme NaN quand on recupere la duree de la musique
-
   function updateMusicDuration() {
     if (audio.current) {
-      let newDuration = null;
-      while (isNaN(newDuration)) {
-        newDuration = audio.current.duration
-        console.log(newDuration)
-      }
-      dispatch(changeDuration(audio.current.duration))
+      audio.current.addEventListener('loadedmetadata', () => {
+        dispatch(changeDuration(Math.floor(audio.current.duration)))
+      }, {once: true})
     }
   }
 
@@ -183,9 +179,9 @@ export default function MusicControls({ soundType }) {
   }, [music.duration])
 
   function updateCurrentTime() {
-    if (audio.current) {
-      if (music.time !== audio.current.currentTime) {
-        dispatch(changeTime(audio.current.currentTime))
+    if (audio.current && !isProgressionBarMoving) {
+      if (music.time !== Math.floor(audio.current.currentTime)) {
+        dispatch(changeTime(Math.floor(audio.current.currentTime)))
       }
     }
   }
@@ -200,10 +196,10 @@ export default function MusicControls({ soundType }) {
   }, [])
 
   useEffect(() => {
-    if (audio) {
+    if (audio.current) {
       music.isPlaying ? audio.current.play() : audio.current.pause()
     }
-  },[music.isPlaying, audio])
+  },[music.isPlaying])
 
 
   function resetMusic(){
@@ -232,6 +228,12 @@ export default function MusicControls({ soundType }) {
     }
   }, [music.volume])
 
+  useEffect(() => {
+    if(audio.current && !isProgressionBarMoving) {
+      audio.current.currentTime = music.time
+    }
+  }, [isProgressionBarMoving])
+
   function getLoopModeDataHover() {
     switch(music.loopMode) {
       case 'no_loop':
@@ -251,7 +253,7 @@ export default function MusicControls({ soundType }) {
             (
               <RandomButton
                 isPlayingRandom={music.isPlayingRandom}
-                onClick={() => dispatch(tooglePlayingRandom())}
+                onClick={() => dispatch(togglePlayingRandom())}
                 data-hover={`${ music.isPlayingRandom ? 'Désactiver' : 'Activer'} la lecture aléatoire`}
               >
                 <RandomMusicLogo />
@@ -302,7 +304,10 @@ export default function MusicControls({ soundType }) {
       <audio ref={audio} src={songsData.musics[currentMusic].link} onTimeUpdate={updateCurrentTime}></audio>
       <MusicProgressionBarContainer>
         <TimerContainer>{music.timeInMinSecs}</TimerContainer>
-        <MusicProgressionBar />
+        <MusicProgressionBar
+          isProgressionBarMoving={isProgressionBarMoving}
+          setIsProgressionBarMoving={setIsProgressionBarMoving}
+        />
         <TimerContainer>{music.durationInMinSecs}</TimerContainer>
       </MusicProgressionBarContainer>
     </MusicControlsContainer>

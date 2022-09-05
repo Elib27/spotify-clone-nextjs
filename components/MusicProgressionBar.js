@@ -59,8 +59,8 @@ const MusicProgressionBarWrapper = styled.div`
   position: relative;
 `
 
-export default function MusicProgressionBar() {
-  const [barCircleActive, setBarCircleActive] = useState(false)
+export default function MusicProgressionBar({isProgressionBarMoving, setIsProgressionBarMoving}) {
+
   const [progressionPercentage, setProgressionPercentage] = useState(0)
   const barContainer = useRef(null)
 
@@ -86,7 +86,9 @@ export default function MusicProgressionBar() {
   }
 
   useEffect(() => {
-    setProgressionPercentage(music.time / music.duration * 100)
+    if (!isProgressionBarMoving){
+      setProgressionPercentage(music.time / music.duration * 100)
+    }
   }, [music.time, music.duration])
 
   useEffect(() => {
@@ -98,14 +100,15 @@ export default function MusicProgressionBar() {
   }
 
   function handleMouseDown(e) {
-    setBarCircleActive(true)
+    setIsProgressionBarMoving(true)
     updateProgressionBar(e)
     document.addEventListener("mousemove", handleMouseMove)
   }
 
   function handleMouseUp(e) {
+    updateProgressionBar(e)
     document.removeEventListener("mousemove", handleMouseMove)
-    setBarCircleActive(false)
+    setIsProgressionBarMoving(false)
   }
 
   useEffect(() => {
@@ -116,18 +119,12 @@ export default function MusicProgressionBar() {
     }
   },[])
 
-  // useEffect(() => {
-  //   console.log('progressionPercentage :', progressionPercentage)
-  //   console.log('time :', music.time)
-  //   console.log('duration :', music.duration)
-  // }, [progressionPercentage, music.time, music.duration])
-
   return (
     <ProgressionBar ref={barContainer}>
-      <MusicBarCircle active={barCircleActive} />
+      <MusicBarCircle active={isProgressionBarMoving} />
       <MusicProgressionBarWrapper>
         <MusicProgressionBarBackground />
-        <MusicProgressionBarFill active={barCircleActive}/>
+        <MusicProgressionBarFill active={isProgressionBarMoving}/>
       </MusicProgressionBarWrapper>
     </ProgressionBar>
   )

@@ -23,7 +23,7 @@ const musicSlice = createSlice({
     playMusic: (state, action) => {
       state.isPlaying = true
     },
-    tooglePlayingRandom: (state, action) => {
+    togglePlayingRandom: (state, action) => {
       state.isPlayingRandom = !state.isPlayingRandom
     },
     changeLoopMode: (state, action) => {
@@ -53,7 +53,7 @@ const musicSlice = createSlice({
     updateDurationInMinSecs: (state, action) => {
       const min = Math.floor(state.duration / 60).toString().padStart(2, '0')
       const sec = Math.floor(state.duration % 60).toString().padStart(2, '0')
-      state.timeInMinSecs = `${min}:${sec}`
+      state.durationInMinSecs = `${min}:${sec}`
     },
     changeVolume: (state, action) => {
       state.volume = action.payload
@@ -81,7 +81,7 @@ const musicSlice = createSlice({
 export const {
   togglePlaying,
   playMusic,
-  tooglePlayingRandom,
+  togglePlayingRandom,
   changeLoopMode,
   changeTime,
   updateTimeInMinSecs,
