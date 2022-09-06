@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { useState, useEffect } from 'react'
 import CurrentMusicInformations from "./CurrentMusicInformations"
 import MusicControls from "./MusicControls"
 import SoundConfiguration from "./SoundConfiguration"
@@ -23,11 +24,22 @@ const MusicBarContainer = styled.div`
 `
 
 export default function MusicBar() {
+
+  const [datas, setDatas] = useState()
+
+  useEffect(() => {
+    (async function () {
+      const res = await fetch('/api/getAuthorization')
+      const data = await res.json()
+      console.log(data)
+    })()
+  }, [])
+
   return (
     <MusicBarWrapper>
       <MusicBarContainer>
         <CurrentMusicInformations />
-        <MusicControls soundType="music"/>
+        <MusicControls />
         <SoundConfiguration />
       </MusicBarContainer>
     </MusicBarWrapper>

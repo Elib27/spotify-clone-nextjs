@@ -14,7 +14,8 @@ const musicSlice = createSlice({
     musicProgressionPercentage: 0,
     volume: 50,
     volumeCategory: 'medium',
-    prevVolume: 50
+    prevVolume: 50,
+    soundType: 'music'
   },
   reducers: {
     togglePlaying: (state, action) => {

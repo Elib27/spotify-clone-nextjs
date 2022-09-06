@@ -156,7 +156,7 @@ const TimerContainer = styled.div`
   }
 `
 
-export default function MusicControls({ soundType }) {
+export default function MusicControls() {
 
   const [currentMusic, setCurrentMusic] = useState(0)
   const [isProgressionBarMoving, setIsProgressionBarMoving] = useState(false)
@@ -249,7 +249,7 @@ export default function MusicControls({ soundType }) {
     <MusicControlsContainer>
       <ControlsContainer>
         <SideContainer>
-        { soundType === 'music' ? 
+        { music.soundType === 'music' ? 
             (
               <RandomButton
                 isPlayingRandom={music.isPlayingRandom}
@@ -284,7 +284,7 @@ export default function MusicControls({ soundType }) {
           >
             <NextMusicLogo />
           </ControlButton>
-          { soundType === 'music' ? 
+          { music.soundType === 'music' ? 
             (
               <LoopButton
                 onClick={() => dispatch(changeLoopMode())}
