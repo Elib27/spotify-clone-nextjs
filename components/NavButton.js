@@ -3,17 +3,17 @@ import Link from "next/link"
 import Image from "next/image"
 
 const LinkLabel = styled.p`
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   margin-left: 16px;
   width: 100%;
   text-align: left;
+  line-height: 1.6;
   color: #b3b3b3;
-  font-weight: 600;
+  font-weight: 700;
   transition: color 0.3s ease-out;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  letter-spacing: 0.25px;
 `
 const NavLinkButton = styled.button`
   height: 40px;
@@ -30,6 +30,7 @@ const NavLinkButton = styled.button`
 `
 const LogoContainer = styled.div`
   opacity: 0.7;
+  height: 24px;
   flex-shrink: 0;
   &:hover {
     opacity: 1;

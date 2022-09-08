@@ -20,7 +20,7 @@ const TopContainer = styled.div`
 `
 const SpotifyLogo = styled.div`
   padding: 0 16px;
-  padding-bottom: 4px;
+  padding-bottom: 2px;
   cursor: pointer;
 `
 const NavigationContainer = styled.div`

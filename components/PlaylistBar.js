@@ -5,7 +5,7 @@ const PlaylistContainer = styled.div`
   padding: 8px 0;
 `
 const PlaylistLabel = styled.p`
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   margin:  0;
   color: #b3b3b3;
   font-weight: 400;
@@ -13,7 +13,6 @@ const PlaylistLabel = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  letter-spacing: 0.35px;
 `
 const PlaylistButton = styled.button`
   height: 32px;
@@ -28,15 +27,19 @@ const PlaylistButton = styled.button`
 
 const PlayLists = [
   {
-    name: 'Ma playlist n°3',
+    name: 'Vélo',
+    id: '1s62EBUhNMW7rWt6NTpvx9'
+  },
+  {
+    name: 'Ma playlist n° 3',
     id: '3s62EBUhNMW7rWt6NTpvx9'
   },
   {
-    name: 'Ma playlist n°2',
+    name: 'Ma playlist n° 2',
     id: 'edffBUhNMW7rWt6NTpvx9'
   },
   {
-    name: 'musique de soirée',
+    name: 'musiques de soirée',
     id: '8jbdhW7rWt6NTpvx9'
   },
 

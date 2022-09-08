@@ -3,10 +3,10 @@ import Link from "next/link"
 import Image from "next/image"
 
 const LinkLabel = styled.p`
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   margin-left: 16px;
   color: ${({ active }) => active ? "#fff" : '#b3b3b3'};
-  font-weight: 600;
+  font-weight: 700;
   width: 100%;
   text-align: left;
   transition: color 0.3s ease-out;
