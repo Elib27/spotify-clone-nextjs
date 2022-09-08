@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import SearchCard from '../components/SearchCard'
+import SearchCategories from '../data/search_categories.json'
 
 const Container = styled.div`
   width: 100%;
@@ -36,20 +37,6 @@ const CategoriesContainer = styled.div`
   position: relative;
 `
 
-const CategoryCards = [
-  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
-  { title: "Conçu spécialement pour vous", backgroundColor: "rgb(30, 50, 100)", cover: "/categoryCover.jpg" },
-  { title: "Classements", backgroundColor: "rgb(141, 103, 171)", cover: "/categoryCover.jpg" },
-  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
-  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
-  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
-  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
-  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
-  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
-  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" },
-  { title: "Podcasts", backgroundColor: "#27856a", cover: "/categoryCover.jpg" }
-]
-
 export default function search() {
   return (
     <Container>
@@ -73,11 +60,11 @@ export default function search() {
       <SearchSection>
         <SectionTitle>Parcourir tout</SectionTitle>
         <CategoriesContainer>
-          {CategoryCards.map((category, index) => (
+          {SearchCategories.map((category, index) => (
             <SearchCard
               title={category.title}
-              cardBackgroundColor={category.backgroundColor}
-              imageSrc={category.cover}
+              cardBackgroundColor={category.background_color}
+              imageSrc={category.cover_url}
               key={index}
             />
           ))}
