@@ -4,8 +4,7 @@ import SearchCategories from '../data/search_categories.json'
 
 const Container = styled.div`
   width: 100%;
-  background-color: #121212;
-  padding: 32px 16px 0 16px;
+  padding-top: 16px;
 `
 const SearchSection = styled.section`
   padding: 16px 0;

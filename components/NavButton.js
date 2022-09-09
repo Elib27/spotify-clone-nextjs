@@ -3,7 +3,7 @@ import Link from "next/link"
 import Image from "next/image"
 
 const LinkLabel = styled.p`
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   margin-left: 16px;
   width: 100%;
   text-align: left;

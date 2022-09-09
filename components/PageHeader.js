@@ -11,7 +11,6 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 32px;
   position: sticky;
   top: 0;
   z-index: 10;
