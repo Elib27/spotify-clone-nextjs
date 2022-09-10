@@ -5,6 +5,7 @@ import NavBar from './NavBar'
 import CreationBar from './CreationBar'
 import PlaylistBar from './PlaylistBar'
 import NavButton from './NavButton'
+import DownloadButton from './DownloadButton'
 
 const Container = styled.nav`
   height: 100%;
@@ -53,12 +54,7 @@ export default function Sidebar() {
         </NavigationContainer>
       </TopContainer>
       <InstallButtonContainer>
-        <NavButton
-          label="Installer l&apos;appli"
-          link="/download"
-          imageSrc="/sideBar_logos/download.svg"
-          imageAlt="download"
-        />
+        <DownloadButton />
       </InstallButtonContainer>
     </Container>
   )

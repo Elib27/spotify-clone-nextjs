@@ -15,8 +15,10 @@ const PageContainer = styled.div`
   height: 100%;
   width: 100%;
   background-color: #121212;
-  padding: 0 32px;
+  padding: 0 16px 0 32px;
+  overflow-x: hidden;
   overflow-y: scroll;
+  scrollbar-gutter: none;
   &::-webkit-scrollbar {
     width: 12px;
   }
@@ -26,7 +28,7 @@ const PageContainer = styled.div`
   &::-webkit-scrollbar-thumb {
     min-height: 30px;
     background-color: rgba(255,255,255,0.3);
-    border: 4px solid transparent ;
+    /* border: 4px solid transparent ; */
     transition: background-color 0.2s ease-in-out;
   }
   &::-webkit-scrollbar-thumb:hover {
@@ -34,7 +36,7 @@ const PageContainer = styled.div`
   }
 `
 const PageContent = styled.div`
-  height: 100%;
+  height: calc(100% - 64px);
   width: 100%;
   padding-top: 24px;
   position: relative;

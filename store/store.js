@@ -93,8 +93,23 @@ export const {
   changePrevVolume
 } = musicSlice.actions
 
+const navigationSlice = createSlice({
+  name: "navigation",
+  initialState: {
+    currentPage: 'home'
+  },
+  reducers: {
+    changeCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    }
+  }
+})
+
+export const { changeCurrentPage } = navigationSlice.actions
+
 export const store = configureStore({
   reducer: {
-    music: musicSlice.reducer
+    music: musicSlice.reducer,
+    navigation: navigationSlice.reducer
   }
 })
