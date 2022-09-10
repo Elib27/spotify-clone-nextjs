@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef} from 'react';
 import styled from "styled-components"
+import { useSelector } from 'react-redux';
 import Link from "next/link"
 import Image from "next/image"
 import Pannel from "./AccountPannel"
+import SearchBar from './SearchBar';
 
 const HeaderContainer = styled.header`
   height: 64px;
@@ -19,6 +21,7 @@ const LeftContainer = styled.div`
   display: flex;
   gap: 16px;
   flex-wrap: nowrap;
+  align-items: center;
 `
 const NavigationButton = styled.button`
   height: 32px;
@@ -40,6 +43,7 @@ const RightContainer = styled.div`
   gap: 32px;
 `
 const SubscribeButton = styled.button`
+  height: 32px;
   font-size: 0.875rem;
   font-weight: 700;
   outline: none;
@@ -80,7 +84,7 @@ const AccountImage = styled.div`
   align-items: center;
   `
 const AccountImageContainer = styled.div`
-  padding-bottom: 1px;
+  height: 20px;
 `
 const Username = styled.span`
   font-size: 0.875rem;
@@ -91,6 +95,7 @@ const Username = styled.span`
   text-overflow: ellipsis;
 `
 const TriangleLogoContainer = styled.div`
+  height: 16px;
   margin-right: 6px;
 `
 
@@ -107,6 +112,8 @@ const TestPannel = styled.div`
 `
 
 export default function PageHeader() {
+
+  const navigation = useSelector(state => state.navigation);
 
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const panel = useRef(null)
@@ -151,11 +158,14 @@ export default function PageHeader() {
             <Image src="/header_logos/right_arrow.svg" alt="forward button" width={22} height={22} />
           </NavigationButton>
         </Link>
+        {navigation.currentPage === 'search' && <SearchBar />}
       </LeftContainer>
       <RightContainer>
+      {navigation.currentPage === 'home' && (
         <a href="https://www.spotify.com/fr/premium/" target="blank_" rel='noreferrer'>
           <SubscribeButton>S&apos;abonner</SubscribeButton>
         </a>
+      )}
         <AccountButton onClick={openPanel}>
           <AccountImage>
             <AccountImageContainer>

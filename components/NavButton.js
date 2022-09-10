@@ -12,7 +12,7 @@ const LinkLabel = styled.p`
   line-height: 1.6;
   color: #b3b3b3;
   font-weight: 700;
-  transition:w color 0.3s ease-out;
+  transition: color 0.3s ease-out;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

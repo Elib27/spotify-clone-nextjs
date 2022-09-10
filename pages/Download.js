@@ -48,7 +48,7 @@ const DownloadButton = styled.button`
   }
 `
 
-export default function download() {
+export default function Download() {
 
   const [downloadLink, setDownloadLink ] = useState('windows')
 

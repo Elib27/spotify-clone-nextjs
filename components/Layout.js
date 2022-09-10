@@ -20,7 +20,7 @@ const PageContainer = styled.div`
   overflow-y: scroll;
   scrollbar-gutter: none;
   &::-webkit-scrollbar {
-    width: 12px;
+    width: 16px;
   }
   &::-webkit-scrollbar-track {
     background-color: transparent;
