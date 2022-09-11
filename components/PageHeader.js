@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef} from 'react';
+import { useState, useEffect, useRef} from 'react'
 import styled from "styled-components"
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
 import Link from "next/link"
 import Image from "next/image"
 import Pannel from "./AccountPannel"
-import SearchBar from './SearchBar';
+import SearchBar from './SearchBar'
+import CollectionNavBar from './collectionNavBar'
 
 const HeaderContainer = styled.header`
   height: 64px;
@@ -159,6 +160,7 @@ export default function PageHeader() {
           </NavigationButton>
         </Link>
         {navigation.currentPage === 'search' && <SearchBar />}
+        {navigation.currentPage === 'collection' && <CollectionNavBar/>}
       </LeftContainer>
       <RightContainer>
       {navigation.currentPage === 'home' && (

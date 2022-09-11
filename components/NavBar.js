@@ -33,6 +33,7 @@ export default function NavBar() {
         imageSrc="/sideBar_logos/books.svg"
         imageSrcSelected="/sideBar_logos/books_full.svg"
         imageAlt="library link button"
+        name="collection"
       />
     </NavContainer>
   )
