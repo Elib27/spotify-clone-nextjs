@@ -40,4 +40,5 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'CircularSp', 'Roboto', Arial;
+  user-select: none;
 }

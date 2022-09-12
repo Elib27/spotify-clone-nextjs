@@ -38,6 +38,7 @@ const PageContainer = styled.div`
 const PageContent = styled.div`
   height: calc(100% - 64px);
   width: 100%;
+  max-width: 1955px;
   padding-top: 24px;
   position: relative;
 `

@@ -106,7 +106,6 @@ export default function MusicProgressionBar({isProgressionBarMoving, setIsProgre
   }
 
   function handleMouseUp(e) {
-    updateProgressionBar(e)
     document.removeEventListener("mousemove", handleMouseMove)
     setIsProgressionBarMoving(false)
   }
