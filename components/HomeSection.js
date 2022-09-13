@@ -43,7 +43,7 @@ const SectionContent = styled.div`
   grid-gap: 24px;
 `
 
-export default function HomeSection({title, children}) {
+export default function HomeSection({ title, children }) {
   return (
     <Container>
       <SectionHeader>

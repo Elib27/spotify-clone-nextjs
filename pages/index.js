@@ -60,7 +60,51 @@ export default function Home() {
           cover_url="https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
         />
       </HomeSection>
-      <HomeSection title="Vos émissions">
+      <HomeSection title="Écoutés récemment">
+        <HomeCard
+          title="Un Bon Moment"
+          artist="Kyan Khojandi & Navo"
+          cover_url="https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
+        />
+        <HomeCard
+          title="Un Bon Moment"
+          artist="Kyan Khojandi & Navo"
+          cover_url="https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
+        />
+        <HomeCard
+          title="Un Bon Moment"
+          artist="Kyan Khojandi & Navo"
+          cover_url="https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
+        />
+        <HomeCard
+          title="Un Bon Moment"
+          artist="Kyan Khojandi & Navo"
+          cover_url="https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
+        />
+      </HomeSection>
+      <HomeSection title="À ne pas manquer aujourd'hui">
+        <HomeCard
+          title="Un Bon Moment"
+          artist="Kyan Khojandi & Navo"
+          cover_url="https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
+        />
+        <HomeCard
+          title="Un Bon Moment"
+          artist="Kyan Khojandi & Navo"
+          cover_url="https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
+        />
+        <HomeCard
+          title="Un Bon Moment"
+          artist="Kyan Khojandi & Navo"
+          cover_url="https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
+        />
+        <HomeCard
+          title="Un Bon Moment"
+          artist="Kyan Khojandi & Navo"
+          cover_url="https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
+        />
+      </HomeSection>
+      <HomeSection title="Épisodes pour vous">
         <HomeCard
           title="Un Bon Moment"
           artist="Kyan Khojandi & Navo"
