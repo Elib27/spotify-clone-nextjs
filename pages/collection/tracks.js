@@ -3,64 +3,11 @@ import Image from 'next/image'
 import PlayLogo from '../../public/tracks_logos/play_logo.svg'
 import DurationLogo from '../../public/tracks_logos/time_logo.svg'
 import LikedTrack from '../../components/LikedTrack'
+import PlaylistHeader from '../../components/PlayListHeader'
 import NoLikedTracksSection from '../../components/NoLikedTracksSection'
 
 const Container = styled.div`
 
-`
-const TraksHeader  = styled.div`
-  height: clamp(340px, 30vh, 500px);
-  width: 100%;
-  padding: 0 32px 24px;
-  background: linear-gradient(#5038a0 0, #291e50 100%);
-  display: flex;
-  align-items: flex-end;  
-`
-const HeaderImageContainer = styled.div`
-  height: 192px;
-  aspect-ratio: 1;
-  box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
-  margin-right: 24px;
-  position: relative;
-  display: flex;
-`
-const TitleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  color: #fff;
-`
-const CategoryTitle = styled.h2`
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-`
-const MainTitle = styled.h1`
-  font-size: 6rem;
-  font-weight: 900;
-  margin: 0.08rem 0px 0.12rem;
-  white-space: nowrap;
-`
-const HeaderInformations = styled.div`
-  display: flex;
-  margin-top: 8px;
-`
-const Username = styled.div`
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
-`
-const TracksNumber = styled.div`
-  font-size: 0.875rem;
-  font-weight: 400;
-`
-const Separator = styled.span`
-  font-size: 0.875rem;
-  font-weight: 700;
-  margin: 0 4px;
 `
 const PlayMusicSection = styled.section`
   padding: 24px 32px;
@@ -112,31 +59,20 @@ const TracksSectionRowTitle = styled.div`
 export default function tracks() {
   return (
     <Container>
-      <TraksHeader>
-        <HeaderImageContainer>
-          <Image
-            src="https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png"
-            layout="fill"
-            alt="liked tracks cover"
-          />
-        </HeaderImageContainer>
-        <TitleContainer>
-          <MainTitle>Titres likés</MainTitle>
-          <CategoryTitle>PLAYLIST</CategoryTitle>
-          <HeaderInformations>
-            <Username>eliot</Username>
-            <Separator>•</Separator>
-            <TracksNumber>1&nbsp;titre</TracksNumber>
-          </HeaderInformations>
-        </TitleContainer>
-      </TraksHeader>
-      {/* <PlayMusicSection>
+      <PlaylistHeader
+        title="Titres likés"
+        cover_url="https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png"
+        background="linear-gradient(#5038a0 0, #291e50 100%)"
+        owner="eliot"
+        tracks_number={2}
+      />
+      {/* <NoLikedTracksSection /> */}
+      <PlayMusicSection>
         <PlayButton>
           <PlayLogo />
         </PlayButton>
-      </PlayMusicSection> */}
-      <NoLikedTracksSection />
-      {/* <TracksContainer>
+      </PlayMusicSection>
+      <TracksContainer>
         <TracksSectionRows>
           <TracksSectionRowTitle>#</TracksSectionRowTitle>
           <TracksSectionRowTitle>TITRE</TracksSectionRowTitle>
@@ -185,8 +121,8 @@ export default function tracks() {
           addedDate={3}
           duration="3:12"
           number={4}
-        /> */}
-      {/* </TracksContainer> */}
+        />
+      </TracksContainer>
     </Container>
   )
 }
