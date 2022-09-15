@@ -10,6 +10,7 @@ import CollectionNavBar from './collectionNavBar'
 const HeaderContainer = styled.header`
   height: 64px;
   width: 100%;
+  padding: 0 16px 0 32px;
   background-color: #0ff0;
   display: flex;
   justify-content: space-between;

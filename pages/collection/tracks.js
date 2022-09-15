@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import Image from 'next/image'
 import PlayLogo from '../../public/tracks_logos/play_logo.svg'
 import DurationLogo from '../../public/tracks_logos/time_logo.svg'
 import LikedTrack from '../../components/LikedTrack'
@@ -7,7 +6,7 @@ import PlaylistHeader from '../../components/PlayListHeader'
 import NoLikedTracksSection from '../../components/NoLikedTracksSection'
 
 const Container = styled.div`
-
+  padding-bottom: 32px;
 `
 const PlayMusicSection = styled.section`
   padding: 24px 32px;
@@ -15,7 +14,6 @@ const PlayMusicSection = styled.section`
 const PlayButton = styled.div`
   height: 56px;
   width: 56px;
-  margin-left: 8px;
   background-color: #1ed760;
   border-radius: 50%;
   color: #000;
@@ -28,7 +26,7 @@ const PlayButton = styled.div`
   }
 `
 const TracksContainer = styled.section`
-  
+  margin: 0 16px 0 32px;
 `
 const TracksSectionRows = styled.div`
   height: 36px;
@@ -41,7 +39,7 @@ const TracksSectionRows = styled.div`
 `
 const TracksSectionRowTitle = styled.div`
   font-size: 0.75rem;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.1em;
   color: #b3b3b3;
   display: flex;
   justify-content: flex-start;
@@ -49,6 +47,7 @@ const TracksSectionRowTitle = styled.div`
   &:first-of-type {
     font-size: 1rem;
     justify-self: end;
+    margin-right: -2px;
   }
   &:last-of-type{
     justify-self: end;

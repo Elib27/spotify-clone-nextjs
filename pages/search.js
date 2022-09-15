@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import PageContainer from '../components/PageContainer'
 import SearchCard from '../components/SearchCard'
 import SearchCategories from '../data/search_categories.json'
 
@@ -38,37 +39,39 @@ const CategoriesContainer = styled.div`
 
 export default function search() {
   return (
-    <Container>
-      <SearchSection>
-        <SectionTitle>Vos genres préférés</SectionTitle>
-        <MusicStyleContainer>
-          <SearchCard
-            title="Variété française"
-            isBigCard
-            cardBackgroundColor="#b49bc8"
-            imageSrc="/search_cover.jpg"
-          />
-          <SearchCard
-            title="Hip-Hop"
-            isBigCard
-            cardBackgroundColor="#ba5d07"
-            imageSrc="/search_cover2.jpg"
-          />
-        </MusicStyleContainer>
-      </SearchSection>
-      <SearchSection>
-        <SectionTitle>Parcourir tout</SectionTitle>
-        <CategoriesContainer>
-          {SearchCategories.map((category, index) => (
+    <PageContainer>
+      <Container>
+        <SearchSection>
+          <SectionTitle>Vos genres préférés</SectionTitle>
+          <MusicStyleContainer>
             <SearchCard
-              title={category.title}
-              cardBackgroundColor={category.background_color}
-              imageSrc={category.cover_url}
-              key={index}
+              title="Variété française"
+              isBigCard
+              cardBackgroundColor="#b49bc8"
+              imageSrc="/search_cover.jpg"
             />
-          ))}
-        </CategoriesContainer>
-      </SearchSection>
-    </Container>
+            <SearchCard
+              title="Hip-Hop"
+              isBigCard
+              cardBackgroundColor="#ba5d07"
+              imageSrc="/search_cover2.jpg"
+            />
+          </MusicStyleContainer>
+        </SearchSection>
+        <SearchSection>
+          <SectionTitle>Parcourir tout</SectionTitle>
+          <CategoriesContainer>
+            {SearchCategories.map((category, index) => (
+              <SearchCard
+                title={category.title}
+                cardBackgroundColor={category.background_color}
+                imageSrc={category.cover_url}
+                key={index}
+              />
+            ))}
+          </CategoriesContainer>
+        </SearchSection>
+      </Container>
+    </PageContainer>
   )
 }

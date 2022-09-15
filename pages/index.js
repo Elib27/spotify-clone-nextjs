@@ -1,14 +1,10 @@
 import styled from 'styled-components'
 import { useState, useLayoutEffect} from 'react'
+import PageContainer from '../components/PageContainer'
 import HomeShorcuts from '../components/HomeShorcuts'
 import HomeSection from '../components/HomeSection'
 import HomeCard from '../components/HomeCard'
 
-const HomeWrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  position: relative;
-`
 const Title = styled.h2`  
   color: #fff;
   font-size: 2em;
@@ -35,7 +31,7 @@ export default function Home() {
   }, [])
 
   return (
-    <HomeWrapper>
+    <PageContainer>
       <Title>{welcomeMessage}</Title>
       <HomeShorcuts />
       <HomeSection title="Vos émissions">
@@ -126,6 +122,6 @@ export default function Home() {
           cover_url="https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
         />
       </HomeSection>
-    </HomeWrapper>
+    </PageContainer>
   )
 }

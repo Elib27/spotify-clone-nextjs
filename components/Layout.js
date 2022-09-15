@@ -11,14 +11,13 @@ const TopWrapper = styled.div`
   width: 100%;
 `
 const PageContainer = styled.div`
-  box-sizing: border-box;
   height: 100%;
   width: 100%;
   background-color: #121212;
-  padding: 0 16px 0 32px;
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-gutter: none;
+  position: relative;
   &::-webkit-scrollbar {
     width: 16px;
   }
@@ -39,7 +38,6 @@ const PageContent = styled.div`
   height: calc(100% - 64px);
   width: 100%;
   max-width: 1955px;
-  padding-top: 24px;
   position: relative;
 `
 

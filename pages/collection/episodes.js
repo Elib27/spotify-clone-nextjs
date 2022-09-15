@@ -2,7 +2,7 @@ import styled from "styled-components"
 import PlaylistHeader from "../../components/PlayListHeader"
 
 const Container = styled.div`
-
+  padding-bottom: 32px;
 `
 
 export default function episodes() {
@@ -10,10 +10,10 @@ export default function episodes() {
     <Container>
       <PlaylistHeader
         title="Vos épisodes"
-        cover_url="https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png"
-        background="linear-gradient(#5038a0 0, #291e50 100%)"
+        background="linear-gradient(#056753 0, #023329 100%)"
         owner="eliot"
         tracks_number={2}
+        isPodcastPlaylist
       />
     </Container>
   )
