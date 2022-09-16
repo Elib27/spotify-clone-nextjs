@@ -9,20 +9,21 @@ import {
   updateTimeInMinSecs,
   changeDuration,
   updateDurationInMinSecs
-} from '../store/store'
+} from '../../store/store'
 import styled from "styled-components"
-import RandomMusicLogo from "../public/musicBar_logos/random_music.svg"
-import PrevMusicLogo from '../public/musicBar_logos/prev_music.svg'
-import NextMusicLogo from '../public/musicBar_logos/next_music.svg'
-import PlayMusicLogo from '../public/musicBar_logos/play_music.svg'
-import PauseMusicLogo from '../public/musicBar_logos/pause_music.svg'
-import LoopMusic1Logo from '../public/musicBar_logos/loop_music1.svg'
-import LoopMusic2Logo from '../public/musicBar_logos/loop_music2.svg'
-import Next15secLogo from '../public/musicBar_logos/next15s.svg'
-import Prev15secLogo from '../public/musicBar_logos/prev15s.svg'
+import RandomMusicLogo from '../../public/musicBar_logos/random_music.svg'
+import PrevMusicLogo from '../../public/musicBar_logos/prev_music.svg'
+import NextMusicLogo from '../../public/musicBar_logos/next_music.svg'
+import PlayMusicLogo from '../../public/musicBar_logos/play_music.svg'
+import PauseMusicLogo from '../../public/musicBar_logos/pause_music.svg'
+import LoopMusic1Logo from '../../public/musicBar_logos/loop_music1.svg'
+import LoopMusic2Logo from '../../public/musicBar_logos/loop_music2.svg'
+import Next15secLogo from '../../public/musicBar_logos/next15s.svg'
+import Prev15secLogo from '../../public/musicBar_logos/prev15s.svg'
+
 import MusicProgressionBar from "./MusicProgressionBar"
 
-import songsData from '../public/musics/musics_catalog.json'
+import songsData from '../../public/musics/musics_catalog.json'
 
 const MusicControlsContainer = styled.div`
   display: flex;

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import PageContainer from '../components/PageContainer'
-import SearchCard from '../components/SearchCard'
+import PageContainer from '../components/shared/PageContainer'
+import SearchCard from '../components/searchPage/SearchCard'
 import SearchCategories from '../data/search_categories.json'
 
 const Container = styled.div`

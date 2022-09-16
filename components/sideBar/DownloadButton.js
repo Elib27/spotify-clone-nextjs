@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
-import { changeCurrentPage } from "../store/store"
+import { changeCurrentPage } from "../../store/store"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -12,11 +12,22 @@ const LinkLabel = styled.p`
   line-height: 1.6;
   color: #b3b3b3;
   font-weight: 700;
-  transition: color 0.3s ease-out;
+  transition: color 0.3s ease-in-out;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  ${({ isSelected }) => isSelected && `color: #fff;`}
+  ${({ isSelected }) => isSelected && `
+    color: #fff;
+  `}
+`
+const LogoContainer = styled.div`
+  opacity: 0.7;
+  height: 24px;
+  flex-shrink: 0;
+  transition: opacity 0.3s ease-in-out;
+  ${({ isSelected }) => isSelected && `
+    opacity: 1;
+  `}
 `
 const NavLinkButton = styled.button`
   height: 40px;
@@ -30,39 +41,30 @@ const NavLinkButton = styled.button`
   &:hover ${LinkLabel}{
     color: #fff;
   }
-`
-const LogoContainer = styled.div`
-  opacity: 0.7;
-  height: 24px;
-  flex-shrink: 0;
-  &:hover {
+  &:hover ${LogoContainer}{
     opacity: 1;
   }
 `
 
-export default function NavButton({ label, link, imageSrc, imageSrcSelected, imageAlt, name}) {
+export default function DownloadButton() {
 
   const navigation = useSelector(state => state.navigation)
   const dispatch = useDispatch()
 
-  function handleClickUpdateCurrentPage() {
-    dispatch(changeCurrentPage(name))
+  function handleClickChangeNavigationPage() {
+    dispatch(changeCurrentPage("download"))
   }
 
   return (
-    <Link href={link}>
-      <NavLinkButton onClick={handleClickUpdateCurrentPage}>
-        <LogoContainer>
-          {navigation.currentPage === name ? (
-            <Image src={imageSrcSelected} alt={imageAlt} width={24} height={24} />
-          ) : (
-            <Image src={imageSrc} alt={imageAlt} width={24} height={24} />
-          )}
+    <Link href="/download">
+      <NavLinkButton onClick={handleClickChangeNavigationPage}>
+        <LogoContainer isSelected={navigation.currentPage === "download"}>
+            <Image src="/sideBar_logos/download.svg" alt="download button" width={24} height={24} />
         </LogoContainer>
         <LinkLabel
-          isSelected={navigation.currentPage === name}
+          isSelected={navigation.currentPage === "download"}
         >
-          {label}
+          Installer l&apos;appli
         </LinkLabel>
       </NavLinkButton>
     </Link>

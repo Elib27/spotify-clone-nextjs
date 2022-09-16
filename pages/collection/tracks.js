@@ -1,9 +1,9 @@
 import styled from 'styled-components'
+import LikedTrack from '../../components/collection/LikedTrack'
+import PlaylistHeader from '../../components/shared/PlayListHeader'
+import NoLikedTracksSection from '../../components/collection/NoLikedTracksSection'
 import PlayLogo from '../../public/tracks_logos/play_logo.svg'
 import DurationLogo from '../../public/tracks_logos/time_logo.svg'
-import LikedTrack from '../../components/LikedTrack'
-import PlaylistHeader from '../../components/PlayListHeader'
-import NoLikedTracksSection from '../../components/NoLikedTracksSection'
 
 const Container = styled.div`
   padding-bottom: 32px;

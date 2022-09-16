@@ -1,14 +1,14 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { changeVolume, changeVolumeCategory, changePrevVolume } from "../store/store"
+import { changeVolume, changeVolumeCategory, changePrevVolume } from "../../store/store"
 import styled from "styled-components"
-import Microphone from '../public/musicBar_logos/microphone.svg'
-import WaitList from '../public/musicBar_logos/wait_list.svg'
-import Speaker from '../public/musicBar_logos/speaker.svg'
-import MutedVolume from '../public/musicBar_logos/muted_volume.svg'
-import LowVolume from '../public/musicBar_logos/low_volume.svg'
-import MediumVolume from '../public/musicBar_logos/medium_volume.svg'
-import HighVolume from '../public/musicBar_logos/high_volume.svg'
+import Microphone from '../../public/musicBar_logos/microphone.svg'
+import WaitList from '../../public/musicBar_logos/wait_list.svg'
+import Speaker from '../../public/musicBar_logos/speaker.svg'
+import MutedVolume from '../../public/musicBar_logos/muted_volume.svg'
+import LowVolume from '../../public/musicBar_logos/low_volume.svg'
+import MediumVolume from '../../public/musicBar_logos/medium_volume.svg'
+import HighVolume from '../../public/musicBar_logos/high_volume.svg'
 import SoundBar from "./SoundBar"
 
 const Container = styled.div`

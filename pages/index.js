@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { useState, useLayoutEffect} from 'react'
-import PageContainer from '../components/PageContainer'
-import HomeShorcuts from '../components/HomeShorcuts'
-import HomeSection from '../components/HomeSection'
-import HomeCard from '../components/HomeCard'
+import PageContainer from '../components/shared/PageContainer'
+import HomeShorcuts from '../components/homePage/HomeShorcuts'
+import HomeSection from '../components/homePage/HomeSection'
+import HomeCard from '../components/homePage/HomeCard'
 
 const Title = styled.h2`  
   color: #fff;

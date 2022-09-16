@@ -1,9 +1,9 @@
 import styled from "styled-components"
 import { useState } from 'react'
 import Image from "next/image"
-import Heart from '../public/musicBar_logos/heart.svg'
-import HeartFull from '../public/musicBar_logos/heart_full.svg'
-import ScreenDisplay from '../public/musicBar_logos/screen_display.svg'
+import Heart from '../../public/musicBar_logos/heart.svg'
+import HeartFull from '../../public/musicBar_logos/heart_full.svg'
+import ScreenDisplay from '../../public/musicBar_logos/screen_display.svg'
 
 const Container = styled.div`
   width: 30%;

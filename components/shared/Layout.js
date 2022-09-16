@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import Sidebar from "./SideBar"
-import MusicBar from "./MusicBar"
-import PageHeader from '../components/pageHeader'
+import Sidebar from "../sideBar/SideBar"
+import MusicBar from "../musicBar/MusicBar"
+import PageHeader from './PageHeader'
 
 const TopWrapper = styled.div`
   display: flex;

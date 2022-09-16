@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux'
 import Link from "next/link"
 import Image from "next/image"
 import Pannel from "./AccountPannel"
-import SearchBar from './SearchBar'
-import CollectionNavBar from './collectionNavBar'
+import SearchBar from '../searchPage/SearchBar'
+import CollectionNavBar from '../collection/collectionNavBar'
 
 const HeaderContainer = styled.header`
   height: 64px;

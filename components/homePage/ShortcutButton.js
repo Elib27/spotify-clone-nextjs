@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import Image from 'next/image'
 import Link from "next/link"
-import FavoriteLogo from '../public/home_logos/favorite_episods.svg'
-import PlayLogo from '../public/home_logos/play_logo.svg'
+import FavoriteLogo from '../../public/home_logos/favorite_episods.svg'
+import PlayLogo from '../../public/home_logos/play_logo.svg'
 
 const PlayButton = styled.div`
   height: 48px;

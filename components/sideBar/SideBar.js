@@ -4,7 +4,6 @@ import Link from 'next/link'
 import NavBar from './NavBar'
 import CreationBar from './CreationBar'
 import PlaylistBar from './PlaylistBar'
-import NavButton from './NavButton'
 import DownloadButton from './DownloadButton'
 
 const Container = styled.nav`

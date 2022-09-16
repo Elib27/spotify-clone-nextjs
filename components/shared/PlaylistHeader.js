@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Image from "next/image"
-import FavoriteLogo from "../public/tracks_logos/favorite_logo.svg"
+import FavoriteLogo from "../../public/tracks_logos/favorite_logo.svg"
 
 const Header  = styled.div`
   height: clamp(340px, 30vh, 500px);

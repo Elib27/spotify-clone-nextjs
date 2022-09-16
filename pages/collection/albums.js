@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import CollectionPageContainer from "../../components/CollectionPageContainer"
-import PlaylistCard from "../../components/PlaylistCard"
+import CollectionPageContainer from "../../components/collection/CollectionPageContainer"
+import PlaylistCard from "../../components/collection/PlaylistCard"
 
 
 export default function albums() {

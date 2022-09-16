@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import PlaylistHeader from "../../components/PlayListHeader"
+import PlaylistHeader from "../../components/shared/PlayListHeader"
 
 const Container = styled.div`
   padding-bottom: 32px;

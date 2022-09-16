@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import Image from 'next/image'
-import HeartLogo from '../public/tracks_logos/heart.svg'
-import OptionsLogo from '../public/tracks_logos/options_logo.svg'
-import SmallPlayLogo from '../public/tracks_logos/play_logo_small.svg'
+import HeartLogo from '../../public/tracks_logos/heart.svg'
+import OptionsLogo from '../../public/tracks_logos/options_logo.svg'
+import SmallPlayLogo from '../../public/tracks_logos/play_logo_small.svg'
 
 const OptionsContainer = styled.button`
   height: 16px;

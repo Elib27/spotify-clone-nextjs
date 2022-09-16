@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Image from 'next/image'
 import Link from 'next/link'
-import PlayLogo from '../public/tracks_logos/play_logo_small.svg'
+import PlayLogo from '../../public/tracks_logos/play_logo_small.svg'
 
 const PlayButton = styled.button`
   height: 48px;

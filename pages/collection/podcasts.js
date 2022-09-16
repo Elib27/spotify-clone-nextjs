@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import CollectionPageContainer from "../../components/CollectionPageContainer"
-import PlaylistBigCard from '../../components/PlaylistBigCard'
-import PlaylistCard from '../../components/PlaylistCard'
+import CollectionPageContainer from "../../components/collection/CollectionPageContainer"
+import PlaylistBigCard from '../../components/collection/PlaylistBigCard'
+import PlaylistCard from '../../components/collection/PlaylistCard'
 
 const exampleTracks = [
   {title: 'Vettel', artist: 'Mister V'},

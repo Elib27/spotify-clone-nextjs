@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useState, useEffect, useRef } from 'react'
-import SearchLogo from '../public/header_logos/search.svg'
-import CrossLogo from '../public/header_logos/cross.svg'
+import SearchLogo from '../../public/header_logos/search.svg'
+import CrossLogo from '../../public/header_logos/cross.svg'
 
 const Container = styled.div`
   height: 40px;
