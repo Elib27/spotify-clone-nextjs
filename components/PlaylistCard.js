@@ -47,13 +47,20 @@ const CardContainer = styled.div`
     }
   }
 `
+const CardImageWrapper = styled.div`
+  margin-bottom: 16px;
+  position: relative;
+`
 const CardImageContainer = styled.div`
   width: 100%;
   aspect-ratio: 1;
-  margin-bottom: 16px;
   border-radius: 4px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 50%);
   position: relative;
   overflow: hidden;
+  ${({isRoundImage}) => isRoundImage && `
+    border-radius: 50%;
+  `}
 `
 const CardTitle = styled.div`
   font-size: 1rem;
@@ -74,17 +81,21 @@ const CardSubTitle = styled.div`
   padding-bottom: 8px;
 `
 
-export default function PlaylistCard({cover_url, title, description}) {
+export default function PlaylistCard({cover_url, title, description, isRoundImage, noPlayingButton}) {
   return (
     <CardContainer>
-      <CardImageContainer>
-        <Image src={cover_url} alt="song cover" layout="fill"/>
-        <PlayButtonAnimationContainer>
-          <PlayButton>
-            <PlayLogo height="24" width="24" />
-          </PlayButton>
-        </PlayButtonAnimationContainer>
-      </CardImageContainer>
+      <CardImageWrapper>
+        <CardImageContainer isRoundImage={isRoundImage}>
+          <Image src={cover_url} alt="song cover" layout="fill" objectFit='cover'/>
+        </CardImageContainer>
+        {!noPlayingButton && (
+          <PlayButtonAnimationContainer>
+            <PlayButton>
+              <PlayLogo height="24" width="24" />
+            </PlayButton>
+          </PlayButtonAnimationContainer>
+        )}
+      </CardImageWrapper>
       <CardTitle>{title}</CardTitle>
       <CardSubTitle>{description}</CardSubTitle>
     </CardContainer>

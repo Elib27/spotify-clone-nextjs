@@ -31,7 +31,6 @@ const PlayButtonAnimationContainer = styled.div`
 const CardContainer = styled.div`
   width: 100%;
   padding: 20px;
-  background: linear-gradient(149.46deg,#450af5,#8e8ee5 99.16%);
   grid-column: span 2;
   position: relative;
   font-family: 'CircularSpTitle', 'Roboto', sans-serif;
@@ -42,6 +41,11 @@ const CardContainer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   gap: 20px;
+  ${({isEpisodes}) => isEpisodes ? `
+    background: linear-gradient(.316turn,#00644e 50.57%,#27856a);
+  ` : `
+    background: linear-gradient(149.46deg,#450af5,#8e8ee5 99.16%);
+  `}
   &:hover {
     background-color: #262626;
     ${PlayButtonAnimationContainer} {
@@ -93,10 +97,13 @@ const CardSubTitle = styled.div`
   line-height: 1.6;
 `
 
-export default function PlaylistLikedTracksCard({tracks, likedTracksNumber}) {
+export default function PlaylistBigCard({tracks, tracksNumber, isEpisodes}) {
+
+  const Subtitle = `${tracksNumber} ${isEpisodes ? 'épisode' : 'titre'}${tracksNumber > 1 ? 's' : ''} ${isEpisodes ? '' : tracksNumber > 1 ? 'likés' : 'liké'}`
+
   return (
-    <Link href="/collection/tracks">
-      <CardContainer>
+    <Link href={isEpisodes ? "/collection/episodes" : "/collection/tracks"}>
+      <CardContainer isEpisodes={isEpisodes}>
         <TracksSummary>
           {tracks.map((track, index) => (
             <span key={index}>
@@ -107,9 +114,9 @@ export default function PlaylistLikedTracksCard({tracks, likedTracksNumber}) {
           ))}
         </TracksSummary>
         <div>
-          <CardTitle>Titres likés</CardTitle>
+          <CardTitle>{isEpisodes ? 'Vos épisodes' : 'Titres likés'}</CardTitle>
           <CardSubTitle>
-            {`${likedTracksNumber} titre${likedTracksNumber > 1 ? 's' : ''} liké${likedTracksNumber > 1 ? 's' : ''}`}
+            {Subtitle}
           </CardSubTitle>
         </div>
         <PlayButtonAnimationContainer>
