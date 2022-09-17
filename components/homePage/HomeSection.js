@@ -38,19 +38,19 @@ const SeeAllButton = styled.button`
 `
 const SectionContent = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(${({cardsNumberPerRow}) => cardsNumberPerRow || '4'}, minmax(0, 1fr));
   grid-template-rows: 1fr;
   grid-gap: 24px;
 `
 
-export default function HomeSection({ title, children }) {
+export default function HomeSection({ title, children, cardsNumberPerRow }) {
   return (
     <Container>
       <SectionHeader>
         <SectionTitle>{title}</SectionTitle>
         <SeeAllButton>VOIR TOUT</SeeAllButton>
       </SectionHeader>
-      <SectionContent>
+      <SectionContent cardsNumberPerRow={cardsNumberPerRow} >
         {children}
       </SectionContent>
     </Container>

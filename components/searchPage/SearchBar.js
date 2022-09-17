@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import { useState, useEffect, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeSearchInput } from '../../store/store'
 import SearchLogo from '../../public/header_logos/search.svg'
 import CrossLogo from '../../public/header_logos/cross.svg'
 
@@ -38,7 +40,9 @@ const ClearButton = styled.button`
 
 export default function SearchBar() {
 
-  const [inputValue, setInputValue ] = useState('')
+  const navigation = useSelector(state => state.navigation)
+  const dispatch = useDispatch()
+  
   const [isClearButtonVisible, setIsClearButtonVisible] = useState(false)
   const searchInput = useRef(null)
 
@@ -51,20 +55,20 @@ export default function SearchBar() {
   }, [])
 
   useEffect(() => {
-    if (inputValue.length > 0) {
+    if (navigation.searchInput.length > 0) {
       setIsClearButtonVisible(true)
     }
     else {
       setIsClearButtonVisible(false)
     }
-  }, [inputValue])
+  }, [navigation.searchInput])
 
   function handleChange(e) {
-    setInputValue(e.target.value)
+    dispatch(changeSearchInput(e.target.value))
   }
 
   function handleClickClearInput() {
-    setInputValue('')
+    dispatch(changeSearchInput(''))
   }
 
   return (
@@ -79,7 +83,7 @@ export default function SearchBar() {
         autocorrect="off"
         maxlength="800"
         onChange={handleChange}
-        value={inputValue}
+        value={navigation.searchInput}
         ref={searchInput}
       />
       {

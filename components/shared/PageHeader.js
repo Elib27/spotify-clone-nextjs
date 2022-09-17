@@ -6,8 +6,14 @@ import Image from "next/image"
 import Pannel from "./AccountPannel"
 import SearchBar from '../searchPage/SearchBar'
 import CollectionNavBar from '../collection/collectionNavBar'
+import CategoryFilterBar from '../searchPage/CategoryFilterBar'
 
 const HeaderContainer = styled.header`
+  position: sticky;
+  top: 0;
+  z-index: 10;
+`
+const MainNavBar = styled.div`
   height: 64px;
   width: 100%;
   padding: 0 16px 0 32px;
@@ -15,9 +21,6 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 10;
 `
 const LeftContainer = styled.div`
   display: flex;
@@ -149,44 +152,47 @@ export default function PageHeader() {
 
   return (
     <HeaderContainer>
-      <LeftContainer>
-        <Link href="/">
-          <NavigationButton>
-            <Image src="/header_logos/left_arrow.svg" alt="return button" width={22} height={22} />
-          </NavigationButton>
-        </Link>
-        <Link href="/">
-          <NavigationButton disabled>
-            <Image src="/header_logos/right_arrow.svg" alt="forward button" width={22} height={22} />
-          </NavigationButton>
-        </Link>
-        {navigation.currentPage === 'search' && <SearchBar />}
-        {navigation.currentPage === 'collection' && <CollectionNavBar/>}
-      </LeftContainer>
-      <RightContainer>
-      {navigation.currentPage === 'home' && (
-        <a href="https://www.spotify.com/fr/premium/" target="blank_" rel='noreferrer'>
-          <SubscribeButton>S&apos;abonner</SubscribeButton>
-        </a>
-      )}
-        <AccountButton onClick={openPanel}>
-          <AccountImage>
-            <AccountImageContainer>
-              <Image src="/header_logos/default_avatar.svg" alt="account button" width={16} height={16} />
-            </AccountImageContainer>
-          </AccountImage>
-          <Username>{user}</Username>
-          <TriangleLogoContainer>
-            <Image src="/header_logos/triangle.svg" alt="toogle menu logo" width={16} height={16} />
-          </TriangleLogoContainer>
-        </AccountButton>
-      </RightContainer>
-      {/* <Pannel /> */}
-      {/* { isPanelOpen && (
-        <TestPannel ref={panel}>
-          <p>TestPannel</p>
-        </TestPannel>
-      )} */}
+      <MainNavBar>
+        <LeftContainer>
+          <Link href="/">
+            <NavigationButton>
+              <Image src="/header_logos/left_arrow.svg" alt="return button" width={22} height={22} />
+            </NavigationButton>
+          </Link>
+          <Link href="/">
+            <NavigationButton disabled>
+              <Image src="/header_logos/right_arrow.svg" alt="forward button" width={22} height={22} />
+            </NavigationButton>
+          </Link>
+          {navigation.currentPage === 'search' && <SearchBar />}
+          {navigation.currentPage === 'collection' && <CollectionNavBar/>}
+        </LeftContainer>
+        <RightContainer>
+        {navigation.currentPage === 'home' && (
+          <a href="https://www.spotify.com/fr/premium/" target="blank_" rel='noreferrer'>
+            <SubscribeButton>S&apos;abonner</SubscribeButton>
+          </a>
+        )}
+          <AccountButton onClick={openPanel}>
+            <AccountImage>
+              <AccountImageContainer>
+                <Image src="/header_logos/default_avatar.svg" alt="account button" width={16} height={16} />
+              </AccountImageContainer>
+            </AccountImage>
+            <Username>{user}</Username>
+            <TriangleLogoContainer>
+              <Image src="/header_logos/triangle.svg" alt="toogle menu logo" width={16} height={16} />
+            </TriangleLogoContainer>
+          </AccountButton>
+        </RightContainer>
+        {/* <Pannel /> */}
+        {/* { isPanelOpen && (
+          <TestPannel ref={panel}>
+            <p>TestPannel</p>
+          </TestPannel>
+        )} */}
+      </MainNavBar>
+      {navigation.currentPage === 'search' && <CategoryFilterBar />}
     </HeaderContainer>
   )
 }

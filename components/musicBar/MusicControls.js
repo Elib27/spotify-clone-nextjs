@@ -159,7 +159,7 @@ const TimerContainer = styled.div`
 
 export default function MusicControls() {
 
-  const [currentMusic, setCurrentMusic] = useState(0)
+  const [currentMusicIndex, setCurrentMusicIndex] = useState(0)
   const [isProgressionBarMoving, setIsProgressionBarMoving] = useState(false)
 
   const music = useSelector( state => state.music)
@@ -211,17 +211,24 @@ export default function MusicControls() {
   }
 
   function handleClickPrevMusic() {
-    setCurrentMusic(curr => curr - 1)
+    if (currentMusicIndex > 0) {
+      setCurrentMusicIndex(curr => curr - 1)
+    }
+    else {
+      resetMusic()
+    }
   }
 
   function handleClickNextMusic() {
-    setCurrentMusic(curr => curr + 1)
+    if (currentMusicIndex < songsData.length - 1) {
+      setCurrentMusicIndex(curr => curr + 1)
+    }
   }
 
   useEffect(() => {
     resetMusic()
     audio.current.play()
-  }, [currentMusic])
+  }, [currentMusicIndex])
 
   useEffect(() => {
     if(audio.current) {
@@ -302,7 +309,7 @@ export default function MusicControls() {
           }
         </SideContainer>
       </ControlsContainer>
-      <audio ref={audio} src={songsData.musics[currentMusic].link} onTimeUpdate={updateCurrentTime}></audio>
+      <audio ref={audio} src={songsData[currentMusicIndex]} onTimeUpdate={updateCurrentTime}></audio>
       <MusicProgressionBarContainer>
         <TimerContainer>{music.timeInMinSecs}</TimerContainer>
         <MusicProgressionBar

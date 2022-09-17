@@ -32,11 +32,14 @@ const CardTitle = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
   padding-bottom: 4px;
+  line-height: 1.6;
 `
 const CardSubTitle = styled.div`
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 400;
   color: #a7a7a7;
+  line-height: 1.6;
+  padding-bottom: 8px;
 `
 
 export default function HomeCard({cover_url, title, artist}) {

@@ -96,16 +96,23 @@ export const {
 const navigationSlice = createSlice({
   name: "navigation",
   initialState: {
-    currentPage: 'home'
+    currentPage: 'home',
+    searchInput: ''
   },
   reducers: {
     changeCurrentPage: (state, action) => {
       state.currentPage = action.payload
+    },
+    changeSearchInput: (state, action) => {
+      state.searchInput = action.payload
     }
   }
 })
 
-export const { changeCurrentPage } = navigationSlice.actions
+export const {
+  changeCurrentPage,
+  changeSearchInput
+} = navigationSlice.actions
 
 export const store = configureStore({
   reducer: {

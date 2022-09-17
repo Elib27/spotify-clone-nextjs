@@ -3,8 +3,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import PlayLogo from '../../public/tracks_logos/play_logo_small.svg'
 
-//utiliser card shared
-
 const PlayButton = styled.button`
   height: 48px;
   width: 48px;
@@ -83,7 +81,7 @@ const CardSubTitle = styled.div`
   padding-bottom: 8px;
 `
 
-export default function PlaylistCard({cover_url, title, description, isRoundImage, noPlayingButton}) {
+export default function MusicCard({cover_url, title, description, isRoundImage, noPlayingButton}) {
   return (
     <CardContainer>
       <CardImageWrapper>
