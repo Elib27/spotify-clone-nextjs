@@ -1,15 +1,29 @@
 import styled from "styled-components"
 import Image from "next/image"
-import PlayLogo from '../../public/tracks_logos/play_logo_small.svg'
-import OptionsLogo from '../../public/tracks_logos/options_logo.svg'
+import PlayLogo from '../../public/tracks_logos/play_logo_medium.svg'
+import ShareLogo from '../../public/tracks_logos/share_logo.svg'
+import DeleteLogo from '../../public/tracks_logos/deleteFromBooks_logo.svg'
+import OptionsLogo from '../../public/tracks_logos/big_options_logo.svg'
 
-const Separator = styled.hr`
-  border-color: #ffffff1a;
-  height: 2px;
-  width: 100%;
+const OptionsButton = styled.button`
+  height: 24px;
+  width: 24px;
+  border: none;
+  background-color: transparent;
+  color: #b3b3b3;
+  opacity: 0;
+  &:hover {
+    color: #fff;
+  }
 `
-const Wrapper = styled.div`
-  position: relative;
+const ShareButton = styled(OptionsButton)`
+  &:hover {
+    transform: scale(1.04);
+  }
+  &:active {
+    transform: scale(1);
+    color: #b3b3b3;
+  }
 `
 const Container = styled.div`
   width: 100%;
@@ -18,17 +32,18 @@ const Container = styled.div`
   color: #b3b3b3;
   border-radius: 4px;
   background-color: transparent;
+  position: relative;
   cursor: pointer;
   display: flex;
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    & ~ ${Separator} {
-      display: none;
+    ${OptionsButton}, ${ShareButton} {
+      opacity: 1;
     }
   }
 `
 const LeftContainer = styled.div`
-
+  flex-shrink: 0;
 `
 const RightContainer = styled.div`
 
@@ -40,7 +55,6 @@ const PodcastCoverContainer = styled.div`
   border-radius: 8px;
   margin-right: 24px;
   overflow: hidden;
-  flex-shrink: 0;
   position: relative;
 `
 const PodcastTitle = styled.div`
@@ -64,11 +78,13 @@ const Description = styled.p`
   word-break: break-word;
   text-overflow: ellipsis;
   overflow: hidden;
+  line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 `
 const ControlsContainer = styled.div`
+  margin: 24px 0 8px 0; 
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -95,49 +111,69 @@ const PlayButton = styled.button`
 const TimeContainer = styled.div`
   font-size: 0.875rem;
   margin-left: 8px;
+  line-height: 1.6;
+  white-space: nowrap;
 `
 const TimeInfo = styled.span`
+  color: hsla(0, 0%, 100%, 0.6);
   &:last-of-type::before{
     content: "·";
+    color: hsla(0, 0%, 100%, 0.6);
     margin: 0 4px;
+  }
+  &:last-of-type {
+    color: hsla(0, 0%, 100%, 0.7);
   }
 `
 const ControlsRightContainer = styled.div`
-  height: 32px;
-  width: 100px;
-  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+`
+const DeleteFromEpisodesButton = styled.button`
+  height: 24px;
+  width: 24px;
+  border: none;
+  background-color: transparent;
+  color: #1ed760;
 `
 
 export default function LikedPodcast({title, description, cover_url, owner, date, duration}) {
   return (
-    <Wrapper>
-      <Separator />
-      <Container>
-        <LeftContainer>
-          <PodcastCoverContainer>
-            <Image src={cover_url} layout="fill" alt="podcast cover" />
-          </PodcastCoverContainer>
-        </LeftContainer>
-        <RightContainer>
-          <PodcastTitle>{title}</PodcastTitle>
-          <PodcastOwner>{owner}</PodcastOwner>
-          <Description>{description}</Description>
-          <ControlsContainer>
-            <ControlsLeftContainer>
-              <PlayButton>
-                <PlayLogo height={16} width={16} />
-              </PlayButton>
-              <TimeContainer>
-                <TimeInfo>{date}</TimeInfo>
-                <TimeInfo>{duration}</TimeInfo>
-              </TimeContainer>
-            </ControlsLeftContainer>
-            <ControlsRightContainer>
-
-            </ControlsRightContainer>
-          </ControlsContainer>
-        </RightContainer>
-      </Container>
-    </Wrapper>
+    <Container>
+      <LeftContainer>
+        <PodcastCoverContainer>
+          <Image src={cover_url} layout="fill" alt="podcast cover" />
+        </PodcastCoverContainer>
+      </LeftContainer>
+      <RightContainer>
+        <PodcastTitle>{title}</PodcastTitle>
+        <PodcastOwner>{owner}</PodcastOwner>
+        <Description>{description}</Description>
+        <ControlsContainer>
+          <ControlsLeftContainer>
+            <PlayButton>
+              <PlayLogo height={16} width={16} />
+            </PlayButton>
+            <TimeContainer>
+              <TimeInfo>{date}</TimeInfo>
+              <TimeInfo>{duration}</TimeInfo>
+            </TimeContainer>
+          </ControlsLeftContainer>
+          <ControlsRightContainer>
+            <ShareButton>
+              <ShareLogo height={24} width={24} />
+            </ShareButton>
+            <DeleteFromEpisodesButton>
+              <DeleteLogo height={24} width={24} />
+            </DeleteFromEpisodesButton>
+            <OptionsButton>
+              <OptionsLogo />
+            </OptionsButton>
+          </ControlsRightContainer>
+        </ControlsContainer>
+      </RightContainer>
+    </Container>
   )
 }
