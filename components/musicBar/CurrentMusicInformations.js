@@ -13,10 +13,11 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
 `
-const Button = styled.button`
+const ScreenButton = styled.button`
   height: 32px;
   width: 32px;
   background-color: transparent;
+  margin-top: -1px;
   color: #fff;
   border: none;
   outline: 0;
@@ -28,7 +29,8 @@ const Button = styled.button`
     opacity: 1;
   }
 `
-const HeartButton = styled(Button)`
+const HeartButton = styled(ScreenButton)`
+  margin-top: 0;
   ${({isLiked}) => isLiked && `
     color: #1db954;
     opacity: 1;
@@ -83,11 +85,9 @@ export default function CurrentMusicInformations() {
       >
         {isLiked ? <HeartFull /> : <Heart />}
       </HeartButton>
-      <Button>
+      <ScreenButton>
         <ScreenDisplay />
-      </Button>
+      </ScreenButton>
     </Container>
   )
 }
-
-// crééer onglet musique en cours HUD

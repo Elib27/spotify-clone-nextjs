@@ -6,7 +6,6 @@ import SearchPageDefaultContent from '../components/searchPage/SearchPageDefault
 
 export default function search() {
   
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const navigation = useSelector(state => state.navigation)
 
   return (

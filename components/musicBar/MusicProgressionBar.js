@@ -82,18 +82,18 @@ export default function MusicProgressionBar({isProgressionBarMoving, setIsProgre
       newProgressionPercentage = 100;
     }
     setProgressionPercentage(newProgressionPercentage);
-    dispatch(changeTime(convertPercentageToTimeInSec(newProgressionPercentage, music.duration)));
   }
 
   useEffect(() => {
     if (!isProgressionBarMoving){
       setProgressionPercentage(music.time / music.duration * 100)
     }
-  }, [music.time, music.duration])
+  }, [music.time, music.duration, isProgressionBarMoving])
 
   useEffect(() => {
     barContainer.current.style.setProperty("--progression-bar-fill", progressionPercentage + '%')
-  }, [progressionPercentage])
+    dispatch(changeTime(convertPercentageToTimeInSec(progressionPercentage, music.duration)))
+  }, [progressionPercentage, music.duration])
 
   function handleMouseMove(e) {
     updateProgressionBar(e)

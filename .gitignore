@@ -35,6 +35,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+#vscode config
+.vscode
+
 # API KEYS
 
 /.env.local

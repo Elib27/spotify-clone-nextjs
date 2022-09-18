@@ -83,6 +83,7 @@ const WaitListButton = styled(Button)`
 `
 const VolumeBarContainer = styled.div`
   width: 125px;
+  margin-right: 4px;
   display: flex;
   align-items: center;
   position: relative;

@@ -7,10 +7,12 @@ import SearchResultSection from "./SearchResultSection"
 import MusicCard from "../shared/MusicCard"
 
 const Container = styled.div`
+  margin-top: -15px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   grid-template-rows: auto;
-  grid-gap: 24px;
+  column-gap: 24px;
+  row-gap: 32px;
 `
 
 // données d'exemple

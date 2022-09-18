@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 const Container = styled.section`
   grid-column: 1/-1;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 `
 const SectionHeader = styled.div`
   margin-bottom: 16px;

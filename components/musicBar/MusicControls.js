@@ -152,6 +152,7 @@ const TimerContainer = styled.div`
   color: #a7a7a7;
   text-align: left;
   user-select: none;
+  line-height: 1.6;
   &:first-of-type {
     text-align: right;
   }
@@ -189,6 +190,9 @@ export default function MusicControls() {
 
   useEffect(() => {
     dispatch(updateTimeInMinSecs())
+    if (music.time === music.duration) {
+      handleClickNextMusic()
+    }
   }, [music.time])
 
   useEffect(() => {
@@ -211,7 +215,7 @@ export default function MusicControls() {
   }
 
   function handleClickPrevMusic() {
-    if (currentMusicIndex > 0) {
+    if (currentMusicIndex > 0 && music.time <= 3) {
       setCurrentMusicIndex(curr => curr - 1)
     }
     else {
@@ -222,6 +226,10 @@ export default function MusicControls() {
   function handleClickNextMusic() {
     if (currentMusicIndex < songsData.length - 1) {
       setCurrentMusicIndex(curr => curr + 1)
+    }
+    else {
+      const randomIndex = Math.floor(Math.random() * (songsData.length - 1))
+      setCurrentMusicIndex(randomIndex)
     }
   }
 

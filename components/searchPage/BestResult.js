@@ -79,15 +79,17 @@ const CardTitle = styled.div`
   line-height: 1.6;
   font-family: 'CircularSpTitle', 'Roboto', sans-serif;
 `
-const ResultCategory = styled.span`
+const ResultCategory = styled.div`
+  width: min-content;
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #fff;
-  padding: 4px 12px;
+  padding: 5.5px 12px;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 50px;
+  line-height: 1.6;
 `
 
 export default function BestResult({title, category, cover_url, link}) {

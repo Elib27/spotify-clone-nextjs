@@ -25,18 +25,6 @@ const MusicBarContainer = styled.div`
 
 export default function MusicBar() {
 
-  async function testAPICall1() {
-    const res = await fetch('/api/getTopTracks')
-    const data = await res.json()
-    console.log(data) 
-  }
-
-  async function testAPICall2() {
-    const res = await fetch('/api/getSearchCategories')
-    const data = await res.json()
-    console.log(data) 
-  }
-  
   return (
     <MusicBarWrapper>
       <MusicBarContainer>
@@ -44,8 +32,6 @@ export default function MusicBar() {
         <MusicControls />
         <SoundConfiguration />
       </MusicBarContainer>
-      <button onClick={testAPICall1}>API Call 1</button>
-      <button onClick={testAPICall2}>API Call 2</button>
     </MusicBarWrapper>
   )
 }

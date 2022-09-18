@@ -12,7 +12,7 @@ const musicSlice = createSlice({
     duration: 180,
     durationInMinSecs: "03:00",
     musicProgressionPercentage: 0,
-    volume: 50,
+    volume: 60,
     volumeCategory: 'medium',
     prevVolume: 50,
     soundType: 'music'
@@ -44,7 +44,7 @@ const musicSlice = createSlice({
       state.time = action.payload
     },
     updateTimeInMinSecs: (state, action) => {
-      const min = Math.floor(state.time / 60).toString().padStart(2, '0')
+      const min = Math.floor(state.time / 60).toString().padStart(1, '0')
       const sec = Math.floor(state.time % 60).toString().padStart(2, '0')
       state.timeInMinSecs = `${min}:${sec}`
     },
@@ -52,7 +52,7 @@ const musicSlice = createSlice({
       state.duration = action.payload
     },
     updateDurationInMinSecs: (state, action) => {
-      const min = Math.floor(state.duration / 60).toString().padStart(2, '0')
+      const min = Math.floor(state.duration / 60).toString().padStart(1, '0')
       const sec = Math.floor(state.duration % 60).toString().padStart(2, '0')
       state.durationInMinSecs = `${min}:${sec}`
     },
