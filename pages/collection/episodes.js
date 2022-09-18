@@ -24,16 +24,16 @@ const PlayButton = styled.div`
   }
 `
 const PodcastsContainer = styled.section`
+  padding: 0 16px;
   max-width: 967px;
 `
 const Separator = styled.hr`
   border-color: #ffffff1a;
   height: 2px;
-  width: calc(100% - 32px);
+  margin: 0 16px;
 `
 const Wrapper = styled.div`
   position: relative;
-  padding: 0 32px;
   &:hover {
     ${Separator} {
       opacity: 0;
@@ -51,7 +51,7 @@ export default function episodes() {
         title="Vos épisodes"
         background="linear-gradient(#056753 0, #023329 100%)"
         owner="eliot"
-        tracks_number={2}
+        tracks_number={9}
         isPodcastPlaylist
       />
       <PlayMusicSection>

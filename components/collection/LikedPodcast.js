@@ -28,7 +28,6 @@ const ShareButton = styled(OptionsButton)`
 const Container = styled.div`
   width: 100%;
   padding: 16px;
-  margin: 0 -16px;
   color: #b3b3b3;
   border-radius: 4px;
   background-color: transparent;

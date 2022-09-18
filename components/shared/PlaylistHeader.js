@@ -27,6 +27,9 @@ const HeaderImageContainer = styled.div`
     border-radius: 4px;
   `}
 `
+const FavoriteLogoContainer = styled.div`
+  height: 71.5px;
+`
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -80,7 +83,9 @@ export default function PlaylistHeader({ title, cover_url, background, owner, tr
         {cover_url ? (
           <Image src={cover_url} layout="fill" alt="playlist cover" />
         ) : (
-          <FavoriteLogo />
+          <FavoriteLogoContainer>
+            <FavoriteLogo />
+          </FavoriteLogoContainer>
         )}
 
       </HeaderImageContainer>
