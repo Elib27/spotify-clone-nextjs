@@ -2,7 +2,7 @@ import styled from "styled-components"
 import Image from "next/image"
 import FavoriteLogo from "../../public/tracks_logos/favorite_logo.svg"
 
-const Header  = styled.div`
+const Header = styled.div`
   height: clamp(340px, 30vh, 500px);
   width: 100%;
   margin-top: -64px;
@@ -13,11 +13,12 @@ const Header  = styled.div`
 `
 const HeaderImageContainer = styled.div`
   height: 192px;
-  aspect-ratio: 1;
+  width: 192px;
   box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
   margin-right: 24px;
   color: #1ed760;
   position: relative;
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;

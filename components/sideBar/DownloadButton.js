@@ -1,6 +1,5 @@
 import styled from "styled-components"
-import { useSelector, useDispatch } from "react-redux"
-import { changeCurrentPage } from "../../store/store"
+import { useSelector } from "react-redux"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -49,20 +48,15 @@ const NavLinkButton = styled.button`
 export default function DownloadButton() {
 
   const navigation = useSelector(state => state.navigation)
-  const dispatch = useDispatch()
-
-  function handleClickChangeNavigationPage() {
-    dispatch(changeCurrentPage("download"))
-  }
 
   return (
     <Link href="/download">
-      <NavLinkButton onClick={handleClickChangeNavigationPage}>
-        <LogoContainer isSelected={navigation.currentPage === "download"}>
+      <NavLinkButton>
+        <LogoContainer isSelected={navigation.currentPage === "/download"}>
             <Image src="/sideBar_logos/download.svg" alt="download button" width={24} height={24} />
         </LogoContainer>
         <LinkLabel
-          isSelected={navigation.currentPage === "download"}
+          isSelected={navigation.currentPage === "/download"}
         >
           Installer l&apos;appli
         </LinkLabel>

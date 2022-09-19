@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef} from 'react'
 import styled from "styled-components"
-import { useSelector } from 'react-redux'
-import Link from "next/link"
+import { useState, useEffect, useRef} from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { incrementPageHistoryCount, decrementPageHistoryCount } from "../../store/store"
+import { useRouter } from 'next/router'
 import Image from "next/image"
 import Pannel from "./AccountPannel"
 import SearchBar from '../searchPage/SearchBar'
@@ -44,7 +45,7 @@ const NavigationButton = styled.button`
   `}
 `
 const RightContainer = styled.div`
-  display:flex;
+  display: flex;
   gap: 32px;
 `
 const SubscribeButton = styled.button`
@@ -116,18 +117,55 @@ const TestPannel = styled.div`
   z-index: 10000;
 `
 
+const pagesWhereCollectionBarVisible = [
+  '/collection/playlists',
+  '/collection/podcasts',
+  '/collection/artists',
+  '/collection/albums',
+]
+
+const pagesWhereSubscribeButtonVisible = [
+  '/',
+  '/collection/tracks',
+  '/download'
+]
+
 export default function PageHeader() {
 
-  const navigation = useSelector(state => state.navigation);
+  const navigation = useSelector(state => state.navigation)
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const windowHistoryLength = useRef(0)
 
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [isPanelOpen, setIsPanelOpen] = useState(false)
   const panel = useRef(null)
 
   function openPanel() {
     setTimeout(() => {
-      setIsPanelOpen(true);
+      setIsPanelOpen(true)
     }, 10)
   }
+
+  function handleClickPrevPage() {
+    if (navigation.pageHistoryCount > 0) {
+      router.back()
+      dispatch(decrementPageHistoryCount(2))
+    }
+  }
+
+  function handleClickNextPage() {
+    if (navigation.pageHistoryCount < windowHistoryLength.current) {
+      window.history.forward() 
+    }
+  }
+
+  useEffect(() => {
+    windowHistoryLength.current = window.history.length
+  }, [navigation.pageHistoryCount])
+
+  useEffect(() => {
+    console.log(navigation.pageHistoryCount)
+  }, [navigation.pageHistoryCount])
 
   function handleClickOutside(e) {
     // console.log('isPanelOpen: ', isPanelOpen)
@@ -154,21 +192,24 @@ export default function PageHeader() {
     <HeaderContainer>
       <MainNavBar>
         <LeftContainer>
-          <Link href="/">
-            <NavigationButton>
-              <Image src="/header_logos/left_arrow.svg" alt="return button" width={22} height={22} />
-            </NavigationButton>
-          </Link>
-          <Link href="/">
-            <NavigationButton disabled>
-              <Image src="/header_logos/right_arrow.svg" alt="forward button" width={22} height={22} />
-            </NavigationButton>
-          </Link>
-          {navigation.currentPage === 'search' && <SearchBar />}
-          {navigation.currentPage === 'collection' && <CollectionNavBar/>}
+          <NavigationButton
+            onClick={handleClickPrevPage}
+            disabled={navigation.pageHistoryCount <= 0}
+          >
+            <Image src="/header_logos/left_arrow.svg" alt="return button" width={22} height={22} />
+          </NavigationButton>
+          <NavigationButton
+            onClick={handleClickNextPage}
+            disabled={navigation.pageHistoryCount >= windowHistoryLength.current}
+          >
+            <Image src="/header_logos/right_arrow.svg" alt="forward button" width={22} height={22} />
+          </NavigationButton>
+          {navigation.currentPage === '/search' && <SearchBar />}
+          {pagesWhereCollectionBarVisible.includes(navigation.currentPage) && <CollectionNavBar/>}
         </LeftContainer>
         <RightContainer>
-        {navigation.currentPage === 'home' && (
+        {(pagesWhereSubscribeButtonVisible.includes(navigation.currentPage) || navigation.currentPage.includes('/playlist/'))
+        && (
           <a href="https://www.spotify.com/fr/premium/" target="blank_" rel='noreferrer'>
             <SubscribeButton>S&apos;abonner</SubscribeButton>
           </a>
@@ -192,7 +233,7 @@ export default function PageHeader() {
           </TestPannel>
         )} */}
       </MainNavBar>
-      {navigation.currentPage === 'search' && <CategoryFilterBar />}
+      {navigation.currentPage === '/search' && <CategoryFilterBar />}
     </HeaderContainer>
   )
 }

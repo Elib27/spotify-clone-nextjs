@@ -4,10 +4,6 @@ import NavButton from './NavButton'
 const NavContainer = styled.div`
   
 `
-const CreationContainer = styled.div`
-  margin-top: 24px;
-`
-
 export default function NavBar() {
   return (
     <NavContainer>
@@ -17,7 +13,6 @@ export default function NavBar() {
         imageSrc="/sideBar_logos/house.svg"
         imageSrcSelected="/sideBar_logos/house_full.svg"
         imageAlt="home link button"
-        name="home"
       />
       <NavButton 
         label="Rechercher"
@@ -25,7 +20,6 @@ export default function NavBar() {
         imageSrc="/sideBar_logos/search.svg"
         imageSrcSelected="/sideBar_logos/search_full.svg"
         imageAlt="search page link button"
-        name="search"
       />
       <NavButton 
         label="Bibliothèque"
@@ -33,7 +27,6 @@ export default function NavBar() {
         imageSrc="/sideBar_logos/books.svg"
         imageSrcSelected="/sideBar_logos/books_full.svg"
         imageAlt="library link button"
-        name="collection"
       />
     </NavContainer>
   )

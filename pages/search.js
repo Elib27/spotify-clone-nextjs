@@ -4,7 +4,7 @@ import PageContainer from '../components/shared/PageContainer'
 import SearchResults from '../components/searchPage/SearchResults'
 import SearchPageDefaultContent from '../components/searchPage/SearchPageDefaultContent'
 
-export default function search() {
+export default function Search() {
   
   const navigation = useSelector(state => state.navigation)
 

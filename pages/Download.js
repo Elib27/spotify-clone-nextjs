@@ -12,7 +12,8 @@ const MiddleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -76px;
+  margin-top: -52px;
+  margin-right: -16px;
   min-width: 565px;
 `
 const DownloadLabel = styled.h3`
@@ -32,7 +33,7 @@ const DownloadButton = styled.button`
   height: 48px;
   border-radius: 48px;
   font-size: 1rem;
-  line-height: 0;
+  line-height: 1.6;
   font-weight: 700;
   color: #000;
   background-color: #1ed760;
@@ -53,21 +54,20 @@ export default function Download() {
   const [downloadLink, setDownloadLink ] = useState('windows')
 
   useEffect(() => {
-    function getGoodFileOSVersion() {
-      const userAgent = window.navigator.userAgent
-      const platform = window.navigator.platform
-      const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K']
-      const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE']
-      let OS = null
-    
-      if (macosPlatforms.indexOf(platform) !== -1) {
-        OS = 'mac';
-      }
-      else if (!OS && /Linux/.test(platform)) {
-        OS = 'linux';
-      }
-      setDownloadLink(OS)
+    const platform = window.navigator.platform
+    const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K']
+    let OS = null
+
+    if (macosPlatforms.indexOf(platform) !== -1) {
+      OS = 'mac'
     }
+    else if (!OS && /Linux/.test(platform)) {
+      OS = 'linux'
+    }
+    else {
+      OS = 'windows'
+    }
+    setDownloadLink(OS)
   }, [])
 
   return (

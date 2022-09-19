@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { useSelector } from "react-redux"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -13,6 +14,7 @@ const LinkLabel = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  ${({ isSelected }) => isSelected && `color: #fff;`}
 `
 const LogoContainer = styled.div`
   height: 24px;
@@ -25,6 +27,7 @@ const LogoContainer = styled.div`
   background: ${({ logoBackground }) => logoBackground};
   opacity: ${({ active }) => active ? 1 : 0.7};
   transition: opacity 0.3s ease-out;
+  ${({ isSelected }) => isSelected && `opacity: 1;`}
 `
 const CreationLinkButton = styled.button`
   height: 40px;
@@ -43,14 +46,24 @@ const CreationLinkButton = styled.button`
   }
 `
 
-export default function CreationButton({ label, link, imageSrc, imageAlt, logoBackground, active}) {
+export default function CreationButton({ label, link, imageSrc, imageAlt, logoBackground }) {
+
+  const navigation = useSelector(state => state.navigation)
+
   return (
     <Link href={link}>
       <CreationLinkButton>
-        <LogoContainer logoBackground={logoBackground} active={active}>
+        <LogoContainer
+          logoBackground={logoBackground}
+          isSelected={navigation.currentPage === link}
+        >
           <Image src={imageSrc} alt={imageAlt} width={12} height={12} />
         </LogoContainer>
-        <LinkLabel active={active}>{label}</LinkLabel>
+        <LinkLabel
+          isSelected={navigation.currentPage === link}
+        >
+          {label}
+        </LinkLabel>
       </CreationLinkButton>
     </Link>
   )

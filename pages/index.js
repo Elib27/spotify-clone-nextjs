@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useState, useLayoutEffect, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import useResizeObserver from '../hooks/useResizeObserver'
 import PageContainer from '../components/shared/PageContainer'
 import HomeShorcuts from '../components/homePage/HomeShorcuts'
@@ -13,7 +13,6 @@ const Title = styled.h2`
   font-weight: 700;
   margin-bottom: 21.5px;
 `
-const CategorySections = styled.div``
 
 export default function Home() {
 
@@ -23,7 +22,7 @@ export default function Home() {
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(4)
   const [welcomeMessage, setWelcomeMessage] = useState('Bonjour')
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const timeInHours = new Date().getHours()
     if (timeInHours >= 4 && timeInHours <= 18) {
       setWelcomeMessage('Bonjour')

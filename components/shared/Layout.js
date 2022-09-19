@@ -2,6 +2,10 @@ import styled from 'styled-components'
 import Sidebar from "../sideBar/SideBar"
 import MusicBar from "../musicBar/MusicBar"
 import PageHeader from './PageHeader'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeCurrentPage, incrementPageHistoryCount, decrementPageHistoryCount } from '../../store/store'
 
 const TopWrapper = styled.div`
   display: flex;
@@ -42,6 +46,35 @@ const PageContent = styled.div`
 `
 
 export default function Layout({ children }) {
+
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const navigation = useSelector(state => state.navigation)
+
+  useEffect(() => {
+
+    function handleStart(url) {
+      dispatch(changeCurrentPage(url))
+      console.log('start loading: ' + url)
+    }
+
+    function handleStop(url) {
+      console.log('loaded: ' + url)
+      dispatch(incrementPageHistoryCount(1))
+    }
+
+    router.events.on('routeChangeStart', handleStart)
+    router.events.on('routeChangeComplete', handleStop)
+    router.events.on('routeChangeError', handleStop)
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart)
+      router.events.off('routeChangeComplete', handleStop)
+      router.events.off('routeChangeError', handleStop)
+    }
+
+  }, [router])
+
   return (
     <div>
       <TopWrapper>

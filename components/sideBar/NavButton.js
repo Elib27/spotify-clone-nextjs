@@ -40,27 +40,22 @@ const LogoContainer = styled.div`
   }
 `
 
-export default function NavButton({ label, link, imageSrc, imageSrcSelected, imageAlt, name}) {
+export default function NavButton({ label, link, imageSrc, imageSrcSelected, imageAlt }) {
 
   const navigation = useSelector(state => state.navigation)
-  const dispatch = useDispatch()
-
-  function handleClickUpdateCurrentPage() {
-    dispatch(changeCurrentPage(name))
-  }
 
   return (
     <Link href={link}>
-      <NavLinkButton onClick={handleClickUpdateCurrentPage}>
+      <NavLinkButton>
         <LogoContainer>
-          {navigation.currentPage === name ? (
+          {navigation.currentPage === link ? (
             <Image src={imageSrcSelected} alt={imageAlt} width={24} height={24} />
           ) : (
             <Image src={imageSrc} alt={imageAlt} width={24} height={24} />
           )}
         </LogoContainer>
         <LinkLabel
-          isSelected={navigation.currentPage === name}
+          isSelected={navigation.currentPage === link}
         >
           {label}
         </LinkLabel>
