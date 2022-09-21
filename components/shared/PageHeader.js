@@ -1,7 +1,11 @@
 import styled from "styled-components"
 import { useState, useEffect, useRef} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { incrementPageHistoryCount, decrementPageHistoryCount } from "../../store/store"
+import {
+  decrementHistoryIndex,
+  pushLinkToHistory,
+  removeHistoryLinksUntilIndex
+} from "../../store/store"
 import { useRouter } from 'next/router'
 import Image from "next/image"
 import Pannel from "./AccountPannel"
@@ -134,39 +138,44 @@ export default function PageHeader() {
 
   const navigation = useSelector(state => state.navigation)
   const dispatch = useDispatch()
-  const router = useRouter()
-  const windowHistoryLength = useRef(0)
+  const [isFirstPageVisited, setIsFirstPageVisited] = useState(true)
+  const [IsLastPageVisited, setIsLastPagePageVisited] = useState(true)
 
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const panel = useRef(null)
 
-  function openPanel() {
-    setTimeout(() => {
-      setIsPanelOpen(true)
-    }, 10)
-  }
+  useEffect(() => {
+    if (window.history.state && typeof(window.history.replaceState) === "function") {
+      window.history.replaceState({ page: window.history.length, href: location.href, oui: 'oui' }, "foo")
+      console.log('initial change history state')
+    }
+  },[])
 
+  useEffect(() => {
+    const isFirstPageVisitedNewValue = (window.history.state && !window.history.state.page)
+    setIsFirstPageVisited(isFirstPageVisitedNewValue)
+    const isLastPageVisitedNewValue = (window.history.state.page && (window.history.state.page <= !window.history.length))
+    setIsLastPagePageVisited(isLastPageVisitedNewValue)
+    console.log('change page visited')
+  }, [navigation.currentPage])
+  
   function handleClickPrevPage() {
-    if (navigation.pageHistoryCount > 0) {
-      router.back()
-      dispatch(decrementPageHistoryCount(2))
-    }
+    // if (navigation.history.index > 0) {
+      window.history.back()
+      // dispatch(decrementHistoryIndex())
+    // }
   }
-
+  
   function handleClickNextPage() {
-    if (navigation.pageHistoryCount < windowHistoryLength.current) {
-      window.history.forward() 
-    }
+    // if (navigation.history.index < 10) {
+      window.history.forward()
+    // }
   }
-
+  
   useEffect(() => {
-    windowHistoryLength.current = window.history.length
-  }, [navigation.pageHistoryCount])
-
-  useEffect(() => {
-    console.log(navigation.pageHistoryCount)
-  }, [navigation.pageHistoryCount])
-
+    console.log(navigation.history.index)
+  }, [navigation.history.index])
+  
   function handleClickOutside(e) {
     // console.log('isPanelOpen: ', isPanelOpen)
     if (panel.current && !panel.current.contains(e.target)){
@@ -177,13 +186,19 @@ export default function PageHeader() {
     }
   }
 
+  function openPanel() {
+    setTimeout(() => {
+      setIsPanelOpen(true)
+    }, 10)
+  }
+  
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => {
       document.removeEventListener('click', handleClickOutside);
     }
   }, [])
-
+  
   useEffect(() => {
     console.log('isPanelOpen: ', isPanelOpen)
   }, [isPanelOpen])
@@ -194,13 +209,13 @@ export default function PageHeader() {
         <LeftContainer>
           <NavigationButton
             onClick={handleClickPrevPage}
-            disabled={navigation.pageHistoryCount <= 0}
+            disabled={isFirstPageVisited}
           >
             <Image src="/header_logos/left_arrow.svg" alt="return button" width={22} height={22} />
           </NavigationButton>
           <NavigationButton
             onClick={handleClickNextPage}
-            disabled={navigation.pageHistoryCount >= windowHistoryLength.current}
+            disabled={IsLastPageVisited}
           >
             <Image src="/header_logos/right_arrow.svg" alt="forward button" width={22} height={22} />
           </NavigationButton>

@@ -5,7 +5,12 @@ import PageHeader from './PageHeader'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeCurrentPage, incrementPageHistoryCount, decrementPageHistoryCount } from '../../store/store'
+import {
+  changeCurrentPage,
+  incrementHistoryIndex,
+  decrementHistoryIndex,
+  pushLinkToHistory
+} from '../../store/store'
 
 const TopWrapper = styled.div`
   display: flex;
@@ -52,23 +57,20 @@ export default function Layout({ children }) {
   const navigation = useSelector(state => state.navigation)
 
   useEffect(() => {
-
-    function handleStart(url) {
-      dispatch(changeCurrentPage(url))
-      console.log('start loading: ' + url)
-    }
-
+    
     function handleStop(url) {
-      console.log('loaded: ' + url)
-      dispatch(incrementPageHistoryCount(1))
+      dispatch(changeCurrentPage(url))
+      dispatch(pushLinkToHistory(url))
+
+      if (window.history.state && typeof(window.history.replaceState) === "function") {
+        window.history.replaceState({ page: window.history.length, href: location.href, oui: 'oui' }, "foo")
+      }
     }
 
-    router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeComplete', handleStop)
     router.events.on('routeChangeError', handleStop)
 
     return () => {
-      router.events.off('routeChangeStart', handleStart)
       router.events.off('routeChangeComplete', handleStop)
       router.events.off('routeChangeError', handleStop)
     }

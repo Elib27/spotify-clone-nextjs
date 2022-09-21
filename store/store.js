@@ -97,30 +97,41 @@ const navigationSlice = createSlice({
   name: "navigation",
   initialState: {
     currentPage: '/',
-    pageHistoryCount: 0,
-    searchInput: ''
+    searchInput: '',
+    history: {
+      links: [],
+      index: 0
+    }
   },
   reducers: {
     changeCurrentPage: (state, action) => {
       state.currentPage = action.payload
     },
-    incrementPageHistoryCount: (state, action) => {
-      state.pageHistoryCount += action.payload
-    },
-    decrementPageHistoryCount: (state, action) => {
-      state.pageHistoryCount -= action.payload
-    },
     changeSearchInput: (state, action) => {
       state.searchInput = action.payload
+    },
+    incrementHistoryIndex: (state) => {
+      state.history.index += 1
+    },
+    decrementHistoryIndex: (state) => {
+      state.history.index -= 1
+    },
+    pushLinkToHistory: (state, action) => {
+      state.history.links.push(action.payload)
+    },
+    removeHistoryLinksUntilIndex: (state) => {
+      state.history.links = state.history.links.slice(0, state.history.index + 1)
     }
   }
 })
 
 export const {
   changeCurrentPage,
-  incrementPageHistoryCount,
-  decrementPageHistoryCount,
-  changeSearchInput
+  changeSearchInput,
+  incrementHistoryIndex,
+  decrementHistoryIndex,
+  pushLinkToHistory,
+  removeHistoryLinksUntilIndex
 } = navigationSlice.actions
 
 export const store = configureStore({
