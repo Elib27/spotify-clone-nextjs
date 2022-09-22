@@ -4,12 +4,9 @@ import MusicBar from "../musicBar/MusicBar"
 import PageHeader from './PageHeader'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
   changeCurrentPage,
-  incrementHistoryIndex,
-  decrementHistoryIndex,
-  pushLinkToHistory
 } from '../../store/store'
 
 const TopWrapper = styled.div`
@@ -54,17 +51,14 @@ export default function Layout({ children }) {
 
   const router = useRouter()
   const dispatch = useDispatch()
-  const navigation = useSelector(state => state.navigation)
 
   useEffect(() => {
     
     function handleStop(url) {
       dispatch(changeCurrentPage(url))
-      dispatch(pushLinkToHistory(url))
-
-      if (window.history.state && typeof(window.history.replaceState) === "function") {
-        window.history.replaceState({ page: window.history.length, href: location.href, oui: 'oui' }, "foo")
-      }
+      // if (window.history.state && typeof(window.history.replaceState) === "function") {
+      //   window.history.replaceState({ page: window.history.length, href: location.href, oui: 'oui' }, "foo")
+      // }
     }
 
     router.events.on('routeChangeComplete', handleStop)

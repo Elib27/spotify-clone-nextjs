@@ -23,8 +23,6 @@ import Prev15secLogo from '../../public/musicBar_logos/prev15s.svg'
 
 import MusicProgressionBar from "./MusicProgressionBar"
 
-import songsData from '../../public/musics/musics_catalog.json'
-
 const MusicControlsContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -161,12 +159,20 @@ const TimerContainer = styled.div`
 export default function MusicControls() {
 
   const [currentMusicIndex, setCurrentMusicIndex] = useState(0)
+  const [maxMusicIndex, setMaxMusicIndex] = useState(0)
+  const [currentMusicLink, setCurrentMusicLink] = useState(null)
   const [isProgressionBarMoving, setIsProgressionBarMoving] = useState(false)
 
   const music = useSelector( state => state.music)
   const dispatch = useDispatch()
 
   const audio = useRef(null)
+
+  async function getCopyrightFreeTrack(index) {
+    const response = await fetch(`/api/getCopyrightFreeTrack/${index}`)
+    const track = await response.json()
+    return track
+  }
 
   function updateMusicDuration() {
     if (audio.current) {
@@ -196,8 +202,14 @@ export default function MusicControls() {
   }, [music.time])
 
   useEffect(() => {
-    updateMusicDuration()
-    updateCurrentTime()
+    async function firstMusicLoad(){
+      const { url, maxIndex } = await getCopyrightFreeTrack(currentMusicIndex)
+      setCurrentMusicLink(url)
+      setMaxMusicIndex(maxIndex)
+      updateMusicDuration()
+      updateCurrentTime()
+    }
+    firstMusicLoad()
   }, [])
 
   useEffect(() => {
@@ -205,7 +217,6 @@ export default function MusicControls() {
       music.isPlaying ? audio.current.play() : audio.current.pause()
     }
   },[music.isPlaying])
-
 
   function resetMusic(){
     audio.current.currentTime = 0
@@ -224,19 +235,28 @@ export default function MusicControls() {
   }
 
   function handleClickNextMusic() {
-    if (currentMusicIndex < songsData.length - 1) {
-      setCurrentMusicIndex(curr => curr + 1)
+    if (music.isPlayingRandom || currentMusicIndex >= maxMusicIndex) {
+      const randomIndex = Math.floor(Math.random() * (maxMusicIndex - 1))
+      setCurrentMusicIndex(randomIndex)
     }
     else {
-      const randomIndex = Math.floor(Math.random() * (songsData.length - 1))
-      setCurrentMusicIndex(randomIndex)
+      setCurrentMusicIndex(curr => curr + 1)
     }
   }
 
   useEffect(() => {
+    async function changeMusic() {
+      const { url, maxIndex } = await getCopyrightFreeTrack(currentMusicIndex)
+      setCurrentMusicLink(url)
+      setMaxMusicIndex(maxIndex)
+    }
+    changeMusic()
+  }, [currentMusicIndex])
+
+  useEffect(() => {
     resetMusic()
     audio.current.play()
-  }, [currentMusicIndex])
+  }, [currentMusicLink])
 
   useEffect(() => {
     if(audio.current) {
@@ -317,7 +337,7 @@ export default function MusicControls() {
           }
         </SideContainer>
       </ControlsContainer>
-      <audio ref={audio} src={songsData[currentMusicIndex]} onTimeUpdate={updateCurrentTime}></audio>
+      <audio ref={audio} src={currentMusicLink} onTimeUpdate={updateCurrentTime}></audio>
       <MusicProgressionBarContainer>
         <TimerContainer>{music.timeInMinSecs}</TimerContainer>
         <MusicProgressionBar

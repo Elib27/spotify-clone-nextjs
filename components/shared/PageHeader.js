@@ -1,12 +1,6 @@
 import styled from "styled-components"
 import { useState, useEffect, useRef} from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import {
-  decrementHistoryIndex,
-  pushLinkToHistory,
-  removeHistoryLinksUntilIndex
-} from "../../store/store"
-import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 import Image from "next/image"
 import Pannel from "./AccountPannel"
 import SearchBar from '../searchPage/SearchBar'
@@ -137,44 +131,37 @@ const pagesWhereSubscribeButtonVisible = [
 export default function PageHeader() {
 
   const navigation = useSelector(state => state.navigation)
-  const dispatch = useDispatch()
   const [isFirstPageVisited, setIsFirstPageVisited] = useState(true)
   const [IsLastPageVisited, setIsLastPagePageVisited] = useState(true)
+  const [firstPageVisitedIndex, setFirstPageVisitedIndex] = useState(0)
+
 
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const panel = useRef(null)
 
-  useEffect(() => {
-    if (window.history.state && typeof(window.history.replaceState) === "function") {
-      window.history.replaceState({ page: window.history.length, href: location.href, oui: 'oui' }, "foo")
-      console.log('initial change history state')
-    }
-  },[])
+  // useEffect(() => {
+  //   if (window.history.state && typeof(window.history.replaceState) === "function") {
+  //     window.history.replaceState({ page: window.history.length, href: location.href, oui: 'oui' }, "")
+  //     console.log('initial change history state')
+  //     setFirstPageVisitedIndex(window.history.length)
+  //   }
+  // },[])
 
-  useEffect(() => {
-    const isFirstPageVisitedNewValue = (window.history.state && !window.history.state.page)
-    setIsFirstPageVisited(isFirstPageVisitedNewValue)
-    const isLastPageVisitedNewValue = (window.history.state.page && (window.history.state.page <= !window.history.length))
-    setIsLastPagePageVisited(isLastPageVisitedNewValue)
-    console.log('change page visited')
-  }, [navigation.currentPage])
+  // useEffect(() => {
+  //   const isFirstPageVisitedNewValue = (window.history.state && !window.history.state.page)
+  //   setIsFirstPageVisited(isFirstPageVisitedNewValue)
+  //   const isLastPageVisitedNewValue = (window.history.state.page && (window.history.state.page <= !window.history.length))
+  //   setIsLastPagePageVisited(isLastPageVisitedNewValue)
+  //   console.log('change page visited')
+  // }, [navigation.currentPage])
   
   function handleClickPrevPage() {
-    // if (navigation.history.index > 0) {
-      window.history.back()
-      // dispatch(decrementHistoryIndex())
-    // }
+    console.log('prevButton')
   }
   
   function handleClickNextPage() {
-    // if (navigation.history.index < 10) {
-      window.history.forward()
-    // }
+    console.log('nextButton')
   }
-  
-  useEffect(() => {
-    console.log(navigation.history.index)
-  }, [navigation.history.index])
   
   function handleClickOutside(e) {
     // console.log('isPanelOpen: ', isPanelOpen)
