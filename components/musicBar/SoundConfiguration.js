@@ -110,12 +110,15 @@ export default function SoundConfiguration() {
 
   return (
     <Container>
-      <MicroButton
-        isLyricsPannelOpen={isLyricsPannelOpen}
-        onClick={() => setIsLyricsOpen(curr => !curr)}
-      >
-        <Microphone />
-      </MicroButton>
+      {music.soundType === 'music' && (
+        <MicroButton
+          isLyricsPannelOpen={isLyricsPannelOpen}
+          onClick={() => setIsLyricsOpen(curr => !curr)}
+        >
+          <Microphone />
+        </MicroButton>
+        )
+      }
       <WaitListButton
         isWaitListOpen={isWaitListOpen}
         onClick={() => setIsWaitListOpen(curr => !curr)}

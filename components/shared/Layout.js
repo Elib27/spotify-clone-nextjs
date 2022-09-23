@@ -9,21 +9,27 @@ import {
   changeCurrentPage,
 } from '../../store/store'
 
-const TopWrapper = styled.div`
-  display: flex;
-  flex-direction: flex-start;
-  position: relative;
-  height: calc(100vh - 91px);
-  width: 100%;
-`
-const PageContainer = styled.div`
+const MainWrapper = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   height: 100%;
   width: 100%;
+  background-color: #000;
+  gap: 8px;
+  padding: 8px;
+`
+const PageContainer = styled.div`
+  grid-row: 2;
+  grid-column: 2;
+  height: calc((100vh - 64px) - 88px);
+  max-width: 1955px;
   background-color: #121212;
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-gutter: none;
   position: relative;
+  border-radius: 8px;
   &::-webkit-scrollbar {
     width: 16px;
   }
@@ -40,12 +46,6 @@ const PageContainer = styled.div`
     background-color: rgba(255,255,255,0.5);
   }
 `
-const PageContent = styled.div`
-  height: calc(100% - 64px);
-  width: 100%;
-  max-width: 1955px;
-  position: relative;
-`
 
 export default function Layout({ children }) {
 
@@ -56,9 +56,6 @@ export default function Layout({ children }) {
     
     function handleStop(url) {
       dispatch(changeCurrentPage(url))
-      // if (window.history.state && typeof(window.history.replaceState) === "function") {
-      //   window.history.replaceState({ page: window.history.length, href: location.href, oui: 'oui' }, "foo")
-      // }
     }
 
     router.events.on('routeChangeComplete', handleStop)
@@ -72,17 +69,13 @@ export default function Layout({ children }) {
   }, [router])
 
   return (
-    <div>
-      <TopWrapper>
-        <Sidebar />
-        <PageContainer>
-          <PageHeader />
-          <PageContent>
-            {children}
-          </PageContent>
-        </PageContainer>
-      </TopWrapper>
+    <MainWrapper>
+      <PageHeader />
+      <Sidebar />
+      <PageContainer>
+        {children}
+      </PageContainer>
       <MusicBar />
-    </div>
+    </MainWrapper>
   )
 }

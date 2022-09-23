@@ -1,8 +1,11 @@
 import styled from "styled-components"
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import Image from "next/image"
 import Heart from '../../public/musicBar_logos/heart.svg'
 import HeartFull from '../../public/musicBar_logos/heart_full.svg'
+import AddToEpisodes from '../../public/musicBar_logos/add_to_episodes_logo.svg'
+import AddedToEpisodes from '../../public/musicBar_logos/added_to_episodes_logo.svg'
 import ScreenDisplay from '../../public/musicBar_logos/screen_display.svg'
 
 const Container = styled.div`
@@ -28,11 +31,20 @@ const ScreenButton = styled.button`
   &:hover {
     opacity: 1;
   }
+  &:active {
+    opacity: 0.7;
+  }
 `
 const HeartButton = styled(ScreenButton)`
   margin-top: 0;
   ${({isLiked}) => isLiked && `
     color: #1db954;
+    opacity: 1;
+  `}
+`
+const AddEpisodesButton = styled(ScreenButton)`
+  margin-top: 0;
+  ${({isLiked}) => isLiked && `
     opacity: 1;
   `}
 `
@@ -69,7 +81,10 @@ const MusicArtist = styled(MusicTitle)`
 `
 
 export default function CurrentMusicInformations() {
-  const [isLiked, setIsLiked ] = useState(false)
+
+  const music = useSelector(state => state.music)
+  const [isLiked, setIsLiked ] = useState(true)
+
   return (
     <Container>
       <CurrentMusicCover>
@@ -79,12 +94,18 @@ export default function CurrentMusicInformations() {
         <MusicTitle>Monégasque</MusicTitle>
         <MusicArtist>PLK</MusicArtist>
       </MusicInformations>
-      <HeartButton
-        isLiked={isLiked}
-        onClick={() => setIsLiked(curr => !curr)}
-      >
-        {isLiked ? <HeartFull /> : <Heart />}
-      </HeartButton>
+      {music.soundType === 'music' ? (
+        <HeartButton
+          isLiked={isLiked}
+          onClick={() => setIsLiked(curr => !curr)}
+        >
+          {isLiked ? <HeartFull /> : <Heart />}
+        </HeartButton>
+      ):(
+        <AddEpisodesButton isLiked={isLiked}>
+          {isLiked ? <AddedToEpisodes /> : <AddToEpisodes />}
+        </AddEpisodesButton>
+      )}
       <ScreenButton>
         <ScreenDisplay />
       </ScreenButton>

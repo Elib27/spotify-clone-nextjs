@@ -7,10 +7,12 @@ import PlaylistBar from './PlaylistBar'
 import DownloadButton from './DownloadButton'
 
 const Container = styled.nav`
-  height: 100%;
+  grid-column: 1;
+  grid-row: 2;
   width: 242px;
   padding: 24px 8px 0 8px;
-  background-color: #000;
+  border-radius: 8px;
+  background-color: #121212;
   position: relative;
   display: flex;
   flex-direction: column;

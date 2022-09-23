@@ -8,12 +8,12 @@ import CollectionNavBar from '../collection/collectionNavBar'
 import CategoryFilterBar from '../searchPage/CategoryFilterBar'
 
 const HeaderContainer = styled.header`
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  background-color: #000;
+  grid-column: 1 / -1;
+  grid-row: 1;
 `
 const MainNavBar = styled.div`
-  height: 64px;
+  height: 48px;
   width: 100%;
   padding: 0 16px 0 32px;
   background-color: #0ff0;

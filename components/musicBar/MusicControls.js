@@ -4,11 +4,13 @@ import {
   togglePlaying,
   playMusic,
   togglePlayingRandom,
+  incrementLoopMode,
   changeLoopMode,
   changeTime,
   updateTimeInMinSecs,
   changeDuration,
-  updateDurationInMinSecs
+  updateDurationInMinSecs,
+  changeSoundType
 } from '../../store/store'
 import styled from "styled-components"
 import RandomMusicLogo from '../../public/musicBar_logos/random_music.svg'
@@ -159,7 +161,7 @@ const TimerContainer = styled.div`
 export default function MusicControls() {
 
   const [currentMusicIndex, setCurrentMusicIndex] = useState(0)
-  const [maxMusicIndex, setMaxMusicIndex] = useState(0)
+  const [maxMusicIndex, setMaxMusicIndex] = useState(20)
   const [currentMusicLink, setCurrentMusicLink] = useState(null)
   const [isProgressionBarMoving, setIsProgressionBarMoving] = useState(false)
 
@@ -197,13 +199,19 @@ export default function MusicControls() {
   useEffect(() => {
     dispatch(updateTimeInMinSecs())
     if (music.time === music.duration) {
-      handleClickNextMusic()
+      if (music.loopMode === 'loop_2') {
+        resetMusic()
+      }
+      else {
+        handleClickNextMusic()
+      }
     }
-  }, [music.time])
+  }, [music.time, music.duration, music.loopMode])
 
   useEffect(() => {
     async function firstMusicLoad(){
-      const { url, maxIndex } = await getCopyrightFreeTrack(currentMusicIndex)
+      const { url, maxIndex, type } = await getCopyrightFreeTrack(currentMusicIndex)
+      dispatch(changeSoundType(type))
       setCurrentMusicLink(url)
       setMaxMusicIndex(maxIndex)
       updateMusicDuration()
@@ -242,13 +250,17 @@ export default function MusicControls() {
     else {
       setCurrentMusicIndex(curr => curr + 1)
     }
+    if (music.loopMode === 'loop_2') {
+      dispatch(changeLoopMode('loop_1'))
+    }
   }
 
   useEffect(() => {
     async function changeMusic() {
-      const { url, maxIndex } = await getCopyrightFreeTrack(currentMusicIndex)
+      const { url, maxIndex, type } = await getCopyrightFreeTrack(currentMusicIndex)
       setCurrentMusicLink(url)
       setMaxMusicIndex(maxIndex)
+      dispatch(changeSoundType(type))
     }
     changeMusic()
   }, [currentMusicIndex])
@@ -295,7 +307,10 @@ export default function MusicControls() {
                 <RandomMusicLogo />
               </RandomButton>
             ) : (
-              <ControlButton>
+              <ControlButton
+                onClick={() => audio.current.currentTime -= 15}
+                data-hover="Reculer de 15 secondes"
+              >
                 <Prev15secLogo />
               </ControlButton>
             )
@@ -323,14 +338,17 @@ export default function MusicControls() {
           { music.soundType === 'music' ? 
             (
               <LoopButton
-                onClick={() => dispatch(changeLoopMode())}
+                onClick={() => dispatch(incrementLoopMode())}
                 loopMode={music.loopMode}
                 data-hover={getLoopModeDataHover()}
               >
                 {music.loopMode === 'loop_2' ? <LoopMusic2Logo /> : <LoopMusic1Logo /> }
               </LoopButton>
             ) : (
-              <ControlButton>
+              <ControlButton
+                onClick={() => audio.current.currentTime += 15}
+                data-hover="Avancer de 15 secondes"
+              >
                   <Next15secLogo />
               </ControlButton>
             )

@@ -5,12 +5,12 @@ import MusicControls from "./MusicControls"
 import SoundConfiguration from "./SoundConfiguration"
 
 const MusicBarWrapper = styled.footer`
-  height: 91px;
-  width: 100vw;
+  grid-row: 3;
+  grid-column: 1 / -1;
+  height: 72px;
   min-width: 768px;
   padding: 0 16px;
-  background-color: #181818;
-  border-top: 1px solid #282828;
+  background-color: #000;
   display: flex;
   align-items: center;
   z-index: 1;
