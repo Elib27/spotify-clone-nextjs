@@ -1,11 +1,15 @@
 import styled from "styled-components"
 import { useState, useEffect, useRef} from 'react'
 import { useSelector } from 'react-redux'
+import Link from 'next/link'
 import Image from "next/image"
 import Pannel from "./AccountPannel"
 import SearchBar from '../searchPage/SearchBar'
-import CollectionNavBar from '../collection/collectionNavBar'
 import CategoryFilterBar from '../searchPage/CategoryFilterBar'
+import SpotifyLogo from '../../public/header_logos/spotify_logo.svg'
+import HouseLogo from '../../public/header_logos/house.svg'
+import HouseFullLogo from '../../public/header_logos/house_full.svg'
+import AvatarLogo from '../../public/header_logos/default_avatar.svg'
 
 const HeaderContainer = styled.header`
   background-color: #000;
@@ -15,11 +19,13 @@ const HeaderContainer = styled.header`
 const MainNavBar = styled.div`
   height: 48px;
   width: 100%;
-  padding: 0 16px 0 32px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 1fr;
+  gap: 16px;
+  padding-left: 8px;
+  border-radius: 8px;
   background-color: #0ff0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 `
 const LeftContainer = styled.div`
   display: flex;
@@ -27,23 +33,45 @@ const LeftContainer = styled.div`
   flex-wrap: nowrap;
   align-items: center;
 `
-const NavigationButton = styled.button`
+const LogoButton = styled.button`
   height: 32px;
   width: 32px;
-  background-color: rgba(0,0,0,0.7);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 0;
+  color: #fff;
+  border: none;
+  background-color: transparent;
   cursor: pointer;
-  ${({ disabled }) => disabled && `
-    opacity: 0.6;
-    cursor: not-allowed;
+`
+const CentralContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+`
+const HomeButton = styled.button`
+  height: 48px;
+  width: 48px;
+  background-color: #242424;
+  border-radius: 50%;
+  color: #fff;
+  opacity: 0.7;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  ${({isHomePage}) => isHomePage && `
+    opacity: 1;
   `}
+  &:hover {
+    background-color: #2a2a2a;
+    opacity: 1;
+  }
 `
 const RightContainer = styled.div`
   display: flex;
+  justify-content: flex-end;
+  align-items: center;
   gap: 32px;
 `
 const SubscribeButton = styled.button`
@@ -63,47 +91,23 @@ const SubscribeButton = styled.button`
   }
 `
 const AccountButton = styled.button`
-  background-color: #000;
-  border: none;
-  outline: none;
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  background-color: #121212;
+  border: 8px solid #242424;
   color: #fff;
-  border-radius: 28px;
-  padding: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
   cursor: pointer;
   &:hover {
-    background-color: #282828;
+    border-color: #2a2a2a;
   }
 `
-const AccountImage = styled.div`
-  height: 28px;
-  width: 28px;
-  background-color: #535353;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  `
-const AccountImageContainer = styled.div`
+const AvatarLogoContainer = styled.div`
   height: 20px;
 `
-const Username = styled.span`
-  font-size: 0.875rem;
-  font-weight: 700;
-  max-width: 110px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`
-const TriangleLogoContainer = styled.div`
-  height: 16px;
-  margin-right: 6px;
-`
-
-const user = 'eliot';
 
 const TestPannel = styled.div`
   height: 200px;
@@ -131,10 +135,10 @@ const pagesWhereSubscribeButtonVisible = [
 export default function PageHeader() {
 
   const navigation = useSelector(state => state.navigation)
+
   const [isFirstPageVisited, setIsFirstPageVisited] = useState(true)
   const [IsLastPageVisited, setIsLastPagePageVisited] = useState(true)
   const [firstPageVisitedIndex, setFirstPageVisitedIndex] = useState(0)
-
 
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const panel = useRef(null)
@@ -194,21 +198,21 @@ export default function PageHeader() {
     <HeaderContainer>
       <MainNavBar>
         <LeftContainer>
-          <NavigationButton
-            onClick={handleClickPrevPage}
-            disabled={isFirstPageVisited}
-          >
-            <Image src="/header_logos/left_arrow.svg" alt="return button" width={22} height={22} />
-          </NavigationButton>
-          <NavigationButton
-            onClick={handleClickNextPage}
-            disabled={IsLastPageVisited}
-          >
-            <Image src="/header_logos/right_arrow.svg" alt="forward button" width={22} height={22} />
-          </NavigationButton>
-          {navigation.currentPage === '/search' && <SearchBar />}
-          {pagesWhereCollectionBarVisible.includes(navigation.currentPage) && <CollectionNavBar/>}
+          <Link href="/">
+            <LogoButton>
+              <SpotifyLogo height={32} width={32}/>
+            </LogoButton>
+          </Link>
         </LeftContainer>
+        <CentralContainer>
+          <Link href="/">
+            <HomeButton isHomePage={navigation.currentPage === '/'}>
+              {navigation.currentPage === '/' ? <HouseFullLogo /> : <HouseLogo />}
+            </HomeButton>
+          </Link>
+          <SearchBar />
+          {pagesWhereCollectionBarVisible.includes(navigation.currentPage) && <CollectionNavBar/>}
+        </CentralContainer>
         <RightContainer>
         {(pagesWhereSubscribeButtonVisible.includes(navigation.currentPage) || navigation.currentPage.includes('/playlist/'))
         && (
@@ -217,15 +221,9 @@ export default function PageHeader() {
           </a>
         )}
           <AccountButton onClick={openPanel}>
-            <AccountImage>
-              <AccountImageContainer>
-                <Image src="/header_logos/default_avatar.svg" alt="account button" width={16} height={16} />
-              </AccountImageContainer>
-            </AccountImage>
-            <Username>{user}</Username>
-            <TriangleLogoContainer>
-              <Image src="/header_logos/triangle.svg" alt="toogle menu logo" width={16} height={16} />
-            </TriangleLogoContainer>
+            <AvatarLogoContainer>
+              <AvatarLogo width={16} height={16} alt="account button" />
+            </AvatarLogoContainer>
           </AccountButton>
         </RightContainer>
         {/* <Pannel /> */}

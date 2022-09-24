@@ -6,9 +6,10 @@ import SearchLogo from '../../public/header_logos/search.svg'
 import CrossLogo from '../../public/header_logos/cross.svg'
 
 const Container = styled.div`
-  height: 40px;
+  height: 48px;
   width: 364px;
-  background-color: #fff;
+  background-color: #2a2a2a;
+  box-shadow: 0 0 0 1px hsl(0deg 0% 100% / 20%);
   border-radius: 500px;
   display: flex;
   justify-content: space-between;
@@ -28,6 +29,7 @@ const SearchInput = styled.input`
   text-overflow: ellipsis;
   &:focus {
     outline: 0;
+    box-shadow: 0 0 0 2px #fff;
   }
 `
 const ClearButton = styled.button`
