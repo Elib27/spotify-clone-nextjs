@@ -1,13 +1,17 @@
 import styled from "styled-components"
+import NavButton from "./NavButton"
 import CreationButton from "./CreationButton"
-
-const CreationBarContainer = styled.div`
-  margin-top: 24px;
-`
 
 export default function CreationBar() {
   return (
-    <CreationBarContainer>
+    <div>
+      <NavButton 
+        label="Bibliothèque"
+        link="/collection/playlists"
+        imageSrc="/sideBar_logos/books.svg"
+        imageSrcSelected="/sideBar_logos/books_full.svg"
+        imageAlt="library link button"
+      />
       <CreationButton 
         label="Créer une playlist"
         link="/playlist/67576ghjgjHG876JHJH6"
@@ -29,6 +33,6 @@ export default function CreationBar() {
         imageAlt="logo favoris vos épisodes"
         logoBackground="#006450"
       />
-    </CreationBarContainer>
+    </div>
   )
 }

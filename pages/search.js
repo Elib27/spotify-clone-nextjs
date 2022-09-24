@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import PageContainer from '../components/shared/PageContainer'
 import SearchResults from '../components/searchPage/SearchResults'
-import CollectionNavBar from '../components/collection/collectionNavBar'
+import CategoryFilterBar from '../components/searchPage/CategoryFilterBar'
 import SearchPageDefaultContent from '../components/searchPage/SearchPageDefaultContent'
 
 export default function Search() {
@@ -13,7 +13,7 @@ export default function Search() {
     <PageContainer>
       {navigation.searchInput.length > 0 && (
         <>
-          <CollectionNavBar />
+          <CategoryFilterBar />
           <SearchResults />
         </>
       )}

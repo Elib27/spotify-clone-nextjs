@@ -51,6 +51,8 @@ const AddEpisodesButton = styled(ScreenButton)`
 const CurrentMusicCover = styled.div`
   height: 56px;
   width: 56px;
+  flex-shrink: 0;
+  margin: 0 8px;
   position: relative;
   cursor: pointer;
 `
@@ -66,6 +68,7 @@ const MusicTitle = styled.div`
   white-space: nowrap;
   line-height: 1.6;
   padding: 0 12px 0 6px;
+  flex-shrink: 0;
   cursor: pointer;
   &:hover {
     text-decoration: underline;

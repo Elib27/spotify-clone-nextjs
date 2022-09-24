@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from "next/image"
 import Pannel from "./AccountPannel"
 import SearchBar from '../searchPage/SearchBar'
-import CategoryFilterBar from '../searchPage/CategoryFilterBar'
+import CollectionNavBar from '../collection/collectionNavBar'
 import SpotifyLogo from '../../public/header_logos/spotify_logo.svg'
 import HouseLogo from '../../public/header_logos/house.svg'
 import HouseFullLogo from '../../public/header_logos/house_full.svg'
@@ -48,24 +48,30 @@ const CentralContainer = styled.div`
   gap: 16px;
   width: 100%;
 `
+const HomeLogoContainer = styled.div`
+  height: 24px;
+  width: 24px;
+  opacity: 0.7;
+  ${({isHomePage}) => isHomePage && `
+    opacity: 1;
+  `}
+`
 const HomeButton = styled.button`
   height: 48px;
   width: 48px;
   background-color: #242424;
   border-radius: 50%;
   color: #fff;
-  opacity: 0.7;
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  ${({isHomePage}) => isHomePage && `
-    opacity: 1;
-  `}
   &:hover {
     background-color: #2a2a2a;
-    opacity: 1;
+    ${HomeLogoContainer} {
+      opacity: 1;
+    }
   }
 `
 const RightContainer = styled.div`
@@ -206,8 +212,10 @@ export default function PageHeader() {
         </LeftContainer>
         <CentralContainer>
           <Link href="/">
-            <HomeButton isHomePage={navigation.currentPage === '/'}>
-              {navigation.currentPage === '/' ? <HouseFullLogo /> : <HouseLogo />}
+            <HomeButton>
+              <HomeLogoContainer isHomePage={navigation.currentPage === '/'}>
+                {navigation.currentPage === '/' ? <HouseFullLogo /> : <HouseLogo />}
+              </HomeLogoContainer>
             </HomeButton>
           </Link>
           <SearchBar />
@@ -233,7 +241,6 @@ export default function PageHeader() {
           </TestPannel>
         )} */}
       </MainNavBar>
-      {navigation.currentPage === '/search' && <CategoryFilterBar />}
     </HeaderContainer>
   )
 }

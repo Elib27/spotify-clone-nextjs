@@ -5,29 +5,56 @@ import { changeSearchInput } from '../../store/store'
 import SearchLogo from '../../public/header_logos/search.svg'
 import CrossLogo from '../../public/header_logos/cross.svg'
 
-const Container = styled.div`
-  height: 48px;
-  width: 364px;
-  background-color: #2a2a2a;
-  box-shadow: 0 0 0 1px hsl(0deg 0% 100% / 20%);
-  border-radius: 500px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`
 const SearchLogoContainer = styled.div`
   height: 24px;
   width: 24px;
-  margin-left: 12px;
+  opacity: 0.7;
+`
+const Container = styled.div`
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  &:focus-within ${SearchLogoContainer} {
+    opacity: 1;
+  }
+  &:hover ${SearchLogoContainer} {
+    opacity: 1;
+  }
+`
+const SearchBarHoverContainer = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 12px;
+  right: 12px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
 `
 const SearchInput = styled.input`
-  width: 100%;
+  height: 48px;
+  width: 440px;
   font-size: 0.875rem;
+  color: #fff;
   border: 0;
   background-color: transparent;
-  margin: 0 12px;
+  padding: 6px 48px;
   text-overflow: ellipsis;
+  background-color: #242424;
+  border-radius: 500px;
+  &:hover {
+    background-color: #2a2a2a;
+    box-shadow: 0 0 0 1px hsl(0deg 0% 100% / 20%);
+  }
   &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 2px #fff;
+  }
+  &:active {
     outline: 0;
     box-shadow: 0 0 0 2px #fff;
   }
@@ -35,9 +62,9 @@ const SearchInput = styled.input`
 const ClearButton = styled.button`
   height: 24px;
   width: 24px;
-  margin-right: 12px;
   border: 0;
   background-color: transparent;
+  pointer-events: all;
 `
 
 export default function SearchBar() {
@@ -46,15 +73,6 @@ export default function SearchBar() {
   const dispatch = useDispatch()
   
   const [isClearButtonVisible, setIsClearButtonVisible] = useState(false)
-  const searchInput = useRef(null)
-
-  function focusInput() {
-    searchInput.current.focus()
-  }
-
-  useEffect(() => {
-    focusInput()
-  }, [])
 
   useEffect(() => {
     if (navigation.searchInput.length > 0) {
@@ -65,6 +83,12 @@ export default function SearchBar() {
     }
   }, [navigation.searchInput])
 
+  useEffect(() => {
+    if (navigation.currentPage !== '/search'){
+      dispatch(changeSearchInput(''))
+    }
+  }, [navigation.currentPage])
+
   function handleChange(e) {
     dispatch(changeSearchInput(e.target.value))
   }
@@ -74,26 +98,27 @@ export default function SearchBar() {
   }
 
   return (
-    <Container onClick={focusInput}>
-      <SearchLogoContainer>
-        <SearchLogo />
-      </SearchLogoContainer>
+    <Container>
+      <SearchBarHoverContainer>
+        <SearchLogoContainer>
+          <SearchLogo />
+        </SearchLogoContainer>
+        {
+          isClearButtonVisible && (
+          <ClearButton onClick={handleClickClearInput}>
+            <CrossLogo/>
+          </ClearButton>
+        )}
+      </SearchBarHoverContainer>
       <SearchInput
         placeholder="Que souhaitez-vous écouter ?"
-        spellcheck="false"
-        autocapitalize="off"
-        autocorrect="off"
-        maxlength="800"
+        spellCheck="false"
+        autoCapitalize="off"
+        autoCorrect="off"
+        maxLength={800}
         onChange={handleChange}
         value={navigation.searchInput}
-        ref={searchInput}
       />
-      {
-        isClearButtonVisible && (
-        <ClearButton onClick={handleClickClearInput}>
-          <CrossLogo/>
-        </ClearButton>
-      )}
     </Container>
   )
 }

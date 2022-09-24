@@ -1,62 +1,86 @@
 import styled from 'styled-components'
-import Image from 'next/image'
-import Link from 'next/link'
-import NavBar from './NavBar'
+import { useState, useEffect, useRef } from 'react'
 import CreationBar from './CreationBar'
 import PlaylistBar from './PlaylistBar'
 import DownloadButton from './DownloadButton'
 
-const Container = styled.nav`
+const Wrapper = styled.nav`
+  --side-bar-width: 242px;
   grid-column: 1;
   grid-row: 2;
-  width: 242px;
-  padding: 24px 8px 0 8px;
+  width: var(--side-bar-width);
   border-radius: 8px;
   background-color: #121212;
   position: relative;
+`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-`
-const TopContainer = styled.div`
-`
-const SpotifyLogo = styled.div`
-  padding: 0 16px;
-  padding-bottom: 2px;
-  cursor: pointer;
-`
-const NavigationContainer = styled.div`
-  margin-top: 18px;
+  padding: 12px 8px 0 8px;
 `
 const Separator = styled.div`
   height: 1px;
-  width: calc(100% - 32px);
+  width: calc(100% - 32px); 
   background-color: #282828;
   margin: 8px 16px 0 16px;
 `
 const InstallButtonContainer = styled.div`
   display: flex;
 `
+const Resizer = styled.div`
+  height: 100%;
+  width: 9px;
+  background: linear-gradient(hsla(0,0%,100%,.3),hsla(0,0%,100%,.3)) no-repeat 50%/1px 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: -4.5px;
+  cursor: col-resize;
+  z-index: 1;
+  &:hover {
+    opacity: 1;
+  }
+`
 
 export default function Sidebar() {
+  const sideBar = useRef(null)
+  const [initalPos, setInitialPos] = useState(null);
+  const [SideBarWidth, setSideBarWidth] = useState(242);
+
+  function resizeSideBar(e) {
+    const boundingRect = sideBar.current.getBoundingClientRect();
+    let newSize = e.clientX - boundingRect.left;
+    if (newSize < 129) {
+      newSize = 129;
+    }
+    else if (newSize > 393) {
+      newSize = 393;
+    }
+    setSideBarWidth(newSize);
+  }
+
+  useEffect(() => {
+    sideBar.current.style.setProperty('--side-bar-width', `${SideBarWidth}px`);
+  }, [SideBarWidth])
+
   return (
-    <Container>
-      <TopContainer>
-        <SpotifyLogo>
-          <Link href="/">
-            <Image src="/sideBar_logos/spotify_logo.svg" alt="logo" width={131} height={40} />
-          </Link>
-        </SpotifyLogo>
-        <NavigationContainer>
-          <NavBar />
+    <Wrapper ref={sideBar}>
+      <Container>
+        <div>
           <CreationBar />
           <Separator />
           <PlaylistBar />
-        </NavigationContainer>
-      </TopContainer>
-      <InstallButtonContainer>
-        <DownloadButton />
-      </InstallButtonContainer>
-    </Container>
+        </div>
+        <InstallButtonContainer>
+          <DownloadButton />
+        </InstallButtonContainer>
+      </Container>
+      <Resizer
+        draggable
+        onDrag={resizeSideBar}
+        onDragEnd={resizeSideBar}
+      />
+    </Wrapper>
   )
 }

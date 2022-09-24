@@ -9,7 +9,6 @@ const MusicBarWrapper = styled.footer`
   grid-column: 1 / -1;
   height: 72px;
   min-width: 768px;
-  padding: 0 16px;
   background-color: #000;
   display: flex;
   align-items: center;
