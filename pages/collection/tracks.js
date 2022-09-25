@@ -55,7 +55,7 @@ const TracksSectionRowTitle = styled.div`
   }
 `
 
-export default function tracks() {
+export default function Tracks() {
   return (
     <Container>
       <PlaylistHeader
@@ -64,7 +64,7 @@ export default function tracks() {
         background="linear-gradient(#5038a0 0, #291e50 100%)"
         owner="eliot"
         tracks_number={2}
-      />
+        />
       {/* <NoLikedTracksSection /> */}
       <PlayMusicSection>
         <PlayButton>
@@ -90,7 +90,7 @@ export default function tracks() {
           addedDate={3}
           duration="3:12"
           number={1}
-        />
+          />
         <LikedTrack
           title="Top album"
           artist="Mister V"
@@ -100,7 +100,7 @@ export default function tracks() {
           addedDate={3}
           duration="3:12"
           number={2}
-        />
+          />
         <LikedTrack
           title="Top album"
           artist="Mister V"
@@ -110,7 +110,7 @@ export default function tracks() {
           addedDate={3}
           duration="3:12"
           number={3}
-        />
+          />
         <LikedTrack
           title="Top album"
           artist="Mister V"
@@ -120,7 +120,7 @@ export default function tracks() {
           addedDate={3}
           duration="3:12"
           number={4}
-        />
+          />
       </TracksContainer>
     </Container>
   )

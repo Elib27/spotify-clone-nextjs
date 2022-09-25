@@ -5,7 +5,7 @@ import PlaylistBar from './PlaylistBar'
 import DownloadButton from './DownloadButton'
 
 const Wrapper = styled.nav`
-  --side-bar-width: 242px;
+  --side-bar-width: 241px;
   grid-column: 1;
   grid-row: 2;
   width: var(--side-bar-width);
@@ -18,6 +18,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 12px 8px 0 8px;
+  height: 100%;
+  width: 100%;
 `
 const Separator = styled.div`
   height: 1px;
@@ -36,16 +38,22 @@ const Resizer = styled.div`
   position: absolute;
   top: 0;
   right: -4.5px;
-  cursor: col-resize;
+  cursor: col-resize !important;
   z-index: 1;
+  ${({isResizeBarVisible}) => isResizeBarVisible && `
+    opacity: 1;
+  `}
   &:hover {
     opacity: 1;
+  }
+  &:active {
+    cursor: col-resize;
   }
 `
 
 export default function Sidebar() {
   const sideBar = useRef(null)
-  const [initalPos, setInitialPos] = useState(null);
+  const [isResizeBarVisible, setIsResizeBarVisible] = useState(false)
   const [SideBarWidth, setSideBarWidth] = useState(242);
 
   function resizeSideBar(e) {
@@ -58,6 +66,17 @@ export default function Sidebar() {
       newSize = 393;
     }
     setSideBarWidth(newSize);
+  }
+
+  function handleDragStart(e) {
+    setIsResizeBarVisible(true)
+    const img = new Image();
+    e.dataTransfer.setDragImage(img, 0, 0);
+  }
+
+  function handleDragEnd(e) {
+    setIsResizeBarVisible(false)
+    resizeSideBar(e)
   }
 
   useEffect(() => {
@@ -78,8 +97,10 @@ export default function Sidebar() {
       </Container>
       <Resizer
         draggable
+        onDragStart={handleDragStart}
         onDrag={resizeSideBar}
-        onDragEnd={resizeSideBar}
+        onDragEnd={handleDragEnd}
+        isResizeBarVisible={isResizeBarVisible}
       />
     </Wrapper>
   )

@@ -47,7 +47,7 @@ const PageContainer = styled.div`
   }
 `
 
-export default function Layout({ children }) {
+export default function MainLayout({ children }) {
 
   const router = useRouter()
   const dispatch = useDispatch()

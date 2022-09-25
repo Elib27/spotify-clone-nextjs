@@ -5,7 +5,6 @@ import Link from 'next/link'
 import Image from "next/image"
 import Pannel from "./AccountPannel"
 import SearchBar from '../searchPage/SearchBar'
-import CollectionNavBar from '../collection/collectionNavBar'
 import SpotifyLogo from '../../public/header_logos/spotify_logo.svg'
 import HouseLogo from '../../public/header_logos/house.svg'
 import HouseFullLogo from '../../public/header_logos/house_full.svg'
@@ -125,12 +124,12 @@ const TestPannel = styled.div`
   z-index: 10000;
 `
 
-const pagesWhereCollectionBarVisible = [
-  '/collection/playlists',
-  '/collection/podcasts',
-  '/collection/artists',
-  '/collection/albums',
-]
+// const pagesWhereCollectionBarVisible = [
+//   '/collection/playlists',
+//   '/collection/podcasts',
+//   '/collection/artists',
+//   '/collection/albums',
+// ]
 
 const pagesWhereSubscribeButtonVisible = [
   '/',
@@ -141,10 +140,6 @@ const pagesWhereSubscribeButtonVisible = [
 export default function PageHeader() {
 
   const navigation = useSelector(state => state.navigation)
-
-  const [isFirstPageVisited, setIsFirstPageVisited] = useState(true)
-  const [IsLastPageVisited, setIsLastPagePageVisited] = useState(true)
-  const [firstPageVisitedIndex, setFirstPageVisitedIndex] = useState(0)
 
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const panel = useRef(null)
@@ -219,7 +214,6 @@ export default function PageHeader() {
             </HomeButton>
           </Link>
           <SearchBar />
-          {pagesWhereCollectionBarVisible.includes(navigation.currentPage) && <CollectionNavBar/>}
         </CentralContainer>
         <RightContainer>
         {(pagesWhereSubscribeButtonVisible.includes(navigation.currentPage) || navigation.currentPage.includes('/playlist/'))

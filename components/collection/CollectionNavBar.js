@@ -3,11 +3,15 @@ import { useState } from 'react'
 import CollectionNavButton from './CollectionNavButton'
 
 const Container = styled.nav`
-  padding-left: 24px;
+  padding-left: 32px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 `
-
 const NavContainer = styled.ul`
+  height: 64px;
   display: flex;
+  align-items: center;
   list-style: none;
 `
 const CollectionButtonContainer = styled.li`

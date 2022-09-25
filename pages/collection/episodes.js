@@ -44,7 +44,7 @@ const Wrapper = styled.div`
   }
 `
 
-export default function episodes() {
+export default function Episodes() {
   return (
     <Container>
       <PlaylistHeader
@@ -53,7 +53,7 @@ export default function episodes() {
         owner="eliot"
         tracks_number={9}
         isPodcastPlaylist
-      />
+        />
       <PlayMusicSection>
         <PlayButton>
           <PlayLogo />
@@ -69,7 +69,7 @@ export default function episodes() {
             cover_url="https://i.scdn.co/image/ab6765630000f68dfde612915ed31ed089865720"
             date="mars 2020"
             duration="1 h 20 min"
-          />
+            />
         </Wrapper>
         <Wrapper>
           <Separator />
@@ -80,7 +80,7 @@ export default function episodes() {
             cover_url="https://i.scdn.co/image/ab6765630000f68dfde612915ed31ed089865720"
             date="mars 2020"
             duration="1 h 20 min"
-          />
+            />
         </Wrapper>
         <Wrapper>
           <Separator />
@@ -91,7 +91,7 @@ export default function episodes() {
             cover_url="https://i.scdn.co/image/ab6765630000f68dfde612915ed31ed089865720"
             date="mars 2020"
             duration="1 h 20 min"
-          />
+            />
         </Wrapper>
         <Wrapper>
           <Separator />
@@ -102,7 +102,7 @@ export default function episodes() {
             cover_url="https://i.scdn.co/image/ab6765630000f68dfde612915ed31ed089865720"
             date="mars 2020"
             duration="1 h 20 min"
-          />
+            />
         </Wrapper>
         <Wrapper>
           <Separator />
@@ -113,7 +113,7 @@ export default function episodes() {
             cover_url="https://i.scdn.co/image/ab6765630000f68dfde612915ed31ed089865720"
             date="mars 2020"
             duration="1 h 20 min"
-          />
+            />
         </Wrapper>
       </PodcastsContainer>
     </Container>
