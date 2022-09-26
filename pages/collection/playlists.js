@@ -52,5 +52,5 @@ export default function Playlists() {
   )
 }
 
-Playlists.Layout = CollectionLayout
+Playlists.getLayout = page => <CollectionLayout>{page}</CollectionLayout>
 

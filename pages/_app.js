@@ -5,14 +5,12 @@ import { store } from '../store/store'
 
 function MyApp({ Component, pageProps }) {
 
-  const Layout = Component.Layout || (children => <>{children}</>)
+  const getLayout = Component.getLayout || ((page) => page)
 
   return (
     <Provider store={store}>
       <MainLayout>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        {getLayout(<Component {...pageProps} />)}
       </MainLayout>
     </Provider>
   )

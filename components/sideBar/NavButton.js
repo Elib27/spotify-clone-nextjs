@@ -1,6 +1,4 @@
 import styled from "styled-components"
-import { useSelector, useDispatch } from "react-redux"
-import { changeCurrentPage } from "../../store/store"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -40,22 +38,20 @@ const LogoContainer = styled.div`
   }
 `
 
-export default function NavButton({ label, link, imageSrc, imageSrcSelected, imageAlt }) {
-
-  const navigation = useSelector(state => state.navigation)
+export default function NavButton({ label, link, imageSrc, imageSrcSelected, imageAlt, isActive}) {
 
   return (
     <Link href={link}>
       <NavLinkButton>
         <LogoContainer>
-          {navigation.currentPage === link ? (
+          {isActive ? (
             <Image src={imageSrcSelected} alt={imageAlt} width={24} height={24} />
           ) : (
             <Image src={imageSrc} alt={imageAlt} width={24} height={24} />
           )}
         </LogoContainer>
         <LinkLabel
-          isSelected={navigation.currentPage === link}
+          isSelected={isActive}
         >
           {label}
         </LinkLabel>

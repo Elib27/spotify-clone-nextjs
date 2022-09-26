@@ -25,4 +25,4 @@ export default function Albums() {
   )
 }
 
-Albums.Layout = CollectionLayout
+Albums.getLayout = page => <CollectionLayout>{page}</CollectionLayout>

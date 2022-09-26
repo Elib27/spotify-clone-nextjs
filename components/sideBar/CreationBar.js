@@ -1,8 +1,19 @@
 import styled from "styled-components"
+import { useRouter } from "next/router"
 import NavButton from "./NavButton"
 import CreationButton from "./CreationButton"
 
+const pagesWhereFullBooks = [
+  "/collection/playlists",
+  "/collection/podcasts",
+  "/collection/artists",
+  "/collection/albums",
+]
+
 export default function CreationBar() {
+
+  const router = useRouter()
+
   return (
     <div>
       <NavButton 
@@ -11,6 +22,7 @@ export default function CreationBar() {
         imageSrc="/sideBar_logos/books.svg"
         imageSrcSelected="/sideBar_logos/books_full.svg"
         imageAlt="library link button"
+        isActive={pagesWhereFullBooks.includes(router.pathname)}
       />
       <CreationButton 
         label="Créer une playlist"

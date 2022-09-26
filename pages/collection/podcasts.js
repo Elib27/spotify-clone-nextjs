@@ -52,4 +52,4 @@ export default function Podcasts() {
   )
 }
 
-Podcasts.Layout = CollectionLayout
+Podcasts.getLayout = page => <CollectionLayout>{page}</CollectionLayout>

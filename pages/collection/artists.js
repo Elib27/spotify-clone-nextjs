@@ -35,4 +35,4 @@ export default function Artists() {
   )
 }
 
-Artists.Layout = CollectionLayout
+Artists.getLayout = page => <CollectionLayout>{page}</CollectionLayout>
