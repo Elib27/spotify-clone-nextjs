@@ -1,7 +1,8 @@
 import styled from 'styled-components'
-import CollectionPageContainer from "../../../components/collection/CollectionPageContainer"
-import PlaylistBigCard from '../../../components/collection/PlaylistBigCard'
-import PlaylistCard from '../../../components/collection/PlaylistCard'
+import CollectionPageContainer from "../../components/collection/CollectionPageContainer"
+import PlaylistBigCard from '../../components/collection/PlaylistBigCard'
+import PlaylistCard from '../../components/collection/PlaylistCard'
+import CollectionLayout from '../../components/collection/CollectionLayout'
 
 const exampleTracks = [
   {title: 'Vettel', artist: 'Mister V'},
@@ -50,3 +51,5 @@ export default function Podcasts() {
     </CollectionPageContainer>
   )
 }
+
+Podcasts.Layout = CollectionLayout

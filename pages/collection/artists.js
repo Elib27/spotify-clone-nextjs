@@ -1,6 +1,8 @@
 import styled from "styled-components"
+import CollectionLayout from "../../components/collection/CollectionLayout"
 import CollectionPageContainer from "../../components/collection/CollectionPageContainer"
 import PlaylistCard from "../../components/collection/PlaylistCard"
+
 
 export default function Artists() {
   return (
@@ -32,3 +34,5 @@ export default function Artists() {
     </CollectionPageContainer>
   )
 }
+
+Artists.Layout = CollectionLayout
