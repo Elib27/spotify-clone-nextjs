@@ -10,15 +10,19 @@ export default function Search() {
   const navigation = useSelector(state => state.navigation)
 
   return (
-    <PageContainer>
-      {navigation.searchInput.length > 0 && (
-        <>
-          <CategoryFilterBar />
-          <SearchResults />
-        </>
+    <>
+      {navigation.searchInput.length > 0  && (
+        <CategoryFilterBar />
       )}
-      {navigation.searchInput.length === 0 && <SearchPageDefaultContent />}
-    </PageContainer>
+      <PageContainer>
+        {navigation.searchInput.length > 0 ? (
+          <>
+            <SearchResults />
+          </>
+        ) : (
+          <SearchPageDefaultContent />
+        )}
+      </PageContainer>
+    </>
   )
-
 }

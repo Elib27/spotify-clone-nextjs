@@ -2,12 +2,14 @@ import styled from "styled-components"
 import CategoryFilterButton from "./CategoryFilterButton"
 
 const BarContainer = styled.div`
-  height: 48px;
+  height: 64px;
   width: 100%;
   background-color: #121212;
-  padding: 7px 32px 0;;
+  padding: 0 32px;
   position: sticky;
-  top: 64px;
+  top: 0;
+  display: flex;
+  align-items: center;
   z-index: 10;
 `
 const FiltersContainer = styled.div`
@@ -36,6 +38,9 @@ export default function CategoryFilterBar() {
         />
         <CategoryFilterButton
           title="Albums"
+        />
+        <CategoryFilterButton
+          title="Genres et ambiances"
         />
         <CategoryFilterButton
           title="Podcasts et émissions"

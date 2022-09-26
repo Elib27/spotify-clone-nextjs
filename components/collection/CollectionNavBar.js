@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
+import { useRouter } from 'next/router'
 import CollectionNavButton from './CollectionNavButton'
 
 const Container = styled.nav`
@@ -20,10 +21,17 @@ const CollectionButtonContainer = styled.li`
 
 export default function CollectionNavBar() {
 
+  const router = useRouter()
+
   const [collectionPageName, setCollectionPageName] = useState('playlists')
 
   const buttonNames = ['Playlists', 'Podcasts', 'Artistes', 'Albums']
   const pageNames = ['playlists', 'podcasts', 'artists', 'albums']
+
+  useEffect(() => {
+    const pageName = router.pathname.split('/')[2]
+    setCollectionPageName(pageName)
+  }, [])
 
   return (
     <Container>

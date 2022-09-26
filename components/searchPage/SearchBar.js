@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeSearchInput } from '../../store/store'
 import SearchLogo from '../../public/header_logos/search.svg'
@@ -71,6 +72,8 @@ export default function SearchBar() {
 
   const navigation = useSelector(state => state.navigation)
   const dispatch = useDispatch()
+
+  const router = useRouter()
   
   const [isClearButtonVisible, setIsClearButtonVisible] = useState(false)
 
@@ -89,16 +92,23 @@ export default function SearchBar() {
     }
   }, [navigation.currentPage])
 
-  function handleChange(e) {
+  function handleInputChange(e) {
     dispatch(changeSearchInput(e.target.value))
+    handleClickRedirectToSearchPage()
   }
 
   function handleClickClearInput() {
     dispatch(changeSearchInput(''))
   }
 
+  function handleClickRedirectToSearchPage() {
+    if (navigation.currentPage !== '/search') {
+      router.push('/search')
+    }
+  }
+
   return (
-    <Container>
+    <Container onClick={handleClickRedirectToSearchPage}>
       <SearchBarHoverContainer>
         <SearchLogoContainer>
           <SearchLogo />
@@ -116,7 +126,7 @@ export default function SearchBar() {
         autoCapitalize="off"
         autoCorrect="off"
         maxLength={800}
-        onChange={handleChange}
+        onChange={handleInputChange}
         value={navigation.searchInput}
       />
     </Container>
