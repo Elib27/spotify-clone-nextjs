@@ -15,6 +15,8 @@ const Container = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  padding-right: 16px;
+  box-sizing: content-box;
 `
 const ScreenButton = styled.button`
   height: 32px;
@@ -52,12 +54,12 @@ const CurrentMusicCover = styled.div`
   height: 56px;
   width: 56px;
   flex-shrink: 0;
-  margin: 0 8px;
+  margin-left: 16px;
   position: relative;
   cursor: pointer;
 `
 const MusicInformations = styled.div`
-  margin: 0 8px;
+  margin: 0 20px 0 14px;
 `
 const MusicTitle = styled.div`
   font-size: 0.875rem;
@@ -67,7 +69,6 @@ const MusicTitle = styled.div`
   text-align: left;
   white-space: nowrap;
   line-height: 1.6;
-  padding: 0 12px 0 6px;
   flex-shrink: 0;
   cursor: pointer;
   &:hover {

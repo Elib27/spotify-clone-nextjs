@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const Container = styled.main`
   width: 100%;
-  padding: 16px 16px 32px 32px;
+  padding: 24px;
 `
 
 export default function PageContainer({children}) {

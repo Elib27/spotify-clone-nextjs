@@ -78,6 +78,7 @@ export default function SearchBar() {
   const [isClearButtonVisible, setIsClearButtonVisible] = useState(false)
 
   useEffect(() => {
+    router.push(`/search/${navigation.searchInput}`)
     if (navigation.searchInput.length > 0) {
       setIsClearButtonVisible(true)
     }
@@ -87,10 +88,16 @@ export default function SearchBar() {
   }, [navigation.searchInput])
 
   useEffect(() => {
-    if (navigation.currentPage !== '/search'){
+    if (!router.pathname.startsWith('/search')){
       dispatch(changeSearchInput(''))
     }
-  }, [navigation.currentPage])
+  }, [router.pathname])
+
+  function handleClickRedirectToSearchPage() {
+    if (!router.pathname.startsWith('/search')) {
+      router.push('/search')
+    }
+  }
 
   function handleInputChange(e) {
     dispatch(changeSearchInput(e.target.value))
@@ -99,12 +106,6 @@ export default function SearchBar() {
 
   function handleClickClearInput() {
     dispatch(changeSearchInput(''))
-  }
-
-  function handleClickRedirectToSearchPage() {
-    if (navigation.currentPage !== '/search') {
-      router.push('/search')
-    }
   }
 
   return (

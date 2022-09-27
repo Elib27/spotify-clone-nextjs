@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import CategoryFilterButton from "./CategoryFilterButton"
+import Link from 'next/link'
 
 const BarContainer = styled.div`
   height: 64px;
@@ -23,23 +24,29 @@ export default function CategoryFilterBar() {
   return (
     <BarContainer>
       <FiltersContainer>
-        <CategoryFilterButton
-          title="Tout"
-          isSelected
-        />
-        <CategoryFilterButton
-          title="Titres"
-        />
-        <CategoryFilterButton
-          title="Artistes"
-        />
+        <Link href='/'>
+          <CategoryFilterButton
+            title="Tout"
+            isSelected
+          />
+        </Link>
+        <Link href='/tracks'>
+          <CategoryFilterButton
+            title="Titres"
+          />
+        </Link>
+        <Link href='/artists'>
+          <CategoryFilterButton
+            title="Artistes"
+          />
+        </Link>
         <CategoryFilterButton
           title="Playlists"
         />
         <CategoryFilterButton
           title="Albums"
         />
-        <CategoryFilterButton
+        {/* <CategoryFilterButton
           title="Genres et ambiances"
         />
         <CategoryFilterButton
@@ -47,7 +54,7 @@ export default function CategoryFilterBar() {
         />
         <CategoryFilterButton
           title="Profils"
-        />
+        /> */}
       </FiltersContainer>
     </BarContainer>
   )

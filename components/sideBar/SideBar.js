@@ -5,7 +5,7 @@ import PlaylistBar from './PlaylistBar'
 import DownloadButton from './DownloadButton'
 
 const Wrapper = styled.nav`
-  --side-bar-width: 241px;
+  --side-bar-width: 255px;
   grid-column: 1;
   grid-row: 2;
   width: var(--side-bar-width);
@@ -54,7 +54,7 @@ const Resizer = styled.div`
 export default function Sidebar() {
   const sideBar = useRef(null)
   const [isResizeBarVisible, setIsResizeBarVisible] = useState(false)
-  const [SideBarWidth, setSideBarWidth] = useState(242);
+  const [SideBarWidth, setSideBarWidth] = useState(255);
 
   function resizeSideBar(e) {
     const boundingRect = sideBar.current.getBoundingClientRect();

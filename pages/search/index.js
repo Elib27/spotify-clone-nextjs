@@ -1,10 +1,10 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 import SearchCard from '../../components/searchPage/SearchCard'
 import SearchCategories from '../../data/search_categories.json'
 
 const Container = styled.div`
   width: 100%;
-  padding-top: 16px;
+  padding: 40px 24px 24px 32px;
 `
 const SearchSection = styled.section`
   padding: 16px 0;

@@ -216,12 +216,12 @@ export default function PageHeader() {
           <SearchBar />
         </CentralContainer>
         <RightContainer>
-        {(pagesWhereSubscribeButtonVisible.includes(navigation.currentPage) || navigation.currentPage.includes('/playlist/'))
+        {/* {(pagesWhereSubscribeButtonVisible.includes(navigation.currentPage) || navigation.currentPage.includes('/playlist/'))
         && (
           <a href="https://www.spotify.com/fr/premium/" target="blank_" rel='noreferrer'>
             <SubscribeButton>S&apos;abonner</SubscribeButton>
           </a>
-        )}
+        )} */}
           <AccountButton onClick={openPanel}>
             <AvatarLogoContainer>
               <AvatarLogo width={16} height={16} alt="account button" />

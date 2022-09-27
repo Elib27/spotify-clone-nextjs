@@ -5,7 +5,7 @@ import FavoriteLogo from "../../public/tracks_logos/favorite_logo.svg"
 const Header = styled.div`
   height: clamp(340px, 30vh, 500px);
   width: 100%;
-  margin-top: -64px;
+  margin-top: -94px;
   padding: 0 32px 24px;
   background: ${({background}) => background};
   display: flex;

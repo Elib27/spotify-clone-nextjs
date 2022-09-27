@@ -12,6 +12,7 @@ const Title = styled.h2`
   line-height: 1em;
   font-weight: 700;
   margin-bottom: 21.5px;
+  font-family: 'CircularSpTitle', 'Roboto', sans-serif;
 `
 
 export default function Home() {
@@ -24,7 +25,7 @@ export default function Home() {
 
   useEffect(() => {
     const timeInHours = new Date().getHours()
-    if (timeInHours >= 4 && timeInHours <= 18) {
+    if (timeInHours >= 4 && timeInHours < 18) {
       setWelcomeMessage('Bonjour')
     }
     else {

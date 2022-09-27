@@ -35,7 +35,7 @@ for(let i = 0; i < 10; i++) {
   })
 }
 
-export default function SearchResults() {
+export default function SearchResults({musicResearch}) {
 
   const WIDTH_LIMIT = useRef(230)
   const containerRef = useRef(null)
@@ -53,7 +53,7 @@ export default function SearchResults() {
   return (
     <Container ref={containerRef}>
       <BestResult
-        title="Vald"
+        title={musicResearch}
         category="Artiste"
         cover_url="https://i.scdn.co/image/ab6761610000f178bb5d08bce59cfcc825c301f4"
         link="/collection/tracks"

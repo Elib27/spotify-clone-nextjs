@@ -57,6 +57,8 @@ export default function MainLayout({ children }) {
     function handleStop(url) {
       dispatch(changeCurrentPage(url))
     }
+    
+    handleStop(router.pathname)
 
     router.events.on('routeChangeComplete', handleStop)
     router.events.on('routeChangeError', handleStop)
