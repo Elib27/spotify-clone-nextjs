@@ -1,6 +1,6 @@
 import styled from "styled-components"
+import { useRouter } from "next/router"
 import CategoryFilterButton from "./CategoryFilterButton"
-import Link from 'next/link'
 
 const BarContainer = styled.div`
   height: 64px;
@@ -21,30 +21,37 @@ const FiltersContainer = styled.div`
 `
 
 export default function CategoryFilterBar() {
+
+  const router = useRouter()
+  const { musicResearch } = router.query
+
   return (
     <BarContainer>
       <FiltersContainer>
-        <Link href='/'>
-          <CategoryFilterButton
-            title="Tout"
-            isSelected
-          />
-        </Link>
-        <Link href='/tracks'>
-          <CategoryFilterButton
-            title="Titres"
-          />
-        </Link>
-        <Link href='/artists'>
-          <CategoryFilterButton
-            title="Artistes"
-          />
-        </Link>
+        <CategoryFilterButton
+          title="Tout"
+          link={`/search/${musicResearch}`}
+          isSelected={router.pathname.split('/').length <= 3}
+        />
+        <CategoryFilterButton
+          title="Titres"
+          link={`/search/${musicResearch}/tracks`}
+          isSelected={router.pathname.split('/')[3] === 'tracks'}
+        />
+        <CategoryFilterButton
+          title="Artistes"
+          link={`/search/${musicResearch}/artists`}
+          isSelected={router.pathname.split('/')[3] === 'artists'}
+        />
         <CategoryFilterButton
           title="Playlists"
+          link={`/search/${musicResearch}/playlists`}
+          isSelected={router.pathname.split('/')[3] === 'playlists'}
         />
         <CategoryFilterButton
           title="Albums"
+          link={`/search/${musicResearch}/albums`}
+          isSelected={router.pathname.split('/')[3] === 'albums'}
         />
         {/* <CategoryFilterButton
           title="Genres et ambiances"

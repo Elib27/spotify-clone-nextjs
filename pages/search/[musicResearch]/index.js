@@ -1,10 +1,12 @@
 import styled from "styled-components"
 import { useState, useEffect, useRef } from "react"
-import useResizeObserver from "../../hooks/useResizeObserver"
-import BestResult from "./BestResult"
-import TrackResults from "./TrackResults"
-import SearchResultSection from "./SearchResultSection"
-import MusicCard from "../shared/MusicCard"
+import { useRouter } from "next/router"
+import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
+import useResizeObserver from "../../../hooks/useResizeObserver"
+import BestResult from "../../../components/searchPage/BestResult"
+import TrackResults from "../../../components/searchPage/TrackResults"
+import SearchResultSection from "../../../components/searchPage/SearchResultSection"
+import MusicCard from "../../../components/shared/MusicCard"
 
 const Container = styled.div`
   margin-top: -15px;
@@ -35,7 +37,10 @@ for(let i = 0; i < 10; i++) {
   })
 }
 
-export default function SearchResults({musicResearch}) {
+export default function SearchResult() {
+
+  const router = useRouter()
+  const { musicResearch } = router.query
 
   const WIDTH_LIMIT = useRef(230)
   const containerRef = useRef(null)
@@ -93,3 +98,5 @@ export default function SearchResults({musicResearch}) {
     </Container>
   )
 }
+
+SearchResult.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>

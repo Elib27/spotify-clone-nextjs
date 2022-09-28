@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import Link from 'next/link'
 
 const FilterButtonWrapper = styled.div`
   padding: 2px;
@@ -24,12 +25,15 @@ const FilterButton = styled.button`
   `}
 `
 
-export default function CategoryFilterButton({title, isSelected}) {
+export default function CategoryFilterButton({title, link, isSelected}) {
+
   return (
-    <FilterButtonWrapper>
-      <FilterButton isSelected={isSelected}>
-        {title}
-      </FilterButton>
-    </FilterButtonWrapper>
+    <Link href={link}>
+      <FilterButtonWrapper>
+        <FilterButton isSelected={isSelected}>
+          {title}
+        </FilterButton>
+      </FilterButtonWrapper>
+    </Link>
   )
 }

@@ -78,7 +78,11 @@ export default function SearchBar() {
   const [isClearButtonVisible, setIsClearButtonVisible] = useState(false)
 
   useEffect(() => {
-    router.push(`/search/${navigation.searchInput}`)
+    let currentSearchCategory = ''
+    if (router.pathname.split('/').length >= 4 && navigation.searchInput !== '') {
+      currentSearchCategory = '/' + router.pathname.split('/')[3]
+    }
+    router.push(`/search/${navigation.searchInput}${currentSearchCategory}`)
     if (navigation.searchInput.length > 0) {
       setIsClearButtonVisible(true)
     }
