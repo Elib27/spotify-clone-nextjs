@@ -8,7 +8,7 @@ const SectionHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-top: 20px;
-  margin-bottom: 16px;
+  margin-bottom: 22px;
 `
 const SectionTitle = styled.h2`
   font-size: 1.5rem;
@@ -30,6 +30,7 @@ const SeeAllButton = styled.button`
   font-weight: 700;
   background-color: transparent;
   border: none;
+  align-self: flex-end;
   cursor: pointer;
   user-select: none;
   &:hover {

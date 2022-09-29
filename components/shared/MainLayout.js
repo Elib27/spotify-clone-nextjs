@@ -23,11 +23,10 @@ const PageContainer = styled.div`
   grid-row: 2;
   grid-column: 2;
   height: calc((100vh - 64px) - 88px);
-  max-width: 1955px;
   background-color: #121212;
   overflow-x: hidden;
   overflow-y: scroll;
-  scrollbar-gutter: none;
+  overflow-y: overlay;
   position: relative;
   border-radius: 8px;
   &::-webkit-scrollbar {
@@ -38,9 +37,11 @@ const PageContainer = styled.div`
   }
   &::-webkit-scrollbar-thumb {
     min-height: 30px;
+    border: 2px solid transparent;
     background-color: rgba(255,255,255,0.3);
-    /* border: 4px solid transparent ; */
+    background-clip: content-box;
     transition: background-color 0.2s ease-in-out;
+    z-index: 9999;
   }
   &::-webkit-scrollbar-thumb:hover {
     background-color: rgba(255,255,255,0.5);

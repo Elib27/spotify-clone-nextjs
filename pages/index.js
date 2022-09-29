@@ -17,7 +17,7 @@ const Title = styled.h2`
 
 export default function Home() {
 
-  const WIDTH_LIMIT = useRef(230)
+  const WIDTH_LIMIT = useRef(210)
   const containerRef = useRef(null)
   const dimensions = useResizeObserver(containerRef)
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(4)
@@ -35,15 +35,16 @@ export default function Home() {
 
   useEffect(() => {
     const { width } = dimensions || {width: 900}
-    const cardsNumber = Math.floor(width / WIDTH_LIMIT.current)
-    if (cardsNumber >= 3 && cardsNumber <= 9) {
-      setCardsNumberPerRow(cardsNumber)
-    }
+    let cardsNumber = Math.floor(width / WIDTH_LIMIT.current)
+    if (cardsNumber < 3) cardsNumber = 3
+    else if (cardsNumber > 9) cardsNumber = 9
+    setCardsNumberPerRow(cardsNumber)
+    console.log(cardsNumber)
   }, [dimensions])
 
-  const withValdExampleCards = []
-  for(let i = 0; i < 10; i++) {
-    withValdExampleCards.push({
+  const podcastExampleCards = []
+  for(let i = 0; i < 15; i++) {
+    podcastExampleCards.push({
       title: "Un Bon Moment",
       description: "Kyan Khojandi & Navo",
       cover_url: "https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
@@ -58,7 +59,7 @@ export default function Home() {
         title="Vos émissions"
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {withValdExampleCards.map((card, index) => (
+        {podcastExampleCards.map((card, index) => (
           index < (cardsNumberPerRow) && (
             <HomeCard
               title={card.title}
@@ -74,7 +75,7 @@ export default function Home() {
           title="Écoutés récemment"
           cardsNumberPerRow={cardsNumberPerRow}
         >
-          {withValdExampleCards.map((card, index) => (
+          {podcastExampleCards.map((card, index) => (
             index < (cardsNumberPerRow) && (
               <HomeCard
                 title={card.title}
@@ -89,7 +90,7 @@ export default function Home() {
           title="À ne pas manquer aujourd'hui"
           cardsNumberPerRow={cardsNumberPerRow}
         >
-          {withValdExampleCards.map((card, index) => (
+          {podcastExampleCards.map((card, index) => (
             index < (cardsNumberPerRow) && (
               <HomeCard
                 title={card.title}
@@ -104,7 +105,7 @@ export default function Home() {
           title="Épisodes pour vous"
           cardsNumberPerRow={cardsNumberPerRow}
         >
-          {withValdExampleCards.map((card, index) => (
+          {podcastExampleCards.map((card, index) => (
             index < (cardsNumberPerRow) && (
               <HomeCard
                 title={card.title}

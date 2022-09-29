@@ -40,7 +40,7 @@ const PlayButton = styled.div`
   }
 `
 const TracksContainer = styled.section`
-  margin: 0 16px 0 32px;
+  margin: 0 32px 0 32px;
 `
 const TracksSectionRows = styled.div`
   height: 36px;

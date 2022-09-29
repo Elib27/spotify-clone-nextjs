@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 const Container = styled.div`
-  height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -12,9 +11,11 @@ const MiddleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: -52px;
-  margin-right: -16px;
+  padding: 20px 0;
   min-width: 565px;
+`
+const ImageContainer = styled.div`
+  flex-shrink: 0;
 `
 const DownloadLabel = styled.h3`
   max-width: 640px;
@@ -73,7 +74,9 @@ export default function Download() {
   return (
     <Container>
       <MiddleContainer>
-        <Image src="/mac_computer.png" width={640} height={396} alt="spotify app on a computer"/>
+        <ImageContainer>
+          <Image src="/mac_computer.png" width={640} height={396} alt="spotify app on a computer"/>
+        </ImageContainer>
         <DownloadLabel>Écoutez la musique que vous aimez en toute simplicité. Téléchargez l&apos;appli Spotify pour votre ordinateur.</DownloadLabel>
         <DownloadLink href={`https://www.spotify.com/fr/download/${downloadLink}`} target="_blank" rel='noreferrer'>
           <DownloadButton>Téléchargez notre appli gratuite</DownloadButton>

@@ -15,6 +15,7 @@ const Container = styled.div`
   grid-template-rows: auto;
   column-gap: 24px;
   row-gap: 32px;
+  max-width: 1955px;
 `
 
 // données d'exemple

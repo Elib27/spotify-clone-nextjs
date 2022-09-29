@@ -41,7 +41,6 @@ const ShortcutContainer = styled.div`
     }
   }
 `
-
 const ImageContainer = styled.div`
   height: 100%;
   aspect-ratio: 1;
@@ -55,6 +54,10 @@ const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`
+const FavoriteLogoWrapper = styled.div`
+  height: 32px;
+  margin-bottom: 8px;
 `
 const RightContainer = styled.div`
   height: 100%;
@@ -74,12 +77,16 @@ export default function ShortcutButton({ title, link, cover_url }) {
   return (
     <ShortcutContainer>
       <ImageContainer>
-        {cover_url && <Image src={cover_url} layout="fill" alt="category cover" />}
-        {!cover_url && (
-          <LogoContainer>
-            <FavoriteLogo />
-          </LogoContainer>
-        )}
+        {cover_url ? (
+            <Image src={cover_url} layout="fill" alt="category cover" />
+          ) : (
+            <LogoContainer>
+              <FavoriteLogoWrapper>
+                <FavoriteLogo />
+              </FavoriteLogoWrapper>
+            </LogoContainer>
+          )
+        }
       </ImageContainer>
       <RightContainer>
         <Link href={link}>

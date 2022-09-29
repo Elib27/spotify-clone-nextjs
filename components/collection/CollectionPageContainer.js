@@ -2,7 +2,8 @@ import styled from "styled-components"
 
 const Container = styled.div`
   width: 100%;
-  padding: 0 16px 32px 32px;
+  padding: 0 32px 32px 32px;
+  max-width: 1955px;
 `
 const Title = styled.h1`
   font-size: 1.5rem;

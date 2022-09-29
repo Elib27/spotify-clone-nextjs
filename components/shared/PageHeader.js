@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import { useState, useEffect, useRef} from 'react'
 import { useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
-import Image from "next/image"
 import Pannel from "./AccountPannel"
 import SearchBar from '../searchPage/SearchBar'
 import SpotifyLogo from '../../public/header_logos/spotify_logo.svg'
@@ -124,13 +124,6 @@ const TestPannel = styled.div`
   z-index: 10000;
 `
 
-// const pagesWhereCollectionBarVisible = [
-//   '/collection/playlists',
-//   '/collection/podcasts',
-//   '/collection/artists',
-//   '/collection/albums',
-// ]
-
 const pagesWhereSubscribeButtonVisible = [
   '/',
   '/collection/tracks',
@@ -139,26 +132,11 @@ const pagesWhereSubscribeButtonVisible = [
 
 export default function PageHeader() {
 
+  const router = useRouter()
   const navigation = useSelector(state => state.navigation)
 
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const panel = useRef(null)
-
-  // useEffect(() => {
-  //   if (window.history.state && typeof(window.history.replaceState) === "function") {
-  //     window.history.replaceState({ page: window.history.length, href: location.href, oui: 'oui' }, "")
-  //     console.log('initial change history state')
-  //     setFirstPageVisitedIndex(window.history.length)
-  //   }
-  // },[])
-
-  // useEffect(() => {
-  //   const isFirstPageVisitedNewValue = (window.history.state && !window.history.state.page)
-  //   setIsFirstPageVisited(isFirstPageVisitedNewValue)
-  //   const isLastPageVisitedNewValue = (window.history.state.page && (window.history.state.page <= !window.history.length))
-  //   setIsLastPagePageVisited(isLastPageVisitedNewValue)
-  //   console.log('change page visited')
-  // }, [navigation.currentPage])
   
   function handleClickPrevPage() {
     console.log('prevButton')
@@ -216,12 +194,12 @@ export default function PageHeader() {
           <SearchBar />
         </CentralContainer>
         <RightContainer>
-        {/* {(pagesWhereSubscribeButtonVisible.includes(navigation.currentPage) || navigation.currentPage.includes('/playlist/'))
+        {(pagesWhereSubscribeButtonVisible.includes(router.pathname) || router.pathname.startsWith('/playlist/'))
         && (
           <a href="https://www.spotify.com/fr/premium/" target="blank_" rel='noreferrer'>
             <SubscribeButton>S&apos;abonner</SubscribeButton>
           </a>
-        )} */}
+        )}
           <AccountButton onClick={openPanel}>
             <AvatarLogoContainer>
               <AvatarLogo width={16} height={16} alt="account button" />
