@@ -1,4 +1,3 @@
-import MusicCard from '../../../components/shared/MusicCard'
 import Tracks from '../../../data/musics_catalog.json'
 
 export default async function handler(req, res) {

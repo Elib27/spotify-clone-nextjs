@@ -16,6 +16,7 @@ const Container = styled.div`
   row-gap: 32px;
   max-width: 1955px;
   margin-top: -15px;
+  padding-right: 8px;
 `
 
 // données d'exemple
@@ -43,14 +44,25 @@ export default function SearchResult() {
   const router = useRouter()
   const { musicResearch } = router.query
 
-  const WIDTH_LIMIT = useRef(230)
   const containerRef = useRef(null)
   const dimensions = useResizeObserver(containerRef)
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(4)
 
+  const [fetchedData, setFetchedData] = useState(null)
+
+  useEffect(() => {
+    async function fetchResults() {
+      const response = await fetch(`/api/getSearchResults/${musicResearch}`)
+      const data = await response.json()
+      setFetchedData(data[0])
+      console.log(data[1])
+    }
+    fetchResults()
+  }, [musicResearch])
+
   useEffect(() => {
     const { width } = dimensions || {width: 900}
-    const cardsNumber = Math.floor(width / WIDTH_LIMIT.current)
+    const cardsNumber = Math.floor(width / 230)
     if (cardsNumber >= 3 && cardsNumber <= 9) {
       setCardsNumberPerRow(cardsNumber)
     }
@@ -59,12 +71,12 @@ export default function SearchResult() {
   return (
     <Container ref={containerRef}>
       <BestResult
-        title={musicResearch}
+        title={fetchedData?.artist}
         category="Artiste"
-        cover_url="https://i.scdn.co/image/ab6761610000f178bb5d08bce59cfcc825c301f4"
+        cover_url={fetchedData?.image}
         link="/collection/tracks"
       />
-      <TrackResults />
+      {fetchedData.tracks && <TrackResults tracks={fetchedData.tracks}/>}
       <SearchResultSection
         title="Avec Vald"
         cardsNumberPerRow={cardsNumberPerRow}
@@ -101,3 +113,11 @@ export default function SearchResult() {
 }
 
 SearchResult.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
+
+// Option choisie :
+// recupere query de la page=> fetch api spotify => affiche les resultats (en fonction query et category)
+
+/********************************************************************************************************/
+
+// Autre option :
+// recupere input => fetch api spotify => resultats dans state => affiche les resultats sur la page avec state

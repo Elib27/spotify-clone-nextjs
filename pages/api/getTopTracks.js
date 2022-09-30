@@ -1,4 +1,3 @@
-import getAccessToken from "./getAccessToken"
 import getTopTracks from "../../lib/spotify/getTopTracks"
 
 export default async function handler(req, res) {
@@ -12,6 +11,5 @@ export default async function handler(req, res) {
     popularity: track.popularity
   }))
 
-  res.status(200).json({ top_tracks })
-
+  res.status(200).json(top_tracks)
 }

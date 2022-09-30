@@ -17,41 +17,27 @@ const TracksContainer = styled.div`
   position: relative;
 `
 
-export default function TrackResults() {
+function convertMsToMinutesSeconds(ms) {
+  const minutes = Math.floor(ms / 60000)
+  const seconds = Math.floor(((ms % 60000) / 1000)).padStart(2, '0')
+  return `${minutes}:${seconds}`
+}
+
+export default function TrackResults({ tracks }) {
   return (
     <Container>
       <TopTitle>Titres</TopTitle>
       <TracksContainer>
-        <Track
-          title="Désaccordé"
-          artist="Vald"
-          cover_url="https://i.scdn.co/image/ab67616d0000485182f6c9fecc589fb8a1d506f9"
-          duration="3:34"
-          explicit
-          liked
-        />
-        <Track
-          title="Désaccordé"
-          artist="Vald"
-          cover_url="https://i.scdn.co/image/ab67616d0000485182f6c9fecc589fb8a1d506f9"
-          duration="3:34"
-          explicit
-        />
-        <Track
-          title="Désaccordé"
-          artist="Vald"
-          cover_url="https://i.scdn.co/image/ab67616d0000485182f6c9fecc589fb8a1d506f9"
-          duration="3:34"
-          explicit
-        />
-        <Track
-          title="Désaccordé"
-          artist="Vald"
-          cover_url="https://i.scdn.co/image/ab67616d0000485182f6c9fecc589fb8a1d506f9"
-          duration="3:34"
-          explicit
-          liked
-        />
+        {tracks.map((track) => {
+          <Track
+            title={track.title}
+            artist={track.artist}
+            cover_url={track.image}
+            duration={track.duration}
+            explicit
+            liked
+          />
+        })}
       </TracksContainer>
     </Container>
   )
