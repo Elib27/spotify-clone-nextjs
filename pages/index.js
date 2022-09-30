@@ -39,7 +39,6 @@ export default function Home() {
     if (cardsNumber < 3) cardsNumber = 3
     else if (cardsNumber > 9) cardsNumber = 9
     setCardsNumberPerRow(cardsNumber)
-    console.log(cardsNumber)
   }, [dimensions])
 
   const podcastExampleCards = []

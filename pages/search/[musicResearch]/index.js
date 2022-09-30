@@ -9,13 +9,13 @@ import SearchResultSection from "../../../components/searchPage/SearchResultSect
 import MusicCard from "../../../components/shared/MusicCard"
 
 const Container = styled.div`
-  margin-top: -15px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   grid-template-rows: auto;
   column-gap: 24px;
   row-gap: 32px;
   max-width: 1955px;
+  margin-top: -15px;
 `
 
 // données d'exemple

@@ -5,6 +5,7 @@ import SearchCategories from '../../data/search_categories.json'
 const Container = styled.div`
   width: 100%;
   padding: 40px 24px 24px 32px;
+  max-width: 1955px;
 `
 const SearchSection = styled.section`
   padding: 16px 0;
@@ -31,7 +32,7 @@ const MusicStyleContainer = styled.div`
 const CategoriesContainer = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
   grid-gap: 24px;
   position: relative;
 `
