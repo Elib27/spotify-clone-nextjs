@@ -10,12 +10,14 @@ export default async function handle(req, res) {
       title: item.name,
       artist: item.artists[0].name,
       duration: item.duration_ms,
-      cover_url: item.album.images[1].url
+      cover_url: item.album.images[2].url || item.album.images[1].url,
+      explicit: item.explicit,
+      id: item.id
   }))
 
   const searchResults = {
     artist: data.artists.items[0].name,
-    image: data.artists.items[0].images[2].url,
+    image: data.artists.items[0].images[1].url,
     tracks: tracks
   }
 

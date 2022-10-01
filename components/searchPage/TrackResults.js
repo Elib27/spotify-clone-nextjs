@@ -19,24 +19,32 @@ const TracksContainer = styled.div`
 
 function convertMsToMinutesSeconds(ms) {
   const minutes = Math.floor(ms / 60000)
-  const seconds = Math.floor(((ms % 60000) / 1000)).padStart(2, '0')
+  const seconds = Math.floor((ms % 60000) / 1000).toString().padStart(2, '0')
   return `${minutes}:${seconds}`
 }
 
 export default function TrackResults({ tracks }) {
+  if (!tracks) {
+    return null
+  }
   return (
     <Container>
       <TopTitle>Titres</TopTitle>
       <TracksContainer>
-        {tracks.map((track) => {
-          <Track
-            title={track.title}
-            artist={track.artist}
-            cover_url={track.image}
-            duration={track.duration}
-            explicit
-            liked
-          />
+        {tracks.map((track, index) => {
+          if (index < 4) {
+            return (
+              <Track
+                title={track.title} 
+                artist={track.artist}
+                cover_url={track.cover_url}
+                duration={convertMsToMinutesSeconds(track.duration)}
+                explicit={track.explicit}
+                liked
+                key={track.id}
+              />
+            )
+          }
         })}
       </TracksContainer>
     </Container>

@@ -34,6 +34,8 @@ const TrackArtist = styled.span`
   font-weight: 400;
   color: #a7a7a7;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   cursor: pointer;
   &:hover {
     color: #fff;
@@ -55,6 +57,7 @@ const Container = styled.div`
   border-radius: 4px;
   position: relative;
   color: #b3b3b3;
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   &:hover {
@@ -78,6 +81,8 @@ const Container = styled.div`
 const TitleContainer = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
+  min-width: 0px;
 `
 const TrackCover = styled.div`
   height: 100%;
@@ -85,6 +90,7 @@ const TrackCover = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  flex-shrink: 0;
 `
 const TracksInformations = styled.div`
   height: 100%;
@@ -92,8 +98,9 @@ const TracksInformations = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding-right: 8px;
   line-height: 1.6;
+  position: relative;
+  overflow: hidden;
 `
 const TrackTitle = styled.div`
   font-size: 1rem;
@@ -102,6 +109,8 @@ const TrackTitle = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 100%;
+  padding-right: 8px;
 `
 const TrackInformationsBottom = styled.div`
   display: flex;
@@ -134,7 +143,8 @@ const LikeButton = styled.button`
 `
 const DurationRow = styled.div`
   margin: 0 16px;
-  flex-grow: 1;
+  flex: 0 0;
+  width: 5ch;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -145,9 +155,9 @@ const DurationContainer = styled.div`
   text-align: center;
 `
 
-export default function Track({ title, artist, cover_url, explicit, duration, liked}) {
+export default function Track({ title, artist, cover_url, explicit, duration, liked, key}) {
   return (
-    <Container>
+    <Container key={key}>
       <TitleContainer>
         <TrackCover>
           <PlayButtonContainer>

@@ -55,7 +55,7 @@ export default function SearchResult() {
       const response = await fetch(`/api/getSearchResults/${musicResearch}`)
       const data = await response.json()
       setFetchedData(data[0])
-      console.log(data[1])
+      console.log(data[0], data[1])
     }
     fetchResults()
   }, [musicResearch])
@@ -76,7 +76,7 @@ export default function SearchResult() {
         cover_url={fetchedData?.image}
         link="/collection/tracks"
       />
-      {fetchedData.tracks && <TrackResults tracks={fetchedData.tracks}/>}
+      {fetchedData?.tracks && <TrackResults tracks={fetchedData.tracks}/>}
       <SearchResultSection
         title="Avec Vald"
         cardsNumberPerRow={cardsNumberPerRow}
