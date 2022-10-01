@@ -71,10 +71,10 @@ export default function SearchResult() {
   return (
     <Container ref={containerRef}>
       <BestResult
-        title={fetchedData?.artist}
-        category="Artiste"
-        cover_url={fetchedData?.image}
-        link="/collection/tracks"
+        title={fetchedData?.bestResult.artist}
+        category={fetchedData?.bestResult.category}
+        cover_url={fetchedData?.bestResult.image}
+        link="https://i.scdn.co/image/ab6761610000f178bb5d08bce59cfcc825c301f4"
       />
       {fetchedData?.tracks && <TrackResults tracks={fetchedData.tracks}/>}
       <SearchResultSection
