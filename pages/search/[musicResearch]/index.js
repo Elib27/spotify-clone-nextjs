@@ -19,26 +19,6 @@ const Container = styled.div`
   padding-right: 8px;
 `
 
-// données d'exemple
-
-const withValdExampleCards = []
-for(let i = 0; i < 10; i++) {
-  withValdExampleCards.push({
-    title: "Vald",
-    description: "Par Spotify",
-    cover_url: "https://i.scdn.co/image/ab67706c0000da848c25ac66aad012fcc84fd2e1"
-  })
-}
-
-const artistsExampleCards = []
-for(let i = 0; i < 10; i++) {
-  artistsExampleCards.push({
-    title:"Vald",
-    description:"Artiste",
-    cover_url:"https://i.scdn.co/image/ab6761610000f178bb5d08bce59cfcc825c301f4"
-  })
-}
-
 export default function SearchResult() {
 
   const router = useRouter()
@@ -71,39 +51,39 @@ export default function SearchResult() {
   return (
     <Container ref={containerRef}>
       <BestResult
-        title={fetchedData?.bestResult.artist}
+        title={fetchedData?.bestResult.title}
         category={fetchedData?.bestResult.category}
         cover_url={fetchedData?.bestResult.image}
-        link="https://i.scdn.co/image/ab6761610000f178bb5d08bce59cfcc825c301f4"
+        link='/'
       />
       {fetchedData?.tracks && <TrackResults tracks={fetchedData.tracks}/>}
       <SearchResultSection
-        title="Avec Vald"
+        title="Artistes"
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {withValdExampleCards.map((card, index) => (
+        {fetchedData?.artists && fetchedData.artists.map((artist, index) => (
           index < (cardsNumberPerRow) && (
             <MusicCard
-              title={card.title}
-              description={card.description}
-              cover_url={card.cover_url}
-              key={index}
+              title={artist.name}
+              description="Artiste"
+              cover_url={artist.image}
+              isRoundImage
+              key={artist.id}
             />
           )
         ))}
       </SearchResultSection>
       <SearchResultSection
-        title="Artistes"
+        title="Albums"
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {artistsExampleCards.map((card, index) => (
+        {fetchedData?.albums && fetchedData.albums.map((album, index) => (
           index < (cardsNumberPerRow) && (
             <MusicCard
-              title={card.title}
-              description={card.description}
-              cover_url={card.cover_url}
-              isRoundImage
-              key={index}
+              title={album.name}
+              description={album.description}
+              cover_url={album.image}
+              key={album.id}
             />
           )
         ))}
@@ -114,10 +94,6 @@ export default function SearchResult() {
 
 SearchResult.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
 
-// Option choisie :
-// recupere query de la page=> fetch api spotify => affiche les resultats (en fonction query et category)
 
-/********************************************************************************************************/
-
-// Autre option :
-// recupere input => fetch api spotify => resultats dans state => affiche les resultats sur la page avec state
+// Afficher page après fetch pour eviter temps de chargement visible et image sans src?
+// Eviter les erreurs

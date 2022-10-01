@@ -81,9 +81,9 @@ const CardSubTitle = styled.div`
   padding-bottom: 8px;
 `
 
-export default function MusicCard({cover_url, title, description, isRoundImage, noPlayingButton}) {
+export default function MusicCard({cover_url, title, description, isRoundImage, noPlayingButton, key}) {
   return (
-    <CardContainer>
+    <CardContainer key={key}>
       <CardImageWrapper>
         <CardImageContainer isRoundImage={isRoundImage}>
           <Image src={cover_url} alt="song cover" layout="fill" objectFit='cover'/>
@@ -97,7 +97,7 @@ export default function MusicCard({cover_url, title, description, isRoundImage, 
         )}
       </CardImageWrapper>
       <CardTitle>{title}</CardTitle>
-      <CardSubTitle>{description}</CardSubTitle>
+      {description && <CardSubTitle>{description}</CardSubTitle>}
     </CardContainer>
   )
 }
