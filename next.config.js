@@ -3,7 +3,12 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['i.scdn.co', 't.scdn.co', 'charts-images.scdn.co', 'daily-mix.scdn.co']
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.scdn.co',
+      },
+    ],
   },
   webpack(config) {
     config.module.rules.push({

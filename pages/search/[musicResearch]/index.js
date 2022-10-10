@@ -88,6 +88,51 @@ export default function SearchResult() {
           )
         ))}
       </SearchResultSection>
+      <SearchResultSection
+        title="Playlists"
+        cardsNumberPerRow={cardsNumberPerRow}
+      >
+        {fetchedData?.playlists && fetchedData.playlists.map((playlist, index) => (
+          index < (cardsNumberPerRow) && (
+            <MusicCard
+              title={playlist.name}
+              description={`Par ${playlist.author}`}
+              cover_url={playlist.image}
+              key={playlist.id}
+            />
+          )
+        ))}
+      </SearchResultSection>
+      <SearchResultSection
+        title="Podcasts"
+        cardsNumberPerRow={cardsNumberPerRow}
+      >
+        {fetchedData?.podcasts && fetchedData.podcasts.map((podcast, index) => (
+          index < (cardsNumberPerRow) && (
+            <MusicCard
+              title={podcast.name}
+              description={podcast.author}
+              cover_url={podcast.image}
+              key={podcast.id}
+            />
+          )
+        ))}
+      </SearchResultSection>
+      <SearchResultSection
+        title="Episodes"
+        cardsNumberPerRow={cardsNumberPerRow}
+      >
+        {fetchedData?.episodes && fetchedData.episodes.map((episode, index) => (
+          index < (cardsNumberPerRow) && (
+            <MusicCard
+              title={episode.name}
+              description={`${episode.publicationDate} · ${episode.duration} Min`}
+              cover_url={episode.image}
+              key={episode.id}
+            />
+          )
+        ))}
+      </SearchResultSection>
     </Container>
   )
 }
