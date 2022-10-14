@@ -143,3 +143,6 @@ SearchResult.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
 // Afficher page après fetch pour eviter temps de chargement visible (setLoading, isLoading) et image sans src?
 // Eviter les erreurs
 // précharger les différentes pages sous [musicResearch]
+
+// infinite scroll
+// nouvelle page API pour rechercher spéfifiquement chaque catégorie

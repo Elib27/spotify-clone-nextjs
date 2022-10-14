@@ -187,9 +187,11 @@ export default function LikedTrack({ title, artist, album, cover_url, explicit, 
       <TrackAlbumRow>
         <TrackAlbum>{album}</TrackAlbum>
       </TrackAlbumRow>
-      <AddedDateRow>
-        <AddedDate>{`Il y a ${addedDate} jours`}</AddedDate>
-      </AddedDateRow>
+      {addedDate && (
+        <AddedDateRow>
+          <AddedDate>{`Il y a ${addedDate} jours`}</AddedDate>
+        </AddedDateRow>
+      )}
       <LastRow>
         <LikeContainer>
           <HeartLogo />

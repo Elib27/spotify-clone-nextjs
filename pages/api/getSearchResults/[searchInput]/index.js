@@ -1,5 +1,5 @@
-import getSearchResults from "../../../lib/spotify/getSearchResults"
-import levenshteinDistance from "../../../lib/levenshteinDistance"
+import getSearchResults from "../../../../lib/spotify/getSearchResults"
+import levenshteinDistance from "../../../../lib/levenshteinDistance"
 
 export default async function handle(req, res) {
   const { searchInput } = req.query
