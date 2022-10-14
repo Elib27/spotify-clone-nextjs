@@ -3,6 +3,7 @@ import LikedTrack from '../../components/collection/LikedTrack'
 import PlaylistHeader from '../../components/shared/PlayListHeader'
 import NoLikedTracksSection from '../../components/collection/NoLikedTracksSection'
 import PlayLogo from '../../public/tracks_logos/play_logo.svg'
+import TracksContainer from '../../components/shared/TracksContainer'
 import DurationLogo from '../../public/tracks_logos/time_logo.svg'
 
 const Container = styled.div`
@@ -39,35 +40,10 @@ const PlayButton = styled.div`
     transform: scale(1.04);
   }
 `
-const TracksContainer = styled.section`
-  margin: 0 32px 0 32px;
+const TracksWrapper = styled.div`
+  padding: 0 32px;
 `
-const TracksSectionRows = styled.div`
-  height: 36px;
-  padding: 0 16px;
-  display: grid;
-  grid-template-columns: 16px 6fr 4fr 3fr minmax(120px,1fr);
-  grid-gap: 16px;
-  border-bottom: 1px solid hsla(0,0%,100%,0.1);
-  margin-bottom: 16px;
-`
-const TracksSectionRowTitle = styled.div`
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  color: #b3b3b3;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  &:first-of-type {
-    font-size: 1rem;
-    justify-self: end;
-    margin-right: -2px;
-  }
-  &:last-of-type{
-    justify-self: end;
-    margin-right: 32px;
-  }
-`
+
 
 export default function Tracks() {
   return (
@@ -87,57 +63,52 @@ export default function Tracks() {
             <PlayLogo />
           </PlayButton>
         </PlayMusicSection>
-        <TracksContainer>
-          <TracksSectionRows>
-            <TracksSectionRowTitle>#</TracksSectionRowTitle>
-            <TracksSectionRowTitle>TITRE</TracksSectionRowTitle>
-            <TracksSectionRowTitle>ALBUM</TracksSectionRowTitle>
-            <TracksSectionRowTitle>AJOUTÉ LE</TracksSectionRowTitle>  
-            <TracksSectionRowTitle>
-              <DurationLogo />
-            </TracksSectionRowTitle>
-          </TracksSectionRows>
-          <LikedTrack
-            title="Top album"
-            artist="Mister V"
-            album="Double V"
-            cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
-            explicit={true}
-            addedDate={3}
-            duration="3:12"
-            number={1}
-            />
-          <LikedTrack
-            title="Top album"
-            artist="Mister V"
-            album="Double V"
-            cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
-            explicit={false}
-            addedDate={3}
-            duration="3:12"
-            number={2}
-            />
-          <LikedTrack
-            title="Top album"
-            artist="Mister V"
-            album="Double V"
-            cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
-            explicit={true}
-            addedDate={3}
-            duration="3:12"
-            number={3}
-            />
-          <LikedTrack
-            title="Top album"
-            artist="Mister V"
-            album="Double V"
-            cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
-            explicit={false}
-            addedDate={3}
-            duration="3:12"
-            number={4}
-            />
-        </TracksContainer>
+        <TracksWrapper>
+          <TracksContainer
+            columnTitles={['#', 'titre', 'album', 'ajouté le']}
+          >
+            <LikedTrack
+              title="Top album"
+              artist="Mister V"
+              album="Double V"
+              cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
+              explicit={true}
+              addedDate={3}
+              duration="3:12"
+              number={1}
+              />
+            <LikedTrack
+              title="Top album"
+              artist="Mister V"
+              album="Double V"
+              cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
+              explicit={false}
+              addedDate={3}
+              duration="3:12"
+              number={2}
+              />
+            <LikedTrack
+              title="Top album"
+              artist="Mister V"
+              album="Double V"
+              cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
+              explicit={true}
+              addedDate={3}
+              duration="3:12"
+              number={3}
+              />
+            <LikedTrack
+              title="Top album"
+              artist="Mister V"
+              album="Double V"
+              cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
+              explicit={false}
+              addedDate={3}
+              duration="3:12"
+              number={4}
+              />
+          </TracksContainer>
+        </TracksWrapper>
       </MainContentWrapper>
     </Container>
   )
