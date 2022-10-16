@@ -31,16 +31,18 @@ const TracksSectionColumnTitle = styled.div`
 export default function TracksContainer({columnTitles, children}) {
   return (
     <div>
-    <TracksSectionColumns>
-      {columnTitles.map(columnTitle => (
-        <TracksSectionColumnTitle key={columnTitle}>{columnTitle.toUpperCase()}</TracksSectionColumnTitle>
-      )
-      )}
-      <TracksSectionColumnTitle>
-        <DurationLogo />
-      </TracksSectionColumnTitle>
-    </TracksSectionColumns>
-    { children }
-  </div>
+      <TracksSectionColumns>
+        {columnTitles.map(columnTitle => (
+          <TracksSectionColumnTitle key={columnTitle}>
+            {columnTitle.toUpperCase()}
+          </TracksSectionColumnTitle>
+        )
+        )}
+        <TracksSectionColumnTitle>
+          <DurationLogo />
+        </TracksSectionColumnTitle>
+      </TracksSectionColumns>
+      { children }
+    </div>
   )
 }

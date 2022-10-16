@@ -42,7 +42,7 @@ const Container = styled.div`
   width: 100%;
   padding: 0 16px;
   display: grid;
-  grid-template-columns: 16px 6fr 4fr 3fr minmax(120px, 1fr);
+  grid-template-columns: 16px 4fr 2fr minmax(120px,1fr);
   grid-gap: 16px;
   border-bottom: 1px solid transparent;
   border-radius: 4px;
@@ -81,6 +81,7 @@ const TracksCover = styled.div`
   margin-right: 16px;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 `
 const TracksInformations = styled.div`
   height: 100%;
@@ -131,15 +132,6 @@ const TrackAlbum = styled.div`
     color: #fff;
   }
 `
-const AddedDateRow = styled.div`
-  display: flex;
-  align-items: center;
-`
-const AddedDate = styled.div`
-  font-size: 0.875rem;
-  color: #a7a7a7;
-  font-weight: 400;
-`
 const LastRow = styled.div`
   display: flex;
   align-items: center;
@@ -163,7 +155,7 @@ const DurationContainer = styled.div`
   text-align: center;
 `
 
-export default function LikedTrack({ title, artist, album, cover_url, explicit, addedDate, duration, number}) {
+export default function LikedTrack({ title, artist, album, cover_url, explicit, duration, number}) {
   return (
     <Container>
       <NumberRow>
@@ -187,9 +179,6 @@ export default function LikedTrack({ title, artist, album, cover_url, explicit, 
       <TrackAlbumRow>
         <TrackAlbum>{album}</TrackAlbum>
       </TrackAlbumRow>
-      <AddedDateRow>
-        <AddedDate>{`Il y a ${addedDate} jours`}</AddedDate>
-      </AddedDateRow>
       <LastRow>
         <LikeContainer>
           <HeartLogo />

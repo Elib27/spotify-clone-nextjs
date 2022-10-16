@@ -3,8 +3,7 @@ import LikedTrack from '../../components/collection/LikedTrack'
 import PlaylistHeader from '../../components/shared/PlayListHeader'
 import NoLikedTracksSection from '../../components/collection/NoLikedTracksSection'
 import PlayLogo from '../../public/tracks_logos/play_logo.svg'
-import TracksContainer from '../../components/shared/TracksContainer'
-import DurationLogo from '../../public/tracks_logos/time_logo.svg'
+import TracksContainer from '../../components/collection/LikedTracksContainer'
 
 const Container = styled.div`
   padding-bottom: 32px;
