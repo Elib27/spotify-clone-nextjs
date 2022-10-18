@@ -75,6 +75,8 @@ const NumberRow = styled.div`
 const TitleRow = styled.div`
   display: flex;
   align-items: center;
+  position: relative;
+  min-width: 0;
 `
 const TracksCover = styled.div`
   height: 100%;
@@ -91,16 +93,16 @@ const TracksInformations = styled.div`
   align-items: flex-start;
   padding-right: 8px;
   line-height: 1.6;
+  overflow: hidden;
 `
 const TrackTitle = styled.div`
   font-size: 1rem;
   font-weight: 400;
   color: #fff;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   overflow: hidden;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
 `
 const TrackInformationsBottom = styled.div`
   display: flex;
@@ -122,10 +124,14 @@ const ExplicitLogo = styled.span`
 const TrackAlbumRow = styled.div`
   display: flex;
   align-items: center;
+  min-width: 0;
 `
 const TrackAlbum = styled.div`
   font-size: 0.875rem;
   font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   cursor: pointer;
   &:hover {
     text-decoration: underline;

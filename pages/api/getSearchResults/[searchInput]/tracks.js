@@ -1,9 +1,9 @@
 import getSearchTracks from '../../../../lib/spotify/getSearchTracks'
 
 export default async function handle(req, res) {
-  const { searchInput } = req.query
+  const { searchInput, offset } = req.query
 
-  const response = await getSearchTracks(searchInput)
+  const response = await getSearchTracks(searchInput, offset)
   const data = await response.json()
 
   function convertMsInMinSecs(timeToConvertInMs) {
@@ -22,8 +22,7 @@ export default async function handle(req, res) {
     id: item.id
   }))
 
-  const nextAPIEndpoint = data?.tracks?.next
-  const trackOffset = data?.tracks?.offset
+  const trackOffset = data?.tracks?.offset + 1 ?? 0
 
-  res.status(200).json({trackResults, nextAPIEndpoint, trackOffset})
+  res.status(200).json({trackResults, trackOffset})
 }

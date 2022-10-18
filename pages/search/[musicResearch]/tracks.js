@@ -1,17 +1,26 @@
 import styled from "styled-components"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from "next/router"
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
 import TracksContainer from "../../../components/searchPage/TracksContainer"
 import TrackItem from "../../../components/shared/TrackItem"
 
-const Container = styled.div`
+const NoResultsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+const NoResultsMainMessage = styled.div`
+
+`
+const NoResultsSubMessage = styled.div`
 
 `
 
 export default function Tracks() {
 
-  const [fetchedData, setFetchedData] = useState(null)
+  const [fetchedData, setFetchedData] = useState({trackResults: [], trackOffset: 0})
+  const loaderRef = useRef(null)
   
   useEffect(() => {
     console.log(fetchedData)
@@ -19,39 +28,82 @@ export default function Tracks() {
 
   const router = useRouter()
   const { musicResearch } = router.query
+  
 
   useEffect(() => {
-    async function getResults() {
-      const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks`)
+    async function addNewTracksToList(){
+      const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=${fetchedData.trackOffset}`)
+      const data = await response.json()
+      setFetchedData({
+        ...data,
+        trackResults: [...fetchedData.trackResults, ...data.trackResults]
+      })
+    }
+
+    const observer = new IntersectionObserver(addNewTracksToList)
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current)
+    }
+
+    console.log('refresh')
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    async function getFirstTracks() {
+      const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=0`)
       const data = await response.json()
       setFetchedData(data)
     }
-    getResults()
+    
+    getFirstTracks()
+
   }, [musicResearch])
 
+
+  if (!fetchedData?.trackResults?.length) {
+    return (
+      <NoResultsContainer>
+        <NoResultsMainMessage>
+          Aucun résultat pour &ldquo; {musicResearch} &ldquo;
+        </NoResultsMainMessage>
+        <NoResultsSubMessage>
+        Merci de vérifier l&apos;orthographe des mots. Vous pouvez aussi essayer d&apos;utiliser moins de mots clés ou d&apos;autres mots clés.
+        </NoResultsSubMessage>
+      </NoResultsContainer>
+    )
+  }
+
   return (
-    <Container>
-      <TracksContainer columnTitles={['#', 'titre', 'album']} >
-        { fetchedData?.trackResults && (
-          fetchedData.trackResults.map((track, index) => (
-            <div key={track.id}>
-              <TrackItem
-                title={track.name}
-                artist={track.artist}
-                album={track.album}
-                cover_url={track.cover_url}
-                explicit={track.explicit}
-                duration={track.duration}
-                number={index + 1}
-              />
-            </div>
-          ))
-        )}
-      </TracksContainer>
-    </Container>
+    <TracksContainer columnTitles={['#', 'titre', 'album']} >
+      { fetchedData?.trackResults && (
+        fetchedData.trackResults.map((track, index) => (
+          <div key={track.id}>
+            <TrackItem
+              title={track.name}
+              artist={track.artist}
+              album={track.album}
+              cover_url={track.cover_url}
+              explicit={track.explicit}
+              duration={track.duration}
+              number={index + 1}
+            />
+          </div>
+        ))
+      )}
+    <div ref={loaderRef} />
+    </TracksContainer>
   )
 }
 
 Tracks.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
 
-// prendre toute la largeur + gérer depassement titre et alignement
+// refresh de la page => get 100 musics
+// arrivé en bas => refetch et add 100 nouvelles musics
+
+// probleme : plusieurs fois le même son apparaît : utiliser Set
+//            parfois, pas de reset
+
+// finir aucun resultat => composant

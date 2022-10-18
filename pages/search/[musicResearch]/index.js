@@ -144,5 +144,6 @@ SearchResult.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
 // Eviter les erreurs
 // précharger les différentes pages sous [musicResearch]
 
-// infinite scroll
-// nouvelle page API pour rechercher spéfifiquement chaque catégorie
+//erreurs dans certaines recherches ex: main "gk"
+
+// infinite scroll [ en cours ]
