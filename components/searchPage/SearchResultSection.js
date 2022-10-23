@@ -22,7 +22,10 @@ const SectionContent = styled.div`
   overflow: hidden;
 `
 
-export default function SearchResultSection({title, children, cardsNumberPerRow}) {
+export default function SearchResultSection({title, children, cardsNumberPerRow, data}) {
+
+  if (!data?.length) return (null)
+
   return (
     <Container>
       <SectionHeader>

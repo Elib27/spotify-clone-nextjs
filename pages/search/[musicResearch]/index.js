@@ -7,6 +7,7 @@ import BestResult from "../../../components/searchPage/BestResult"
 import TrackResults from "../../../components/searchPage/TrackResults"
 import SearchResultSection from "../../../components/searchPage/SearchResultSection"
 import MusicCard from "../../../components/shared/MusicCard"
+import NoResults from "../../../components/searchPage/NoResults"
 
 const Container = styled.div`
   display: grid;
@@ -48,6 +49,12 @@ export default function SearchResult() {
     }
   }, [dimensions])
 
+  if (!fetchedData) return (null)
+  
+  if (fetchedData && !fetchedData?.bestResult?.title){
+    return (<NoResults searchValue={musicResearch}/>)
+  }
+
   return (
     <Container ref={containerRef}>
       <BestResult
@@ -56,9 +63,10 @@ export default function SearchResult() {
         cover_url={fetchedData?.bestResult.image}
         link='/'
       />
-      {fetchedData?.tracks && <TrackResults tracks={fetchedData.tracks}/>}
+      {fetchedData?.tracks?.length > 0 && <TrackResults tracks={fetchedData.tracks}/>}
       <SearchResultSection
         title="Artistes"
+        data={fetchedData?.artists}
         cardsNumberPerRow={cardsNumberPerRow}
       >
         {fetchedData?.artists && fetchedData.artists.map((artist, index) => (
@@ -75,9 +83,10 @@ export default function SearchResult() {
       </SearchResultSection>
       <SearchResultSection
         title="Albums"
+        data={fetchedData?.albums}
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {fetchedData?.albums && fetchedData.albums.map((album, index) => (
+        {fetchedData?.albums.map((album, index) => (
           index < (cardsNumberPerRow) && (
             <MusicCard
               title={album.name}
@@ -90,6 +99,7 @@ export default function SearchResult() {
       </SearchResultSection>
       <SearchResultSection
         title="Playlists"
+        data={fetchedData?.playlists}
         cardsNumberPerRow={cardsNumberPerRow}
       >
         {fetchedData?.playlists && fetchedData.playlists.map((playlist, index) => (
@@ -105,6 +115,7 @@ export default function SearchResult() {
       </SearchResultSection>
       <SearchResultSection
         title="Podcasts"
+        data={fetchedData?.podcasts}
         cardsNumberPerRow={cardsNumberPerRow}
       >
         {fetchedData?.podcasts && fetchedData.podcasts.map((podcast, index) => (
@@ -120,6 +131,7 @@ export default function SearchResult() {
       </SearchResultSection>
       <SearchResultSection
         title="Episodes"
+        data={fetchedData?.episodes}
         cardsNumberPerRow={cardsNumberPerRow}
       >
         {fetchedData?.episodes && fetchedData.episodes.map((episode, index) => (

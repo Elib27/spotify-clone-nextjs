@@ -56,37 +56,37 @@ export default async function handle(req, res) {
   
   const tracks = data.tracks.items.map((item) => ({
       title: item.name,
-      artist: item.artists?.[0].name,
+      artist: item.artists?.[0]?.name,
       duration: item.duration_ms,
-      cover_url: item.album?.images?.[1].url,
-      explicit: item.explicit,
-      id: item.id
+      cover_url: item.album?.images?.[1]?.url,
+      explicit: item?.explicit,
+      id: item?.id
   }))
   const artists = data.artists.items.map((item) => ({
     name: item?.name,
     id: item?.id,
-    image: item?.images?.[1].url
+    image: item?.images?.[1]?.url
   }))
   const albums = data.albums.items.map((item) => ({
     name: item?.name,
     id: item?.id,
-    description: `${item?.release_date.split('-')?.[0]} • ${item?.artists?.[0].name}`,
-    image: item?.images?.[1].url
+    description: `${item?.release_date.split('-')?.[0]} • ${item?.artists?.[0]?.name}`,
+    image: item?.images?.[1]?.url
   }))
   const playlists = data.playlists.items.map((item) => ({
-    image: item?.images?.[0].url,
+    image: item?.images?.[0]?.url,
     name: item?.name,
-    author: item?.owner.display_name,
+    author: item?.owner?.display_name,
     id: item?.id
   }))
   const podcasts = data.shows.items.map((item) => ({
-    image: item?.images?.[0].url,
+    image: item?.images?.[0]?.url,
     name: item?.name,
     author: item?.publisher,
     id: item?.id
   }))
   const episodes = data.episodes.items.map((item) => ({
-    image: item?.images?.[0].url,
+    image: item?.images?.[0]?.url,
     name: item?.name,
     publicationDate: convertPodcastDate(item.release_date),
     duration: convertMsToMinutes(item.duration_ms),

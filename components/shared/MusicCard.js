@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Image from 'next/image'
-import Link from 'next/link'
+import DefaultAvatarLogo from '../../public/home_logos/default_avatar.svg'
 import PlayLogo from '../../public/tracks_logos/play_logo_small.svg'
 
 const PlayButton = styled.button`
@@ -62,6 +62,15 @@ const CardImageContainer = styled.div`
     border-radius: 50%;
   `}
 `
+const DefaultAvatarLogoContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #b3b3b3;
+`
 const CardTitle = styled.div`
   font-size: 1rem;
   font-weight: 700;
@@ -86,12 +95,21 @@ export default function MusicCard({cover_url, title, description, isRoundImage, 
     <CardContainer key={key}>
       <CardImageWrapper>
         <CardImageContainer isRoundImage={isRoundImage}>
-          <Image src={cover_url} alt="song cover" layout="fill" objectFit='cover'/>
+          {
+            cover_url ?
+            (
+              <Image src={cover_url} alt="song cover" layout="fill" objectFit='cover'/>
+            ):(
+              <DefaultAvatarLogoContainer>
+                <DefaultAvatarLogo height="64" width="64"/>
+              </DefaultAvatarLogoContainer>
+            )
+          }
         </CardImageContainer>
         {!noPlayingButton && (
           <PlayButtonAnimationContainer>
             <PlayButton>
-              <PlayLogo height="24" width="24" />
+              <PlayLogo />
             </PlayButton>
           </PlayButtonAnimationContainer>
         )}

@@ -4,22 +4,12 @@ import { useRouter } from "next/router"
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
 import TracksContainer from "../../../components/searchPage/TracksContainer"
 import TrackItem from "../../../components/shared/TrackItem"
+import NoResults from "../../../components/searchPage/NoResults"
 
-const NoResultsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-const NoResultsMainMessage = styled.div`
-
-`
-const NoResultsSubMessage = styled.div`
-
-`
 
 export default function Tracks() {
 
-  const [fetchedData, setFetchedData] = useState({trackResults: [], trackOffset: 0})
+  const [fetchedData, setFetchedData] = useState()
   const loaderRef = useRef(null)
   
   useEffect(() => {
@@ -63,17 +53,10 @@ export default function Tracks() {
   }, [musicResearch])
 
 
+  if (!fetchedData) return (null)
+
   if (!fetchedData?.trackResults?.length) {
-    return (
-      <NoResultsContainer>
-        <NoResultsMainMessage>
-          Aucun résultat pour &ldquo; {musicResearch} &ldquo;
-        </NoResultsMainMessage>
-        <NoResultsSubMessage>
-        Merci de vérifier l&apos;orthographe des mots. Vous pouvez aussi essayer d&apos;utiliser moins de mots clés ou d&apos;autres mots clés.
-        </NoResultsSubMessage>
-      </NoResultsContainer>
-    )
+    return (<NoResults searchValue={musicResearch}/>)
   }
 
   return (
