@@ -77,8 +77,8 @@ const CardTitle = styled.div`
   color: #fff;
   width: 100%;
   white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
   padding-bottom: 4px;
   line-height: 1.6;
 `
@@ -88,6 +88,9 @@ const CardSubTitle = styled.div`
   color: #a7a7a7;
   line-height: 1.6;
   padding-bottom: 8px;
+  max-height: 45px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 export default function MusicCard({cover_url, title, description, isRoundImage, noPlayingButton, key}) {

@@ -18,18 +18,38 @@ export default function Tracks() {
 
   const router = useRouter()
   const { musicResearch } = router.query
-  
+
+  async function addNewTracksToList(){
+    const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=${fetchedData.trackOffset}`)
+    const data = await response.json()
+    const trackResults = [...fetchedData.trackResults, ...data.trackResults]
+    const ids = trackResults.map(track => track.id)
+    setFetchedData({
+      ...data,
+      trackResults: trackResults.filter(({id}, index) => !ids.includes(id, index + 1))
+    })
+    console.log("add tracks")
+    console.log(data)
+  }
 
   useEffect(() => {
-    async function addNewTracksToList(){
-      const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=${fetchedData.trackOffset}`)
+    async function getFirstTracks() {
+      const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=0`)
       const data = await response.json()
-      setFetchedData({
-        ...data,
-        trackResults: [...fetchedData.trackResults, ...data.trackResults]
-      })
+      setFetchedData(data)
+      console.log(data)
     }
+    getFirstTracks()
 
+  }, [musicResearch])
+
+  // useEffect(() => {
+  //   if (fetchedData?.trackOffset == 1){
+  //     addNewTracksToList()
+  //   }
+  // }, [fetchedData])
+
+  useEffect(() => {
     const observer = new IntersectionObserver(addNewTracksToList)
 
     if (loaderRef.current) {
@@ -40,18 +60,6 @@ export default function Tracks() {
 
     return () => observer.disconnect()
   }, [])
-
-  useEffect(() => {
-    async function getFirstTracks() {
-      const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=0`)
-      const data = await response.json()
-      setFetchedData(data)
-    }
-    
-    getFirstTracks()
-
-  }, [musicResearch])
-
 
   if (!fetchedData) return (null)
 
@@ -83,10 +91,6 @@ export default function Tracks() {
 
 Tracks.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
 
-// refresh de la page => get 100 musics
-// arrivé en bas => refetch et add 100 nouvelles musics
 
-// probleme : plusieurs fois le même son apparaît : utiliser Set
+// probleme : trackOffset ne se met pas à jour
 //            parfois, pas de reset
-
-// finir aucun resultat => composant
