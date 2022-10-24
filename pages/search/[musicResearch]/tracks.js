@@ -28,7 +28,6 @@ export default function Tracks() {
       ...data,
       trackResults: trackResults.filter(({id}, index) => !ids.includes(id, index + 1))
     })
-    console.log("add tracks")
     console.log(data)
   }
 
@@ -43,11 +42,12 @@ export default function Tracks() {
 
   }, [musicResearch])
 
-  // useEffect(() => {
-  //   if (fetchedData?.trackOffset == 1){
-  //     addNewTracksToList()
-  //   }
-  // }, [fetchedData])
+  useEffect(() => {
+    console.log(fetchedData?.trackOffset)
+    if (fetchedData?.trackOffset == 1){
+      addNewTracksToList()
+    }
+  }, [fetchedData])
 
   useEffect(() => {
     const observer = new IntersectionObserver(addNewTracksToList)
@@ -94,3 +94,5 @@ Tracks.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
 
 // probleme : trackOffset ne se met pas à jour
 //            parfois, pas de reset
+
+//plus tard: faire les requetes en même temps

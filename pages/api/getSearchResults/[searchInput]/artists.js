@@ -7,9 +7,9 @@ export default async function handle(req, res) {
   const data = await response.json()
 
   const artistResults = data?.artists?.items.map((item) => ({
-    name: item.name,
+    name: item?.name,
     cover_url: item?.images?.[1]?.url,
-    id: item.id
+    id: item?.id
   }))
 
   const artistOffset = data?.artist?.offset + 1 ?? 0

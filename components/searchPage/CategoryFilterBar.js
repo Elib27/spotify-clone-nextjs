@@ -53,15 +53,11 @@ export default function CategoryFilterBar() {
           link={`/search/${musicResearch}/albums`}
           isSelected={router.pathname.split('/')[3] === 'albums'}
         />
-        {/* <CategoryFilterButton
-          title="Genres et ambiances"
-        />
         <CategoryFilterButton
           title="Podcasts et émissions"
+          link={`/search/${musicResearch}/podcasts`}
+          isSelected={router.pathname.split('/')[3] === 'podcasts'}
         />
-        <CategoryFilterButton
-          title="Profils"
-        /> */}
       </FiltersContainer>
     </BarContainer>
   )
