@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useSelector, dispatch } from 'react-redux'
 import Image from "next/image"
 import Heart from '../../public/musicBar_logos/heart.svg'
 import HeartFull from '../../public/musicBar_logos/heart_full.svg'
@@ -17,10 +17,12 @@ const Container = styled.div`
   align-items: center;
   padding-right: 16px;
   box-sizing: content-box;
+  position: relative;
 `
 const ScreenButton = styled.button`
   height: 32px;
   width: 32px;
+  flex-shrink: 0;
   background-color: transparent;
   margin-top: -1px;
   color: #fff;
@@ -60,6 +62,7 @@ const CurrentMusicCover = styled.div`
 `
 const MusicInformations = styled.div`
   margin: 0 20px 0 14px;
+  position: relative;
 `
 const MusicTitle = styled.div`
   font-size: 0.875rem;
@@ -67,9 +70,11 @@ const MusicTitle = styled.div`
   color: #fff;
   width: 100%;
   text-align: left;
-  white-space: nowrap;
   line-height: 1.6;
   flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
@@ -78,6 +83,10 @@ const MusicTitle = styled.div`
 const MusicArtist = styled(MusicTitle)`
   font-size: 0.6875rem;
   color: #b3b3b3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
   cursor: pointer;
   &:hover {
     color: #fff;
@@ -88,6 +97,18 @@ export default function CurrentMusicInformations() {
 
   const music = useSelector(state => state.music)
   const [isLiked, setIsLiked ] = useState(true)
+  const [currentPlayingInfos, setcurrentPlayingInfos] = useState(null)
+
+  async function fetchCurrentPlaying() {
+    const response = await fetch('/api/player/getCurrentPlaying')
+    const data = await response.json()
+
+    setcurrentPlayingInfos(data.currentPlayingInfos)
+  }
+
+  useEffect(() => {
+    console.log(currentPlayingInfos)
+  }, [currentPlayingInfos])
 
   return (
     <Container>
@@ -95,8 +116,9 @@ export default function CurrentMusicInformations() {
         <Image src="https://i.scdn.co/image/ab67616d000048519ee288482ec17f1d091ffad2" alt='plk album cover' layout="fill"/>
       </CurrentMusicCover>
       <MusicInformations>
-        <MusicTitle>Monégasque</MusicTitle>
-        <MusicArtist>PLK</MusicArtist>
+        <MusicTitle>{currentPlayingInfos?.name}</MusicTitle>
+        {/* <MusicArtist>{currentPlayingInfos?.artists.join(', ')}</MusicArtist> */}
+        <MusicArtist>ddddddddddddddddddddddddddddddddddddddd</MusicArtist>
       </MusicInformations>
       {music.soundType === 'music' ? (
         <HeartButton
@@ -113,6 +135,7 @@ export default function CurrentMusicInformations() {
       <ScreenButton>
         <ScreenDisplay />
       </ScreenButton>
+      <button onClick={fetchCurrentPlaying}>getCurrentPlaying</button>
     </Container>
   )
 }
