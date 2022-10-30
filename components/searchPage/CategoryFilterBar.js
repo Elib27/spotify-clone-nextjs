@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useRouter } from "next/router"
+import { useRouter, useState } from "next/router"
 import CategoryFilterButton from "./CategoryFilterButton"
 
 const BarContainer = styled.div`
@@ -17,7 +17,12 @@ const FiltersContainer = styled.div`
   width: 100%;
   display: flex;
   gap: 8px;
-  overflow: hidden;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 export default function CategoryFilterBar() {
@@ -27,7 +32,7 @@ export default function CategoryFilterBar() {
 
   return (
     <BarContainer>
-      <FiltersContainer>
+      <FiltersContainer onScroll={handleScroll}>
         <CategoryFilterButton
           title="Tout"
           link={`/search/${musicResearch}`}

@@ -117,8 +117,7 @@ export default function CurrentMusicInformations() {
       </CurrentMusicCover>
       <MusicInformations>
         <MusicTitle>{currentPlayingInfos?.name}</MusicTitle>
-        {/* <MusicArtist>{currentPlayingInfos?.artists.join(', ')}</MusicArtist> */}
-        <MusicArtist>ddddddddddddddddddddddddddddddddddddddd</MusicArtist>
+        <MusicArtist>{currentPlayingInfos?.artists.join(', ')}</MusicArtist>
       </MusicInformations>
       {music.soundType === 'music' ? (
         <HeartButton

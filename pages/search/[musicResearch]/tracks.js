@@ -10,6 +10,9 @@ import NoResults from "../../../components/searchPage/NoResults"
 export default function Tracks() {
 
   const [fetchedData, setFetchedData] = useState()
+  const [isLoading, setLoading] = useState(true)
+
+  const observer = useRef(null)
   const loaderRef = useRef(null)
   
   useEffect(() => {
@@ -19,47 +22,52 @@ export default function Tracks() {
   const router = useRouter()
   const { musicResearch } = router.query
 
-  async function addNewTracksToList(){
+  async function addNewTracks(){
+    console.log('Tracks fetch')
+    setLoading(true)
     const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=${fetchedData.trackOffset}`)
     const data = await response.json()
-    const trackResults = [...fetchedData.trackResults, ...data.trackResults]
+    const trackResults = [...fetchedData?.trackResults, ...data.trackResults]
     const ids = trackResults.map(track => track.id)
     setFetchedData({
       ...data,
       trackResults: trackResults.filter(({id}, index) => !ids.includes(id, index + 1))
     })
-    console.log(data)
+    debugger
+    setLoading(false)
   }
 
   useEffect(() => {
+    if (!observer.current) {
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          const first = entries[0];
+          if (first.isIntersecting) {
+            addNewTracks()
+          }
+        })
+    }
+  }, [])
+
+  useEffect(() => {
     async function getFirstTracks() {
+      setLoading(true)
       const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=0`)
       const data = await response.json()
       setFetchedData(data)
-      console.log(data)
+      console.log('First tracks fetch')
+      setLoading(false)
     }
     getFirstTracks()
-
   }, [musicResearch])
 
   useEffect(() => {
-    console.log(fetchedData?.trackOffset)
-    if (fetchedData?.trackOffset == 1){
-      addNewTracksToList()
-    }
-  }, [fetchedData])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(addNewTracksToList)
-
     if (loaderRef.current) {
-      observer.observe(loaderRef.current)
+      observer.current.observe(loaderRef.current)
     }
+    return () => observer.current.disconnect()
+  }, [isLoading])
 
-    console.log('refresh')
-
-    return () => observer.disconnect()
-  }, [])
 
   if (!fetchedData) return (null)
 
@@ -70,21 +78,22 @@ export default function Tracks() {
   return (
     <TracksContainer columnTitles={['#', 'titre', 'album']} >
       { fetchedData?.trackResults && (
-        fetchedData.trackResults.map((track, index) => (
-          <div key={track.id}>
-            <TrackItem
-              title={track.name}
-              artist={track.artist}
-              album={track.album}
-              cover_url={track.cover_url}
-              explicit={track.explicit}
-              duration={track.duration}
-              number={index + 1}
-            />
-          </div>
-        ))
-      )}
-    <div ref={loaderRef} />
+          fetchedData.trackResults.map((track, index) => (
+            <div key={track.id}>
+              <TrackItem
+                title={track.name}
+                artist={track.artist}
+                album={track.album}
+                cover_url={track.cover_url}
+                explicit={track.explicit}
+                duration={track.duration}
+                number={index + 1}
+              />
+            </div>
+          ))
+        )
+      }
+    <div ref={loaderRef}></div>
     </TracksContainer>
   )
 }

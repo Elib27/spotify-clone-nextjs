@@ -3,8 +3,17 @@ import getSearchTracks from '../../../../lib/spotify/getSearchTracks'
 export default async function handle(req, res) {
   const { searchInput, offset } = req.query
 
-  const response = await getSearchTracks(searchInput, offset)
-  const data = await response.json()
+  // const response1 = await getSearchTracks(searchInput, offset)
+  // const data1 = await response1.json()
+  // const response2 = await getSearchTracks(searchInput, parseInt(offset) + 50)
+  // const data2 = await response2.json()
+
+  const tracksData = await Promise.all([
+    getSearchTracks(searchInput, offset),
+    getSearchTracks(searchInput, parseInt(offset) + 50)
+  ])
+  .then(responses => Promise.all(responses.map(res => res.json())))
+  .then(data => {return data})
 
   function convertMsInMinSecs(timeToConvertInMs) {
     if (!timeToConvertInMs) return null
@@ -13,7 +22,7 @@ export default async function handle(req, res) {
     return `${min}:${sec}`
   }
 
-  const trackResults = data?.tracks?.items.map((item) => ({
+  const trackResults1 = tracksData?.[0]?.tracks?.items.map((item) => ({
     name: item?.name,
     artist: item?.artists?.[0]?.name,
     duration: convertMsInMinSecs(item?.duration_ms),
@@ -23,7 +32,21 @@ export default async function handle(req, res) {
     id: item?.id
   }))
 
-  const trackOffset = parseInt(offset) + 1
+  const trackResults2 = tracksData?.[1]?.tracks?.items.map((item) => ({
+    name: item?.name,
+    artist: item?.artists?.[0]?.name,
+    duration: convertMsInMinSecs(item?.duration_ms),
+    album: item?.album?.name,
+    cover_url: item?.album?.images?.[1]?.url,
+    explicit: item?.explicit,
+    id: item?.id
+  }))
+
+  const combinedTrackResults = [...trackResults1, ...trackResults2]
+  const ids = combinedTrackResults.map(track => track.id)
+  const trackResults = combinedTrackResults.filter(({id}, index) => !ids.includes(id, index + 1))
+  
+  const trackOffset = parseInt(offset) + 100
 
   res.status(200).json({trackResults, trackOffset})
 }
