@@ -63,6 +63,9 @@ const CurrentMusicCover = styled.div`
 const MusicInformations = styled.div`
   margin: 0 20px 0 14px;
   position: relative;
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(90deg,transparent 0,#000 6px,#000 calc(100% - 12px),transparent);
 `
 const MusicTitle = styled.div`
   font-size: 0.875rem;
@@ -73,8 +76,7 @@ const MusicTitle = styled.div`
   line-height: 1.6;
   flex-shrink: 0;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding-left: 6px;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
@@ -84,9 +86,7 @@ const MusicArtist = styled(MusicTitle)`
   font-size: 0.6875rem;
   color: #b3b3b3;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
+  padding-left: 6px;
   cursor: pointer;
   &:hover {
     color: #fff;
