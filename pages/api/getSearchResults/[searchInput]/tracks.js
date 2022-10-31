@@ -3,11 +3,6 @@ import getSearchTracks from '../../../../lib/spotify/getSearchTracks'
 export default async function handle(req, res) {
   const { searchInput, offset } = req.query
 
-  // const response1 = await getSearchTracks(searchInput, offset)
-  // const data1 = await response1.json()
-  // const response2 = await getSearchTracks(searchInput, parseInt(offset) + 50)
-  // const data2 = await response2.json()
-
   const tracksData = await Promise.all([
     getSearchTracks(searchInput, offset),
     getSearchTracks(searchInput, parseInt(offset) + 50)

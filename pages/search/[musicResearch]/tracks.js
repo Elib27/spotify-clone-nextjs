@@ -22,18 +22,23 @@ export default function Tracks() {
   const router = useRouter()
   const { musicResearch } = router.query
 
-  async function addNewTracks(){
+  async function addNewTracks(isNewSearch){
     console.log('Tracks fetch')
     setLoading(true)
-    const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=${fetchedData.trackOffset}`)
+    const offset = isNewSearch ? 0 : fetchedData?.trackOffset
+    const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=${offset}`)
     const data = await response.json()
-    const trackResults = [...fetchedData?.trackResults, ...data.trackResults]
-    const ids = trackResults.map(track => track.id)
-    setFetchedData({
-      ...data,
-      trackResults: trackResults.filter(({id}, index) => !ids.includes(id, index + 1))
-    })
-    debugger
+    if (isNewSearch) {
+      setFetchedData(data)
+    }
+    else {
+      const trackResults = [...fetchedData?.trackResults, ...data.trackResults]
+      const ids = trackResults.map(track => track.id)
+      setFetchedData({
+        ...data,
+        trackResults: trackResults.filter(({id}, index) => !ids.includes(id, index + 1))
+      })
+    }
     setLoading(false)
   }
 
@@ -43,22 +48,14 @@ export default function Tracks() {
         (entries) => {
           const first = entries[0];
           if (first.isIntersecting) {
-            addNewTracks()
+            addNewTracks(false)
           }
         })
     }
   }, [])
 
   useEffect(() => {
-    async function getFirstTracks() {
-      setLoading(true)
-      const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=0`)
-      const data = await response.json()
-      setFetchedData(data)
-      console.log('First tracks fetch')
-      setLoading(false)
-    }
-    getFirstTracks()
+    addNewTracks(true)
   }, [musicResearch])
 
   useEffect(() => {
@@ -77,22 +74,21 @@ export default function Tracks() {
 
   return (
     <TracksContainer columnTitles={['#', 'titre', 'album']} >
-      { fetchedData?.trackResults && (
-          fetchedData.trackResults.map((track, index) => (
-            <div key={track.id}>
-              <TrackItem
-                title={track.name}
-                artist={track.artist}
-                album={track.album}
-                cover_url={track.cover_url}
-                explicit={track.explicit}
-                duration={track.duration}
-                number={index + 1}
-              />
-            </div>
-          ))
-        )
-      }
+      {fetchedData?.trackResults && (
+        fetchedData.trackResults.map((track, index) => (
+          <div key={track.id}>
+            <TrackItem
+              title={track.name}
+              artist={track.artist}
+              album={track.album}
+              cover_url={track.cover_url}
+              explicit={track.explicit}
+              duration={track.duration}
+              number={index + 1}
+            />
+          </div>
+        ))
+      )}
     <div ref={loaderRef}></div>
     </TracksContainer>
   )
@@ -101,7 +97,9 @@ export default function Tracks() {
 Tracks.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
 
 
-// probleme : trackOffset ne se met pas à jour
-//            parfois, pas de reset
+// probleme : infinite scroll ne fonctionne pas
+// fetchdata undefined alors que si dans le inspect component
 
-//plus tard: faire les requetes en même temps
+// refresh ? 
+
+// Résoudre bug 

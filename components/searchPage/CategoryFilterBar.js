@@ -32,7 +32,7 @@ export default function CategoryFilterBar() {
 
   return (
     <BarContainer>
-      <FiltersContainer onScroll={handleScroll}>
+      <FiltersContainer>
         <CategoryFilterButton
           title="Tout"
           link={`/search/${musicResearch}`}

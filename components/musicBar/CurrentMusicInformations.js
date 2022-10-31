@@ -102,8 +102,7 @@ export default function CurrentMusicInformations() {
   async function fetchCurrentPlaying() {
     const response = await fetch('/api/player/getCurrentPlaying')
     const data = await response.json()
-
-    setcurrentPlayingInfos(data.currentPlayingInfos)
+    setcurrentPlayingInfos(data)
   }
 
   useEffect(() => {

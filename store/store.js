@@ -3,7 +3,8 @@ import { configureStore, createSlice } from "@reduxjs/toolkit"
 const musicSlice = createSlice({
   name: "music",
   initialState: {
-    name: "Monégasque",
+    name: "",
+    artists: [],
     isPlaying: false,
     isPlayingRandom: false,
     loopMode: "no_loop",
@@ -101,6 +102,7 @@ export const {
   changePrevVolume
 } = musicSlice.actions
 
+// à retirer  / modifier
 const navigationSlice = createSlice({
   name: "navigation",
   initialState: {
