@@ -67,27 +67,32 @@ const MusicInformations = styled.div`
   padding-right: 10px;
   mask-image: linear-gradient(90deg,transparent 0,#000 6px,#000 calc(100% - 12px),transparent);
 `
-const MusicTitle = styled.div`
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: #fff;
+const MusicDescription = styled.div`
   width: 100%;
-  text-align: left;
+  font-weight: 400;
   line-height: 1.6;
+  text-align: left;
   flex-shrink: 0;
   white-space: nowrap;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+const MusicTitle = styled(MusicDescription)`
+  font-size: 0.875rem;
+  color: #fff;
   padding-left: 6px;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
   }
 `
-const MusicArtistsContainer = styled.div`
-  flex-shrink: 0;
-  width: 100%;
+const MusicArtistsContainer = styled(MusicDescription)`
   font-size: 0.6875rem;
-  font-weight: 400;
-  line-height: 1.6;
   color: #b3b3b3;
 `
 
@@ -148,7 +153,7 @@ export default function CurrentMusicInformations() {
         <MusicTitle>{music.currentTrack.name}</MusicTitle>
         <MusicArtistsContainer>{artists}</MusicArtistsContainer>
       </MusicInformations>
-      {music.soundType === 'music' ? (
+      {music.currentTrack.soundType === 'track' ? (
         <HeartButton
           isLiked={music.isLiked}
           onClick={() => dispatch(toogleLiked())}

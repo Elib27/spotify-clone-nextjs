@@ -9,8 +9,7 @@ import {
   changeTime,
   updateTimeInMinSecs,
   changeDuration,
-  updateDurationInMinSecs,
-  changeSoundType
+  updateDurationInMinSecs
 } from '../../store/store'
 import styled from "styled-components"
 import randomInteger from "../../lib/randomInteger"
@@ -192,6 +191,11 @@ export default function MusicControlsActive() {
     dispatch(playMusic())
   }
 
+  function setRandomMusic() {
+    const randomIndex = randomInteger(0, maxMusicIndex)
+    setCurrentMusicIndex(randomIndex)
+  }
+
   function handleClickPrevMusic() {
     if (currentMusicIndex > 0 && music.time <= 3) {
       setCurrentMusicIndex(curr => curr - 1)
@@ -203,8 +207,7 @@ export default function MusicControlsActive() {
 
   function handleClickNextMusic() {
     if (music.isPlayingRandom || currentMusicIndex > maxMusicIndex) {
-      const randomIndex = randomInteger(0, maxMusicIndex)
-      setCurrentMusicIndex(randomIndex)
+      setRandomMusic()
     }
     else {
       setCurrentMusicIndex(curr => curr + 1)
@@ -212,11 +215,6 @@ export default function MusicControlsActive() {
     if (music.loopMode === 'loop_2') {
       dispatch(changeLoopMode('loop_1'))
     }
-  }
-
-  function setRandomMusic() {
-    const randomIndex = randomInteger(0, maxMusicIndex)
-    setCurrentMusicIndex(randomIndex)
   }
 
   useEffect(() => {
@@ -249,8 +247,7 @@ export default function MusicControlsActive() {
 
   useEffect(() => {
     async function firstMusicLoad(){
-      const { url, maxIndex, type } = await getCopyrightFreeTrack(currentMusicIndex)
-      dispatch(changeSoundType(type))
+      const { url, maxIndex } = await getCopyrightFreeTrack(currentMusicIndex)
       setCurrentMusicLink(url)
       setMaxMusicIndex(maxIndex)
       updateMusicDuration()
@@ -267,10 +264,9 @@ export default function MusicControlsActive() {
 
   useEffect(() => {
     async function changeMusic() {
-      const { url, maxIndex, type } = await getCopyrightFreeTrack(currentMusicIndex)
+      const { url, maxIndex } = await getCopyrightFreeTrack(currentMusicIndex)
       setCurrentMusicLink(url)
       setMaxMusicIndex(maxIndex)
-      dispatch(changeSoundType(type))
     }
     changeMusic()
   }, [currentMusicIndex])
@@ -307,7 +303,7 @@ export default function MusicControlsActive() {
     <MusicControlsContainer>
       <ControlsContainer>
         <SideContainer>
-        { music.soundType === 'music' ? 
+        { music.currentTrack.soundType === 'track' ? 
             (
               <RandomButton
                 isPlayingRandom={music.isPlayingRandom}
@@ -345,7 +341,7 @@ export default function MusicControlsActive() {
           >
             <NextMusicLogo />
           </ControlButton>
-          { music.soundType === 'music' ? 
+          { music.currentTrack.soundType === 'track' ? 
             (
               <LoopButton
                 onClick={() => dispatch(incrementLoopMode())}

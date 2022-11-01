@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { useSelector, useDispatch } from 'react-redux'
-import { changeCurrentMusicId } from '../../store/store'
+import { useDispatch } from 'react-redux'
+import { changeCurrentMusicId, changeTracksQueue} from '../../store/store'
 import Image from 'next/image'
 import HeartLogo from '../../public/tracks_logos/heart.svg'
 import OptionsLogo from '../../public/tracks_logos/options_logo.svg'
@@ -168,8 +168,12 @@ export default function LikedTrack({ title, artist, album, id, cover_url, explic
   const dispatch = useDispatch()
 
   function handleClickChangeCurrentMusicId() {
-    dispatch(changeCurrentMusicId(id))
-    console.log('ChangeMusicId()')
+    dispatch(changeCurrentMusicId(id)) // bug ?
+    (async () => {
+      const response = await fetch(`/api/getTrackRecommendations/seed_tracks=${id}`)
+      const data = await response.json()
+      dispatch(changeTracksQueue(data))
+    })()
   }
 
   return (

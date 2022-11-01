@@ -9,9 +9,9 @@ const musicSlice = createSlice({
       image: "",
       album: "",
       id: "",
+      soundType: "track",
     },
     isLiked: true,
-    soundType: 'music',
     isPlaying: false,
     isPlayingRandom: false,
     loopMode: "no_loop",
@@ -21,8 +21,9 @@ const musicSlice = createSlice({
     durationInMinSecs: "03:00",
     musicProgressionPercentage: 0,
     volume: 60,
-    volumeCategory: 'medium',
-    prevVolume: 50
+    volumeCategory: "medium",
+    prevVolume: 50,
+    tracksQueue: [],
   },
   reducers: {
     changeCurrentMusic(state, action) {
@@ -76,7 +77,7 @@ const musicSlice = createSlice({
       state.durationInMinSecs = `${min}:${sec}`
     },
     changeSoundType: (state, action) => {
-      state.soundType = action.payload
+      state.currentTrack.soundType = action.payload
     },
     changeVolume: (state, action) => {
       state.volume = action.payload
@@ -97,6 +98,12 @@ const musicSlice = createSlice({
     },
     changePrevVolume: (state, action) => {
       state.prevVolume = action.payload
+    },
+    changeTracksQueue: (state, action) => {
+      state.tracksQueue = action.payload
+    },
+    addToQueue(state, action) {
+      state.tracksQueue = [...state.tracksQueue, action.payload]
     }
   }
 })
@@ -120,7 +127,9 @@ export const {
   changeSoundType,
   changeVolume,
   changeVolumeCategory,
-  changePrevVolume
+  changePrevVolume,
+  changeTracksQueue,
+  addToQueue
 } = musicSlice.actions
 
 // à retirer  / modifier

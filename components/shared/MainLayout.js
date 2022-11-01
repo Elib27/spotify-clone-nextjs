@@ -5,9 +5,7 @@ import PageHeader from './PageHeader'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import {
-  changeCurrentPage,
-} from '../../store/store'
+import { changeCurrentPage } from '../../store/store'
 
 const MainWrapper = styled.div`
   display: grid;
@@ -29,6 +27,10 @@ const PageContainer = styled.div`
   overflow-y: overlay;
   position: relative;
   border-radius: 8px;
+  /* Firefox */
+  scrollbar-color: rgba(255,255,255,0.3);
+  scrollbar-width: thin;
+  /* Chrome, Edge, and Safari */
   &::-webkit-scrollbar {
     width: 16px;
   }

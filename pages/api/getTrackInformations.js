@@ -20,7 +20,8 @@ export default async function getTrackInformations(req, res) {
       name: data?.album?.name,
       id: data?.album?.id,
       href: data?.album?.href,
-    }
+    },
+    soundType: data?.type
   }
 
   res.status(200).json(track)
