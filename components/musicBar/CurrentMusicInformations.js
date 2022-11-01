@@ -1,11 +1,12 @@
 import styled from "styled-components"
 import { useState, useEffect } from 'react'
 import { useSelector, dispatch } from 'react-redux'
+import { toogleLiked } from '../../store/store'
 import Image from "next/image"
 import Heart from '../../public/musicBar_logos/heart.svg'
 import HeartFull from '../../public/musicBar_logos/heart_full.svg'
 import AddToEpisodes from '../../public/musicBar_logos/add_to_episodes_logo.svg'
-import AddedToEpisodes from '../../public/musicBar_logos/added_to_episodes_logo.svg'
+import IsInEpisodes from '../../public/musicBar_logos/added_to_episodes_logo.svg'
 import ScreenDisplay from '../../public/musicBar_logos/screen_display.svg'
 
 const Container = styled.div`
@@ -96,44 +97,37 @@ const MusicArtist = styled(MusicTitle)`
 export default function CurrentMusicInformations() {
 
   const music = useSelector(state => state.music)
-  const [isLiked, setIsLiked ] = useState(true)
-  const [currentPlayingInfos, setcurrentPlayingInfos] = useState(null)
 
-  async function fetchCurrentPlaying() {
-    const response = await fetch('/api/player/getCurrentPlaying')
-    const data = await response.json()
-    setcurrentPlayingInfos(data)
+  if (!music.name) {
+    return (
+      <Container />
+    )
   }
-
-  useEffect(() => {
-    console.log(currentPlayingInfos)
-  }, [currentPlayingInfos])
 
   return (
     <Container>
       <CurrentMusicCover>
-        <Image src="https://i.scdn.co/image/ab67616d000048519ee288482ec17f1d091ffad2" alt='plk album cover' layout="fill"/>
+        <Image src={music.image.url} alt={`${music.album || music.name} cover`} layout="fill"/>
       </CurrentMusicCover>
       <MusicInformations>
-        <MusicTitle>{currentPlayingInfos?.name}</MusicTitle>
-        <MusicArtist>{currentPlayingInfos?.artists.join(', ')}</MusicArtist>
+        <MusicTitle>{music?.name}</MusicTitle>
+        <MusicArtist>{music?.artists.join(', ')}</MusicArtist>
       </MusicInformations>
       {music.soundType === 'music' ? (
         <HeartButton
-          isLiked={isLiked}
-          onClick={() => setIsLiked(curr => !curr)}
+          isLiked={music.isLiked}
+          onClick={toogleLiked}
         >
-          {isLiked ? <HeartFull /> : <Heart />}
+          {music.isLiked ? <HeartFull /> : <Heart />}
         </HeartButton>
       ):(
-        <AddEpisodesButton isLiked={isLiked}>
-          {isLiked ? <AddedToEpisodes /> : <AddToEpisodes />}
+        <AddEpisodesButton isLiked={music.isLiked}>
+          {music.isLiked ? <IsInEpisodes /> : <AddToEpisodes />}
         </AddEpisodesButton>
       )}
       <ScreenButton>
         <ScreenDisplay />
       </ScreenButton>
-      <button onClick={fetchCurrentPlaying}>getCurrentPlaying</button>
     </Container>
   )
 }

@@ -5,6 +5,10 @@ const musicSlice = createSlice({
   initialState: {
     name: "",
     artists: [],
+    image: "",
+    album: "",
+    isLiked: true,
+    soundType: 'music',
     isPlaying: false,
     isPlayingRandom: false,
     loopMode: "no_loop",
@@ -15,10 +19,18 @@ const musicSlice = createSlice({
     musicProgressionPercentage: 0,
     volume: 60,
     volumeCategory: 'medium',
-    prevVolume: 50,
-    soundType: 'music'
+    prevVolume: 50
   },
   reducers: {
+    changeName: (state, action) => {
+      state.name = action.payload
+    },
+    changeArtists: (state, action) => {
+      state.artists = action.payload
+    },
+    toogleLiked: (state) => {
+      state.isLiked = !state.isLiked
+    },
     togglePlaying: (state) => {
       state.isPlaying = !state.isPlaying
     },
@@ -85,6 +97,9 @@ const musicSlice = createSlice({
     }
   }
 })
+
+// Library Slice ?
+
 
 export const {
   togglePlaying,
