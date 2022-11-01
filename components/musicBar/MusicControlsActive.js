@@ -13,6 +13,7 @@ import {
   changeSoundType
 } from '../../store/store'
 import styled from "styled-components"
+import randomInteger from "../../lib/randomInteger"
 import RandomMusicLogo from '../../public/musicBar_logos/random_music.svg'
 import PrevMusicLogo from '../../public/musicBar_logos/prev_music.svg'
 import NextMusicLogo from '../../public/musicBar_logos/next_music.svg'
@@ -165,7 +166,7 @@ export default function MusicControlsActive() {
   const [currentMusicLink, setCurrentMusicLink] = useState(null)
   const [isProgressionBarMoving, setIsProgressionBarMoving] = useState(false)
 
-  const music = useSelector( state => state.music)
+  const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
   const audio = useRef(null)
@@ -183,6 +184,44 @@ export default function MusicControlsActive() {
       }, {once: true})
     }
   }
+
+  function resetMusic(){
+    audio.current.currentTime = 0
+    dispatch(changeTime(0))
+    updateMusicDuration()
+    dispatch(playMusic())
+  }
+
+  function handleClickPrevMusic() {
+    if (currentMusicIndex > 0 && music.time <= 3) {
+      setCurrentMusicIndex(curr => curr - 1)
+    }
+    else {
+      resetMusic()
+    }
+  }
+
+  function handleClickNextMusic() {
+    if (music.isPlayingRandom || currentMusicIndex > maxMusicIndex) {
+      const randomIndex = randomInteger(0, maxMusicIndex)
+      setCurrentMusicIndex(randomIndex)
+    }
+    else {
+      setCurrentMusicIndex(curr => curr + 1)
+    }
+    if (music.loopMode === 'loop_2') {
+      dispatch(changeLoopMode('loop_1'))
+    }
+  }
+
+  function setRandomMusic() {
+    const randomIndex = randomInteger(0, maxMusicIndex)
+    setCurrentMusicIndex(randomIndex)
+  }
+
+  useEffect(() => {
+    setRandomMusic()
+  }, [music.currentTrack.id])
 
   useEffect(() => {
     dispatch(updateDurationInMinSecs())
@@ -225,35 +264,6 @@ export default function MusicControlsActive() {
       music.isPlaying ? audio.current.play() : audio.current.pause()
     }
   },[music.isPlaying])
-
-  function resetMusic(){
-    audio.current.currentTime = 0
-    dispatch(changeTime(0))
-    updateMusicDuration()
-    dispatch(playMusic())
-  }
-
-  function handleClickPrevMusic() {
-    if (currentMusicIndex > 0 && music.time <= 3) {
-      setCurrentMusicIndex(curr => curr - 1)
-    }
-    else {
-      resetMusic()
-    }
-  }
-
-  function handleClickNextMusic() {
-    if (music.isPlayingRandom || currentMusicIndex >= maxMusicIndex) {
-      const randomIndex = Math.floor(Math.random() * (maxMusicIndex - 1))
-      setCurrentMusicIndex(randomIndex)
-    }
-    else {
-      setCurrentMusicIndex(curr => curr + 1)
-    }
-    if (music.loopMode === 'loop_2') {
-      dispatch(changeLoopMode('loop_1'))
-    }
-  }
 
   useEffect(() => {
     async function changeMusic() {

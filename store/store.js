@@ -3,10 +3,13 @@ import { configureStore, createSlice } from "@reduxjs/toolkit"
 const musicSlice = createSlice({
   name: "music",
   initialState: {
-    name: "",
-    artists: [],
-    image: "",
-    album: "",
+    currentTrack: {
+      name: "",
+      artists: [""],
+      image: "",
+      album: "",
+      id: "",
+    },
     isLiked: true,
     soundType: 'music',
     isPlaying: false,
@@ -22,11 +25,11 @@ const musicSlice = createSlice({
     prevVolume: 50
   },
   reducers: {
-    changeName: (state, action) => {
-      state.name = action.payload
+    changeCurrentMusic(state, action) {
+      state.currentTrack = {...state.currentTrack, ...action.payload}
     },
-    changeArtists: (state, action) => {
-      state.artists = action.payload
+    changeCurrentMusicId(state, action) {
+      state.currentTrack.id = action.payload
     },
     toogleLiked: (state) => {
       state.isLiked = !state.isLiked
@@ -102,6 +105,9 @@ const musicSlice = createSlice({
 
 
 export const {
+  changeCurrentMusic,
+  changeCurrentMusicId,
+  toogleLiked,
   togglePlaying,
   playMusic,
   togglePlayingRandom,

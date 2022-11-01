@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeCurrentMusicId } from '../../store/store'
 import Image from 'next/image'
 import HeartLogo from '../../public/tracks_logos/heart.svg'
 import OptionsLogo from '../../public/tracks_logos/options_logo.svg'
@@ -161,12 +163,20 @@ const DurationContainer = styled.div`
   text-align: center;
 `
 
-export default function LikedTrack({ title, artist, album, cover_url, explicit, duration, number}) {
+export default function LikedTrack({ title, artist, album, id, cover_url, explicit, duration, number}) {
+  
+  const dispatch = useDispatch()
+
+  function handleClickChangeCurrentMusicId() {
+    dispatch(changeCurrentMusicId(id))
+    console.log('ChangeMusicId()')
+  }
+
   return (
     <Container>
       <NumberRow>
         <Number>{number}</Number>
-        <PlayButtonContainer>
+        <PlayButtonContainer onClick={handleClickChangeCurrentMusicId}>
           <SmallPlayLogo />
         </PlayButtonContainer>
       </NumberRow>

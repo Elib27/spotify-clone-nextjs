@@ -1,13 +1,12 @@
 import styled from "styled-components"
-import { useState, useEffect } from 'react'
-import { useSelector, dispatch } from 'react-redux'
-import { toogleLiked } from '../../store/store'
+import { useEffect } from "react"
+import { useSelector, useDispatch } from 'react-redux'
+import { changeCurrentMusic, toogleLiked } from '../../store/store'
 import Image from "next/image"
 import Heart from '../../public/musicBar_logos/heart.svg'
 import HeartFull from '../../public/musicBar_logos/heart_full.svg'
 import AddToEpisodes from '../../public/musicBar_logos/add_to_episodes_logo.svg'
 import IsInEpisodes from '../../public/musicBar_logos/added_to_episodes_logo.svg'
-import ScreenDisplay from '../../public/musicBar_logos/screen_display.svg'
 
 const Container = styled.div`
   width: 30%;
@@ -62,10 +61,10 @@ const CurrentMusicCover = styled.div`
   cursor: pointer;
 `
 const MusicInformations = styled.div`
-  margin: 0 20px 0 14px;
+  margin: 0 14px 0 14px;
   position: relative;
   overflow: hidden;
-  width: 100%;
+  padding-right: 10px;
   mask-image: linear-gradient(90deg,transparent 0,#000 6px,#000 calc(100% - 12px),transparent);
 `
 const MusicTitle = styled.div`
@@ -83,22 +82,58 @@ const MusicTitle = styled.div`
     text-decoration: underline;
   }
 `
-const MusicArtist = styled(MusicTitle)`
+const MusicArtistsContainer = styled.div`
+  flex-shrink: 0;
+  width: 100%;
   font-size: 0.6875rem;
+  font-weight: 400;
+  line-height: 1.6;
   color: #b3b3b3;
+`
+
+const MusicArtistButton = styled.button`
+  background-color: transparent;
+  border: none;
+  font-size: 0.6875rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #b3b3b3;
+  outline: 0;
+  text-align: left;
   white-space: nowrap;
   padding-left: 6px;
   cursor: pointer;
   &:hover {
     color: #fff;
+    text-decoration: underline;
   }
 `
 
 export default function CurrentMusicInformations() {
 
   const music = useSelector(state => state.music)
+  const dispatch = useDispatch()
 
-  if (!music.name) {
+  useEffect(() => {
+    async function getTrackInformations() {
+      if (!music.currentTrack.id) return
+      const response = await fetch(`/api/getTrackInformations?id=${music.currentTrack.id}`)
+      const data = await response.json()
+      dispatch(changeCurrentMusic(data))
+    }
+    getTrackInformations()
+  }, [music.currentTrack.id])
+
+  const artists = music.currentTrack.artists.map((artist, index) => (
+    <span key={artist.id}>
+      {index > 0 ? ',' : ''}
+      <MusicArtistButton >
+        {artist.name}
+      </MusicArtistButton>
+    </span>
+  ))
+
+  if (!music.currentTrack.name) {
     return (
       <Container />
     )
@@ -107,27 +142,27 @@ export default function CurrentMusicInformations() {
   return (
     <Container>
       <CurrentMusicCover>
-        <Image src={music.image.url} alt={`${music.album || music.name} cover`} layout="fill"/>
+        <Image src={music.currentTrack.image} alt={`${music.currentTrack.album || music.currentTrack.name} cover`} layout="fill"/>
       </CurrentMusicCover>
       <MusicInformations>
-        <MusicTitle>{music?.name}</MusicTitle>
-        <MusicArtist>{music?.artists.join(', ')}</MusicArtist>
+        <MusicTitle>{music.currentTrack.name}</MusicTitle>
+        <MusicArtistsContainer>{artists}</MusicArtistsContainer>
       </MusicInformations>
       {music.soundType === 'music' ? (
         <HeartButton
           isLiked={music.isLiked}
-          onClick={toogleLiked}
+          onClick={() => dispatch(toogleLiked())}
         >
           {music.isLiked ? <HeartFull /> : <Heart />}
         </HeartButton>
       ):(
-        <AddEpisodesButton isLiked={music.isLiked}>
+        <AddEpisodesButton
+        isLiked={music.isLiked}
+        onClick={() => dispatch(toogleLiked())}
+        >
           {music.isLiked ? <IsInEpisodes /> : <AddToEpisodes />}
         </AddEpisodesButton>
       )}
-      <ScreenButton>
-        <ScreenDisplay />
-      </ScreenButton>
     </Container>
   )
 }

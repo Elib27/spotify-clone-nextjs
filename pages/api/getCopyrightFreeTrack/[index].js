@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         url: Tracks[index],
         type: index % 2 === 0 ? 'music' : 'podcast',
         index: index,
-        maxIndex: Tracks.length,
+        maxIndex: Tracks.length - 1,
       }
   )
   }

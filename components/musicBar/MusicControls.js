@@ -6,10 +6,9 @@ export default function MusicControls() {
 
   const music = useSelector(state => state.music)
 
-  if (!music.name) {
+  if (!music.currentTrack.name) {
     return <MusicControlsDisabled />
   }
-
   return (
     <MusicControlsActive />
   )

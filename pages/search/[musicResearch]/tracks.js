@@ -1,4 +1,3 @@
-import styled from "styled-components"
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from "next/router"
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
@@ -81,6 +80,7 @@ export default function Tracks() {
               title={track.name}
               artist={track.artist}
               album={track.album}
+              id={track.id}
               cover_url={track.cover_url}
               explicit={track.explicit}
               duration={track.duration}
