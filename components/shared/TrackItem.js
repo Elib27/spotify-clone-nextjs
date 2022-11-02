@@ -167,13 +167,11 @@ export default function LikedTrack({ title, artist, album, id, cover_url, explic
   
   const dispatch = useDispatch()
 
-  function handleClickChangeCurrentMusicId() {
-    dispatch(changeCurrentMusicId(id)) // bug ?
-    (async () => {
-      const response = await fetch(`/api/getTrackRecommendations/seed_tracks=${id}`)
-      const data = await response.json()
-      dispatch(changeTracksQueue(data))
-    })()
+  async function handleClickChangeCurrentMusicId() {
+    dispatch(changeCurrentMusicId(id))
+    const response = await fetch(`/api/getTracksQueue?seed_tracks=${id}`)
+    const data = await response.json()
+    dispatch(changeTracksQueue(data))
   }
 
   return (

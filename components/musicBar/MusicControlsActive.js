@@ -176,6 +176,12 @@ export default function MusicControlsActive() {
     return track
   }
 
+  function calcultateCurrentMusicIndex(id) { // à revoir + currMusicInQueue
+    const short_id = btoa(id.slice(-6))
+    const index = parseInt(short_id, 32) % maxMusicIndex
+    return index
+  }
+
   function updateMusicDuration() {
     if (audio.current) {
       audio.current.addEventListener('loadedmetadata', () => {
