@@ -9,7 +9,8 @@ import {
   changeTime,
   updateTimeInMinSecs,
   changeDuration,
-  updateDurationInMinSecs
+  updateDurationInMinSecs,
+  changeCurrentMusicId
 } from '../../store/store'
 import styled from "styled-components"
 import randomInteger from "../../lib/randomInteger"
@@ -163,6 +164,7 @@ export default function MusicControlsActive() {
   const [currentMusicIndex, setCurrentMusicIndex] = useState(0)
   const [maxMusicIndex, setMaxMusicIndex] = useState(20)
   const [currentMusicLink, setCurrentMusicLink] = useState(null)
+  const [musicIndexInQueue, setMusicIndexInQueue] = useState(0)
   const [isProgressionBarMoving, setIsProgressionBarMoving] = useState(false)
 
   const music = useSelector(state => state.music)
@@ -176,9 +178,14 @@ export default function MusicControlsActive() {
     return track
   }
 
-  function calcultateCurrentMusicIndex(id) { // à revoir + currMusicInQueue
-    const short_id = btoa(id.slice(-6))
-    const index = parseInt(short_id, 32) % maxMusicIndex
+  function calculateCurrentMusicIndex(id, maxIndex) {
+    if (!id || !maxIndex) return 0
+    const short_id = id.slice(-10)
+    let idSum = 0
+    for (let i = 0; i < short_id.length; i++) {
+      idSum += short_id.charCodeAt(i)
+    }
+    const index = idSum % maxIndex
     return index
   }
 
@@ -198,13 +205,13 @@ export default function MusicControlsActive() {
   }
 
   function setRandomMusic() {
-    const randomIndex = randomInteger(0, maxMusicIndex)
-    setCurrentMusicIndex(randomIndex)
+    const randomIndex = randomInteger(0, music.tracksQueue.length - 1)
+    setMusicIndexInQueue(randomIndex)
   }
 
   function handleClickPrevMusic() {
-    if (currentMusicIndex > 0 && music.time <= 3) {
-      setCurrentMusicIndex(curr => curr - 1)
+    if (musicIndexInQueue > 0 && music.time <= 3) {
+      setMusicIndexInQueue(musicIndexInQueue - 1)
     }
     else {
       resetMusic()
@@ -212,11 +219,11 @@ export default function MusicControlsActive() {
   }
 
   function handleClickNextMusic() {
-    if (music.isPlayingRandom || currentMusicIndex > maxMusicIndex) {
+    if (music.isPlayingRandom || musicIndexInQueue >= music.tracksQueue.length - 1) {
       setRandomMusic()
     }
     else {
-      setCurrentMusicIndex(curr => curr + 1)
+      setMusicIndexInQueue(musicIndexInQueue + 1)
     }
     if (music.loopMode === 'loop_2') {
       dispatch(changeLoopMode('loop_1'))
@@ -224,8 +231,13 @@ export default function MusicControlsActive() {
   }
 
   useEffect(() => {
-    setRandomMusic()
-  }, [music.currentTrack.id])
+    const currMusicIndex = calculateCurrentMusicIndex(music.currentTrack.id, maxMusicIndex)
+    setCurrentMusicIndex(currMusicIndex)
+  }, [music.currentTrack.id, maxMusicIndex])
+
+  useEffect(() => {
+    dispatch(changeCurrentMusicId(music.tracksQueue[musicIndexInQueue]))
+  }, [musicIndexInQueue])
 
   useEffect(() => {
     dispatch(updateDurationInMinSecs())
