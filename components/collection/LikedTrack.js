@@ -188,7 +188,7 @@ export default function LikedTrack({ title, artist, album, cover_url, explicit, 
         <TrackAlbum>{album}</TrackAlbum>
       </TrackAlbumRow>
       <AddedDateRow>
-        <AddedDate>{`Il y a ${addedDate} jours`}</AddedDate>
+        <AddedDate>{addedDate}</AddedDate>
       </AddedDateRow>
       <LastRow>
         <LikeContainer>

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import LikedTrack from '../../components/collection/LikedTrack'
 import PlaylistHeader from '../../components/shared/PlayListHeader'
 import NoLikedTracksSection from '../../components/collection/NoLikedTracksSection'
