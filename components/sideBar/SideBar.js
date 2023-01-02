@@ -38,7 +38,7 @@ const Resizer = styled.div`
   position: absolute;
   top: 0;
   right: -4.5px;
-  cursor: col-resize !important;
+  cursor: col-resize;
   z-index: 1;
   ${({isResizeBarVisible}) => isResizeBarVisible && `
     opacity: 1;
@@ -46,13 +46,11 @@ const Resizer = styled.div`
   &:hover {
     opacity: 1;
   }
-  &:active {
-    cursor: col-resize;
-  }
 `
 
 export default function Sidebar() {
   const sideBar = useRef(null)
+  const resizer = useRef(null)
   const [isResizeBarVisible, setIsResizeBarVisible] = useState(false)
   const [SideBarWidth, setSideBarWidth] = useState(255);
 
@@ -68,15 +66,16 @@ export default function Sidebar() {
     setSideBarWidth(newSize);
   }
 
-  function handleDragStart(e) {
+  function handleMouseDown() {
     setIsResizeBarVisible(true)
-    const img = new Image();
-    e.dataTransfer.setDragImage(img, 0, 0);
+    document.addEventListener("mousemove", resizeSideBar)
+    document.addEventListener("mouseup", handleMouseUp)
   }
 
-  function handleDragEnd(e) {
+  function handleMouseUp() {
     setIsResizeBarVisible(false)
-    resizeSideBar(e)
+    document.removeEventListener("mousemove", resizeSideBar)
+    document.removeEventListener("mouseup", handleMouseUp)
   }
 
   useEffect(() => {
@@ -96,10 +95,8 @@ export default function Sidebar() {
         </InstallButtonContainer>
       </Container>
       <Resizer
-        draggable
-        onDragStart={handleDragStart}
-        onDrag={resizeSideBar}
-        onDragEnd={handleDragEnd}
+        ref={resizer}
+        onMouseDown={handleMouseDown}
         isResizeBarVisible={isResizeBarVisible}
       />
     </Wrapper>
