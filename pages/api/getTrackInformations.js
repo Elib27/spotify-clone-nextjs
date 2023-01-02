@@ -1,6 +1,6 @@
 import getRawTrackInformations from "../../lib/spotify/getRawTrackInformations"
 
-export default async function getTrackInformations(req, res) {
+export default async function handler(req, res) {
 
   const { id } = req.query
 

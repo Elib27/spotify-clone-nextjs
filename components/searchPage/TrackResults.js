@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import Track from './Track'
+import convertMsToMinutesSeconds from '../../lib/convertMsToMinutesSeconds'
 
 const Container = styled.div`
   grid-column: 3 / -1;
@@ -16,12 +17,6 @@ const TracksContainer = styled.div`
   width: 100%;
   position: relative;
 `
-
-function convertMsToMinutesSeconds(ms) {
-  const minutes = Math.floor(ms / 60000)
-  const seconds = Math.floor((ms % 60000) / 1000).toString().padStart(2, '0')
-  return `${minutes}:${seconds}`
-}
 
 export default function TrackResults({ tracks }) {
   if (!tracks) {

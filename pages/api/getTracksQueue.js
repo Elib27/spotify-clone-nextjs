@@ -1,6 +1,6 @@
 import getTrackRecommendations from "../../lib/spotify/getTrackRecommendations"
 
-export default async function getTracksQueue(req, res) {
+export default async function handler(req, res) {
 
   const seed_tracks = req.query?.seed_tracks
   const seed_artists = req.query?.seed_artists

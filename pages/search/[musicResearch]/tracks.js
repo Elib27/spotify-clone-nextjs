@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from "next/router"
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
 import TracksContainer from "../../../components/searchPage/TracksContainer"
@@ -8,73 +8,31 @@ import NoResults from "../../../components/searchPage/NoResults"
 
 export default function Tracks() {
 
-  const [fetchedData, setFetchedData] = useState()
-  const [isLoading, setLoading] = useState(true)
-
-  const observer = useRef(null)
-  const loaderRef = useRef(null)
-  
-  useEffect(() => {
-    console.log(fetchedData)
-  }, [fetchedData])
+  const [tracksData, setTracksData] = useState(null)
 
   const router = useRouter()
   const { musicResearch } = router.query
 
-  async function addNewTracks(isNewSearch){
-    console.log('Tracks fetch')
-    setLoading(true)
-    const offset = isNewSearch ? 0 : fetchedData?.trackOffset
-    const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks?offset=${offset}`)
+  async function addNewTracks(){
+    const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks`)
     const data = await response.json()
-    if (isNewSearch) {
-      setFetchedData(data)
-    }
-    else {
-      const trackResults = [...fetchedData?.trackResults, ...data.trackResults]
-      const ids = trackResults.map(track => track.id)
-      setFetchedData({
-        ...data,
-        trackResults: trackResults.filter(({id}, index) => !ids.includes(id, index + 1))
-      })
-    }
-    setLoading(false)
+    setTracksData(data)
   }
 
   useEffect(() => {
-    if (!observer.current) {
-      observer.current = new IntersectionObserver(
-        (entries) => {
-          const first = entries[0];
-          if (first.isIntersecting) {
-            addNewTracks(false)
-          }
-        })
-    }
-  }, [])
-
-  useEffect(() => {
-    addNewTracks(true)
+    addNewTracks()
   }, [musicResearch])
 
-  useEffect(() => {
-    if (loaderRef.current) {
-      observer.current.observe(loaderRef.current)
-    }
-    return () => observer.current.disconnect()
-  }, [isLoading])
+  if (!tracksData) return (null)
 
-
-  if (!fetchedData) return (null)
-
-  if (!fetchedData?.trackResults?.length) {
+  if (!tracksData?.length) {
     return (<NoResults searchValue={musicResearch}/>)
   }
 
   return (
     <TracksContainer columnTitles={['#', 'titre', 'album']} >
-      {fetchedData?.trackResults && (
-        fetchedData.trackResults.map((track, index) => (
+      {
+        tracksData.map((track, index) => (
           <div key={track.id}>
             <TrackItem
               title={track.name}
@@ -88,18 +46,9 @@ export default function Tracks() {
             />
           </div>
         ))
-      )}
-    <div ref={loaderRef}></div>
+      }
     </TracksContainer>
   )
 }
 
 Tracks.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
-
-
-// probleme : infinite scroll ne fonctionne pas
-// fetchdata undefined alors que si dans le inspect component
-
-// refresh ? 
-
-// Résoudre bug 

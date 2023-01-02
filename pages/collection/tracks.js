@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useState, useEffect} from 'react'
 import LikedTrack from '../../components/collection/LikedTrack'
 import PlaylistHeader from '../../components/shared/PlayListHeader'
 import NoLikedTracksSection from '../../components/collection/NoLikedTracksSection'
@@ -25,11 +26,13 @@ const PlayMusicSection = styled.section`
   padding: 24px 32px;
   position: relative;
 `
-const PlayButton = styled.div`
+const PlayButton = styled.button`
   height: 56px;
   width: 56px;
   background-color: #1ed760;
   border-radius: 50%;
+  outline: 0;
+  border: 0;
   color: #000;
   display: flex;
   justify-content: center;
@@ -43,8 +46,20 @@ const TracksWrapper = styled.div`
   padding: 0 32px;
 `
 
-
 export default function Tracks() {
+
+  const [likedTracks, setLikedTracks] = useState(null)
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch('/api/getLikedTracks')
+      const data = await response.json()
+      setLikedTracks(data)
+    })()
+  }, [])
+
+  if (!likedTracks) return
+
   return (
     <Container>
       <PlaylistHeader
@@ -52,62 +67,40 @@ export default function Tracks() {
         cover_url="https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png"
         background="linear-gradient(#5038a0 0, #291e50 100%)"
         owner="eliot"
-        tracks_number={2}
+        tracks_number={likedTracks.length}
         />
       <MainContentWrapper>
         <BackgroundGradient />
-        {/* <NoLikedTracksSection /> */}
-        <PlayMusicSection>
-          <PlayButton>
-            <PlayLogo />
-          </PlayButton>
-        </PlayMusicSection>
-        <TracksWrapper>
-          <TracksContainer
-            columnTitles={['#', 'titre', 'album', 'ajouté le']}
-          >
-            <LikedTrack
-              title="Top album"
-              artist="Mister V"
-              album="Double V"
-              cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
-              explicit={true}
-              addedDate={3}
-              duration="3:12"
-              number={1}
-              />
-            <LikedTrack
-              title="Top album"
-              artist="Mister V"
-              album="Double V"
-              cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
-              explicit={false}
-              addedDate={3}
-              duration="3:12"
-              number={2}
-              />
-            <LikedTrack
-              title="Top album"
-              artist="Mister V"
-              album="Double V"
-              cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
-              explicit={true}
-              addedDate={3}
-              duration="3:12"
-              number={3}
-              />
-            <LikedTrack
-              title="Top album"
-              artist="Mister V"
-              album="Double V"
-              cover_url="https://i.scdn.co/image/ab67616d000048513fa6647c6ba06e64e0f1ff47"
-              explicit={false}
-              addedDate={3}
-              duration="3:12"
-              number={4}
-              />
-          </TracksContainer>
-        </TracksWrapper>
+        {likedTracks.length === 0 ? (
+          <NoLikedTracksSection />
+        ):(
+          <>
+            <PlayMusicSection>
+              <PlayButton>
+                <PlayLogo />
+              </PlayButton>
+            </PlayMusicSection>
+            <TracksWrapper>
+              <TracksContainer
+                columnTitles={['#', 'titre', 'album', 'ajouté le']}
+              >
+                {likedTracks.map((track, index) => (
+                  <LikedTrack
+                    key={track.id}
+                    title={track.name}
+                    artist={track.artist}
+                    album={track.album}
+                    cover_url={track.image}
+                    explicit={track.explicit}
+                    addedDate={track.addedDate}
+                    duration={track.duration}
+                    number={index + 1}
+                  />
+                ))}
+              </TracksContainer>
+            </TracksWrapper>
+          </>
+        )}
       </MainContentWrapper>
     </Container>
   )
