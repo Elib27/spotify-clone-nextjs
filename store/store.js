@@ -16,12 +16,8 @@ const musicSlice = createSlice({
     isPlayingRandom: false,
     loopMode: "no_loop",
     time: 0,
-    timeInMinSecs: "00:00",
     duration: 180,
-    durationInMinSecs: "03:00",
-    musicProgressionPercentage: 0,
     volume: 60,
-    volumeCategory: "medium",
     prevVolume: 50,
     tracksQueue: [],
   },
@@ -63,38 +59,14 @@ const musicSlice = createSlice({
     changeTime: (state, action) => {
       state.time = action.payload
     },
-    updateTimeInMinSecs: (state) => {
-      const min = Math.floor(state.time / 60).toString().padStart(1, '0')
-      const sec = Math.floor(state.time % 60).toString().padStart(2, '0')
-      state.timeInMinSecs = `${min}:${sec}`
-    },
     changeDuration: (state, action) => {
       state.duration = action.payload
-    },
-    updateDurationInMinSecs: (state) => {
-      const min = Math.floor(state.duration / 60).toString().padStart(1, '0')
-      const sec = Math.floor(state.duration % 60).toString().padStart(2, '0')
-      state.durationInMinSecs = `${min}:${sec}`
     },
     changeSoundType: (state, action) => {
       state.currentTrack.soundType = action.payload
     },
     changeVolume: (state, action) => {
       state.volume = action.payload
-    },
-    changeVolumeCategory: (state) => {
-      if (state.volume === 0 && state.volumeCategory !== 'muted') {
-        state.volumeCategory = 'muted'
-      }
-      else if ((state.volume > 0 && state.volume <= 30) && state.volumeCategory !== 'low') {
-        state.volumeCategory = 'low'
-      }
-      else if ((state.volume > 30 && state.volume <= 70) && state.volumeCategory !== 'medium') {
-        state.volumeCategory = 'medium'
-      }
-      else if (state.volume > 70 && state.volumeCategory !== 'high') {
-        state.volumeCategory = 'high'
-      }
     },
     changePrevVolume: (state, action) => {
       state.prevVolume = action.payload
@@ -120,12 +92,9 @@ export const {
   incrementLoopMode,
   changeLoopMode,
   changeTime,
-  updateTimeInMinSecs,
   changeDuration,
-  updateDurationInMinSecs,
   changeSoundType,
   changeVolume,
-  changeVolumeCategory,
   changePrevVolume,
   changeTracksQueue,
   addToQueue

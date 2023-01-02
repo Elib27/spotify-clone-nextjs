@@ -1,9 +1,9 @@
 import getSearchArtists from '../../../../lib/spotify/getSearchArtists'
 
 export default async function handle(req, res) {
-  const { searchInput, offset } = req.query
+  const { searchInput } = req.query
 
-  const response = await getSearchArtists(searchInput, offset)
+  const response = await getSearchArtists(searchInput, 0)
   const data = await response.json()
 
   const artistResults = data?.artists?.items.map((item) => ({
@@ -12,7 +12,5 @@ export default async function handle(req, res) {
     id: item?.id
   }))
 
-  const artistOffset = data?.artist?.offset + 1 ?? 0
-
-  res.status(200).json({artistResults, artistOffset})
+  res.status(200).json(artistResults)
 }

@@ -17,9 +17,11 @@ export default async function handle(req, res) {
     return `${min}:${sec}`
   }
 
-  // dans l'ordre inverse ?
+  const combinedResults = [...tracksData[0].tracks.items, ...tracksData[1].tracks.items]
+  const ids = combinedResults.map(track => track.id)
+  const NoDuplicatedTrackResults = combinedResults.filter(({id}, index) => !ids.includes(id, index + 1))
 
-  const trackResults1 = tracksData?.[0]?.tracks?.items.map((item) => ({
+  const trackResults = NoDuplicatedTrackResults.map((item) => ({
     name: item?.name,
     artist: item?.artists?.[0]?.name,
     duration: convertMsInMinSecs(item?.duration_ms),
@@ -28,20 +30,6 @@ export default async function handle(req, res) {
     explicit: item?.explicit,
     id: item?.id
   }))
-
-  const trackResults2 = tracksData?.[1]?.tracks?.items.map((item) => ({
-    name: item?.name,
-    artist: item?.artists?.[0]?.name,
-    duration: convertMsInMinSecs(item?.duration_ms),
-    album: item?.album?.name,
-    cover_url: item?.album?.images?.[1]?.url,
-    explicit: item?.explicit,
-    id: item?.id
-  }))
-
-  const combinedTrackResults = [...trackResults1, ...trackResults2]
-  const ids = combinedTrackResults.map(track => track.id)
-  const trackResults = combinedTrackResults.filter(({id}, index) => !ids.includes(id, index + 1))
 
   res.status(200).json(trackResults)
 }

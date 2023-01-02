@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { changeVolume, changeVolumeCategory } from "../../store/store"
+import { changeVolume } from "../../store/store"
 import styled from "styled-components"
 
 const SoundProgressionBarBackground = styled.div`
@@ -84,8 +84,7 @@ export default function SoundBar() {
 
   useEffect(() => {
     soundBarContainer.current.style.setProperty("--sound-progression-bar-fill", music.volume + '%')
-    dispatch(changeVolumeCategory())
-  }, [music.volume]) 
+  }, [music.volume])
 
   function handleMouseMoveSound(e) {
     updateProgressionBar(e)

@@ -7,13 +7,12 @@ import {
   incrementLoopMode,
   changeLoopMode,
   changeTime,
-  updateTimeInMinSecs,
   changeDuration,
-  updateDurationInMinSecs,
   changeCurrentMusicId
 } from '../../store/store'
-import styled from "styled-components"
-import randomInteger from "../../lib/randomInteger"
+import { convertSecondsToMinutesSeconds } from '../../lib/convertTime'
+import styled from 'styled-components'
+import randomInteger from '../../lib/randomInteger'
 import RandomMusicLogo from '../../public/musicBar_logos/random_music.svg'
 import PrevMusicLogo from '../../public/musicBar_logos/prev_music.svg'
 import NextMusicLogo from '../../public/musicBar_logos/next_music.svg'
@@ -239,10 +238,6 @@ export default function MusicControlsActive() {
     dispatch(changeCurrentMusicId(music.tracksQueue[musicIndexInQueue]))
   }, [musicIndexInQueue])
 
-  useEffect(() => {
-    dispatch(updateDurationInMinSecs())
-  }, [music.duration])
-
   function updateCurrentTime() {
     if (audio.current && !isProgressionBarMoving) {
       if (music.time !== Math.floor(audio.current.currentTime)) {
@@ -252,7 +247,6 @@ export default function MusicControlsActive() {
   }
 
   useEffect(() => {
-    dispatch(updateTimeInMinSecs())
     if (music.time === music.duration) {
       if (music.loopMode === 'loop_2') {
         resetMusic()
@@ -316,6 +310,9 @@ export default function MusicControlsActive() {
         return 'Désactiver la répétition'
     }
   }
+
+  const timeInMinSecs = convertSecondsToMinutesSeconds(music.time)
+  const durationInMinSecs = convertSecondsToMinutesSeconds(music.duration)
 
   return (
     <MusicControlsContainer>
@@ -381,12 +378,12 @@ export default function MusicControlsActive() {
       </ControlsContainer>
       <audio ref={audio} src={currentMusicLink} onTimeUpdate={updateCurrentTime}></audio>
       <MusicProgressionBarContainer>
-        <TimerContainer>{music.timeInMinSecs}</TimerContainer>
+        <TimerContainer>{timeInMinSecs}</TimerContainer>
         <MusicProgressionBar
           isProgressionBarMoving={isProgressionBarMoving}
           setIsProgressionBarMoving={setIsProgressionBarMoving}
         />
-        <TimerContainer>{music.durationInMinSecs}</TimerContainer>
+        <TimerContainer>{durationInMinSecs}</TimerContainer>
       </MusicProgressionBarContainer>
     </MusicControlsContainer>
   )

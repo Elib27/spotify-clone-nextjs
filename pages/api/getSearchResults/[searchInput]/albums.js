@@ -1,9 +1,9 @@
 import getSearchAlbums from '../../../../lib/spotify/getSearchAlbums'
 
 export default async function handle(req, res) {
-  const { searchInput, offset } = req.query
+  const { searchInput } = req.query
 
-  const response = await getSearchAlbums(searchInput, offset)
+  const response = await getSearchAlbums(searchInput, 0)
   const data = await response.json()
 
   const albumResults = data?.albums?.items.map((item) => ({
@@ -14,7 +14,5 @@ export default async function handle(req, res) {
     id: item?.id
   }))
 
-  const albumOffset = data?.albums?.offset + 1 ?? 0
-
-  res.status(200).json({albumResults, albumOffset})
+  res.status(200).json(albumResults)
 }

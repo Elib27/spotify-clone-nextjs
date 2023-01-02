@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from "next/router"
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
 import MusicCard from "../../../components/shared/MusicCard"
@@ -14,35 +14,32 @@ const PlaylistsContainer = styled.div`
 `
 
 export default function Playlists() {
-  const [fetchedData, setFetchedData] = useState()
+  const [playlistsData, setPlaylistsData] = useState(null)
 
   const router = useRouter()
   const { musicResearch } = router.query
 
   useEffect(() => {
-    async function getFirstTracks() {
-      const response = await fetch(`/api/getSearchResults/${musicResearch}/playlists?offset=0`)
+    async function getFirstPlaylists() {
+      const response = await fetch(`/api/getSearchResults/${musicResearch}/playlists`)
       const data = await response.json()
-      setFetchedData(data)
+      setPlaylistsData(data)
     }
     
-    getFirstTracks()
+    getFirstPlaylists()
 
   }, [musicResearch])
 
-  useEffect(() => {
-    console.log(fetchedData)
-  }, [fetchedData])
 
-if (!fetchedData) return (null)
+if (!playlistsData) return (null)
 
-if (!fetchedData?.playlistResults?.length) {
+if (!playlistsData?.length) {
   return (<NoResults searchValue={musicResearch}/>)
 }
 
 return (
   <PlaylistsContainer>
-    {fetchedData?.playlistResults.map((playlist) => (
+    {playlistsData.map((playlist) => (
       <MusicCard
         title={playlist.name}
         cover_url={playlist.cover_url}

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from "next/router"
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
 import MusicCard from "../../../components/shared/MusicCard"
@@ -14,36 +14,31 @@ const ArtistsContainer = styled.div`
 `
 
 export default function Artists() {
-  const [fetchedData, setFetchedData] = useState()
+  const [artistsData, setArtistsData] = useState(null)
 
   const router = useRouter()
   const { musicResearch } = router.query
 
   useEffect(() => {
     async function getFirstArtists() {
-      const response = await fetch(`/api/getSearchResults/${musicResearch}/artists?offset=0`)
+      const response = await fetch(`/api/getSearchResults/${musicResearch}/artists`)
       const data = await response.json()
-      setFetchedData(data)
+      setArtistsData(data)
     }
     
     getFirstArtists()
 
   }, [musicResearch])
-
-  useEffect(() => {
-    console.log(fetchedData)
-  }, [fetchedData])
-
   
-  if (!fetchedData) return (null)
+  if (!artistsData) return (null)
 
-  if (!fetchedData?.artistResults?.length) {
+  if (!artistsData?.length) {
     return (<NoResults searchValue={musicResearch}/>)
   }
 
   return (
     <ArtistsContainer>
-      {fetchedData?.artistResults.map((artist) => (
+      {artistsData.map((artist) => (
         <MusicCard
           title={artist.name}
           cover_url={artist.cover_url}

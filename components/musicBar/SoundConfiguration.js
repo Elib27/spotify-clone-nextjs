@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { changeVolume, changeVolumeCategory, changePrevVolume } from "../../store/store"
+import { changeVolume, changePrevVolume } from "../../store/store"
 import styled from "styled-components"
 import Microphone from '../../public/musicBar_logos/microphone.svg'
 import WaitList from '../../public/musicBar_logos/wait_list.svg'
@@ -97,12 +97,28 @@ export default function SoundConfiguration() {
   const [isLyricsPannelOpen, setIsLyricsOpen] = useState(false)
   const [isWaitListOpen, setIsWaitListOpen] = useState(false)
 
-  function handleClickToogleMute() {
-    if(music.volumeCategory === 'muted') {
-      dispatch(changeVolume(music.prevVolume !== 0 ? music.prevVolume : 50))
+  const volumeCategory = getVolumeCategory(music.volume)
+
+  function getVolumeCategory(volume) {
+    if (volume === 0) {
+      return 'muted'
+    }
+    else if ((volume > 0 && volume <= 30)) {
+      return 'low'
+    }
+    else if ((volume > 30 && volume <= 65)) {
+      return 'medium'
     }
     else {
-      dispatch(changeVolumeCategory('muted'))
+      return 'high'
+    }
+  }
+
+  function handleClickToogleMute() {
+    if(volumeCategory === 'muted') {
+      dispatch(changeVolume(music.prevVolume === 0 ? 50 : music.prevVolume ))
+    }
+    else {
       dispatch(changePrevVolume(music.volume))
       dispatch(changeVolume(0))
     }
@@ -130,10 +146,10 @@ export default function SoundConfiguration() {
       </Button>
       <VolumeBarContainer>
         <Button onClick={handleClickToogleMute}>
-          {music.volumeCategory === 'muted' && <MutedVolume />}
-          {music.volumeCategory === 'low' && <LowVolume />}
-          {music.volumeCategory === 'medium' && <MediumVolume />}
-          {music.volumeCategory === 'high' && <HighVolume />}
+          {volumeCategory === 'muted' && <MutedVolume />}
+          {volumeCategory === 'low' && <LowVolume />}
+          {volumeCategory === 'medium' && <MediumVolume />}
+          {volumeCategory === 'high' && <HighVolume />}
         </Button>
         <SoundBar />
       </VolumeBarContainer>

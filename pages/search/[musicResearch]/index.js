@@ -151,11 +151,3 @@ export default function SearchResult() {
 
 SearchResult.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
 
-
-// Afficher page après fetch pour eviter temps de chargement visible (setLoading, isLoading) et image sans src?
-// Eviter les erreurs
-// précharger les différentes pages sous [musicResearch]
-
-//erreurs dans certaines recherches ex: main "gk"
-
-// infinite scroll [ en cours ]

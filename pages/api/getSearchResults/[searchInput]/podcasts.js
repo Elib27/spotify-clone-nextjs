@@ -1,9 +1,9 @@
 import getSearchPodcasts from '../../../../lib/spotify/getSearchPodcasts'
 
 export default async function handle(req, res) {
-  const { searchInput, offset } = req.query
+  const { searchInput } = req.query
 
-  const response = await getSearchPodcasts(searchInput, offset)
+  const response = await getSearchPodcasts(searchInput, 0)
   const data = await response.json()
 
   const podcastResults = data?.shows?.items.map((item) => ({
@@ -13,7 +13,5 @@ export default async function handle(req, res) {
     id: item?.id
   }))
 
-  const podcastOffset = data?.shows?.offset + 1 ?? 0
-
-  res.status(200).json({podcastResults, podcastOffset})
+  res.status(200).json(podcastResults)
 }

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Track from './Track'
-import convertMsToMinutesSeconds from '../../lib/convertMsToMinutesSeconds'
+import { convertMsToMinutesSeconds } from '../../lib/convertTime'
 
 const Container = styled.div`
   grid-column: 3 / -1;
