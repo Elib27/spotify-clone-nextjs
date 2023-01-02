@@ -100,16 +100,12 @@ export const {
   addToQueue
 } = musicSlice.actions
 
-// à retirer  / modifier
+
 const navigationSlice = createSlice({
   name: "navigation",
   initialState: {
     currentPage: '/',
     searchInput: '',
-    history: {
-      links: [],
-      index: 0
-    }
   },
   reducers: {
     changeCurrentPage: (state, action) => {
@@ -118,28 +114,12 @@ const navigationSlice = createSlice({
     changeSearchInput: (state, action) => {
       state.searchInput = action.payload
     },
-    incrementHistoryIndex: (state) => {
-      state.history.index += 1
-    },
-    decrementHistoryIndex: (state) => {
-      state.history.index -= 1
-    },
-    pushLinkToHistory: (state, action) => {
-      state.history.links.push(action.payload)
-    },
-    removeHistoryLinksUntilIndex: (state) => {
-      state.history.links = state.history.links.slice(0, state.history.index + 1)
-    }
   }
 })
 
 export const {
   changeCurrentPage,
   changeSearchInput,
-  incrementHistoryIndex,
-  decrementHistoryIndex,
-  pushLinkToHistory,
-  removeHistoryLinksUntilIndex
 } = navigationSlice.actions
 
 export const store = configureStore({
