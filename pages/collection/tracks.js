@@ -95,6 +95,7 @@ export default function Tracks() {
                     addedDate={track.addedDate}
                     duration={track.duration}
                     number={index + 1}
+                    isLiked
                   />
                 ))}
               </TracksContainer>

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Image from 'next/image'
-import HeartLogo from '../../public/tracks_logos/heart.svg'
+import FilledHeartLogo from '../../public/tracks_logos/heart.svg'
 import PlayLogo from '../../public/tracks_logos/play_logo_small.svg'
 import EmptyHeartLogo from '../../public/tracks_logos/empty_heart.svg'
 import OptionsLogo from '../../public/tracks_logos/options_logo.svg'
@@ -155,7 +155,7 @@ const DurationContainer = styled.div`
   text-align: center;
 `
 
-export default function Track({ title, artist, cover_url, explicit, duration, liked, key}) {
+export default function Track({ title, artist, cover_url, explicit, duration, isLiked, key}) {
   return (
     <Container key={key}>
       <TitleContainer>
@@ -175,9 +175,9 @@ export default function Track({ title, artist, cover_url, explicit, duration, li
       </TitleContainer>
       <UtilityContainer>
         <LikeButton>
-          {liked ?
+          {isLiked ?
             (
-              <HeartLogo />
+              <FilledHeartLogo />
             ) : (
               <EmptyHeartLogoContainer>
                 <EmptyHeartLogo />

@@ -30,15 +30,25 @@ export default function SearchResult() {
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(4)
 
   const [fetchedData, setFetchedData] = useState(null)
+  const likedTracksIds = useRef(null)
+
+  async function getLikedTracksIds() {
+    const response = await fetch('/api/getLikedTracks')
+    const data = await response.json()
+    const ids = data.map(track => track.id)
+    likedTracksIds.current = ids;
+  }
+
+  async function fetchResults() {
+    const response = await fetch(`/api/getSearchResults/${musicResearch}`)
+    const data = await response.json()
+    setFetchedData(data[0])
+    console.log(data[0], data[1])
+  }
 
   useEffect(() => {
-    async function fetchResults() {
-      const response = await fetch(`/api/getSearchResults/${musicResearch}`)
-      const data = await response.json()
-      setFetchedData(data[0])
-      console.log(data[0], data[1])
-    }
     fetchResults()
+    getLikedTracksIds()
   }, [musicResearch])
 
   useEffect(() => {
@@ -63,7 +73,13 @@ export default function SearchResult() {
         cover_url={fetchedData?.bestResult.image}
         link='/'
       />
-      {fetchedData?.tracks?.length > 0 && <TrackResults tracks={fetchedData.tracks}/>}
+      {
+        fetchedData?.tracks?.length > 0 && (
+        <TrackResults
+          tracks={fetchedData.tracks}
+          likedTracksIds={likedTracksIds.current}
+        />)
+      }
       <SearchResultSection
         title="Artistes"
         data={fetchedData?.artists}

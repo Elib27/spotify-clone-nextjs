@@ -18,7 +18,8 @@ const TracksContainer = styled.div`
   position: relative;
 `
 
-export default function TrackResults({ tracks }) {
+export default function TrackResults({ tracks, likedTracksIds }) {
+
   if (!tracks) {
     return null
   }
@@ -35,7 +36,7 @@ export default function TrackResults({ tracks }) {
                 cover_url={track.cover_url}
                 duration={convertMsToMinutesSeconds(track.duration)}
                 explicit={track.explicit}
-                liked
+                isLiked = {likedTracksIds.includes(track.id)}
                 key={track.id}
               />
             )

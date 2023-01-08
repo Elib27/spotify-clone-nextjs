@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import { changeCurrentMusicId, changeTracksQueue} from '../../store/store'
 import Image from 'next/image'
-import HeartLogo from '../../public/tracks_logos/heart.svg'
+import FilledHeartLogo from '../../public/tracks_logos/heart.svg'
+import EmptyHeartLogo from '../../public/tracks_logos/empty_heart.svg'
 import OptionsLogo from '../../public/tracks_logos/options_logo.svg'
 import SmallPlayLogo from '../../public/tracks_logos/play_logo_small.svg'
 
@@ -39,6 +40,21 @@ const TrackArtist = styled.span`
     text-decoration: underline;
   }
 `
+const LikeContainer = styled.div`
+  height: 16px;
+  width: 16px;
+  ${({isLiked}) => isLiked ? `
+    color: #1ed760;
+    opacity: 1 !important;
+  ` : `
+    color: #ffffff;
+    opacity: 0;
+    &:hover {
+      opacity: 1 !important;
+    }
+  `}
+  margin-right: 16px;
+`
 const Container = styled.div`
   height: 56px;
   width: 100%;
@@ -66,6 +82,9 @@ const Container = styled.div`
     }
     ${TrackArtist} {
       color: #fff;
+    }
+    ${LikeContainer} {
+      opacity: 0.7;
     }
   }
 `
@@ -144,12 +163,6 @@ const LastRow = styled.div`
   display: flex;
   align-items: center;
 `
-const LikeContainer = styled.div`
-  height: 16px;
-  width: 16px;
-  color: #1ed760;
-  margin-right: 16px;
-`
 const DurationRow = styled.div`
   margin-right: 16px;
   flex-grow: 1;
@@ -163,7 +176,7 @@ const DurationContainer = styled.div`
   text-align: center;
 `
 
-export default function LikedTrack({ title, artist, album, id, cover_url, explicit, duration, number}) {
+export default function TrackItem({ title, artist, album, id, cover_url, explicit, duration, number, isLiked}) {
   
   const dispatch = useDispatch()
 
@@ -198,8 +211,8 @@ export default function LikedTrack({ title, artist, album, id, cover_url, explic
         <TrackAlbum>{album}</TrackAlbum>
       </TrackAlbumRow>
       <LastRow>
-        <LikeContainer>
-          <HeartLogo />
+        <LikeContainer isLiked={isLiked}>
+          { isLiked ? <FilledHeartLogo /> : <EmptyHeartLogo />}
         </LikeContainer>
         <DurationRow>
           <DurationContainer>
