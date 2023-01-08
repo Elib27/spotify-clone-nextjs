@@ -1,11 +1,12 @@
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
-import { changeCurrentMusicId, changeTracksQueue} from '../../store/store'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeCurrentMusicId, changeTracksQueue, togglePlaying} from '../../store/store'
 import Image from 'next/image'
 import FilledHeartLogo from '../../public/tracks_logos/heart.svg'
 import EmptyHeartLogo from '../../public/tracks_logos/empty_heart.svg'
 import OptionsLogo from '../../public/tracks_logos/options_logo.svg'
 import SmallPlayLogo from '../../public/tracks_logos/play_logo_small.svg'
+import SmallPauseLogo from '../../public/tracks_logos/pause_logo_small.svg'
 
 const OptionsContainer = styled.button`
   height: 16px;
@@ -20,6 +21,9 @@ const Number = styled.div`
   font-size: 1rem;
   font-weight: 400;
   color: #b3b3b3;
+  ${({isPlaying}) => isPlaying && `
+    color: #1ed760 !important;
+  `}
 `
 const PlayButtonContainer = styled.button`
   height: 16px;
@@ -124,6 +128,9 @@ const TrackTitle = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  ${({isPlaying}) => isPlaying && `
+    color: #1ed760 !important;
+  `}
 `
 const TrackInformationsBottom = styled.div`
   display: flex;
@@ -178,21 +185,38 @@ const DurationContainer = styled.div`
 
 export default function TrackItem({ title, artist, album, id, cover_url, explicit, duration, number, isLiked}) {
   
+  const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
   async function handleClickChangeCurrentMusicId() {
-    dispatch(changeCurrentMusicId(id))
-    const response = await fetch(`/api/getTracksQueue?seed_tracks=${id}`)
-    const data = await response.json()
-    dispatch(changeTracksQueue(data))
+    if (id === music.currentTrack.id) {
+      dispatch(togglePlaying())
+    }
+    else {
+      dispatch(changeCurrentMusicId(id))
+      const response = await fetch(`/api/getTracksQueue?seed_tracks=${id}`)
+      const data = await response.json()
+      dispatch(changeTracksQueue(data))
+    }
   }
 
   return (
     <Container>
       <NumberRow>
-        <Number>{number}</Number>
+      {
+        id === music.currentTrack.id && music.isPlaying ? (
+          <Image
+            src="/tracks_logos/equaliser_animated.gif"
+            alt='music playing sound levels animation'
+            height={14}
+            width={14}
+            />
+        ) : (
+          <Number isPlaying={id === music.currentTrack.id}>{number}</Number>
+        )
+      }
         <PlayButtonContainer onClick={handleClickChangeCurrentMusicId}>
-          <SmallPlayLogo />
+          {music.isPlaying ? <SmallPauseLogo /> : <SmallPlayLogo />}
         </PlayButtonContainer>
       </NumberRow>
       <TitleRow>
@@ -200,7 +224,11 @@ export default function TrackItem({ title, artist, album, id, cover_url, explici
           <Image src={cover_url} width={40} height={40} alt="album cover"/>
         </TracksCover>
         <TracksInformations>
-          <TrackTitle>{title}</TrackTitle>
+          <TrackTitle
+            isPlaying={id === music.currentTrack.id}
+          >
+            {title}
+          </TrackTitle>
           <TrackInformationsBottom>
             {explicit && <ExplicitLogo>E</ExplicitLogo>}
             <TrackArtist>{artist}</TrackArtist>
