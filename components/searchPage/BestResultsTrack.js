@@ -155,7 +155,7 @@ const DurationContainer = styled.div`
   text-align: center;
 `
 
-export default function Track({ title, artist, cover_url, explicit, duration, isLiked, key}) {
+export default function BestResultsTrack({ title, artist, cover_url, explicit, duration, isLiked, key}) {
   return (
     <Container key={key}>
       <TitleContainer>

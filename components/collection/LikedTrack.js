@@ -163,7 +163,7 @@ const DurationContainer = styled.div`
   text-align: center;
 `
 
-export default function LikedTrack({ title, artist, album, cover_url, explicit, addedDate, duration, number}) {
+export default function LikedTrack({ title, artist, album, cover_url, explicit, duration, number, addedDate}) {
   return (
     <Container>
       <NumberRow>
@@ -187,9 +187,11 @@ export default function LikedTrack({ title, artist, album, cover_url, explicit, 
       <TrackAlbumRow>
         <TrackAlbum>{album}</TrackAlbum>
       </TrackAlbumRow>
-      <AddedDateRow>
-        <AddedDate>{addedDate}</AddedDate>
-      </AddedDateRow>
+      {addedDate && (
+        <AddedDateRow>
+          <AddedDate>{addedDate}</AddedDate>
+        </AddedDateRow>
+      )}
       <LastRow>
         <LikeContainer>
           <HeartLogo />

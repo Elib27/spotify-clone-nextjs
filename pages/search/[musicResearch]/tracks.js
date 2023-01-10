@@ -53,6 +53,7 @@ export default function Tracks() {
               duration={track.duration}
               number={index + 1}
               isLiked={likedTracksIds.current && likedTracksIds.current.includes(track.id)}
+              addedDate={null}
             />
           </div>
         ))

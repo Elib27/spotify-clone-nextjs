@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import { useState, useEffect } from 'react'
-import LikedTrack from '../../components/collection/LikedTrack'
 import PlaylistHeader from '../../components/shared/PlayListHeader'
 import NoLikedTracksSection from '../../components/collection/NoLikedTracksSection'
 import PlayLogo from '../../public/tracks_logos/play_logo.svg'
 import TracksContainer from '../../components/collection/LikedTracksContainer'
+import TrackItem from '../../components/shared/TrackItem'
 
 const Container = styled.div`
   padding-bottom: 32px;
@@ -50,12 +50,14 @@ export default function Tracks() {
 
   const [likedTracks, setLikedTracks] = useState(null)
 
+  async function getLikedTracks() {
+    const response = await fetch('/api/getLikedTracks')
+    const data = await response.json()
+    setLikedTracks(data)
+  }
+
   useEffect(() => {
-    (async () => {
-      const response = await fetch('/api/getLikedTracks')
-      const data = await response.json()
-      setLikedTracks(data)
-    })()
+    getLikedTracks()
   }, [])
 
   if (!likedTracks) return
@@ -85,17 +87,17 @@ export default function Tracks() {
                 columnTitles={['#', 'titre', 'album', 'ajouté le']}
               >
                 {likedTracks.map((track, index) => (
-                  <LikedTrack
+                  <TrackItem
                     key={track.id}
                     title={track.name}
                     artist={track.artist}
                     album={track.album}
                     cover_url={track.image}
                     explicit={track.explicit}
-                    addedDate={track.addedDate}
                     duration={track.duration}
                     number={index + 1}
                     isLiked
+                    addedDate={track.addedDate}
                   />
                 ))}
               </TracksContainer>

@@ -1,10 +1,10 @@
 import styled from "styled-components"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusic, toogleLiked } from '../../store/store'
 import Image from "next/image"
-import Heart from '../../public/musicBar_logos/heart.svg'
-import HeartFull from '../../public/musicBar_logos/heart_full.svg'
+import FilledHeartLogo from '../../public/tracks_logos/heart.svg'
+import EmptyHeartLogo from '../../public/tracks_logos/empty_heart.svg'
 import AddToEpisodes from '../../public/musicBar_logos/add_to_episodes_logo.svg'
 import IsInEpisodes from '../../public/musicBar_logos/added_to_episodes_logo.svg'
 
@@ -119,15 +119,27 @@ export default function CurrentMusicInformations() {
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
+  const [likedTracks, setLikedTracks] = useState(null)
+
+  async function getLikedTracks() {
+    const response = await fetch('/api/getLikedTracks')
+    const data = await response.json()
+    setLikedTracks(data)
+  }
+
+  async function getTrackInformations() {
+    if (!music.currentTrack.id) return
+    const response = await fetch(`/api/getTrackInformations?id=${music.currentTrack.id}`)
+    const data = await response.json()
+    dispatch(changeCurrentMusic(data))
+  }
+
   useEffect(() => {
-    async function getTrackInformations() {
-      if (!music.currentTrack.id) return
-      const response = await fetch(`/api/getTrackInformations?id=${music.currentTrack.id}`)
-      const data = await response.json()
-      dispatch(changeCurrentMusic(data))
-    }
     getTrackInformations()
+    getLikedTracks()
   }, [music.currentTrack.id])
+
+  const isLiked = likedTracks && likedTracks.map(track => track.id).includes(music.currentTrack.id)
 
   const artists = music.currentTrack.artists.map((artist, index) => (
     <span key={artist.id}>
@@ -155,17 +167,16 @@ export default function CurrentMusicInformations() {
       </MusicInformations>
       {music.currentTrack.soundType === 'track' ? (
         <HeartButton
-          isLiked={music.isLiked}
-          onClick={() => dispatch(toogleLiked())}
+          isLiked={isLiked}
+          onClick={() => console.log('ToggleLike')}
         >
-          {music.isLiked ? <HeartFull /> : <Heart />}
+          {isLiked ? <FilledHeartLogo /> : <EmptyHeartLogo />}
         </HeartButton>
       ):(
         <AddEpisodesButton
-        isLiked={music.isLiked}
-        onClick={() => dispatch(toogleLiked())}
+        isLiked={isLiked}
         >
-          {music.isLiked ? <IsInEpisodes /> : <AddToEpisodes />}
+          {isLiked ? <IsInEpisodes /> : <AddToEpisodes />}
         </AddEpisodesButton>
       )}
     </Container>

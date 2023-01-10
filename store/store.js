@@ -11,7 +11,6 @@ const musicSlice = createSlice({
       id: "",
       soundType: "track",
     },
-    isLiked: true,
     isPlaying: false,
     isPlayingRandom: false,
     loopMode: "no_loop",
@@ -27,9 +26,6 @@ const musicSlice = createSlice({
     },
     changeCurrentMusicId(state, action) {
       state.currentTrack.id = action.payload
-    },
-    toogleLiked: (state) => {
-      state.isLiked = !state.isLiked
     },
     togglePlaying: (state) => {
       state.isPlaying = !state.isPlaying
@@ -85,7 +81,6 @@ const musicSlice = createSlice({
 export const {
   changeCurrentMusic,
   changeCurrentMusicId,
-  toogleLiked,
   togglePlaying,
   playMusic,
   togglePlayingRandom,

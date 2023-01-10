@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeCurrentMusicId, changeTracksQueue, togglePlaying} from '../../store/store'
+import { changeCurrentMusicId, changeTracksQueue, togglePlaying } from '../../store/store'
 import Image from 'next/image'
 import FilledHeartLogo from '../../public/tracks_logos/heart.svg'
 import EmptyHeartLogo from '../../public/tracks_logos/empty_heart.svg'
@@ -64,7 +64,11 @@ const Container = styled.div`
   width: 100%;
   padding: 0 16px;
   display: grid;
-  grid-template-columns: 16px 4fr 2fr minmax(120px,1fr);
+  ${({suppColumn}) => suppColumn ? `
+    grid-template-columns: 16px 6fr 4fr 3fr minmax(120px, 1fr);
+  ` : `
+    grid-template-columns: 16px 4fr 2fr minmax(120px,1fr);
+  `}
   grid-gap: 16px;
   border-bottom: 1px solid transparent;
   border-radius: 4px;
@@ -154,6 +158,15 @@ const TrackAlbumRow = styled.div`
   align-items: center;
   min-width: 0;
 `
+const AddedDateRow = styled.div`
+  display: flex;
+  align-items: center;
+`
+const AddedDate = styled.div`
+  font-size: 0.875rem;
+  color: #a7a7a7;
+  font-weight: 400;
+`
 const TrackAlbum = styled.div`
   font-size: 0.875rem;
   font-weight: 400;
@@ -183,7 +196,7 @@ const DurationContainer = styled.div`
   text-align: center;
 `
 
-export default function TrackItem({ title, artist, album, id, cover_url, explicit, duration, number, isLiked}) {
+export default function TrackItem({ title, artist, album, id, cover_url, explicit, duration, number, isLiked, addedDate}) {
   
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()
@@ -200,11 +213,13 @@ export default function TrackItem({ title, artist, album, id, cover_url, explici
     }
   }
 
+  const isCurrentTrackPlaying = (id === music.currentTrack.id) && music.isPlaying
+
   return (
-    <Container>
+    <Container suppColumn={addedDate}>
       <NumberRow>
       {
-        id === music.currentTrack.id && music.isPlaying ? (
+        isCurrentTrackPlaying ? (
           <Image
             src="/tracks_logos/equaliser_animated.gif"
             alt='music playing sound levels animation'
@@ -216,7 +231,7 @@ export default function TrackItem({ title, artist, album, id, cover_url, explici
         )
       }
         <PlayButtonContainer onClick={handleClickChangeCurrentMusicId}>
-          {music.isPlaying ? <SmallPauseLogo /> : <SmallPlayLogo />}
+          {isCurrentTrackPlaying ? <SmallPauseLogo /> : <SmallPlayLogo />}
         </PlayButtonContainer>
       </NumberRow>
       <TitleRow>
@@ -238,6 +253,11 @@ export default function TrackItem({ title, artist, album, id, cover_url, explici
       <TrackAlbumRow>
         <TrackAlbum>{album}</TrackAlbum>
       </TrackAlbumRow>
+      {addedDate && (
+        <AddedDateRow>
+          <AddedDate>{addedDate}</AddedDate>
+        </AddedDateRow>
+      )}
       <LastRow>
         <LikeContainer isLiked={isLiked}>
           { isLiked ? <FilledHeartLogo /> : <EmptyHeartLogo />}

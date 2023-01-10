@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Track from './Track'
+import Track from './BestResultsTrack'
 import { convertMsToMinutesSeconds } from '../../lib/convertTime'
 
 const Container = styled.div`
@@ -36,7 +36,7 @@ export default function TrackResults({ tracks, likedTracksIds }) {
                 cover_url={track.cover_url}
                 duration={convertMsToMinutesSeconds(track.duration)}
                 explicit={track.explicit}
-                isLiked = {likedTracksIds.includes(track.id)}
+                isLiked = {likedTracksIds && likedTracksIds.includes(track.id)}
                 key={track.id}
               />
             )
