@@ -213,6 +213,16 @@ export default function TrackItem({ title, artist, album, id, cover_url, explici
     }
   }
 
+  async function toggleLikedTrack(id, isLiked) {
+    if (isLiked) {
+      console.log('remove liked track ' + id)
+    }
+    else {
+      await fetch(`/api/addLikedTracks?ids=${id}`)
+      console.log('add liked track ' + id)
+    }
+  }
+
   const isCurrentTrackPlaying = (id === music.currentTrack.id) && music.isPlaying
 
   return (
@@ -259,7 +269,10 @@ export default function TrackItem({ title, artist, album, id, cover_url, explici
         </AddedDateRow>
       )}
       <LastRow>
-        <LikeContainer isLiked={isLiked}>
+        <LikeContainer
+          isLiked={isLiked}
+          onClick={() => toggleLikedTrack(id, isLiked)}
+        >
           { isLiked ? <FilledHeartLogo /> : <EmptyHeartLogo />}
         </LikeContainer>
         <DurationRow>
