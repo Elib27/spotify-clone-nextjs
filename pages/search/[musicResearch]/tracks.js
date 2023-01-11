@@ -42,20 +42,19 @@ export default function Tracks() {
     <TracksContainer columnTitles={['#', 'titre', 'album']} >
       {
         tracksData.map((track, index) => (
-          <div key={track.id}>
-            <TrackItem
-              title={track.name}
-              artist={track.artist}
-              album={track.album}
-              id={track.id}
-              cover_url={track.cover_url}
-              explicit={track.explicit}
-              duration={track.duration}
-              number={index + 1}
-              isLiked={likedTracksIds.current && likedTracksIds.current.includes(track.id)}
-              addedDate={null}
-            />
-          </div>
+          <TrackItem
+            key={track.id}
+            title={track.name}
+            artist={track.artist}
+            album={track.album}
+            id={track.id}
+            cover_url={track.cover_url}
+            explicit={track.explicit}
+            duration={track.duration}
+            number={index + 1}
+            isLiked={likedTracksIds.current && likedTracksIds.current.includes(track.id)}
+            addedDate={null}
+          />
         ))
       }
     </TracksContainer>

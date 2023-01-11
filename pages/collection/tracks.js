@@ -89,6 +89,7 @@ export default function Tracks() {
                 {likedTracks.map((track, index) => (
                   <TrackItem
                     key={track.id}
+                    id={track.id}
                     title={track.name}
                     artist={track.artist}
                     album={track.album}
