@@ -9,7 +9,7 @@ import NoResults from "../../../components/searchPage/NoResults"
 export default function Tracks() {
 
   const [tracksData, setTracksData] = useState(null)
-  const likedTracksIds = useRef(null)
+  const [likedTrackIds, setLikedTrackIds] = useState(null)
 
   const router = useRouter()
   const { musicResearch } = router.query
@@ -18,7 +18,7 @@ export default function Tracks() {
     const response = await fetch('/api/getLikedTracks')
     const data = await response.json()
     const ids = data.map(track => track.id)
-    likedTracksIds.current = ids;
+    setLikedTrackIds(ids)
   }
 
   async function refreshTracks(){
@@ -52,7 +52,8 @@ export default function Tracks() {
             explicit={track.explicit}
             duration={track.duration}
             number={index + 1}
-            isLiked={likedTracksIds.current && likedTracksIds.current.includes(track.id)}
+            setLikedTrackIds={setLikedTrackIds}
+            isLiked={likedTrackIds.current && likedTrackIds.includes(track.id)}
             addedDate={null}
           />
         ))

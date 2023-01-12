@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusicId, changeTracksQueue, togglePlaying } from '../../store/store'
 import Image from 'next/image'
@@ -196,8 +197,20 @@ const DurationContainer = styled.div`
   text-align: center;
 `
 
-export default function TrackItem({ title, artist, album, id, cover_url, explicit, duration, number, isLiked, addedDate}) {
-  
+export default function TrackItem({
+  title,
+  artist,
+  album,
+  id,
+  cover_url,
+  explicit,
+  duration,
+  number,
+  isLiked,
+  addedDate,
+  setLikedTracksIds
+}) {
+
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
@@ -215,11 +228,14 @@ export default function TrackItem({ title, artist, album, id, cover_url, explici
 
   async function toggleLikedTrack(id, isLiked) {
     if (isLiked) {
-      console.log('remove liked track ' + id)
+      console.log('delete liked track ' + id)
+      setLikedTracksIds(prev => prev.filter(trackId => trackId !== id))
+      await fetch(`/api/deleteLikedTracks?ids=${id}`)
     }
     else {
-      await fetch(`/api/addLikedTracks?ids=${id}`)
       console.log('add liked track ' + id)
+      setLikedTracksIds(prev => [...prev, {id}])
+      await fetch(`/api/addLikedTracks?ids=${id}`)
     }
   }
 

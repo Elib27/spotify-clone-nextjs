@@ -50,6 +50,8 @@ export default function Tracks() {
 
   const [likedTracks, setLikedTracks] = useState(null)
 
+  const likedTrackIds = likedTracks?.map(track => track.id)
+
   async function getLikedTracks() {
     const response = await fetch('/api/getLikedTracks')
     const data = await response.json()
@@ -98,6 +100,7 @@ export default function Tracks() {
                     duration={track.duration}
                     number={index + 1}
                     isLiked
+                    setLikedTracksIds={setLikedTracks}
                     addedDate={track.addedDate}
                   />
                 ))}
