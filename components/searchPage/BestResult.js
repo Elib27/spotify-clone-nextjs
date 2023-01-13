@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import Link from 'next/link'
 import Image from 'next/image'
 import PlayLogo from '../../public/tracks_logos/play_logo_small.svg'
 
@@ -98,22 +97,20 @@ export default function BestResult({title, category, cover_url, link}) {
   return (
     <Container>
       <TopTitle>Meilleur résultat</TopTitle>
-      <Link href={link}>
-        <CardContainer>
-          <ImageContainer isRound={category === 'artist'}>
-            <Image src={cover_url} layout="fill" objectFit="cover" alt="result cover"/>
-          </ImageContainer>
-          <div>
-            <CardTitle>{title}</CardTitle>
-            <ResultCategory>{category}</ResultCategory>
-          </div>
-          <PlayButtonAnimationContainer>
-            <PlayButton>
-              <PlayLogo height="24" width="24" />
-            </PlayButton>
-          </PlayButtonAnimationContainer>
-        </CardContainer>
-      </Link>
+      <CardContainer>
+        <ImageContainer isRound={category === 'artiste'}>
+          <Image src={cover_url} layout="fill" objectFit="cover" alt="result cover"/>
+        </ImageContainer>
+        <div>
+          <CardTitle>{title}</CardTitle>
+          <ResultCategory>{category}</ResultCategory>
+        </div>
+        <PlayButtonAnimationContainer>
+          <PlayButton>
+            <PlayLogo height="24" width="24" />
+          </PlayButton>
+        </PlayButtonAnimationContainer>
+      </CardContainer>
     </Container>
   )
 }

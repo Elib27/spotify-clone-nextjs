@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect} from 'react'
 import { useRouter } from "next/router"
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
 import TracksContainer from "../../../components/searchPage/TracksContainer"
