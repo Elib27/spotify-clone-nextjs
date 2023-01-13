@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusicId, changeTracksQueue, togglePlaying } from '../../store/store'
 import Image from 'next/image'
@@ -208,7 +207,8 @@ export default function TrackItem({
   number,
   isLiked,
   addedDate,
-  setLikedTracksIds
+  deleteLikedTrack,
+  addLikedTrack,
 }) {
 
   const music = useSelector(state => state.music)
@@ -227,16 +227,10 @@ export default function TrackItem({
   }
 
   async function toggleLikedTrack(id, isLiked) {
-    if (isLiked) {
-      console.log('delete liked track ' + id)
-      setLikedTracksIds(prev => prev.filter(trackId => trackId !== id))
-      await fetch(`/api/deleteLikedTracks?ids=${id}`)
-    }
-    else {
-      console.log('add liked track ' + id)
-      setLikedTracksIds(prev => [...prev, {id}])
-      await fetch(`/api/addLikedTracks?ids=${id}`)
-    }
+    if (isLiked)
+      deleteLikedTrack(id)
+    else
+      addLikedTrack(id)
   }
 
   const isCurrentTrackPlaying = (id === music.currentTrack.id) && music.isPlaying

@@ -50,8 +50,6 @@ export default function Tracks() {
 
   const [likedTracks, setLikedTracks] = useState(null)
 
-  const likedTrackIds = likedTracks?.map(track => track.id)
-
   async function getLikedTracks() {
     const response = await fetch('/api/getLikedTracks')
     const data = await response.json()
@@ -61,6 +59,11 @@ export default function Tracks() {
   useEffect(() => {
     getLikedTracks()
   }, [])
+
+  async function deleteLikedTrack(id) {
+    setLikedTracks(prev => prev.filter(track => track.id !== id))
+    await fetch(`/api/deleteLikedTracks?ids=${id}`)
+  }
 
   if (!likedTracks) return
 
@@ -100,7 +103,7 @@ export default function Tracks() {
                     duration={track.duration}
                     number={index + 1}
                     isLiked
-                    setLikedTracksIds={setLikedTracks}
+                    deleteLikedTrack={deleteLikedTrack}
                     addedDate={track.addedDate}
                   />
                 ))}

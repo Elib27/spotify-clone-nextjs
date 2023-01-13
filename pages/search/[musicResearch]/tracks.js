@@ -31,6 +31,16 @@ export default function Tracks() {
     refreshTracks()
     getLikedTracksIds()
   }, [musicResearch])
+
+  async function addLikedTrack(id) {
+    setLikedTrackIds(prev => [...prev, id])
+    await fetch(`/api/addLikedTracks?ids=${id}`)
+  }
+
+  async function deleteLikedTrack(id) {
+    setLikedTrackIds(prev => prev.filter(trackId => trackId !== id))
+    await fetch(`/api/deleteLikedTracks?ids=${id}`)
+  }
   
   if (!tracksData) return (null)
 
@@ -52,8 +62,9 @@ export default function Tracks() {
             explicit={track.explicit}
             duration={track.duration}
             number={index + 1}
-            setLikedTrackIds={setLikedTrackIds}
-            isLiked={likedTrackIds.current && likedTrackIds.includes(track.id)}
+            addLikedTrack={addLikedTrack}
+            deleteLikedTrack={deleteLikedTrack}
+            isLiked={likedTrackIds && likedTrackIds.includes(track.id)}
             addedDate={null}
           />
         ))
