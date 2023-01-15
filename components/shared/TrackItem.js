@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeCurrentMusicId, changeTracksQueue, togglePlaying } from '../../store/store'
+import { changeCurrentMusicId, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
 import Image from 'next/image'
 import FilledHeartLogo from '../../public/tracks_logos/heart.svg'
 import EmptyHeartLogo from '../../public/tracks_logos/empty_heart.svg'
@@ -218,7 +218,6 @@ export default function TrackItem({
   async function handleClickChangeCurrentMusicId() {
     if (id === music.currentTrack.id) {
       dispatch(togglePlaying())
-      console.log(music.currentTrack.id + ' ' + music.isPlaying)
     }
     else {
       dispatch(changeCurrentMusicId(id))
@@ -226,14 +225,15 @@ export default function TrackItem({
         const response = await fetch(`/api/getLikedTracks`)
         const data = await response.json()
         const tracksQueueIds = data.map(track => track.id)
-        console.log(tracksQueueIds)
+        const currIndexInQueue = tracksQueueIds.indexOf(id)
         dispatch(changeTracksQueue(tracksQueueIds))
+        dispatch(changeMusicIndexInQueue(currIndexInQueue))
       }
       else {
         const response = await fetch(`/api/getTracksQueue?seed_tracks=${id}`)
         const tracksQueueIds = await response.json()
-        console.log(tracksQueueIds)
         dispatch(changeTracksQueue(tracksQueueIds))
+        dispatch(changeMusicIndexInQueue(0))
       }
     }
   }

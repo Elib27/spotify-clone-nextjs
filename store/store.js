@@ -80,13 +80,6 @@ const musicSlice = createSlice({
   }
 })
 
-/*
-
-ajouter la musique courante à tracksQueue[0]
-utiliser tracksQueue[indexMusicInQueue] pour la musique courante
-
-*/
-
 export const {
   changeCurrentMusic,
   changeCurrentMusicId,

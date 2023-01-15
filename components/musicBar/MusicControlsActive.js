@@ -230,9 +230,10 @@ export default function MusicControlsActive() {
   }
 
   useEffect(() => {
-    const currMusicIndex = calculateCurrentMusicIndex(music.currentTrack.id, music.tracksQueue.length - 1)
+    const currMusicIndex = calculateCurrentMusicIndex(music.currentTrack.id, MAX_CPFREE_MUSIC_INDEX.current)
     setCurrentCpFreeMusicIndex(currMusicIndex)
-  }, [music.currentTrack.id, music.tracksQueue])
+    console.log('currMusicIndex: ', currMusicIndex)
+  }, [music.currentTrack.id])
 
   useEffect(() => {
     dispatch(changeCurrentMusicId(music.tracksQueue[music.musicIndexInQueue]))
@@ -280,6 +281,7 @@ export default function MusicControlsActive() {
       setCurrentCpFreeMusicLink(url)
     }
     changeMusic()
+    console.log('change currentCpFreeMusicIndex: ' + currentCpFreeMusicIndex)
   }, [currentCpFreeMusicIndex])
 
   useEffect(() => {
