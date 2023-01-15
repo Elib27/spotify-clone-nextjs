@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
-import { changeCurrentMusic, toogleLiked } from '../../store/store'
+import { changeCurrentMusic } from '../../store/store'
 import Image from "next/image"
 import FilledHeartLogo from '../../public/tracks_logos/heart.svg'
 import EmptyHeartLogo from '../../public/tracks_logos/empty_heart.svg'

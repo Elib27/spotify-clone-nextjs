@@ -9,12 +9,10 @@ export default async function handler(req, res) {
     res.status(400).json({error: 'Index must be a number'})
   }
   else {
-    res.status(200).json(
-      {
-        url: Tracks[index],
-        index: index,
-        maxIndex: Tracks.length - 1,
-      }
-  )
+    res.status(200).json({
+      url: Tracks[index],
+      index: index,
+      maxIndex: Tracks.length - 1
+    })
   }
 }

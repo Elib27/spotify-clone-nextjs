@@ -29,7 +29,7 @@ const Subtitle = styled.p`
   margin-top: 20px;
 `
 const AuthButton = styled.button`
-  background-color: #1db954;
+  background-color: #1ed760;
   color: #000;
   font-size: 1.25rem;
   font-weight: 700;

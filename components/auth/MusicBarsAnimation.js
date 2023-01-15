@@ -29,7 +29,7 @@ const Bar = styled.li`
   padding: 0;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  background-color: #1db954;
+  background-color: #1ed760;
   animation: ${barAnimation} 2s ease-in-out infinite reverse;
   animation-delay: ${({delay}) => delay}s;
 `

@@ -18,6 +18,7 @@ const musicSlice = createSlice({
     duration: 180,
     volume: 60,
     prevVolume: 50,
+    musicIndexInQueue: 0,
     tracksQueue: [],
   },
   reducers: {
@@ -67,6 +68,9 @@ const musicSlice = createSlice({
     changePrevVolume: (state, action) => {
       state.prevVolume = action.payload
     },
+    changeMusicIndexInQueue: (state, action) => {
+      state.musicIndexInQueue = action.payload
+    },
     changeTracksQueue: (state, action) => {
       state.tracksQueue = action.payload
     },
@@ -76,7 +80,12 @@ const musicSlice = createSlice({
   }
 })
 
-// Library Slice ?
+/*
+
+ajouter la musique courante à tracksQueue[0]
+utiliser tracksQueue[indexMusicInQueue] pour la musique courante
+
+*/
 
 export const {
   changeCurrentMusic,
@@ -91,6 +100,7 @@ export const {
   changeSoundType,
   changeVolume,
   changePrevVolume,
+  changeMusicIndexInQueue,
   changeTracksQueue,
   addToQueue
 } = musicSlice.actions

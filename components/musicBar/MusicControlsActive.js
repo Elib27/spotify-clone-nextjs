@@ -8,7 +8,8 @@ import {
   changeLoopMode,
   changeTime,
   changeDuration,
-  changeCurrentMusicId
+  changeCurrentMusicId,
+  changeMusicIndexInQueue,
 } from '../../store/store'
 import { convertSecondsToMinutesSeconds } from '../../lib/convertTime'
 import styled from 'styled-components'
@@ -160,11 +161,10 @@ const TimerContainer = styled.div`
 
 export default function MusicControlsActive() {
 
-  const [currentMusicIndex, setCurrentMusicIndex] = useState(0)
-  const [maxMusicIndex, setMaxMusicIndex] = useState(20)
-  const [currentMusicLink, setCurrentMusicLink] = useState(null)
-  const [musicIndexInQueue, setMusicIndexInQueue] = useState(0)
+  const [currentCpFreeMusicIndex, setCurrentCpFreeMusicIndex] = useState(0)
+  const [currentCpFreeMusicLink, setCurrentCpFreeMusicLink] = useState(null)
   const [isProgressionBarMoving, setIsProgressionBarMoving] = useState(false)
+  const MAX_CPFREE_MUSIC_INDEX = useRef(70);
 
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()
@@ -205,12 +205,12 @@ export default function MusicControlsActive() {
 
   function setRandomMusic() {
     const randomIndex = randomInteger(0, music.tracksQueue.length - 1)
-    setMusicIndexInQueue(randomIndex)
+    dispatch(changeMusicIndexInQueue(randomIndex))
   }
 
   function handleClickPrevMusic() {
-    if (musicIndexInQueue > 0 && music.time <= 3) {
-      setMusicIndexInQueue(musicIndexInQueue - 1)
+    if (music.musicIndexInQueue > 0 && music.time <= 3) {
+      dispatch(changeMusicIndexInQueue(music.musicIndexInQueue - 1))
     }
     else {
       resetMusic()
@@ -218,11 +218,11 @@ export default function MusicControlsActive() {
   }
 
   function handleClickNextMusic() {
-    if (music.isPlayingRandom || musicIndexInQueue >= music.tracksQueue.length - 1) {
+    if (music.isPlayingRandom || music.musicIndexInQueue >= music.tracksQueue.length - 1) {
       setRandomMusic()
     }
     else {
-      setMusicIndexInQueue(musicIndexInQueue + 1)
+      dispatch(changeMusicIndexInQueue(music.musicIndexInQueue + 1))
     }
     if (music.loopMode === 'loop_2') {
       dispatch(changeLoopMode('loop_1'))
@@ -230,13 +230,13 @@ export default function MusicControlsActive() {
   }
 
   useEffect(() => {
-    const currMusicIndex = calculateCurrentMusicIndex(music.currentTrack.id, maxMusicIndex)
-    setCurrentMusicIndex(currMusicIndex)
-  }, [music.currentTrack.id, maxMusicIndex])
+    const currMusicIndex = calculateCurrentMusicIndex(music.currentTrack.id, music.tracksQueue.length - 1)
+    setCurrentCpFreeMusicIndex(currMusicIndex)
+  }, [music.currentTrack.id, music.tracksQueue])
 
   useEffect(() => {
-    dispatch(changeCurrentMusicId(music.tracksQueue[musicIndexInQueue]))
-  }, [musicIndexInQueue])
+    dispatch(changeCurrentMusicId(music.tracksQueue[music.musicIndexInQueue]))
+  }, [music.musicIndexInQueue])
 
   function updateCurrentTime() {
     if (audio.current && !isProgressionBarMoving) {
@@ -259,9 +259,9 @@ export default function MusicControlsActive() {
 
   useEffect(() => {
     async function firstMusicLoad(){
-      const { url, maxIndex } = await getCopyrightFreeTrack(currentMusicIndex)
-      setCurrentMusicLink(url)
-      setMaxMusicIndex(maxIndex)
+      const { url, maxIndex } = await getCopyrightFreeTrack(currentCpFreeMusicIndex)
+      MAX_CPFREE_MUSIC_INDEX.current = maxIndex
+      setCurrentCpFreeMusicLink(url)
       updateMusicDuration()
       updateCurrentTime()
     }
@@ -276,17 +276,16 @@ export default function MusicControlsActive() {
 
   useEffect(() => {
     async function changeMusic() {
-      const { url, maxIndex } = await getCopyrightFreeTrack(currentMusicIndex)
-      setCurrentMusicLink(url)
-      setMaxMusicIndex(maxIndex)
+      const { url } = await getCopyrightFreeTrack(currentCpFreeMusicIndex)
+      setCurrentCpFreeMusicLink(url)
     }
     changeMusic()
-  }, [currentMusicIndex])
+  }, [currentCpFreeMusicIndex])
 
   useEffect(() => {
     resetMusic()
     audio.current.play()
-  }, [currentMusicLink])
+  }, [currentCpFreeMusicLink])
 
   useEffect(() => {
     if(audio.current) {
@@ -376,7 +375,7 @@ export default function MusicControlsActive() {
           }
         </SideContainer>
       </ControlsContainer>
-      <audio ref={audio} src={currentMusicLink} onTimeUpdate={updateCurrentTime}></audio>
+      <audio ref={audio} src={currentCpFreeMusicLink} onTimeUpdate={updateCurrentTime}></audio>
       <MusicProgressionBarContainer>
         <TimerContainer>{timeInMinSecs}</TimerContainer>
         <MusicProgressionBar

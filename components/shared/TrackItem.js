@@ -209,6 +209,7 @@ export default function TrackItem({
   addedDate,
   deleteLikedTrack,
   addLikedTrack,
+  isTracksCollection
 }) {
 
   const music = useSelector(state => state.music)
@@ -217,12 +218,23 @@ export default function TrackItem({
   async function handleClickChangeCurrentMusicId() {
     if (id === music.currentTrack.id) {
       dispatch(togglePlaying())
+      console.log(music.currentTrack.id + ' ' + music.isPlaying)
     }
     else {
       dispatch(changeCurrentMusicId(id))
-      const response = await fetch(`/api/getTracksQueue?seed_tracks=${id}`)
-      const data = await response.json()
-      dispatch(changeTracksQueue(data))
+      if (isTracksCollection){
+        const response = await fetch(`/api/getLikedTracks`)
+        const data = await response.json()
+        const tracksQueueIds = data.map(track => track.id)
+        console.log(tracksQueueIds)
+        dispatch(changeTracksQueue(tracksQueueIds))
+      }
+      else {
+        const response = await fetch(`/api/getTracksQueue?seed_tracks=${id}`)
+        const tracksQueueIds = await response.json()
+        console.log(tracksQueueIds)
+        dispatch(changeTracksQueue(tracksQueueIds))
+      }
     }
   }
 
