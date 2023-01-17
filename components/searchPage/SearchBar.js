@@ -1,8 +1,9 @@
 import styled from 'styled-components'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback} from 'react'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeSearchInput } from '../../store/store'
+import debounce from '../../lib/debounce.js'
 import SearchLogo from '../../public/header_logos/search.svg'
 import CrossLogo from '../../public/header_logos/cross.svg'
 
@@ -78,17 +79,12 @@ export default function SearchBar() {
   const [isClearButtonVisible, setIsClearButtonVisible] = useState(false)
 
   useEffect(() => {
-    let currentSearchCategory = ''
-    if (router.pathname.split('/').length >= 4 && navigation.searchInput !== '') {
-      currentSearchCategory = '/' + router.pathname.split('/')[3]
+    if (navigation.searchInput)
+    {
+      // debouncedUpdateUrlWithSearchInput()
+      updateUrlWithSearchInput()
     }
-    router.push(`/search/${navigation.searchInput}${currentSearchCategory}`)
-    if (navigation.searchInput.length > 0) {
-      setIsClearButtonVisible(true)
-    }
-    else {
-      setIsClearButtonVisible(false)
-    }
+    console.log('searchInput: ', navigation.searchInput)
   }, [navigation.searchInput])
 
   useEffect(() => {
@@ -96,6 +92,28 @@ export default function SearchBar() {
       dispatch(changeSearchInput(''))
     }
   }, [router.pathname])
+  
+  function updateUrlWithSearchInput() {
+    let currentSearchCategory = ''
+    if (router.pathname.split('/').length >= 4 && navigation.searchInput !== '') {
+      currentSearchCategory = '/' + router.pathname.split('/')[3]
+    }
+    router.push(`/search/${navigation.searchInput}${currentSearchCategory}`)
+    updateClearButtonVisibility()
+    console.log('URL changed')
+    console.log(router)
+  }
+
+  function updateClearButtonVisibility() {
+    if (navigation.searchInput.length > 0) {
+      setIsClearButtonVisible(true)
+    }
+    else {
+      setIsClearButtonVisible(false)
+    }
+  }
+
+  const debouncedUpdateUrlWithSearchInput = useCallback(debounce(updateUrlWithSearchInput, 1000), [])
 
   function handleClickRedirectToSearchPage() {
     if (!router.pathname.startsWith('/search')) {
