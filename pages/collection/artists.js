@@ -1,36 +1,35 @@
-import styled from "styled-components"
+import { useEffect, useState } from "react"
 import CollectionLayout from "../../components/collection/CollectionLayout"
 import CollectionPageContainer from "../../components/collection/CollectionPageContainer"
 import PlaylistCard from "../../components/collection/PlaylistCard"
 
-
 export default function Artists() {
+
+  const [followedArtists, setFollowedArtists] = useState(null)
+
+  async function getFollowedArtists() {
+    const response = await fetch('/api/getFollowedArtists')
+    const data = await response.json()
+    setFollowedArtists(data)
+  }
+
+  useEffect(() => {
+    getFollowedArtists()
+  }, [])
+
+  if (!followedArtists) return null
+
   return (
     <CollectionPageContainer title="Artistes">
-      <PlaylistCard
-        title="Lorenzo"
-        cover_url="https://i.scdn.co/image/ab6761610000f178e640d227cd8994c95b15ba52"
-        description="Artiste"
-        isRoundImage
-      />
-      <PlaylistCard
-        title="Lorenzo"
-        cover_url="https://i.scdn.co/image/ab6761610000f178e640d227cd8994c95b15ba52"
-        description="Artiste"
-        isRoundImage
-      />
-      <PlaylistCard
-        title="Lorenzo"
-        cover_url="https://i.scdn.co/image/ab6761610000f178e640d227cd8994c95b15ba52"
-        description="Artiste"
-        isRoundImage
-      />
-      <PlaylistCard
-        title="Lorenzo"
-        cover_url="https://i.scdn.co/image/ab6761610000f178e640d227cd8994c95b15ba52"
-        description="Artiste"
-        isRoundImage
-      />
+      {followedArtists.map(artist => (
+        <PlaylistCard
+          title={artist.name}
+          cover_url={artist.image}
+          description="Artiste"
+          key={artist.id}
+          isRoundImage
+        />
+      ))}
     </CollectionPageContainer>
   )
 }

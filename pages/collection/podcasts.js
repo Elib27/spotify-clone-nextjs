@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import { useEffect, useState } from "react"
 import CollectionPageContainer from "../../components/collection/CollectionPageContainer"
 import PlaylistBigCard from '../../components/collection/PlaylistBigCard'
 import PlaylistCard from '../../components/collection/PlaylistCard'
@@ -17,6 +17,22 @@ const exampleTracks = [
 ]
 
 export default function Podcasts() {
+
+  const [likedPodcasts, setLikedPodcasts] = useState(null)
+
+  async function getLikedPodcasts() {
+    const response = await fetch('/api/getLikedPodcasts')
+    const data = await response.json()
+    setLikedPodcasts(data)
+    console.log(data)
+  }
+
+  useEffect(() => {
+    getLikedPodcasts()
+  }, [])
+
+  if (!likedPodcasts) return
+
   return (
     <CollectionPageContainer title="Podcasts">
       <PlaylistBigCard
@@ -24,30 +40,15 @@ export default function Podcasts() {
         tracks={exampleTracks}
         tracksNumber={4}
       />
-      <PlaylistCard
-        cover_url="https://i.scdn.co/image/ab67656300005f1fb969baea8ebad840ae2baec6"
-        title="TechOut"
-        description="Emakina/influx"
-        noPlayingButton
-        />
-      <PlaylistCard
-        cover_url="https://i.scdn.co/image/ab67656300005f1fb969baea8ebad840ae2baec6"
-        title="TechOut"
-        description="Emakina/influx"
-        noPlayingButton
-        />
-      <PlaylistCard
-        cover_url="https://i.scdn.co/image/ab67656300005f1fb969baea8ebad840ae2baec6"
-        title="TechOut"
-        description="Emakina/influx"
-        noPlayingButton
-        />
-      <PlaylistCard
-        cover_url="https://i.scdn.co/image/ab67656300005f1fb969baea8ebad840ae2baec6"
-        title="TechOut"
-        description="Emakina/influx"
-        noPlayingButton
-        />
+      {likedPodcasts.map(podcast => (
+        <PlaylistCard
+          title={podcast.name}
+          cover_url={podcast.image}
+          description={podcast.artist}
+          key={podcast.id}
+          noPlayingButton
+          />
+      ))}
     </CollectionPageContainer>
   )
 }

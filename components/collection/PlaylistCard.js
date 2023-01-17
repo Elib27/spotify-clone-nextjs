@@ -88,7 +88,7 @@ export default function PlaylistCard({cover_url, title, description, isRoundImag
     <CardContainer>
       <CardImageWrapper>
         <CardImageContainer isRoundImage={isRoundImage}>
-          <Image src={cover_url} alt="song cover" layout="fill" objectFit='cover'/>
+          <Image src={cover_url} alt="song cover" layout="fill" objectFit='cover' draggable="false"/>
         </CardImageContainer>
         {!noPlayingButton && (
           <PlayButtonAnimationContainer>
