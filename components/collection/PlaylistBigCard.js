@@ -109,7 +109,7 @@ export default function PlaylistBigCard({tracks, tracksNumber, isEpisodes}) {
             <span key={index}>
               <SummaryArtist>{track.artist}</SummaryArtist>
               <SummaryTitle>{track.title}</SummaryTitle>
-              <Separator>•</Separator>
+              {(index < tracks.length - 1) && <Separator>•</Separator>}
             </span>
           ))}
         </TracksSummary>

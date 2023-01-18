@@ -46,8 +46,7 @@ export default function Podcasts() {
           cover_url={podcast.image}
           description={podcast.artist}
           key={podcast.id}
-          noPlayingButton
-          />
+        />
       ))}
     </CollectionPageContainer>
   )
