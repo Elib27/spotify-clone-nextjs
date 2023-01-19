@@ -19,26 +19,44 @@ const exampleTracks = [
 export default function Podcasts() {
 
   const [likedPodcasts, setLikedPodcasts] = useState(null)
+  const [savedEpisodes, setSavedEpisodes] = useState(null)
 
   async function getLikedPodcasts() {
     const response = await fetch('/api/getLikedPodcasts')
     const data = await response.json()
-    setLikedPodcasts(data)
-    console.log(data)
+    return data
   }
 
+  async function getSavedEpisodes() {
+    const response = await fetch('/api/getSavedEpisodes')
+    const data = await response.json()
+    const savedEpisodes = data.map(episode => ({
+      title: episode.podcast,
+      artist: episode.name
+    }))
+    return savedEpisodes
+  }
+
+
   useEffect(() => {
-    getLikedPodcasts()
+    Promise.all([
+      getLikedPodcasts(),
+      getSavedEpisodes()
+    ])
+    .then((data) => {
+      setLikedPodcasts(data[0])
+      setSavedEpisodes(data[1])
+    })
   }, [])
 
-  if (!likedPodcasts) return
+  if (!(likedPodcasts && savedEpisodes)) return
 
   return (
     <CollectionPageContainer title="Podcasts">
       <PlaylistBigCard
         isEpisodes
-        tracks={exampleTracks}
-        tracksNumber={4}
+        tracks={savedEpisodes.slice(0, 7)}
+        tracksNumber={savedEpisodes.length}
       />
       {likedPodcasts.map(podcast => (
         <PlaylistCard

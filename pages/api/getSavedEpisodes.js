@@ -1,6 +1,6 @@
 import getSavedEpisodes from "../../lib/spotify/getSavedEpisodes"
-import { convertMsToMinutesSeconds } from "../../lib/convertTime"
-import convertDateToAddedDate from "../../lib/convertDateToAddedDate"
+import { convertMsToHourMinSecString } from "../../lib/convertTime"
+import convertToEpisodeReleaseDate from "../../lib/convertToEpisodeReleaseDate"
 
 export default async function handler(req, res) {
 
@@ -14,8 +14,8 @@ export default async function handler(req, res) {
     publisher: item.episode?.show?.publisher,
     explicit: item.episode?.explicit,
     image: item.episode?.images?.[1]?.url ?? item.episode?.images?.[0]?.url,
-    addedDate: item?.added_at && convertDateToAddedDate(item.added_at),
-    duration: item.episode?.duration_ms && convertMsToMinutesSeconds(item.episode.duration_ms),
+    release_date: item.episode?.release_date && convertToEpisodeReleaseDate(item.episode.release_date),
+    duration: item.episode?.duration_ms && convertMsToHourMinSecString(item.episode.duration_ms),
     id: item.episode?.id,
   }))
 

@@ -5,6 +5,7 @@ import CollectionNavButton from './CollectionNavButton'
 
 const Container = styled.nav`
   padding-left: 32px;
+  background: #121212;
   position: sticky;
   top: 0;
   z-index: 10;

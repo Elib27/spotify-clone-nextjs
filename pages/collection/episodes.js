@@ -66,7 +66,6 @@ export default function Episodes() {
     const response = await fetch('/api/getSavedEpisodes')
     const data = await response.json()
     setSavedEpisodes(data)
-    console.log(data)
   }
 
   useEffect(() => {
@@ -100,7 +99,7 @@ export default function Episodes() {
                 description={episode.description}
                 podcast={episode.podcast}
                 cover_url={episode.image}
-                date={episode.addedDate}
+                date={episode.release_date}
                 duration={episode.duration}
                 />
             </Wrapper>
