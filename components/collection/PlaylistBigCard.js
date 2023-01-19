@@ -57,7 +57,7 @@ const CardContainer = styled.div`
 `
 const TracksSummary = styled.div`
   font-family: 'CircularSp', 'Roboto', sans-serif;
-  max-height: 130px;
+  max-height: 80px;
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -105,7 +105,7 @@ export default function PlaylistBigCard({tracks, tracksNumber, isEpisodes}) {
     <Link href={isEpisodes ? "/collection/episodes" : "/collection/tracks"}>
       <CardContainer isEpisodes={isEpisodes}>
         <TracksSummary>
-          {tracks.map((track, index) => (
+          {tracks && tracks.map((track, index) => (
             <span key={index}>
               <SummaryArtist>{track.artist}</SummaryArtist>
               <SummaryTitle>{track.title}</SummaryTitle>

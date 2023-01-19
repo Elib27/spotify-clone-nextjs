@@ -1,8 +1,11 @@
 import styled from 'styled-components'
 import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeCurrentMusicId, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
 import PlaylistHeader from '../../components/shared/PlayListHeader'
 import NoLikedTracksSection from '../../components/collection/NoLikedTracksSection'
 import PlayLogo from '../../public/tracks_logos/play_logo.svg'
+import PauseLogo from '../../public/tracks_logos/pause_logo.svg'
 import TracksContainer from '../../components/collection/LikedTracksContainer'
 import TrackItem from '../../components/shared/TrackItem'
 
@@ -48,6 +51,9 @@ const TracksWrapper = styled.div`
 
 export default function Tracks() {
 
+  const music = useSelector(state => state.music)
+  const dispatch = useDispatch()
+
   const [likedTracks, setLikedTracks] = useState(null)
 
   async function getLikedTracks() {
@@ -64,6 +70,18 @@ export default function Tracks() {
     setLikedTracks(prev => prev.filter(track => track.id !== id))
     await fetch(`/api/deleteLikedTracks?ids=${id}`)
   }
+
+  function tooglePlaylingLikedMusic() {
+    if (!(likedTracks && likedTracks.map(track => track.id).includes(music.currentTrack.id)))
+    {
+      dispatch(changeCurrentMusicId(likedTracks[0].id))
+      dispatch(changeTracksQueue(likedTracks.map(track => track.id)))
+      dispatch(changeMusicIndexInQueue(0))
+    }
+    dispatch(togglePlaying())
+  }
+
+  const isLikedMusicPlaying = music.isPlaying && likedTracks && likedTracks.map(track => track.id).includes(music.currentTrack.id)
 
   if (!likedTracks) return
 
@@ -83,8 +101,8 @@ export default function Tracks() {
         ):(
           <>
             <PlayMusicSection>
-              <PlayButton>
-                <PlayLogo />
+              <PlayButton onClick={tooglePlaylingLikedMusic}>
+                {isLikedMusicPlaying ? <PauseLogo /> : <PlayLogo />}
               </PlayButton>
             </PlayMusicSection>
             <TracksWrapper>

@@ -232,7 +232,6 @@ export default function MusicControlsActive() {
   useEffect(() => {
     const currMusicIndex = calculateCurrentMusicIndex(music.currentTrack.id, MAX_CPFREE_MUSIC_INDEX.current)
     setCurrentCpFreeMusicIndex(currMusicIndex)
-    console.log('currMusicIndex: ', currMusicIndex)
   }, [music.currentTrack.id])
 
   useEffect(() => {
@@ -281,7 +280,6 @@ export default function MusicControlsActive() {
       setCurrentCpFreeMusicLink(url)
     }
     changeMusic()
-    console.log('change currentCpFreeMusicIndex: ' + currentCpFreeMusicIndex)
   }, [currentCpFreeMusicIndex])
 
   useEffect(() => {

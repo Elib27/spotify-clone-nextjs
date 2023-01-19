@@ -4,18 +4,6 @@ import PlaylistBigCard from '../../components/collection/PlaylistBigCard'
 import PlaylistCard from '../../components/collection/PlaylistCard'
 import CollectionLayout from '../../components/collection/CollectionLayout'
 
-const exampleTracks = [
-  {title: 'Vettel', artist: 'Mister V'},
-  {title: 'Journal Perso II', artist: 'Vald'},
-  {title: 'Top album', artist: 'Mister V'},
-  {title: 'Vettel', artist: 'Mister V'},
-  {title: 'Vettel', artist: 'Mister V'},
-  {title: 'Journal Perso II', artist: 'Vald'},
-  {title: 'Top album', artist: 'Mister V'},
-  {title: 'Journal Perso II', artist: 'Vald'},
-  {title: 'Top album', artist: 'Mister V'},
-]
-
 export default function Podcasts() {
 
   const [likedPodcasts, setLikedPodcasts] = useState(null)
@@ -24,7 +12,7 @@ export default function Podcasts() {
   async function getLikedPodcasts() {
     const response = await fetch('/api/getLikedPodcasts')
     const data = await response.json()
-    return data
+    setLikedPodcasts(data)
   }
 
   async function getSavedEpisodes() {
@@ -34,29 +22,22 @@ export default function Podcasts() {
       title: episode.podcast,
       artist: episode.name
     }))
-    return savedEpisodes
+    setSavedEpisodes(savedEpisodes)
   }
 
-
   useEffect(() => {
-    Promise.all([
-      getLikedPodcasts(),
-      getSavedEpisodes()
-    ])
-    .then((data) => {
-      setLikedPodcasts(data[0])
-      setSavedEpisodes(data[1])
-    })
+    getLikedPodcasts()
+    getSavedEpisodes()
   }, [])
 
-  if (!(likedPodcasts && savedEpisodes)) return
+  if (!(likedPodcasts)) return
 
   return (
     <CollectionPageContainer title="Podcasts">
       <PlaylistBigCard
         isEpisodes
-        tracks={savedEpisodes.slice(0, 7)}
-        tracksNumber={savedEpisodes.length}
+        tracks={savedEpisodes?.slice(0, 7) || null}
+        tracksNumber={savedEpisodes?.length || 17}
       />
       {likedPodcasts.map(podcast => (
         <PlaylistCard

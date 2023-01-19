@@ -101,7 +101,6 @@ export default function SearchBar() {
     router.push(`/search/${navigation.searchInput}${currentSearchCategory}`)
     updateClearButtonVisibility()
     console.log('URL changed')
-    console.log(router)
   }
 
   function updateClearButtonVisibility() {

@@ -43,7 +43,6 @@ export default function SearchResult() {
     const response = await fetch(`/api/getSearchResults/${musicResearch}`)
     const data = await response.json()
     setFetchedData(data[0])
-    console.log(data[0], data[1])
   }
 
   useEffect(() => {
