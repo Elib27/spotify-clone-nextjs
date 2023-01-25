@@ -17,6 +17,8 @@ const TracksSectionColumnTitle = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  text-transform: uppercase;
+  white-space: nowrap;
   &:first-of-type {
     font-size: 1rem;
     justify-self: end;
@@ -34,7 +36,7 @@ export default function TracksContainer({columnTitles, children}) {
       <TracksSectionColumns>
         {columnTitles.map(columnTitle => (
           <TracksSectionColumnTitle key={columnTitle}>
-            {columnTitle.toUpperCase()}
+            {columnTitle}
           </TracksSectionColumnTitle>
         )
         )}

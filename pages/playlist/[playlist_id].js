@@ -14,39 +14,45 @@ export default function Playlist() {
   const router = useRouter()
   const { playlist_id } = router.query
 
-  const [tracks, setTracks] = useState(null)
+  const [playlistInformations, setPlaylistInformations] = useState(null)
 
   useEffect(() => {
     async function getPlaylist() {
       const response = await fetch(`/api/getPlaylist?playlist_id=${playlist_id}`)
       const data = await response.json()
-      setTracks(data)
+      setPlaylistInformations(data)
+      console.log(data)
     }
-
-    console.log('get tracks from playlist: ', playlist_id)
+    getPlaylist()
   }, [playlist_id])
+
+  if (!playlistInformations) return
 
   return (
     <PlaylistPageLayout
-      // title={title}
-      // description={description}
-      // cover_url={cover_url}
-      // background={background}
-      // tracks_number={tracks_number}
+      title={playlistInformations.name}
+      description={playlistInformations.description}
+      cover_url={playlistInformations.image}
+      tracks_number={playlistInformations.tracks.length}
+      likes={playlistInformations.followers}
+      owner={playlistInformations.owner}
+      // background={playlistInformations.background}
     >
-      {/* {tracks.map((track, index) => (
+      {playlistInformations.tracks.map((track, index) => (
         <TrackItem
-          name={track.name}
+          title={track.name}
           artist={track.artist}
           album={track.album}
           key={track.id}
           id={track.id}
+          explicit={track.explicit}
           cover_url={track.image}
           duration={track.duration}
-          number={index}
+          addedDate={track.added_date}
+          number={index + 1}
         />
       ))
-      } */}
+      }
     </PlaylistPageLayout>
   )
 }

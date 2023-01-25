@@ -65,7 +65,7 @@ const Username = styled.div`
     text-decoration: underline;
   }
 `
-const TracksNumber = styled.div`
+const suppInfo = styled.div`
   font-size: 0.875rem;
   font-weight: 400;
   text-align: center;
@@ -77,7 +77,7 @@ const Separator = styled.span`
   text-align: center;
 `
 
-export default function PlaylistHeader({ title, cover_url, background, owner, tracks_number, isPodcastPlaylist }) {
+export default function PlaylistHeader({ title, cover_url, background, owner, likes, tracks_number, isPodcastPlaylist }) {
   return (
     <Header background={background}>
       <HeaderImageContainer isGreenBG={cover_url}>
@@ -97,10 +97,16 @@ export default function PlaylistHeader({ title, cover_url, background, owner, tr
         </div>
         <HeaderInformations>
           <Username>{owner}</Username>
+          {likes && (  // ne s'afficher pas ?
+            <>
+              <Separator>•</Separator>
+              <suppInfo>{`${likes} like${likes > 1 ? 's' : null}`}</suppInfo>
+            </>
+          )}
           {tracks_number > 0 && (
             <>
               <Separator>•</Separator>
-              <TracksNumber>{`${tracks_number} ${isPodcastPlaylist ? 'épisode' : 'titre'}${tracks_number > 1 ? 's' : ''}`}</TracksNumber>
+              <suppInfo>{`${tracks_number} ${isPodcastPlaylist ? 'épisode' : 'titre'}${tracks_number > 1 ? 's' : ''}`}</suppInfo>
             </>
           )}
         </HeaderInformations>

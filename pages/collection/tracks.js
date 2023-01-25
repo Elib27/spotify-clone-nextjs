@@ -3,9 +3,8 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusicId, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
 import PlaylistHeader from '../../components/shared/PlayListHeader'
+import PlaylistPlayButtonSection from '../../components/shared/PlaylistPlayButtonSection'
 import NoLikedTracksSection from '../../components/collection/NoLikedTracksSection'
-import PlayLogo from '../../public/tracks_logos/play_logo.svg'
-import PauseLogo from '../../public/tracks_logos/pause_logo.svg'
 import TracksContainer from '../../components/collection/LikedTracksContainer'
 import TrackItem from '../../components/shared/TrackItem'
 
@@ -100,11 +99,10 @@ export default function Tracks() {
           <NoLikedTracksSection />
         ):(
           <>
-            <PlayMusicSection>
-              <PlayButton onClick={tooglePlaylingLikedMusic}>
-                {isLikedMusicPlaying ? <PauseLogo /> : <PlayLogo />}
-              </PlayButton>
-            </PlayMusicSection>
+            <PlaylistPlayButtonSection
+              handleButtonClick={tooglePlaylingLikedMusic}
+              isPlaying={isLikedMusicPlaying}
+            />
             <TracksWrapper>
               <TracksContainer
                 columnTitles={['#', 'titre', 'album', 'ajouté le']}

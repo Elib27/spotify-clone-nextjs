@@ -205,8 +205,8 @@ export default function TrackItem({
   explicit,
   duration,
   number,
-  isLiked,
   addedDate,
+  isLiked,
   deleteLikedTrack,
   addLikedTrack,
   isTracksCollection

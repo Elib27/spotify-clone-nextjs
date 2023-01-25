@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import styled from "styled-components"
 import PlaylistHeader from "../../components/shared/PlayListHeader"
 import LikedPodcast from "../../components/collection/LikedPodcast"
-import PlayLogo from '../../public/tracks_logos/play_logo.svg'
+import PlaylistPlayButtonSection from "../../components/shared/PlaylistPlayButtonSection"
 
 const Container = styled.div`
   padding-bottom: 32px;
@@ -85,11 +85,7 @@ export default function Episodes() {
         />
       <MainContentWrapper>
         <BackgroundGradient />
-        <PlayMusicSection>
-          <PlayButton>
-            <PlayLogo />
-          </PlayButton>
-        </PlayMusicSection>
+        <PlaylistPlayButtonSection />
         <PodcastsContainer>
           {savedEpisodes.map(episode => (
             <Wrapper key={episode.id}>

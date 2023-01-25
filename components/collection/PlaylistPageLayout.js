@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import PlaylistHeader from "../shared/PlayListHeader"
+import PlaylistPlayButtonSection from "../shared/PlaylistPlayButtonSection"
 import LikedTracksContainer from '../collection/LikedTracksContainer'
 
 const MainContentWrapper = styled.div`
@@ -15,8 +16,11 @@ const BackgroundGradient = styled.div`
   z-index: -1;
   pointer-events: none;
 `
+const TracksWrapper = styled.div`
+  padding: 0 32px;
+`
 
-function PlaylistPageLayout({ title, description, cover_url, background, tracks_number, children }) {
+function PlaylistPageLayout({ title, description, cover_url, background, owner, likes, tracks_number, children }) {
   return (
     <>
       <PlaylistHeader
@@ -24,13 +28,18 @@ function PlaylistPageLayout({ title, description, cover_url, background, tracks_
         description={description}
         cover_url={cover_url}
         background={background}
+        owner={owner}
+        likes={likes}
         tracks_number={tracks_number}
       />
       <MainContentWrapper>
         <BackgroundGradient />
-        {/* <LikedTracksContainer>
-          {children}
-        </LikedTracksContainer> */}
+        <PlaylistPlayButtonSection />
+        <TracksWrapper>
+          <LikedTracksContainer columnTitles={["#", "titre", "album ou podcast", "ajouté le"]}>
+            {children}
+          </LikedTracksContainer>
+        </TracksWrapper>
       </MainContentWrapper>
     </>
   )
