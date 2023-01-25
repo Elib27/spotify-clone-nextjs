@@ -65,10 +65,14 @@ const Username = styled.div`
     text-decoration: underline;
   }
 `
-const suppInfo = styled.div`
+const SuppInfo = styled.div`
   font-size: 0.875rem;
   font-weight: 400;
   text-align: center;
+`
+const PlaylistDuration = styled(SuppInfo)`
+  opacity: 0.7;
+  margin-left: 4px;
 `
 const Separator = styled.span`
   font-size: 0.875rem;
@@ -77,7 +81,7 @@ const Separator = styled.span`
   text-align: center;
 `
 
-export default function PlaylistHeader({ title, cover_url, background, owner, likes, tracks_number, isPodcastPlaylist }) {
+export default function PlaylistHeader({ title, cover_url, background, owner, likes, playlistDuration, tracks_number, isPodcastPlaylist }) {
   return (
     <Header background={background}>
       <HeaderImageContainer isGreenBG={cover_url}>
@@ -97,17 +101,20 @@ export default function PlaylistHeader({ title, cover_url, background, owner, li
         </div>
         <HeaderInformations>
           <Username>{owner}</Username>
-          {likes && (  // ne s'afficher pas ?
+          {likes > 0 && (
             <>
               <Separator>•</Separator>
-              <suppInfo>{`${likes} like${likes > 1 ? 's' : null}`}</suppInfo>
+              <SuppInfo>{`${likes} like${likes > 1 ? 's' : ''}`}</SuppInfo>
             </>
           )}
           {tracks_number > 0 && (
             <>
               <Separator>•</Separator>
-              <suppInfo>{`${tracks_number} ${isPodcastPlaylist ? 'épisode' : 'titre'}${tracks_number > 1 ? 's' : ''}`}</suppInfo>
+              <SuppInfo>{`${tracks_number} ${isPodcastPlaylist ? 'épisode' : 'titre'}${tracks_number > 1 ? 's' : ''}${playlistDuration ? ',' : ''}`}</SuppInfo>
             </>
+          )}
+          {playlistDuration && (
+            <PlaylistDuration>{playlistDuration}</PlaylistDuration>
           )}
         </HeaderInformations>
       </TitleContainer>

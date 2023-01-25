@@ -209,7 +209,7 @@ export default function TrackItem({
   isLiked,
   deleteLikedTrack,
   addLikedTrack,
-  isTracksCollection
+  isTracksPlaylist
 }) {
 
   const music = useSelector(state => state.music)
@@ -221,7 +221,7 @@ export default function TrackItem({
     }
     else {
       dispatch(changeCurrentMusicId(id))
-      if (isTracksCollection){
+      if (isTracksPlaylist){
         const response = await fetch(`/api/getLikedTracks`)
         const data = await response.json()
         const tracksQueueIds = data.map(track => track.id)

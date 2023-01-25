@@ -121,7 +121,7 @@ export default function Tracks() {
                     isLiked
                     deleteLikedTrack={deleteLikedTrack}
                     addedDate={track.addedDate}
-                    isTracksCollection
+                    isTracksPlaylist
                   />
                 ))}
               </TracksContainer>

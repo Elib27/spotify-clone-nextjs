@@ -1,5 +1,4 @@
 import getPlaylist from "../../lib/spotify/getPlaylist"
-import { convertMsToMinutesSeconds } from "../../lib/convertTime"
 import convertDateToAddedDate from "../../lib/convertDateToAddedDate"
 
 export default async function handler(req, res) {
@@ -15,7 +14,7 @@ export default async function handler(req, res) {
     image: item?.track?.album?.images?.[2]?.url || item?.track?.album?.images?.[1]?.url || item?.track?.album?.images?.[0]?.url,
     album: item?.track?.album?.name,
     added_date: item?.added_at && convertDateToAddedDate(item.added_at),
-    duration: item?.track?.duration_ms && convertMsToMinutesSeconds(item.track.duration_ms),
+    duration: item?.track?.duration_ms,
     explicit: item?.track?.explicit,
     id: item?.track?.id,
   }))

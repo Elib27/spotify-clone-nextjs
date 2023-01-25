@@ -79,12 +79,9 @@ export default function SearchBar() {
   const [isClearButtonVisible, setIsClearButtonVisible] = useState(false)
 
   useEffect(() => {
-    if (navigation.searchInput)
-    {
-      // debouncedUpdateUrlWithSearchInput()
-      updateUrlWithSearchInput()
-    }
-    console.log('searchInput: ', navigation.searchInput)
+    // debouncedUpdateUrlWithSearchInput()
+    updateUrlWithSearchInput()
+    console.log(navigation.searchInput)
   }, [navigation.searchInput])
 
   useEffect(() => {
@@ -100,7 +97,6 @@ export default function SearchBar() {
     }
     router.push(`/search/${navigation.searchInput}${currentSearchCategory}`)
     updateClearButtonVisibility()
-    console.log('URL changed')
   }
 
   function updateClearButtonVisibility() {
@@ -112,7 +108,7 @@ export default function SearchBar() {
     }
   }
 
-  const debouncedUpdateUrlWithSearchInput = useCallback(debounce(updateUrlWithSearchInput, 1000), [])
+  // const debouncedUpdateUrlWithSearchInput = useCallback(debounce(updateUrlWithSearchInput, 1000), [])
 
   function handleClickRedirectToSearchPage() {
     if (!router.pathname.startsWith('/search')) {
