@@ -81,7 +81,7 @@ export default function Episodes() {
         background="linear-gradient(#056753 0, #023329 100%)"
         owner="eliot"
         tracks_number={savedEpisodes.length}
-        isPodcastPlaylist
+        isEpisodesCollection
         />
       <MainContentWrapper>
         <BackgroundGradient />

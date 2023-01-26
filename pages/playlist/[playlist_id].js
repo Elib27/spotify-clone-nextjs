@@ -1,15 +1,9 @@
-import styled from "styled-components"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import PlaylistPageLayout from "../../components/collection/PlaylistPageLayout"
 import TrackItem from "../../components/shared/TrackItem"
 import { convertMsToMinutesSeconds, convertMsToHourMinSecString } from "../../lib/convertTime"
 
-const PlaylistTitle = styled.h1`
-  font-size: 32px;
-  font-weight: 700;
-  color: #fff;
-`
 
 export default function Playlist() {
   const router = useRouter()
@@ -57,8 +51,8 @@ export default function Playlist() {
       tracks_number={playlistInformations.tracks.length}
       likes={playlistInformations.followers}
       owner={playlistInformations.owner}
-      playlistDuration={playlistDurationMs && convertMsToHourMinSecString(playlistDurationMs)}
-      background="blue"
+      playlistDuration={!!playlistDurationMs && convertMsToHourMinSecString(playlistDurationMs)}
+      background="#555555"
     >
       {playlistInformations.tracks.map((track, index) => (
         <TrackItem

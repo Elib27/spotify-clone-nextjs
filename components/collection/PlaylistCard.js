@@ -1,9 +1,7 @@
 import styled from 'styled-components'
 import Image from 'next/image'
-import Link from 'next/link'
 import PlayLogo from '../../public/tracks_logos/play_logo_small.svg'
-
-//utiliser card shared
+import DoubleNoteLogo from '../../public/tracks_logos/double_music_note.svg'
 
 const PlayButton = styled.button`
   height: 48px;
@@ -58,6 +56,11 @@ const CardImageContainer = styled.div`
   aspect-ratio: 1;
   border-radius: 4px;
   box-shadow: 0 8px 24px rgb(0 0 0 / 50%);
+  background-color: #333;
+  color: #b3b3b3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   overflow: hidden;
   ${({isRoundImage}) => isRoundImage && `
@@ -88,7 +91,11 @@ export default function PlaylistCard({cover_url, title, description, isRoundImag
     <CardContainer>
       <CardImageWrapper>
         <CardImageContainer isRoundImage={isRoundImage}>
-          <Image src={cover_url} alt="song cover" layout="fill" objectFit='cover' draggable="false"/>
+          {cover_url ? (
+            <Image src={cover_url} alt="song cover" layout="fill" objectFit='cover' draggable="false"/>
+          ):(
+            <DoubleNoteLogo />
+          )}
         </CardImageContainer>
         {!noPlayingButton && (
           <PlayButtonAnimationContainer>

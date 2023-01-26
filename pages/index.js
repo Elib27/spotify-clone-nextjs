@@ -5,6 +5,7 @@ import PageContainer from '../components/shared/PageContainer'
 import HomeShorcuts from '../components/homePage/HomeShorcuts'
 import HomeSection from '../components/homePage/HomeSection'
 import HomeCard from '../components/homePage/HomeCard'
+import MusicCard from '../components/shared/MusicCard'
 
 const Title = styled.h2`  
   color: #fff;
@@ -17,29 +18,41 @@ const Title = styled.h2`
 
 export default function Home() {
 
-  const WIDTH_LIMIT = useRef(210)
+  const WIDTH_LIMIT = 210
   const containerRef = useRef(null)
   const dimensions = useResizeObserver(containerRef)
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(4)
-  const [welcomeMessage, setWelcomeMessage] = useState('Bonjour')
-
-  useEffect(() => {
-    const timeInHours = new Date().getHours()
-    if (timeInHours >= 4 && timeInHours < 18) {
-      setWelcomeMessage('Bonjour')
-    }
-    else {
-      setWelcomeMessage('Bonsoir')
-    }
-  }, [])
+  const [favoriteArtists, setFavoriteArtists] = useState(null)
 
   useEffect(() => {
     const { width } = dimensions || {width: 900}
-    let cardsNumber = Math.floor(width / WIDTH_LIMIT.current)
+    let cardsNumber = Math.floor(width / WIDTH_LIMIT)
     if (cardsNumber < 3) cardsNumber = 3
     else if (cardsNumber > 9) cardsNumber = 9
     setCardsNumberPerRow(cardsNumber)
   }, [dimensions])
+
+  useEffect(() => {
+    async function getFavoriteArtists() {
+      const response = await fetch('/api/getTopArtists')
+      const data = await response.json()
+      setFavoriteArtists(data)
+      console.log(data)
+    }
+    getFavoriteArtists()
+  }, [])
+
+  function getWelcomeMessage() {
+    const timeInHours = new Date().getHours()
+    if (timeInHours >= 4 && timeInHours < 18) {
+      return "Bonjour"
+    }
+    else {
+      return "Bonsoir"
+    }
+  }
+
+  const welcomeMessage = getWelcomeMessage() || 'Bonjour'
 
   const podcastExampleCards = []
   for(let i = 0; i < 15; i++) {
@@ -71,46 +84,17 @@ export default function Home() {
       </HomeSection>
       <div ref={containerRef}>
         <HomeSection
-          title="Écoutés récemment"
+          title="Vos artistes préférés"
           cardsNumberPerRow={cardsNumberPerRow}
         >
-          {podcastExampleCards.map((card, index) => (
+          {favoriteArtists && favoriteArtists.map((artist, index) => (
             index < (cardsNumberPerRow) && (
-              <HomeCard
-                title={card.title}
-                artist={card.description}
-                cover_url={card.cover_url}
-                key={index}
-              />
-            )
-          ))}
-        </HomeSection>
-        <HomeSection
-          title="À ne pas manquer aujourd'hui"
-          cardsNumberPerRow={cardsNumberPerRow}
-        >
-          {podcastExampleCards.map((card, index) => (
-            index < (cardsNumberPerRow) && (
-              <HomeCard
-                title={card.title}
-                artist={card.description}
-                cover_url={card.cover_url}
-                key={index}
-              />
-            )
-          ))}
-        </HomeSection>
-        <HomeSection
-          title="Épisodes pour vous"
-          cardsNumberPerRow={cardsNumberPerRow}
-        >
-          {podcastExampleCards.map((card, index) => (
-            index < (cardsNumberPerRow) && (
-              <HomeCard
-                title={card.title}
-                artist={card.description}
-                cover_url={card.cover_url}
-                key={index}
+              <MusicCard
+                title={artist.name}
+                cover_url={artist.image}
+                description="Artiste"
+                key={artist.id}
+                isRoundImage
               />
             )
           ))}

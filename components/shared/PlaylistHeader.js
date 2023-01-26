@@ -1,13 +1,14 @@
 import styled from "styled-components"
 import Image from "next/image"
 import FavoriteLogo from "../../public/tracks_logos/favorite_logo.svg"
+import DoubleMusicNote from "../../public/tracks_logos/double_music_note.svg"
 
 const Header = styled.div`
   height: clamp(340px, 30vh, 500px);
   width: 100%;
   margin-top: -94px;
   padding: 0 32px 24px;
-  background: ${({background}) => background};
+  ${({background}) => `background: linear-gradient(${background} 10%, rgba(0,0,0,0.5) 160%);`}
   display: flex;
   align-items: flex-end;  
 `
@@ -16,15 +17,17 @@ const HeaderImageContainer = styled.div`
   width: 192px;
   box-shadow: 0 4px 60px rgb(0 0 0 / 50%);
   margin-right: 24px;
-  color: #1ed760;
+  background-color: #333;
+  color: #b3b3b3;
   position: relative;
   flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  ${({isGreenBG}) => !isGreenBG && `
+  ${({isEpisodesCollection}) => isEpisodesCollection && `
     background-color: #056952;
+    color: #1ed760;
     border-radius: 4px;
   `}
 `
@@ -81,18 +84,22 @@ const Separator = styled.span`
   text-align: center;
 `
 
-export default function PlaylistHeader({ title, cover_url, background, owner, likes, playlistDuration, tracks_number, isPodcastPlaylist }) {
+export default function PlaylistHeader({ title, cover_url, background, owner, likes, playlistDuration, tracks_number, isEpisodesCollection}) {
   return (
     <Header background={background}>
-      <HeaderImageContainer isGreenBG={cover_url}>
-        {cover_url ? (
-          <Image src={cover_url} layout="fill" alt="playlist cover" />
-        ) : (
-          <FavoriteLogoContainer>
-            <FavoriteLogo />
-          </FavoriteLogoContainer>
-        )}
-
+      <HeaderImageContainer isEpisodesCollection={isEpisodesCollection}>
+        { isEpisodesCollection ? (
+            <FavoriteLogoContainer>
+              <FavoriteLogo />
+            </FavoriteLogoContainer>
+          ):(
+            cover_url ? (
+              <Image src={cover_url} layout="fill" alt="playlist cover" draggable="false"/>
+            ) : (
+              <DoubleMusicNote />
+            )
+          )
+        }
       </HeaderImageContainer>
       <TitleContainer>
         <CategoryTitle>PLAYLIST</CategoryTitle>
@@ -110,7 +117,7 @@ export default function PlaylistHeader({ title, cover_url, background, owner, li
           {tracks_number > 0 && (
             <>
               <Separator>•</Separator>
-              <SuppInfo>{`${tracks_number} ${isPodcastPlaylist ? 'épisode' : 'titre'}${tracks_number > 1 ? 's' : ''}${playlistDuration ? ',' : ''}`}</SuppInfo>
+              <SuppInfo>{`${tracks_number} ${isEpisodesCollection ? 'épisode' : 'titre'}${tracks_number > 1 ? 's' : ''}${playlistDuration ? ',' : ''}`}</SuppInfo>
             </>
           )}
           {playlistDuration && (

@@ -49,7 +49,7 @@ export default function HomeSection({ title, children, cardsNumberPerRow }) {
     <Container>
       <SectionHeader>
         <SectionTitle>{title}</SectionTitle>
-        <SeeAllButton>VOIR TOUT</SeeAllButton>
+        <SeeAllButton>TOUT AFFICHER</SeeAllButton>
       </SectionHeader>
       <SectionContent cardsNumberPerRow={cardsNumberPerRow} >
         {children}
