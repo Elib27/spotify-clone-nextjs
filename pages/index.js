@@ -23,6 +23,7 @@ export default function Home() {
   const dimensions = useResizeObserver(containerRef)
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(4)
   const [favoriteArtists, setFavoriteArtists] = useState(null)
+  const [recentlyPlayedAlbums, setRecentlyPlayedAlbums] = useState(null)
 
   useEffect(() => {
     const { width } = dimensions || {width: 900}
@@ -37,9 +38,16 @@ export default function Home() {
       const response = await fetch('/api/getTopArtists')
       const data = await response.json()
       setFavoriteArtists(data)
-      console.log(data)
+    }
+    async function getRecentlyPlayed() {
+      const response = await fetch('/api/getRecentlyPlayed')
+      const data = await response.json()
+      const albumsIds = data.map(track => track.album.id)
+      const recentlyPlayedAlbumsData = data.map(track => track.album).filter(({id}, index) => !albumsIds.includes(id, index + 1))
+      setRecentlyPlayedAlbums(recentlyPlayedAlbumsData)
     }
     getFavoriteArtists()
+    getRecentlyPlayed()
   }, [])
 
   function getWelcomeMessage() {
@@ -67,22 +75,22 @@ export default function Home() {
     <PageContainer>
       <Title>{welcomeMessage}</Title>
       <HomeShorcuts />
-      <HomeSection
-        title="Vos émissions"
-        cardsNumberPerRow={cardsNumberPerRow}
-      >
-        {podcastExampleCards.map((card, index) => (
-          index < (cardsNumberPerRow) && (
-            <HomeCard
-              title={card.title}
-              artist={card.description}
-              cover_url={card.cover_url}
-              key={index}
-            />
-          )
-        ))}
-      </HomeSection>
       <div ref={containerRef}>
+        <HomeSection
+          title="Écoutés récemment"
+          cardsNumberPerRow={cardsNumberPerRow}
+        >
+          {recentlyPlayedAlbums && recentlyPlayedAlbums.map((album, index) => (
+            index < (cardsNumberPerRow) && (
+              <MusicCard
+                title={album.name}
+                cover_url={album.image}
+                description={album.artist}
+                key={album.id}
+              />
+            )
+          ))}
+        </HomeSection>
         <HomeSection
           title="Vos artistes préférés"
           cardsNumberPerRow={cardsNumberPerRow}
@@ -92,7 +100,23 @@ export default function Home() {
               <MusicCard
                 title={artist.name}
                 cover_url={artist.image}
-                description="Artiste"
+                description="Album"
+                key={artist.id}
+                isRoundImage
+              />
+            )
+          ))}
+        </HomeSection>
+        <HomeSection
+          title="Artistes recommandés"
+          cardsNumberPerRow={cardsNumberPerRow}
+        >
+          {favoriteArtists && favoriteArtists.map((artist, index) => (
+            index < (cardsNumberPerRow) && (
+              <MusicCard
+                title={artist.name}
+                cover_url={artist.image}
+                description="Album"
                 key={artist.id}
                 isRoundImage
               />
