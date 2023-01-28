@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from "next/link"
 import FavoriteLogo from '../../public/home_logos/favorite_episods.svg'
 import PlayLogo from '../../public/home_logos/play_logo.svg'
+import DoubleMusicNoteLogo from '../../public/tracks_logos/double_music_note.svg'
 
 const PlayButton = styled.div`
   height: 48px;
@@ -50,7 +51,8 @@ const ImageContainer = styled.div`
 const LogoContainer = styled.div`
   height: 100%;
   aspect-ratio: 1;
-  background-color: #056952;
+  background-color: ${({ backgroundColor}) => backgroundColor || '#056952'};
+  color: #b3b3b3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,18 +75,24 @@ const ShortcutTitle = styled.div`
    color: #fff;
 `
 
-export default function ShortcutButton({ title, link, cover_url }) {
+export default function ShortcutButton({ title, link, cover_url, isEpisodesCollection }) {
   return (
     <ShortcutContainer>
       <ImageContainer>
-        {cover_url ? (
-            <Image src={cover_url} layout="fill" alt="category cover" />
-          ) : (
+        {isEpisodesCollection ? (
             <LogoContainer>
               <FavoriteLogoWrapper>
                 <FavoriteLogo />
               </FavoriteLogoWrapper>
             </LogoContainer>
+          ) : (
+            cover_url ? (
+              <Image src={cover_url} layout="fill" alt="category cover" />
+            ) : (
+              <LogoContainer backgroundColor="#333">
+                <DoubleMusicNoteLogo height="38" width="38"/>
+              </LogoContainer>
+            )
           )
         }
       </ImageContainer>

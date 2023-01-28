@@ -2,10 +2,11 @@ import getRecommandedArtists from "../../lib/spotify/getRecommandedArtists"
 
 export default async function handler(req, res) {
 
-  const response = await getRecommandedArtists()
-  const data = await response.json()
+  const { artist_id } = req.query
 
-  const recommandedArtists = data.items.map(item => ({
+  const data = await getRecommandedArtists(artist_id)
+
+  const recommandedArtists = data.artists.map(item => ({
     name: item?.name,
     image: item?.images?.[1]?.url ?? item?.images?.[0]?.url,
     id: item?.id,

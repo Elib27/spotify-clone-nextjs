@@ -6,7 +6,7 @@ const Container = styled.main`
   max-width: 1955px;
 `
 
-export default function PageContainer({children}) {
+export default function PageContainer({ children }) {
   return (
     <Container>
       {children}

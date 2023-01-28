@@ -1,44 +1,29 @@
-import styled from 'styled-components'
 import { useState, useEffect, useRef } from 'react'
 import useResizeObserver from '../hooks/useResizeObserver'
-import PageContainer from '../components/shared/PageContainer'
-import HomeShorcuts from '../components/homePage/HomeShorcuts'
+import HomeLayout from '../components/homePage/HomeLayout'
 import HomeSection from '../components/homePage/HomeSection'
-import HomeCard from '../components/homePage/HomeCard'
 import MusicCard from '../components/shared/MusicCard'
-
-const Title = styled.h2`  
-  color: #fff;
-  font-size: 2em;
-  line-height: 1em;
-  font-weight: 700;
-  margin-bottom: 21.5px;
-  font-family: 'CircularSpTitle', 'Roboto', sans-serif;
-`
 
 export default function Home() {
 
-  const WIDTH_LIMIT = 210
+  const WIDTH_LIMIT = 200
   const containerRef = useRef(null)
   const dimensions = useResizeObserver(containerRef)
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(4)
   const [favoriteArtists, setFavoriteArtists] = useState(null)
   const [recentlyPlayedAlbums, setRecentlyPlayedAlbums] = useState(null)
+  const [recommandedArtists, setRecommandedArtists] = useState(null)
+  const [newAlbumReleases, setNewAlbumReleases] = useState(null)
 
   useEffect(() => {
     const { width } = dimensions || {width: 900}
     let cardsNumber = Math.floor(width / WIDTH_LIMIT)
-    if (cardsNumber < 3) cardsNumber = 3
+    if (cardsNumber < 2) cardsNumber = 2
     else if (cardsNumber > 9) cardsNumber = 9
     setCardsNumberPerRow(cardsNumber)
   }, [dimensions])
 
   useEffect(() => {
-    async function getFavoriteArtists() {
-      const response = await fetch('/api/getTopArtists')
-      const data = await response.json()
-      setFavoriteArtists(data)
-    }
     async function getRecentlyPlayed() {
       const response = await fetch('/api/getRecentlyPlayed')
       const data = await response.json()
@@ -46,41 +31,52 @@ export default function Home() {
       const recentlyPlayedAlbumsData = data.map(track => track.album).filter(({id}, index) => !albumsIds.includes(id, index + 1))
       setRecentlyPlayedAlbums(recentlyPlayedAlbumsData)
     }
-    getFavoriteArtists()
+    async function getFavoriteArtists() {
+      const response = await fetch('/api/getTopArtists')
+      const data = await response.json()
+      setFavoriteArtists(data)
+    }
+    async function getNewAlbumReleases() {
+      const response = await fetch('/api/getNewAlbumReleases')
+      const data = await response.json()
+      setNewAlbumReleases(data)
+      console.log(data)
+    }
+    getNewAlbumReleases()
     getRecentlyPlayed()
+    getFavoriteArtists()
   }, [])
 
-  function getWelcomeMessage() {
-    const timeInHours = new Date().getHours()
-    if (timeInHours >= 4 && timeInHours < 18) {
-      return "Bonjour"
+  useEffect(() => {
+    async function getRecommandedArtists() {
+      if (favoriteArtists) {
+        const getRecommandedArtistsFromId = async (id) => {
+          const response = await fetch(`/api/getRecommandedArtists?artist_id=${id}`)
+          const data = await response.json()
+          return data
+        }
+        Promise.all(Array.from(favoriteArtists.slice(0,4), ({ id }) => getRecommandedArtistsFromId(id)))
+        .then((data) => {
+          const artists = data.map(arr => arr.slice(0, 4)).flat()
+          const artistsIds = artists.map(artist => artist.id)
+          const noDuplicatedArtists = artists.filter(({id}, index) => !artistsIds.includes(id, index + 1))
+          setRecommandedArtists(noDuplicatedArtists)
+        })
+      }
     }
-    else {
-      return "Bonsoir"
-    }
-  }
+    getRecommandedArtists()
+  }, [favoriteArtists])
 
-  const welcomeMessage = getWelcomeMessage() || 'Bonjour'
-
-  const podcastExampleCards = []
-  for(let i = 0; i < 15; i++) {
-    podcastExampleCards.push({
-      title: "Un Bon Moment",
-      description: "Kyan Khojandi & Navo",
-      cover_url: "https://i.scdn.co/image/ab67656300005f1f4e312595ecca6e991a65faa4"
-    })
-  }
+  if (!newAlbumReleases) return
 
   return (
-    <PageContainer>
-      <Title>{welcomeMessage}</Title>
-      <HomeShorcuts />
-      <div ref={containerRef}>
+    <HomeLayout>
+      {recentlyPlayedAlbums && (
         <HomeSection
-          title="Écoutés récemment"
-          cardsNumberPerRow={cardsNumberPerRow}
+            title="Écoutés récemment"
+            cardsNumberPerRow={cardsNumberPerRow}
         >
-          {recentlyPlayedAlbums && recentlyPlayedAlbums.map((album, index) => (
+          {recentlyPlayedAlbums.map((album, index) => (
             index < (cardsNumberPerRow) && (
               <MusicCard
                 title={album.name}
@@ -91,39 +87,63 @@ export default function Home() {
             )
           ))}
         </HomeSection>
-        <HomeSection
-          title="Vos artistes préférés"
-          cardsNumberPerRow={cardsNumberPerRow}
-        >
-          {favoriteArtists && favoriteArtists.map((artist, index) => (
-            index < (cardsNumberPerRow) && (
-              <MusicCard
-                title={artist.name}
-                cover_url={artist.image}
-                description="Album"
-                key={artist.id}
-                isRoundImage
-              />
-            )
-          ))}
-        </HomeSection>
-        <HomeSection
-          title="Artistes recommandés"
-          cardsNumberPerRow={cardsNumberPerRow}
-        >
-          {favoriteArtists && favoriteArtists.map((artist, index) => (
-            index < (cardsNumberPerRow) && (
-              <MusicCard
-                title={artist.name}
-                cover_url={artist.image}
-                description="Album"
-                key={artist.id}
-                isRoundImage
-              />
-            )
-          ))}
-        </HomeSection>
+      )}
+        {/* cardsNumberPerRow ? */}
+      <div ref={containerRef}>
+        {favoriteArtists && (
+          <HomeSection
+            title="Vos artistes préférés"
+            cardsNumberPerRow={cardsNumberPerRow}
+          >
+            {favoriteArtists.map((artist, index) => (
+              index < (cardsNumberPerRow) && (
+                <MusicCard
+                  title={artist.name}
+                  cover_url={artist.image}
+                  description="Artiste"
+                  key={artist.id}
+                  isRoundImage
+                />
+              )
+            ))}
+          </HomeSection>
+        )}
+        {newAlbumReleases && (
+          <HomeSection
+            title="Sorties récentes"
+            cardsNumberPerRow={cardsNumberPerRow}
+          >
+            {newAlbumReleases.map((album, index) => (
+              index < (cardsNumberPerRow) && (
+                <MusicCard
+                  title={album.name}
+                  cover_url={album.image}
+                  description={album.artists}
+                  key={album.id}
+                />
+              )
+            ))}
+          </HomeSection>
+        )}
+        {recommandedArtists && (
+          <HomeSection
+            title="Artistes recommandés"
+            cardsNumberPerRow={cardsNumberPerRow}
+          >
+            {recommandedArtists.map((artist, index) => (
+              index < (cardsNumberPerRow) && (
+                <MusicCard
+                  title={artist.name}
+                  cover_url={artist.image}
+                  description="Artiste"
+                  key={artist.id}
+                  isRoundImage
+                />
+              )
+            ))}
+          </HomeSection>
+        )}
       </div>
-    </PageContainer>
+    </HomeLayout>
   )
 }

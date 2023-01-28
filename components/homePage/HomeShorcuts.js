@@ -35,11 +35,11 @@ export default function HomeShorcuts() {
       <ShortcutButton
         title="Vos épisodes"
         link="/collection/episodes"
+        isEpisodesCollection
       />
       <ShortcutButton
         title="Vélo"
         link="/collection/episodes"
-        cover_url="/podcastCover1.jpg"
       />
       <ShortcutButton
         title="Vélo"
