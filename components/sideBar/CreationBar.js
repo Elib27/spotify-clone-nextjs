@@ -1,4 +1,3 @@
-import styled from "styled-components"
 import { useRouter } from "next/router"
 import NavButton from "./NavButton"
 import CreationButton from "./CreationButton"

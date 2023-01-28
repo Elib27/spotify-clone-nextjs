@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import SpotifyLogo from "../public/simple_spotify_logo.svg"
-import MusicBarsAnimation from "../components/auth/MusicBarsAnimation"
+import SpotifyLogo from "../../public/simple_spotify_logo.svg"
+import MusicBarsAnimation from "./MusicBarsAnimation"
 
 const MainContainer = styled.div`
   height: 100vh;

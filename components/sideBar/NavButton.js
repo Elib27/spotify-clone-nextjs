@@ -40,15 +40,13 @@ const LogoContainer = styled.div`
 
 export default function NavButton({ label, link, imageSrc, imageSrcSelected, imageAlt, isActive}) {
 
+  const imageSource = isActive ? imageSrcSelected : imageSrc
+
   return (
     <Link href={link}>
       <NavLinkButton>
         <LogoContainer>
-          {isActive ? (
-            <Image src={imageSrcSelected} alt={imageAlt} width={24} height={24} />
-          ) : (
-            <Image src={imageSrc} alt={imageAlt} width={24} height={24} />
-          )}
+          <Image src={imageSource} alt={imageAlt} width={24} height={24} />
         </LogoContainer>
         <LinkLabel
           isSelected={isActive}
