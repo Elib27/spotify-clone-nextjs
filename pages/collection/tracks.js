@@ -89,7 +89,7 @@ export default function Tracks() {
       <PlaylistHeader
         title="Titres likés"
         cover_url="https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png"
-        background="linear-gradient(#5038a0 0, #291e50 100%)"
+        background="#523b9f"
         owner="eliot"
         tracks_number={likedTracks.length}
         />

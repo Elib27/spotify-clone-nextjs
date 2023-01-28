@@ -21,6 +21,7 @@ export default function Home() {
     if (cardsNumber < 2) cardsNumber = 2
     else if (cardsNumber > 9) cardsNumber = 9
     setCardsNumberPerRow(cardsNumber)
+    console.log(cardsNumber)
   }, [dimensions])
 
   useEffect(() => {
@@ -67,29 +68,26 @@ export default function Home() {
     getRecommandedArtists()
   }, [favoriteArtists])
 
-  if (!newAlbumReleases) return
-
   return (
     <HomeLayout>
-      {recentlyPlayedAlbums && (
-        <HomeSection
-            title="Écoutés récemment"
-            cardsNumberPerRow={cardsNumberPerRow}
-        >
-          {recentlyPlayedAlbums.map((album, index) => (
-            index < (cardsNumberPerRow) && (
-              <MusicCard
-                title={album.name}
-                cover_url={album.image}
-                description={album.artist}
-                key={album.id}
-              />
-            )
-          ))}
-        </HomeSection>
-      )}
-        {/* cardsNumberPerRow ? */}
       <div ref={containerRef}>
+        {recentlyPlayedAlbums && (
+          <HomeSection
+              title="Écoutés récemment"
+              cardsNumberPerRow={cardsNumberPerRow}
+          >
+            {recentlyPlayedAlbums.map((album, index) => (
+              index < (cardsNumberPerRow) && (
+                <MusicCard
+                  title={album.name}
+                  cover_url={album.image}
+                  description={album.artist}
+                  key={album.id}
+                />
+              )
+            ))}
+          </HomeSection>
+        )}
         {favoriteArtists && (
           <HomeSection
             title="Vos artistes préférés"

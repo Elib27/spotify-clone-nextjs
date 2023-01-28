@@ -12,10 +12,14 @@ const ShortcutSection = styled.section`
 `
 
 export default function HomeShorcuts() {
+
+  // fetch playlists et recently played => artists
   
   const containerRef = useRef(null)
   const dimensions = useResizeObserver(containerRef)
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(3)
+  const [playlists, setPlaylists] = useState(null)
+  const [recentlyPlayed, setRecentlyPlayed] = useState(null)
 
   useEffect(() => {
     const { width } = dimensions || {width: 900}
@@ -27,40 +31,75 @@ export default function HomeShorcuts() {
     }
   }, [dimensions])
 
+  useEffect(() => {
+    async function getPlaylists() {
+      const response = await fetch('/api/getPlaylists')
+      const data = await response.json()
+      const ids = data.map(track => track.id)
+      const noDuplicatedData = data.filter(({id}, index) => !ids.includes(id, index + 1))
+      setPlaylists(noDuplicatedData)
+    }
+    async function getRecentlyPlayed() {
+      const response = await fetch('/api/getRecentlyPlayed')
+      const data = await response.json()
+      const ids = data.map(track => track.id)
+      const noDuplicatedData = data.filter(({id}, index) => !ids.includes(id, index + 1))
+      setRecentlyPlayed(noDuplicatedData)
+    }
+    getPlaylists()
+    getRecentlyPlayed()
+  }, [])
+
+  let playlistsLength = 2
+  let recentlyPlayedlength = 3
+
+  if (playlists && recentlyPlayed)
+  {
+    if (playlists.length + playlists.length < 6)
+    {
+      playlistsLength = playlists.length
+      recentlyPlayedlength = playlists.length
+    }
+    else if (playlists.length < 2)
+    {
+      playlistsLength = playlists.length
+      recentlyPlayedlength = 6 - playlists.length
+    }
+    else if (recentlyPlayed.length < 3)
+    {
+      recentlyPlayedlength = recentlyPlayed.length
+      playlistsLength = 6 - recentlyPlayed.length
+    }
+  }
+
   return (
     <ShortcutSection
       ref={containerRef}
       cardsNumberPerRow={cardsNumberPerRow}
     >
-      <ShortcutButton
-        title="Vos épisodes"
-        link="/collection/episodes"
-        isEpisodesCollection
-      />
-      <ShortcutButton
-        title="Vélo"
-        link="/collection/episodes"
-      />
-      <ShortcutButton
-        title="Vélo"
-        link="/collection/episodes"
-        cover_url="/podcastCover1.jpg"
-      />
-      <ShortcutButton
-        title="Vélo"
-      link="/collection/episodes"
-        cover_url="/podcastCover1.jpg"
-      />
-      <ShortcutButton
-        title="Vélo"
-        link="/collection/episodes"
-        cover_url="/podcastCover1.jpg"
-      />
-      <ShortcutButton
-        title="Vélo"
-        link="/collection/episodes"
-        cover_url="/podcastCover1.jpg"
-      />
+      {playlists && (
+        <ShortcutButton
+          title="Vos épisodes"
+          link="/collection/episodes"
+          isEpisodesCollection
+        />
+      )}
+      {playlists && playlists.slice(0, playlistsLength).map( playlist => (
+        <ShortcutButton
+          title={playlist.name}
+          link={`/playlist/${playlist.id}`}
+          cover_url={playlist.image}
+          key={playlist.id}
+        />
+      ))}
+      {recentlyPlayed && recentlyPlayed.slice(0, recentlyPlayedlength).map( track => (
+        <ShortcutButton
+          title={track.name}
+          cover_url={track.album.image}
+          link={`/album/${track.album.id}`}
+          key={track.id}
+        />
+      ))}
     </ShortcutSection>
   )
 }

@@ -62,13 +62,12 @@ export default function Episodes() {
 
   const [savedEpisodes, setSavedEpisodes] = useState(null)
 
-  async function getSavedEpisodes() {
-    const response = await fetch('/api/getSavedEpisodes')
-    const data = await response.json()
-    setSavedEpisodes(data)
-  }
-
   useEffect(() => {
+    async function getSavedEpisodes() {
+      const response = await fetch('/api/getSavedEpisodes')
+      const data = await response.json()
+      setSavedEpisodes(data)
+    }
     getSavedEpisodes()
   }, [])
 
@@ -78,7 +77,7 @@ export default function Episodes() {
     <Container>
       <PlaylistHeader
         title="Vos épisodes"
-        background="linear-gradient(#056753 0, #023329 100%)"
+        background="#036551"
         owner="eliot"
         tracks_number={savedEpisodes.length}
         isEpisodesCollection

@@ -8,7 +8,7 @@ const Header = styled.div`
   width: 100%;
   margin-top: -94px;
   padding: 0 32px 24px;
-  ${({background}) => `background: linear-gradient(${background} 10%, rgba(0,0,0,0.5) 160%);`}
+  ${({background}) => `background: linear-gradient(${background} 10%, rgba(0,0,0,0.6) 160%);`}
   display: flex;
   align-items: flex-end;  
 `

@@ -4,6 +4,8 @@ import HomeShorcuts from './HomeShorcuts'
 
 function HomeLayout({ children }) {
 
+  
+
   return (
     <PageContainer>
       <WelcomeMessage />

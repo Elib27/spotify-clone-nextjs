@@ -45,7 +45,7 @@ const LeftContainer = styled.div`
   flex-shrink: 0;
 `
 const RightContainer = styled.div`
-
+  flex-grow: 1;
 `
 const PodcastCoverContainer = styled.div`
   height: 112px;

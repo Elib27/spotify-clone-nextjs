@@ -15,6 +15,8 @@ const PlayButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  right: 16px;
   box-shadow: 0 8px 8px rgb(0 0 0 / 30%);
   opacity: 0;
   pointer-events: none;
@@ -63,47 +65,52 @@ const FavoriteLogoWrapper = styled.div`
 `
 const RightContainer = styled.div`
   height: 100%;
-  width: 100%;
+  width: calc(100% - 80px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 16px;
+  position: relative;
 `
 const ShortcutTitle = styled.div`
-   font-size: 1rem;
-   font-weight: 700;
-   color: #fff;
+  font-size: 1rem;
+  width: 100%;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 export default function ShortcutButton({ title, link, cover_url, isEpisodesCollection }) {
   return (
-    <ShortcutContainer>
-      <ImageContainer>
-        {isEpisodesCollection ? (
-            <LogoContainer>
-              <FavoriteLogoWrapper>
-                <FavoriteLogo />
-              </FavoriteLogoWrapper>
-            </LogoContainer>
-          ) : (
-            cover_url ? (
-              <Image src={cover_url} layout="fill" alt="category cover" />
-            ) : (
-              <LogoContainer backgroundColor="#333">
-                <DoubleMusicNoteLogo height="38" width="38"/>
+    <Link href={link}>
+      <ShortcutContainer>
+        <ImageContainer>
+          {isEpisodesCollection ? (
+              <LogoContainer>
+                <FavoriteLogoWrapper>
+                  <FavoriteLogo />
+                </FavoriteLogoWrapper>
               </LogoContainer>
+            ) : (
+              cover_url ? (
+                <Image src={cover_url} layout="fill" alt="category cover" />
+              ) : (
+                <LogoContainer backgroundColor="#333">
+                  <DoubleMusicNoteLogo height="38" width="38"/>
+                </LogoContainer>
+              )
             )
-          )
-        }
-      </ImageContainer>
-      <RightContainer>
-        <Link href={link}>
+          }
+        </ImageContainer>
+        <RightContainer>
           <ShortcutTitle>{title}</ShortcutTitle>
-        </Link>
+        </RightContainer>
         <PlayButton>
           <PlayLogo />
         </PlayButton>
-      </RightContainer>
-    </ShortcutContainer>
+      </ShortcutContainer>
+    </Link>
   )
 }
