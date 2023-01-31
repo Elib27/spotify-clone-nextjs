@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     image: data?.images?.[1]?.url || data?.images?.[0]?.url,
     followers: data?.followers?.total,
     owner: data?.owner?.display_name,
-    tracks: tracks,
+    tracks: tracks.filter(track => track.id),
     id: data?.id,
   }
 

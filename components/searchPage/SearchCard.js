@@ -2,15 +2,8 @@ import styled from 'styled-components'
 import Image from 'next/image'
 
 const Container = styled.div`
-  ${({ isBigCard }) => isBigCard ?
-  `height: 220px;
-   width: clamp(340px, 50%, 480px);
-   flex-shrink: 0;
-   `
-   : 
-   `width: 100%;
-    aspect-ratio: 1;`
-  }
+  width: 100%;
+  aspect-ratio: 1;
   background-color: ${({cardBackgroundColor}) => cardBackgroundColor};
   border-radius: 8px;
   position: relative;
@@ -18,8 +11,9 @@ const Container = styled.div`
   cursor: pointer;
 `
 const CardTitle = styled.h3`
-  ${({ isBigCard }) => isBigCard ? 'font-size: 2.5rem;' : 'font-size: 1.5rem;'}
-  letter-spacing: -0.04rem;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
+  letter-spacing: -0.06rem;
   font-weight: 700;
   user-select: none;
   color: #fff;
@@ -39,29 +33,19 @@ const CardImage = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
-  ${({ isBigCard }) => isBigCard ?
-    `
-      height: 128px;
-      width: 128px;
-    `
-    :
-    `
-    height: 100px;
-    width: 100px;
-    `
-  }
+  height: 100px;
+  width: 100px;
 `
 
-export default function SearchCard({title, cardBackgroundColor, isBigCard, imageSrc}) {
+export default function SearchCard({title, cardBackgroundColor, imageSrc}) {
   return (
     <Container
-      isBigCard={isBigCard}
       cardBackgroundColor={cardBackgroundColor}
     >
-      <CardTitle isBigCard={isBigCard}>
+      <CardTitle>
         {title}
       </CardTitle>
-      <CardImage isBigCard={isBigCard}>
+      <CardImage>
         <Image src={imageSrc} alt={title} layout="fill"/>
       </CardImage>
     </Container>

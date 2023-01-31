@@ -12,22 +12,10 @@ const SearchSection = styled.section`
 `
 const SectionTitle = styled.h2`
   font-size: 1.5rem;
+  letter-spacing: -0.06rem;
   font-weight: 700;
   color: #fff;
   padding-bottom: 16px;
-`
-const MusicStyleContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 18px;
-  overflow-x: scroll;
-  scroll-behavior: smooth;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `
 const CategoriesContainer = styled.div`
   width: 100%;
@@ -40,36 +28,19 @@ const CategoriesContainer = styled.div`
 export default function SearchPageDefaultContent() {
   return (
     <Container>
-        <SearchSection>
-          <SectionTitle>Vos genres préférés</SectionTitle>
-          <MusicStyleContainer>
+      <SearchSection>
+        <SectionTitle>Parcourir tout</SectionTitle>
+        <CategoriesContainer>
+          {SearchCategories.map((category, index) => (
             <SearchCard
-              title="Variété française"
-              isBigCard
-              cardBackgroundColor="#b49bc8"
-              imageSrc="/search_cover.jpg"
+              title={category.title}
+              cardBackgroundColor={category.background_color}
+              imageSrc={category.cover_url}
+              key={index}
             />
-            <SearchCard
-              title="Hip-Hop"
-              isBigCard
-              cardBackgroundColor="#ba5d07"
-              imageSrc="/search_cover2.jpg"
-            />
-          </MusicStyleContainer>
-        </SearchSection>
-        <SearchSection>
-          <SectionTitle>Parcourir tout</SectionTitle>
-          <CategoriesContainer>
-            {SearchCategories.map((category, index) => (
-              <SearchCard
-                title={category.title}
-                cardBackgroundColor={category.background_color}
-                imageSrc={category.cover_url}
-                key={index}
-              />
-            ))}
-          </CategoriesContainer>
-        </SearchSection>
-      </Container>
+          ))}
+        </CategoriesContainer>
+      </SearchSection>
+    </Container>
   )
 }

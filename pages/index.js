@@ -41,7 +41,6 @@ export default function Home() {
       const response = await fetch('/api/getNewAlbumReleases')
       const data = await response.json()
       setNewAlbumReleases(data)
-      console.log(data)
     }
     getNewAlbumReleases()
     getRecentlyPlayed()
