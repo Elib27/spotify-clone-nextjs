@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import Link from 'next/link'
+import { useEffect, useRef } from "react"
 import Image from "next/image"
 
 const PannelContainer = styled.div`
@@ -58,54 +58,59 @@ const ExtendedMenuButton = styled(MenuButton)`
   justify-content: space-between;
   align-items: center;
 `
-const ExternalLink = styled.a`
-  text-decoration: none;
-`
 
-export default function AccountPannel() {
+export default function AccountPannel({ setIsPanelOpen }) {
+
+  const panel = useRef(null)
+  
+  useEffect(() => {
+
+    function handleClickOutside(e) {
+      console.log(e.target)
+      if (panel.current && !panel.current.contains(e.target)) {
+        setIsPanelOpen(false)
+      }
+    }
+  
+    document.addEventListener("click", handleClickOutside)
+    return () => {
+      document.removeEventListener("click", handleClickOutside)
+    }
+  }, [])
+
   return (
-    <PannelContainer>
+    <PannelContainer ref={panel}>
       <AccountMenu>
         <li>
-          <ExternalLink href="https://www.spotify.com/fr/account/overview" target="_blank" rel="noreferrer">
-            <ExtendedMenuButton>
-              <ButtonLabel>Compte</ButtonLabel>
-              <OutlinkLogoContainer>
-                <Image className="outlinklogo" src="/header_logos/out_link.svg" alt="out link logo" width={16} height={16} />
-              </OutlinkLogoContainer>
-            </ExtendedMenuButton>
-          </ExternalLink>
+          <ExtendedMenuButton>
+            <ButtonLabel>Compte</ButtonLabel>
+            <OutlinkLogoContainer>
+              <Image className="outlinklogo" src="/header_logos/out_link.svg" alt="out link logo" width={16} height={16} />
+            </OutlinkLogoContainer>
+          </ExtendedMenuButton>
         </li>
         <li>
-          <Link href="https://www.spotify.com/fr/premium/" target="_blank" rel="noreferrer">
-            <MenuButton>
-              <ButtonLabel>Profil</ButtonLabel>
-            </MenuButton>
-          </Link>
+          <MenuButton>
+            <ButtonLabel>Profil</ButtonLabel>
+          </MenuButton>
         </li> 
         <li>
-          <ExternalLink href="https://www.spotify.com/fr/premium/" target="_blank" rel="noreferrer">
-            <ExtendedMenuButton>
-              <ButtonLabel>Passer à Premium</ButtonLabel>
-              <OutlinkLogoContainer>
-                <Image className="outlinklogo" src="/header_logos/out_link.svg" alt="out link logo" width={16} height={16} />
-              </OutlinkLogoContainer>
-            </ExtendedMenuButton>
-          </ExternalLink>
+          <ExtendedMenuButton>
+            <ButtonLabel>Passer à Premium</ButtonLabel>
+            <OutlinkLogoContainer>
+              <Image className="outlinklogo" src="/header_logos/out_link.svg" alt="out link logo" width={16} height={16} />
+            </OutlinkLogoContainer>
+          </ExtendedMenuButton>
         </li>
         <li>
-          <Link href="https://www.spotify.com/fr/premium/" target="_blank" rel="noreferrer">
-            <MenuButton>
-              <ButtonLabel>Préférences</ButtonLabel>
-            </MenuButton>
-          </Link>
+          <MenuButton>
+            <ButtonLabel>Préférences</ButtonLabel>
+          </MenuButton>
         </li>
         <li>
-          <Link href="https://www.spotify.com/fr/premium/" target="_blank" rel="noreferrer">
-            <MenuButton>
-              <ButtonLabel>Déconnexion</ButtonLabel>
-            </MenuButton>
-          </Link>
+          <MenuButton>
+            <ButtonLabel>Déconnexion</ButtonLabel>
+          </MenuButton>
         </li> 
       </AccountMenu>
     </PannelContainer>

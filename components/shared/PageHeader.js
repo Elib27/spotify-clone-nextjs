@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useState, useEffect, useRef} from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -114,16 +114,6 @@ const AvatarLogoContainer = styled.div`
   height: 20px;
 `
 
-const TestPannel = styled.div`
-  height: 200px;
-  width: 100px;
-  background-color: red;
-  position: absolute;
-  top: 64px;
-  right: 400px;
-  z-index: 10000;
-`
-
 const pagesWhereSubscribeButtonVisible = [
   '/',
   '/collection/tracks',
@@ -136,42 +126,14 @@ export default function PageHeader() {
   const navigation = useSelector(state => state.navigation)
 
   const [isPanelOpen, setIsPanelOpen] = useState(false)
-  const panel = useRef(null)
-  
-  function handleClickPrevPage() {
-    console.log('prevButton')
-  }
-  
-  function handleClickNextPage() {
-    console.log('nextButton')
-  }
-  
-  function handleClickOutside(e) {
-    // console.log('isPanelOpen: ', isPanelOpen)
-    if (panel.current && !panel.current.contains(e.target)){
-      if (isPanelOpen) {
-        setIsPanelOpen(false)
-        console.log('clicked outside', e.target)
-      }
-    }
-  }
 
   function openPanel() {
     setTimeout(() => {
       setIsPanelOpen(true)
-    }, 10)
+    }, 0)
   }
   
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    }
-  }, [])
-  
-  useEffect(() => {
-    console.log('isPanelOpen: ', isPanelOpen)
-  }, [isPanelOpen])
+  const isSubscribeButtonVisible = pagesWhereSubscribeButtonVisible.includes(router.pathname) || router.pathname.startsWith('/playlist/')
 
   return (
     <HeaderContainer>
@@ -194,8 +156,7 @@ export default function PageHeader() {
           <SearchBar />
         </CentralContainer>
         <RightContainer>
-        {(pagesWhereSubscribeButtonVisible.includes(router.pathname) || router.pathname.startsWith('/playlist/'))
-        && (
+        { isSubscribeButtonVisible && (
           <a href="https://www.spotify.com/fr/premium/" target="blank_" rel='noreferrer'>
             <SubscribeButton>S&apos;abonner</SubscribeButton>
           </a>
@@ -206,12 +167,7 @@ export default function PageHeader() {
             </AvatarLogoContainer>
           </AccountButton>
         </RightContainer>
-        {/* <Pannel /> */}
-        {/* { isPanelOpen && (
-          <TestPannel ref={panel}>
-            <p>TestPannel</p>
-          </TestPannel>
-        )} */}
+        {isPanelOpen && <Pannel setIsPanelOpen={setIsPanelOpen} />}
       </MainNavBar>
     </HeaderContainer>
   )
