@@ -1,10 +1,10 @@
-import getAccessToken from "../../lib/spotify/getAccessToken.js"
+import getRefreshedAccessToken from "../../lib/spotify/getRefreshedAccessToken.js"
 
 const ENDPOINT = 'https://api.spotify.com/v1/me/tracks'
 
 async function deleteLikedTracks(ids) {
   
-  const { access_token } = await getAccessToken()
+  const { access_token } = await getRefreshedAccessToken()
   
   await fetch(`${ENDPOINT}?ids=${ids}`, {
     method: 'DELETE',

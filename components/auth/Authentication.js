@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import SpotifyLogo from "../../public/simple_spotify_logo.svg"
 import MusicBarsAnimation from "./MusicBarsAnimation"
+import { useEffect } from "react"
 
 const MainContainer = styled.div`
   height: 100vh;
@@ -59,8 +60,42 @@ const AuthButton = styled.button`
 
 export default function Authentication({ setIsAuthenticated }) {
 
-  function setAuth() {
-    setIsAuthenticated(true)
+  useEffect(() => {
+    async function getAccessToken(code) {
+      const response = await fetch(`/api/getAccessToken?code=${code}`)
+      const data = await response.json()
+      return data?.access_token
+    }
+    async function authenticate() {
+      if (window.location.search.includes("code")) {
+        const code = new URLSearchParams(window.location.search).get("code")
+        const access_token = await getAccessToken(code)
+        setIsAuthenticated(true)
+      }
+      else if (window.location.search.includes("error")) {
+        const error = new URLSearchParams(window.location.search).get("error")
+        console.warn("error : " + error)
+      }
+    }
+    authenticate()
+  }, [setIsAuthenticated])
+
+  async function setAuth() {
+    const client_id = process.env.NEXT_PUBLIC_CLIENT_ID
+    const scope = process.env.NEXT_PUBLIC_SCOPE
+
+    const env = process.env.NODE_ENV
+    const redirect_uri = env === "development" ? "http://localhost:3000" : null
+    const response_type = "code"
+
+    const authUrl = "https://accounts.spotify.com/authorize?" + new URLSearchParams({
+      response_type,
+      client_id,
+      redirect_uri,
+      scope,
+    }).toString()
+
+    window.location.replace(authUrl)
   }
 
   return (

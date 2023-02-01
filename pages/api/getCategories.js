@@ -16,5 +16,5 @@ export default async function handler(req, res) {
     }
   }))
 
-  res.status(200).json({ userInformations })
+  res.status(200).json({ categories })
 } 
