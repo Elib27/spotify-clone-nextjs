@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import SpotifyLogo from "../../public/simple_spotify_logo.svg"
 import MusicBarsAnimation from "./MusicBarsAnimation"
-import { useEffect } from "react"
+// import { useEffect } from "react"
 
 const MainContainer = styled.div`
   height: 100vh;
@@ -58,27 +58,27 @@ const AuthButton = styled.button`
   }
 `
 
-export default function Authentication({ setIsAuthenticated }) {
+export default function Login() {
 
-  useEffect(() => {
-    async function getAccessToken(code) {
-      const response = await fetch(`/api/getAccessToken?code=${code}`)
-      const data = await response.json()
-      return data?.access_token
-    }
-    async function authenticate() {
-      if (window.location.search.includes("code")) {
-        const code = new URLSearchParams(window.location.search).get("code")
-        const access_token = await getAccessToken(code)
-        setIsAuthenticated(true)
-      }
-      else if (window.location.search.includes("error")) {
-        const error = new URLSearchParams(window.location.search).get("error")
-        console.warn("error : " + error)
-      }
-    }
-    authenticate()
-  }, [setIsAuthenticated])
+  // useEffect(() => {
+  //   async function getAccessToken(code) {
+  //     const response = await fetch(`/api/getAccessToken?code=${code}`)
+  //     const data = await response.json()
+  //     return data?.access_token
+  //   }
+  //   async function authenticate() {
+  //     if (window.location.search.includes("code")) {
+  //       const code = new URLSearchParams(window.location.search).get("code")
+  //       const access_token = await getAccessToken(code)
+  //       setIsAuthenticated(true)
+  //     }
+  //     else if (window.location.search.includes("error")) {
+  //       const error = new URLSearchParams(window.location.search).get("error")
+  //       console.warn("error : " + error)
+  //     }
+  //   }
+  //   authenticate()
+  // }, [])
 
   async function setAuth() {
     const client_id = process.env.NEXT_PUBLIC_CLIENT_ID
@@ -108,4 +108,3 @@ export default function Authentication({ setIsAuthenticated }) {
     </MainContainer>
   )
 }
-
