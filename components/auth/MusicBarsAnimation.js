@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components"
-import { useState, useRef } from "react"
+import { useEffect, useState, useRef } from "react"
 import useResizeObserver from "../../hooks/useResizeObserver"
 
 const Container = styled.ul`
@@ -37,24 +37,24 @@ const Bar = styled.li`
 export default function MusicBarsAnimation() {
   
   const container = useRef(null)
-  
+  const bars = useRef([])
+  const [barsNumber, setBarsNumber] = useState(0)
   const containerDimensions = useResizeObserver(container)
-  const { width } = containerDimensions || {width: 1200}
 
-  const barsNumber = Math.round(width / 28);
+  useEffect(() => {
+    const { width } = containerDimensions || {width: 1200}
+    const barsNum = Math.round(width / 28)
+    setBarsNumber(barsNum)
+  }, [containerDimensions])
 
-  const bars = [];
-
-  for (let i = 0; i < barsNumber; i++) {
-    const delay = -(Math.random() * 2)
-    bars.push(
-      <Bar key={i} delay={delay}/>
-    )
-  }
+  useEffect(() => {
+    const MAX_BARS = 50
+    bars.current = Array(MAX_BARS).fill(null).map((_, i) => <Bar key={i} delay={-(Math.random() * 2)}/>)
+  }, [])
 
   return (
     <Container ref={container}>
-      {bars}
+      {bars.current.slice(0, barsNumber)}
     </Container>
   )
 }

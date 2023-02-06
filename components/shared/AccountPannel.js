@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { useEffect, useRef } from "react"
 import Image from "next/image"
+import { signOut } from "next-auth/react"
 
 const PannelContainer = styled.div`
   width: 196px;
@@ -66,7 +67,6 @@ export default function AccountPannel({ setIsPanelOpen }) {
   useEffect(() => {
 
     function handleClickOutside(e) {
-      console.log(e.target)
       if (panel.current && !panel.current.contains(e.target)) {
         setIsPanelOpen(false)
       }
@@ -108,7 +108,7 @@ export default function AccountPannel({ setIsPanelOpen }) {
           </MenuButton>
         </li>
         <li>
-          <MenuButton>
+          <MenuButton onClick={signOut}>
             <ButtonLabel>Déconnexion</ButtonLabel>
           </MenuButton>
         </li> 

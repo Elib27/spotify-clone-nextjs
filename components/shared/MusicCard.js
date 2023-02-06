@@ -93,9 +93,9 @@ const CardSubTitle = styled.div`
   text-overflow: ellipsis;
 `
 
-export default function MusicCard({cover_url, title, description, isRoundImage, noPlayingButton, key}) {
+export default function MusicCard({cover_url, title, description, isRoundImage, noPlayingButton}) {
   return (
-    <CardContainer key={key}>
+    <CardContainer>
       <CardImageWrapper>
         <CardImageContainer isRoundImage={isRoundImage}>
           {

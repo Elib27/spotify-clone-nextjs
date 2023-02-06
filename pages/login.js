@@ -2,7 +2,6 @@ import styled from "styled-components"
 import { signIn } from "next-auth/react"
 import SpotifyLogo from "../public/simple_spotify_logo.svg"
 import MusicBarsAnimation from "../components/auth/MusicBarsAnimation"
-// import { useEffect } from "react"
 
 const MainContainer = styled.div`
   height: 100vh;
