@@ -81,16 +81,17 @@ export default function SearchBar() {
   useEffect(() => {
     // debouncedUpdateUrlWithSearchInput()
     updateUrlWithSearchInput()
-    console.log(navigation.searchInput)
-  }, [navigation.searchInput])
+  }, [navigation.searchInput]) // passer en state local ?
 
   useEffect(() => {
-    if (!router.pathname.startsWith('/search')){
+    if (!router.pathname.startsWith('/search') && navigation.searchInput !== ''){
       dispatch(changeSearchInput(''))
     }
   }, [router.pathname])
   
   function updateUrlWithSearchInput() {
+    if (!router.pathname.startsWith('/search'))
+      return
     let currentSearchCategory = ''
     if (router.pathname.split('/').length >= 4 && navigation.searchInput !== '') {
       currentSearchCategory = '/' + router.pathname.split('/')[3]
@@ -118,7 +119,7 @@ export default function SearchBar() {
 
   function handleInputChange(e) {
     dispatch(changeSearchInput(e.target.value))
-    handleClickRedirectToSearchPage()
+    // handleClickRedirectToSearchPage() // cas impossible ?
   }
 
   function handleClickClearInput() {
