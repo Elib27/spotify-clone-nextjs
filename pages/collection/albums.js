@@ -11,7 +11,6 @@ export default function Albums() {
     const response = await fetch('/api/getLikedAlbums')
     const data = await response.json()
     setLikedAlbums(data)
-    console.log(data)
   }
 
   useEffect(() => {

@@ -17,7 +17,6 @@ export default function Playlist() {
       const response = await fetch(`/api/getPlaylist?playlist_id=${playlist_id}`)
       const data = await response.json()
       setPlaylistInformations(data)
-      console.log(data)
     }
     async function getLikedTracksIds() {
       const response = await fetch('/api/getLikedTracks')

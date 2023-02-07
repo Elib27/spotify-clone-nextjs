@@ -21,7 +21,6 @@ export default function Home() {
     if (cardsNumber < 2) cardsNumber = 2
     else if (cardsNumber > 9) cardsNumber = 9
     setCardsNumberPerRow(cardsNumber)
-    console.log(cardsNumber)
   }, [dimensions])
 
   useEffect(() => {
