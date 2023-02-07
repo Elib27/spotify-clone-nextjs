@@ -26,8 +26,8 @@ export async function middleware(req) {
 
 }
 
-// export const config = {
-//   matcher: [
-//     '/((?!_next|api/auth).*)(.+)'
-//   ],
-// }
+export const config = {
+  matcher: [
+    '/((?!_next|api/auth).*)(.+)'
+  ],
+}
