@@ -143,7 +143,7 @@ export default function LikedPodcast({title, description, cover_url, podcast, da
     <Container>
       <LeftContainer>
         <PodcastCoverContainer>
-          <Image src={cover_url} layout="fill" alt="podcast cover" />
+          <Image src={cover_url} fill alt="podcast cover" />
         </PodcastCoverContainer>
       </LeftContainer>
       <RightContainer>

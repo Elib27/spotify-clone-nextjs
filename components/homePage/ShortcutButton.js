@@ -95,7 +95,7 @@ export default function ShortcutButton({ title, link, cover_url, isEpisodesColle
               </LogoContainer>
             ) : (
               cover_url ? (
-                <Image src={cover_url} layout="fill" alt="category cover" />
+                <Image src={cover_url} fill alt="category cover" />
               ) : (
                 <LogoContainer backgroundColor="#333">
                   <DoubleMusicNoteLogo height="38" width="38"/>

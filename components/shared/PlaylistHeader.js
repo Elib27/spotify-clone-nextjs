@@ -94,7 +94,7 @@ export default function PlaylistHeader({ title, cover_url, background, owner, li
             </FavoriteLogoContainer>
           ):(
             cover_url ? (
-              <Image src={cover_url} layout="fill" alt="playlist cover" draggable="false"/>
+              <Image src={cover_url} fill alt="playlist cover" draggable="false"/>
             ) : (
               <DoubleMusicNote />
             )

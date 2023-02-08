@@ -92,7 +92,7 @@ export default function PlaylistCard({cover_url, title, description, isRoundImag
       <CardImageWrapper>
         <CardImageContainer isRoundImage={isRoundImage}>
           {cover_url ? (
-            <Image src={cover_url} alt="song cover" layout="fill" objectFit='cover' draggable="false"/>
+            <Image src={cover_url} alt="song cover" fill draggable="false"/>
           ):(
             <DoubleNoteLogo />
           )}
