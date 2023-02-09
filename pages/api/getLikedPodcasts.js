@@ -1,8 +1,12 @@
 import getLikedPodcasts from "../../lib/spotify/getLikedPodcasts"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
 
 export default async function handler(req, res) {
+  
+  const { accessToken } = await getServerSession(req, res, authOptions)
 
-  const response = await getLikedPodcasts()
+  const response = await getLikedPodcasts(accessToken)
   const data = await response.json()
 
   const likedPodcasts= data.items.map(item => ({

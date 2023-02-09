@@ -1,8 +1,12 @@
 import getPlaylists from "../../lib/spotify/getPlaylists"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
 
 export default async function handler(req, res) {
+  
+  const { accessToken } = await getServerSession(req, res, authOptions)
 
-  const response = await getPlaylists()
+  const response = await getPlaylists(accessToken)
   const data = await response.json()
 
   const playlists = data.items.map(item => ({

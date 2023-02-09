@@ -1,8 +1,12 @@
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
 import getTopTracks from "../../lib/spotify/getTopTracks"
 
 export default async function handler(req, res) {
+  
+  const { accessToken } = await getServerSession(req, res, authOptions)
 
-  const data = await getTopTracks()
+  const data = await getTopTracks(accessToken)
 
   const top_tracks = data.map(track => ({
     name: track.name,

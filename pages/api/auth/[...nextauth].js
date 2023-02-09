@@ -42,7 +42,6 @@ export const authOptions = {
       session.user = token.user
       session.accessToken = token.accessToken
       session.error = token.error
-
       return session
     },
   },

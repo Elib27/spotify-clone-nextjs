@@ -1,11 +1,15 @@
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
 import getPlaylist from "../../lib/spotify/getPlaylist"
 import convertDateToAddedDate from "../../lib/convertDateToAddedDate"
 
 export default async function handler(req, res) {
+  
+  const { accessToken } = await getServerSession(req, res, authOptions)
 
   const { playlist_id } = req.query
 
-  const response = await getPlaylist(playlist_id)
+  const response = await getPlaylist(accessToken, playlist_id)
   const data = await response.json()
 
   const tracks = data.tracks.items.map(item => ({

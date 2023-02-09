@@ -1,10 +1,15 @@
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
 import getLikedTracks from "../../lib/spotify/getLikedTracks"
 import { convertMsToMinutesSeconds } from "../../lib/convertTime"
 import convertDateToAddedDate from "../../lib/convertDateToAddedDate"
 
+
 export default async function handler(req, res) {
 
-  const response = await getLikedTracks()
+  const { accessToken } = await getServerSession(req, res, authOptions)
+
+  const response = await getLikedTracks(accessToken)
   const data = await response.json()
 
   const likedTracks = data.items.map(item => ({

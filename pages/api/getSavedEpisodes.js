@@ -1,10 +1,14 @@
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
 import getSavedEpisodes from "../../lib/spotify/getSavedEpisodes"
 import { convertMsToHourMinSecString } from "../../lib/convertTime"
 import convertToEpisodeReleaseDate from "../../lib/convertToEpisodeReleaseDate"
 
 export default async function handler(req, res) {
+  
+  const { accessToken } = await getServerSession(req, res, authOptions)
 
-  const response = await getSavedEpisodes()
+  const response = await getSavedEpisodes(accessToken)
   const data = await response.json()
 
   const savedEpisodes = data.items.map(item => ({

@@ -1,8 +1,12 @@
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
 import getNewAlbumReleases from "../../lib/spotify/getNewAlbumReleases"
 
 export default async function handler(req, res) {
+  
+  const { accessToken } = await getServerSession(req, res, authOptions)
 
-  const response = await getNewAlbumReleases()
+  const response = await getNewAlbumReleases(accessToken)
   const data = await response.json()
 
   const newAlbums = data.albums.items.map(item => ({

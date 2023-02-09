@@ -1,10 +1,14 @@
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
 import getRawTrackInformations from "../../lib/spotify/getRawTrackInformations"
 
 export default async function handler(req, res) {
+  
+  const { accessToken } = await getServerSession(req, res, authOptions)
 
   const { id } = req.query
-
-  const response = await getRawTrackInformations(id)
+  
+  const response = await getRawTrackInformations(accessToken, id)
 
   const data = await response.json()
 
