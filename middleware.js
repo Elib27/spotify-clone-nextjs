@@ -3,8 +3,6 @@ import { NextResponse } from "next/server"
 
 export async function middleware(req) {
 
-  console.log("url matched !")
-
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
 
   const { pathname } = req.nextUrl || {pathname: ''}
@@ -21,20 +19,12 @@ export async function middleware(req) {
     return NextResponse.redirect(new URL('/', req.nextUrl.origin))
   }
 
+  return NextResponse.next()
 }
-
-// export const config = {
-//   matcher: [
-//     '/((?!_next|api|sentry|auth|static|api/auth).*)(.+)'
-//   ],
-// }
 
 export const config = {
   matcher: [
-    '/(login|collection|playlist|search|download)',
+    '/(login|collection|playlist|search|download)(.*)',
+    '/'
   ],
 }
-
-// matcher (/api/auth et /login et /collection et /playlist et /search et / et /download
-
-// tout ce qui contient ... 
