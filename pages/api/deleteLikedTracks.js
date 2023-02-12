@@ -1,15 +1,17 @@
-import getRefreshedAccessToken from "../../lib/spotify/getRefreshedAccessToken.js"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
+
 
 const ENDPOINT = 'https://api.spotify.com/v1/me/tracks'
 
 async function deleteLikedTracks(ids) {
   
-  const { access_token } = await getRefreshedAccessToken()
+  const { accessToken } = await getServerSession(req, res, authOptions)
   
   await fetch(`${ENDPOINT}?ids=${ids}`, {
     method: 'DELETE',
     headers: {
-      Authorization: `Bearer ${access_token}`
+      Authorization: `Bearer ${accessToken}`
     },
   })
 }

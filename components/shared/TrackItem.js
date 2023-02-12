@@ -59,6 +59,7 @@ const LikeContainer = styled.div`
   `}
   margin-right: 16px;
 `
+const NumberContainer = styled.div``
 const Container = styled.div`
   height: 56px;
   width: 100%;
@@ -82,7 +83,7 @@ const Container = styled.div`
       opacity: 1;
       pointer-events: auto;
     }
-    ${Number} {
+    ${NumberContainer} {
       display: none;
     }
     ${PlayButtonContainer} {
@@ -250,18 +251,20 @@ export default function TrackItem({
   return (
     <Container suppColumn={addedDate}>
       <NumberRow>
-      {
-        isCurrentTrackPlaying ? (
-          <Image
-            src="/tracks_logos/equaliser_animated.gif"
-            alt='music playing sound levels animation'
-            height={14}
-            width={14}
-            />
-        ) : (
-          <Number isPlaying={id === music.currentTrack.id}>{number}</Number>
-        )
-      }
+        <NumberContainer>
+          {
+            isCurrentTrackPlaying ? (
+              <Image
+                src="/tracks_logos/equaliser_animated.gif"
+                alt='music playing sound levels animation'
+                height={14}
+                width={14}
+                />
+            ) : (
+              <Number isPlaying={id === music.currentTrack.id}>{number}</Number>
+            )
+          }
+        </NumberContainer>
         <PlayButtonContainer onClick={handleClickChangeCurrentMusicId}>
           {isCurrentTrackPlaying ? <SmallPauseLogo /> : <SmallPlayLogo />}
         </PlayButtonContainer>

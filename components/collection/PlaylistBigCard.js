@@ -37,9 +37,6 @@ const CardContainer = styled.div`
   border-radius: 6px;
   transition: background-color 0.3s ease;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   gap: 20px;
   ${({isEpisodes}) => isEpisodes ? `
     background: linear-gradient(.316turn,#00644e 50.57%,#27856a);
@@ -102,8 +99,16 @@ export default function PlaylistBigCard({tracks, tracksNumber, isEpisodes}) {
   const Subtitle = `${tracksNumber} ${isEpisodes ? 'épisode' : 'titre'}${tracksNumber > 1 ? 's' : ''} ${isEpisodes ? '' : tracksNumber > 1 ? 'likés' : 'liké'}`
 
   return (
-    <Link href={isEpisodes ? "/collection/episodes" : "/collection/tracks"}>
-      <CardContainer isEpisodes={isEpisodes}>
+    <CardContainer isEpisodes={isEpisodes}>
+      <Link
+        href={isEpisodes ? "/collection/episodes" : "/collection/tracks"}
+        style={{
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end'
+        }}
+      >
         <TracksSummary>
           {tracks && tracks.map((track, index) => (
             <span key={index}>
@@ -124,7 +129,7 @@ export default function PlaylistBigCard({tracks, tracksNumber, isEpisodes}) {
             <PlayLogo height="24" width="24" />
           </PlayButton>
         </PlayButtonAnimationContainer>
-      </CardContainer>
-    </Link>
+      </Link>
+    </CardContainer>
   )
 }

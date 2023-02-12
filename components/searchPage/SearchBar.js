@@ -80,6 +80,7 @@ export default function SearchBar() {
 
   useEffect(() => {
     // debouncedUpdateUrlWithSearchInput()
+    // console.log(navigation.searchInput)
     updateUrlWithSearchInput()
   }, [navigation.searchInput]) // passer en state local ?
 
@@ -109,7 +110,7 @@ export default function SearchBar() {
     }
   }
 
-  // const debouncedUpdateUrlWithSearchInput = useCallback(debounce(updateUrlWithSearchInput, 1000), [])
+  const debouncedUpdateUrlWithSearchInput = useCallback(debounce(updateUrlWithSearchInput, 1000), [])
 
   function handleClickRedirectToSearchPage() {
     if (!router.pathname.startsWith('/search')) {

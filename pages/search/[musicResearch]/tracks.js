@@ -1,5 +1,6 @@
 import { useState, useEffect} from 'react'
 import { useRouter } from "next/router"
+import MainLayout from '../../../components/shared/MainLayout'
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
 import TracksContainer from "../../../components/searchPage/TracksContainer"
 import TrackItem from "../../../components/shared/TrackItem"
@@ -73,4 +74,8 @@ export default function Tracks() {
   )
 }
 
-Tracks.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
+Tracks.getLayout = function getLayout(page) {
+  <MainLayout>
+    <SearchResultLayout>{page}</SearchResultLayout>
+  </MainLayout>
+}

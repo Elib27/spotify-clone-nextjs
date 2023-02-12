@@ -25,22 +25,21 @@ export default function CreationBar() {
       />
       <CreationButton 
         label="Créer une playlist"
-        link="/playlist/67576ghjgjHG876JHJH6"
-        imageSrc="/sideBar_Logos/cross.svg"
+        imageSrc="/sideBar_logos/cross.svg"
         imageAlt="logo créer une playlist"
         logoBackground="#fff"
       />
       <CreationButton 
         label="Titres likés"
         link="/collection/tracks"
-        imageSrc="/sideBar_Logos/heart.svg"
+        imageSrc="/sideBar_logos/heart.svg"
         imageAlt="logo coeur titres likés"
         logoBackground="linear-gradient(135deg,#450af5,#c4efd9)"
       />
       <CreationButton
         label="Vos épisodes"
         link="/collection/episodes"
-        imageSrc="/sideBar_Logos/favorite.svg"
+        imageSrc="/sideBar_logos/favorite.svg"
         imageAlt="logo favoris vos épisodes"
         logoBackground="#006450"
       />

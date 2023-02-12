@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import MainLayout from "../../components/shared/MainLayout"
 import CollectionPageContainer from "../../components/collection/CollectionPageContainer"
 import PlaylistBigCard from "../../components/collection/PlaylistBigCard"
 import PlaylistCard from "../../components/collection/PlaylistCard"
@@ -61,5 +62,10 @@ export default function Playlists() {
     </CollectionPageContainer>
   )
 }
-Playlists.getLayout = page => <CollectionLayout>{page}</CollectionLayout>
-
+Playlists.getLayout = function getLayout(page) {
+  return (
+    <MainLayout>
+      <CollectionLayout>{page}</CollectionLayout>
+    </MainLayout>
+  )
+}

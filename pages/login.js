@@ -17,6 +17,7 @@ const Title = styled.h1`
   color: #fff;
   font-size: 2rem;
   margin-top: 30px;
+  text-align: center;
 `
 const TextGradient = styled.span`
   font-weight: 700;
@@ -28,6 +29,7 @@ const Subtitle = styled.p`
   color: #fff;
   font-size: 1rem;
   margin-top: 20px;
+  text-align: center;
 `
 const AuthButton = styled.button`
   background-color: #1ed760;
@@ -70,3 +72,5 @@ export default function Login() {
     </MainContainer>
   )
 }
+
+Login.getLayout = page => page

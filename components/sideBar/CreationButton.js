@@ -51,7 +51,7 @@ export default function CreationButton({ label, link, imageSrc, imageAlt, logoBa
   const navigation = useSelector(state => state.navigation)
 
   return (
-    <Link href={link}>
+    <Link href={link ?? '/'}>
       <CreationLinkButton>
         <LogoContainer
           logoBackground={logoBackground}

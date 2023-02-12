@@ -9,14 +9,12 @@ function MyApp({
   pageProps: {session, ...pageProps}
 }) {
 
-  const getLayout = Component.getLayout || ((page) => page)
+  const getLayout = Component.getLayout || ((page) => <MainLayout>{page}</MainLayout>)
 
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
-        <MainLayout>
-          {getLayout(<Component {...pageProps} />)}
-        </MainLayout>
+        {getLayout(<Component {...pageProps} />)}
       </Provider>
     </SessionProvider>
   )

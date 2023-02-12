@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/router"
+import MainLayout from "../../../components/shared/MainLayout"
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
 import useResizeObserver from "../../../hooks/useResizeObserver"
 import BestResult from "../../../components/searchPage/BestResult"
@@ -164,5 +165,8 @@ export default function SearchResult() {
   )
 }
 
-SearchResult.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
-
+SearchResult.getLayout = function getLayout(page) {
+  <MainLayout>
+    <SearchResultLayout>{page}</SearchResultLayout>
+  </MainLayout>
+}

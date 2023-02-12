@@ -24,7 +24,7 @@ export default function CollectionNavBar() {
 
   const router = useRouter()
 
-  const [collectionPageName, setCollectionPageName] = useState('playlists')
+  const [collectionPageName, setCollectionPageName] = useState('')
 
   const buttonNames = ['Playlists', 'Podcasts', 'Artistes', 'Albums']
   const pageNames = ['playlists', 'podcasts', 'artists', 'albums']
@@ -32,7 +32,7 @@ export default function CollectionNavBar() {
   useEffect(() => {
     const pageName = router.pathname.split('/')[2]
     setCollectionPageName(pageName)
-  }, [])
+  }, [setCollectionPageName, router.pathname])
 
   return (
     <Container>

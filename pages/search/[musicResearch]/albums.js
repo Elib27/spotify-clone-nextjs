@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { useState, useEffect } from 'react'
 import { useRouter } from "next/router"
+import MainLayout from "../../../components/shared/MainLayout"
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
 import MusicCard from "../../../components/shared/MusicCard"
 import NoResults from "../../../components/searchPage/NoResults"
@@ -51,4 +52,8 @@ export default function Playlists() {
 }
 
 
-Playlists.getLayout = page => <SearchResultLayout>{page}</SearchResultLayout>
+Playlists.getLayout = function getLayout(page) {
+  <MainLayout>
+    <SearchResultLayout>{page}</SearchResultLayout>
+  </MainLayout>
+}
