@@ -81,3 +81,5 @@ export default function Page404() {
     </Wrapper>
   )
 }
+
+Page404.getLayout = (page) => page

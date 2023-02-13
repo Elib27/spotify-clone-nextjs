@@ -25,7 +25,7 @@ const CategoriesContainer = styled.div`
   position: relative;
 `
 
-export default function SearchPageDefaultContent() {
+export default function SearchPageCategories() {
   return (
     <Container>
       <SearchSection>

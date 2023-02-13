@@ -24,7 +24,6 @@ const PageContainer = styled.div`
   background-color: #121212;
   overflow-x: hidden;
   overflow-y: scroll;
-  overflow-y: overlay;
   position: relative;
   border-radius: 8px;
   /* Firefox */
