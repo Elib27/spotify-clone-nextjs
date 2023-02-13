@@ -65,9 +65,9 @@ export default function Tracks() {
     getLikedTracks()
   }, [])
 
-  async function deleteLikedTrack(id) {
+  function deleteLikedTrack(id) {
     setLikedTracks(prev => prev.filter(track => track.id !== id))
-    await fetch(`/api/deleteLikedTracks?ids=${id}`)
+    fetch(`/api/deleteLikedTracks?ids=${id}`)
   }
 
   function tooglePlaylingLikedMusic() {

@@ -1,17 +1,14 @@
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "./auth/[...nextauth]"
 
-
 const ENDPOINT = 'https://api.spotify.com/v1/me/tracks'
 
-async function deleteLikedTracks(ids) {
-  
-  const { accessToken } = await getServerSession(req, res, authOptions)
-  
+async function deleteLikedTracks(access_token, ids) {
+    
   await fetch(`${ENDPOINT}?ids=${ids}`, {
     method: 'DELETE',
     headers: {
-      Authorization: `Bearer ${accessToken}`
+      Authorization: `Bearer ${access_token}`
     },
   })
 }
@@ -19,7 +16,8 @@ async function deleteLikedTracks(ids) {
 export default async function handler(req, res) {
 
   const { ids } = req.query
+  const { accessToken } = await getServerSession(req, res, authOptions)
 
-  await deleteLikedTracks(ids)
+  await deleteLikedTracks(accessToken, ids)
   res.status(200).end()
 }
