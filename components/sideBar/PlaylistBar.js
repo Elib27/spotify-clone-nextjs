@@ -3,12 +3,14 @@ import { useEffect, useState } from "react"
 import PlaylistButton from "./PlaylistButton"
 
 const PlaylistContainer = styled.div`
-  height: 400px;
+  height: 100%;
+  flex-grow: 1;
   overflow-y: scroll;
   padding: 8px 0;
   /* Firefox */
   scrollbar-color: rgba(255,255,255,0.3);
   scrollbar-width: thin;
+  ${({isScrollBarVisible}) => !isScrollBarVisible && `scrollbar-color: rgba(18,18,18,1);`}
   /* Chrome, Edge, and Safari */
   &::-webkit-scrollbar {
     width: 16px;
@@ -20,6 +22,7 @@ const PlaylistContainer = styled.div`
     min-height: 30px;
     border: 2px solid transparent;
     background-color: rgba(255,255,255,0.3);
+    ${({isScrollBarVisible}) => !isScrollBarVisible && `background-color: rgba(18,18,18,1);`}
     background-clip: content-box;
     transition: background-color 0.2s ease-in-out;
     z-index: 9999;
@@ -32,6 +35,7 @@ const PlaylistContainer = styled.div`
 export default function PlaylistBar() {
 
   const [playlists, setPlaylists] = useState(null)
+  const [isScrollBarVisible, setIsScrollBarVisible] = useState(false)
 
   useEffect(() => {
     async function getPlaylists() {
@@ -45,7 +49,11 @@ export default function PlaylistBar() {
   if (!playlists) return
 
   return (
-    <PlaylistContainer>
+    <PlaylistContainer
+      isScrollBarVisible={isScrollBarVisible}
+      onMouseEnter={() => setIsScrollBarVisible(true)}
+      onMouseLeave={() => setIsScrollBarVisible(false)}
+    >
       {playlists.map((playlist) => (
         <PlaylistButton
           name={playlist.name}

@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { useState, useEffect, useRef } from 'react'
 import SideBarLayout from './SideBarLayout'
 import CreationBar from './CreationBar'
 import PlaylistBar from './PlaylistBar'
@@ -19,11 +18,9 @@ export default function Sidebar() {
 
   return (
     <SideBarLayout>
-      <div>
-        <CreationBar />
-        <Separator />
-        <PlaylistBar />
-      </div>
+      <CreationBar />
+      <Separator />
+      <PlaylistBar />
       <InstallButtonContainer>
         <DownloadButton />
       </InstallButtonContainer>

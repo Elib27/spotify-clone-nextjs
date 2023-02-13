@@ -80,7 +80,7 @@ export default function SearchBar() {
 
   useEffect(() => {
     // debouncedUpdateUrlWithSearchInput()
-    // console.log(navigation.searchInput)
+    console.log(navigation.searchInput)
     updateUrlWithSearchInput()
   }, [navigation.searchInput]) // passer en state local ?
 
@@ -88,7 +88,7 @@ export default function SearchBar() {
     if (!router.pathname.startsWith('/search') && navigation.searchInput !== ''){
       dispatch(changeSearchInput(''))
     }
-  }, [router.pathname])
+  }, [router.pathname, navigation.searchInput])
   
   function updateUrlWithSearchInput() {
     if (!router.pathname.startsWith('/search'))
@@ -110,7 +110,7 @@ export default function SearchBar() {
     }
   }
 
-  const debouncedUpdateUrlWithSearchInput = useCallback(debounce(updateUrlWithSearchInput, 1000), [])
+  // const debouncedUpdateUrlWithSearchInput = useCallback(debounce(updateUrlWithSearchInput, 1000), [])
 
   function handleClickRedirectToSearchPage() {
     if (!router.pathname.startsWith('/search')) {
@@ -120,7 +120,6 @@ export default function SearchBar() {
 
   function handleInputChange(e) {
     dispatch(changeSearchInput(e.target.value))
-    // handleClickRedirectToSearchPage() // cas impossible ?
   }
 
   function handleClickClearInput() {

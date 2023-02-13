@@ -25,6 +25,7 @@ export default function SearchResult() {
 
   const router = useRouter()
   const { musicResearch } = router.query
+  console.log('results')
 
   const containerRef = useRef(null)
   const dimensions = useResizeObserver(containerRef)

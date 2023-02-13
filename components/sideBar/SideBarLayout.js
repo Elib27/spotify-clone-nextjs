@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 
 const Wrapper = styled.nav`
 --side-bar-width: 255px;
+height: calc((100vh - 64px) - 88px);
 grid-column: 1;
 grid-row: 2;
 width: var(--side-bar-width);
@@ -13,7 +14,6 @@ position: relative;
 const Container = styled.div`
 display: flex;
 flex-direction: column;
-justify-content: space-between;
 padding: 12px 8px 0 8px;
 height: 100%;
 width: 100%;
