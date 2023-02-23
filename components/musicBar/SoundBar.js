@@ -105,7 +105,7 @@ export default function SoundBar() {
     soundBarContainer.current.addEventListener('mousedown', handleMouseDownSound)
     document.addEventListener('mouseup', handleMouseUpSound)
     return () => {
-      soundBarContainer.current.removeEventListener('mousedown', handleMouseDownSound)
+      soundBarContainer.current.removeEventListener('mousedown', handleMouseDownSound) // PB ?
       document.removeEventListener('mouseup', handleMouseUpSound)
     }
   }, [])

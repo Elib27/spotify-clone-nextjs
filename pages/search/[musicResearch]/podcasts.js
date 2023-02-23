@@ -26,7 +26,7 @@ export default function Podcasts() {
       const data = await response.json()
       setPodcastResults(data)
     }
-    
+
     getFirstPodcasts()
 
   }, [musicResearch])
