@@ -1,11 +1,15 @@
 import getSearchTracks from '../../../../lib/spotify/getSearchTracks'
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
 
 export default async function handle(req, res) {
+
   const { searchInput } = req.query
+  const { accessToken } = await getServerSession(req, res, authOptions)
 
   const tracksData = await Promise.all([
-    getSearchTracks(searchInput, 0),
-    getSearchTracks(searchInput, 50)
+    getSearchTracks(accessToken, searchInput, 0),
+    getSearchTracks(accessToken, searchInput, 50)
   ])
   .then(responses => Promise.all(responses.map(res => res.json())))
   .then(data => {return data})

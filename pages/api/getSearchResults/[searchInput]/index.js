@@ -1,10 +1,14 @@
 import getSearchResults from "../../../../lib/spotify/getSearchResults"
 import levenshteinDistance from "../../../../lib/levenshteinDistance"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
 
 export default async function handle(req, res) {
-  const { searchInput } = req.query
 
-  const response = await getSearchResults(searchInput)
+  const { searchInput } = req.query
+  const { accessToken } = await getServerSession(req, res, authOptions)
+
+  const response = await getSearchResults(accessToken, searchInput)
   const data = await response.json()
 
   function getCloserWordIndex(reference, wordsArray) {
@@ -37,7 +41,6 @@ export default async function handle(req, res) {
     const year = release_date.getFullYear()
 
     return `${day} ${month}${year !== currentYear ? ' ' + year : ''}`
-    
   }
 
   const categories = Object.keys(data)

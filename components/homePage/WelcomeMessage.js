@@ -14,6 +14,8 @@ function WelcomeMessage() {
 
   const { data: session, status } = useSession()
 
+  console.log(session)
+
   function getWelcomeMessage() {
     const timeInHours = new Date().getHours()
     if (timeInHours >= 4 && timeInHours < 18) {

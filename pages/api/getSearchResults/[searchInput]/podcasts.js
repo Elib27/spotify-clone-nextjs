@@ -1,9 +1,13 @@
 import getSearchPodcasts from '../../../../lib/spotify/getSearchPodcasts'
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
 
 export default async function handle(req, res) {
-  const { searchInput } = req.query
 
-  const response = await getSearchPodcasts(searchInput, 0)
+  const { searchInput } = req.query
+  const { accessToken } = await getServerSession(req, res, authOptions)
+
+  const response = await getSearchPodcasts(accessToken, searchInput, 0)
   const data = await response.json()
 
   const podcastResults = data?.shows?.items.map((item) => ({

@@ -1,9 +1,14 @@
 import getSearchAlbums from '../../../../lib/spotify/getSearchAlbums'
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./auth/[...nextauth]"
+
 
 export default async function handle(req, res) {
-  const { searchInput } = req.query
 
-  const response = await getSearchAlbums(searchInput, 0)
+  const { searchInput } = req.query
+  const { accessToken } = await getServerSession(req, res, authOptions)
+
+  const response = await getSearchAlbums(accessToken, searchInput, 0)
   const data = await response.json()
 
   const albumResults = data?.albums?.items.map((item) => ({
