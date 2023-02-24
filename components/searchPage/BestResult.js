@@ -93,7 +93,7 @@ const ResultCategory = styled.div`
   line-height: 1.6;
 `
 
-export default function BestResult({title, category, cover_url, link}) {
+export default function BestResult({title, category, cover_url}) {
   return (
     <Container>
       <TopTitle>Meilleur résultat</TopTitle>

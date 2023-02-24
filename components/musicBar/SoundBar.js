@@ -96,16 +96,17 @@ export default function SoundBar() {
     document.addEventListener("mousemove", handleMouseMoveSound)
   }
 
-  function handleMouseUpSound(e) {
+  function handleMouseUpSound() {
     document.removeEventListener("mousemove", handleMouseMoveSound)
     setBarCircleActive(false)
   }
 
   useEffect(() => {
-    soundBarContainer.current.addEventListener('mousedown', handleMouseDownSound)
+    const soundBarContainerRef = soundBarContainer.current
+    soundBarContainerRef.addEventListener('mousedown', handleMouseDownSound)
     document.addEventListener('mouseup', handleMouseUpSound)
     return () => {
-      soundBarContainer.current.removeEventListener('mousedown', handleMouseDownSound) // PB ?
+      soundBarContainerRef.removeEventListener('mousedown', handleMouseDownSound) // PB ?
       document.removeEventListener('mouseup', handleMouseUpSound)
     }
   }, [])

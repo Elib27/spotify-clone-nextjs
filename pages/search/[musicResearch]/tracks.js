@@ -75,7 +75,9 @@ export default function Tracks() {
 }
 
 Tracks.getLayout = function getLayout(page) {
-  <MainLayout>
-    <SearchResultLayout>{page}</SearchResultLayout>
-  </MainLayout>
+  return (
+    <MainLayout>
+      <SearchResultLayout>{page}</SearchResultLayout>
+    </MainLayout>
+  )
 }

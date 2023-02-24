@@ -25,7 +25,6 @@ export default function SearchResult() {
 
   const router = useRouter()
   const { musicResearch } = router.query
-  console.log('results')
 
   const containerRef = useRef(null)
   const dimensions = useResizeObserver(containerRef)
@@ -72,7 +71,6 @@ export default function SearchResult() {
         title={fetchedData?.bestResult.title}
         category={fetchedData?.bestResult.category}
         cover_url={fetchedData?.bestResult.image}
-        link='/'
       />
       {
         fetchedData?.tracks?.length > 0 && (
@@ -167,7 +165,9 @@ export default function SearchResult() {
 }
 
 SearchResult.getLayout = function getLayout(page) {
-  <MainLayout>
-    <SearchResultLayout>{page}</SearchResultLayout>
-  </MainLayout>
+  return (
+    <MainLayout>
+      <SearchResultLayout>{page}</SearchResultLayout>
+    </MainLayout>
+  )
 }

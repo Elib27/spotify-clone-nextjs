@@ -8,6 +8,7 @@ const FilterButtonWrapper = styled.div`
 const FilterButton = styled.button`
   font-size: 0.875rem;
   font-weight: 400;
+  white-space: nowrap;
   padding: 4px 12px;
   color: #fff;
   border-radius: 50px;

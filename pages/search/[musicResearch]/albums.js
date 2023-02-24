@@ -53,7 +53,9 @@ export default function Playlists() {
 
 
 Playlists.getLayout = function getLayout(page) {
-  <MainLayout>
-    <SearchResultLayout>{page}</SearchResultLayout>
-  </MainLayout>
+  return (
+    <MainLayout>
+      <SearchResultLayout>{page}</SearchResultLayout>
+    </MainLayout>
+  )
 }

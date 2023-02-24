@@ -168,7 +168,6 @@ export default function CurrentMusicInformations() {
       {music.currentTrack.soundType === 'track' ? (
         <HeartButton
           isLiked={isLiked}
-          onClick={() => console.log('ToggleLike')}
         >
           {isLiked ? <FilledHeartLogo /> : <EmptyHeartLogo />}
         </HeartButton>
