@@ -2,7 +2,7 @@ import styled from "styled-components"
 import Image from "next/image"
 import PlayLogo from '../../public/tracks_logos/play_logo_medium.svg'
 import ShareLogo from '../../public/tracks_logos/share_logo.svg'
-import DeleteLogo from '../../public/tracks_logos/deleteFromBooks_logo.svg'
+import DeleteLogo from '../../public/tracks_logos/delete_from_books_logo.svg'
 import OptionsLogo from '../../public/tracks_logos/big_options_logo.svg'
 
 const OptionsButton = styled.button`
