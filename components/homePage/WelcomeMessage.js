@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { useSession } from "next-auth/react"
 
 const Title = styled.h2`  
   color: #fff;
@@ -12,8 +11,6 @@ const Title = styled.h2`
 
 function WelcomeMessage() {
 
-  const { data: session, status } = useSession()
-
   function getWelcomeMessage() {
     const timeInHours = new Date().getHours()
     if (timeInHours >= 4 && timeInHours < 18) {
@@ -25,11 +22,6 @@ function WelcomeMessage() {
   }
 
   let welcomeMessage = getWelcomeMessage() || 'Bonjour'
-
-  if (status === "authenticated")
-    welcomeMessage += ` ${session.user.name}`
-  else
-    welcomeMessage += ", connecte toi !"
 
   return (
     <Title>{welcomeMessage}</Title>
