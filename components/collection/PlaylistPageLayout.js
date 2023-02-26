@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import PlaylistHeader from "../shared/PlayListHeader"
+import PlaylistHeader from "../shared/PlaylistHeader"
 import PlaylistPlayButtonSection from "../shared/PlaylistPlayButtonSection"
 import LikedTracksContainer from '../collection/LikedTracksContainer'
 

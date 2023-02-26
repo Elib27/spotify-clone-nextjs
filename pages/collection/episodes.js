@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import PlaylistHeader from "../../components/shared/PlayListHeader"
+import PlaylistHeader from "../../components/shared/PlaylistHeader"
 import LikedPodcast from "../../components/collection/LikedPodcast"
 import PlaylistPlayButtonSection from "../../components/shared/PlaylistPlayButtonSection"
 
