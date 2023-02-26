@@ -33,20 +33,18 @@ export default function SearchResult() {
   const [fetchedData, setFetchedData] = useState(null)
   const likedTracksIds = useRef(null)
 
-  async function getLikedTracksIds() {
-    const response = await fetch('/api/getLikedTracks')
-    const data = await response.json()
-    const ids = data.map(track => track.id)
-    likedTracksIds.current = ids;
-  }
-
-  async function fetchResults() {
-    const response = await fetch(`/api/getSearchResults/${musicResearch}`)
-    const data = await response.json()
-    setFetchedData(data[0])
-  }
-
   useEffect(() => {
+    async function fetchResults() {
+      const response = await fetch(`/api/getSearchResults/${musicResearch}`)
+      const data = await response.json()
+      setFetchedData(data[0])
+    }
+    async function getLikedTracksIds() {
+      const response = await fetch('/api/getLikedTracks')
+      const data = await response.json()
+      const ids = data.map(track => track.id)
+      likedTracksIds.current = ids;
+    }
     fetchResults()
     getLikedTracksIds()
   }, [musicResearch])

@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 import { useState, useEffect, useCallback} from 'react'
 import { useRouter } from 'next/router'
-import { useSelector, useDispatch } from 'react-redux'
-import { changeSearchInput } from '../../store/store'
 import debounce from '../../lib/debounce.js'
 import SearchLogo from '../../public/header_logos/search.svg'
 import CrossLogo from '../../public/header_logos/cross.svg'
@@ -71,46 +69,33 @@ const ClearButton = styled.button`
 
 export default function SearchBar() {
 
-  const navigation = useSelector(state => state.navigation)
-  const dispatch = useDispatch()
-
   const router = useRouter()
   
-  const [isClearButtonVisible, setIsClearButtonVisible] = useState(false)
+  const [searchInput, setSearchInput] = useState('')
 
   useEffect(() => {
     // debouncedUpdateUrlWithSearchInput()
     updateUrlWithSearchInput()
-  }, [navigation.searchInput]) // passer en state local ?
+  }, [searchInput])
 
   useEffect(() => {
-    if (!router.pathname.startsWith('/search') && navigation.searchInput !== ''){
-      dispatch(changeSearchInput(''))
+    if (!router.pathname.startsWith('/search') && searchInput !== ''){
+      setSearchInput('')
     }
-  }, [router.pathname, navigation.searchInput])
+  }, [router.pathname, searchInput])
   
   function updateUrlWithSearchInput() {
     if (!router.pathname.startsWith('/search'))
-    return
+      return
     let currentSearchCategory = ''
-    if (router.pathname.split('/').length >= 4 && navigation.searchInput !== '') {
+    if (router.pathname.split('/').length >= 4 && searchInput !== '') {
       currentSearchCategory = '/' + router.pathname.split('/')[3]
     }
-    router.push(`/search/${navigation.searchInput}${currentSearchCategory}`)
+    router.push(`/search/${searchInput}${currentSearchCategory}`)
     console.log('updateUrlWithSearchInput')
-    updateClearButtonVisibility()
   }
 
-  function updateClearButtonVisibility() {
-    if (navigation.searchInput.length > 0) {
-      setIsClearButtonVisible(true)
-    }
-    else {
-      setIsClearButtonVisible(false)
-    }
-  }
-
-  // const debouncedUpdateUrlWithSearchInput = useCallback(debounce(updateUrlWithSearchInput, 1000), [router.pathname, navigation.searchInput])
+  // const debouncedUpdateUrlWithSearchInput = useCallback(debounce(updateUrlWithSearchInput, 1000), [router.pathname, searchInput])
 
   function handleClickRedirectToSearchPage() {
     if (!router.pathname.startsWith('/search')) {
@@ -119,12 +104,14 @@ export default function SearchBar() {
   }
 
   function handleInputChange(e) {
-    dispatch(changeSearchInput(e.target.value))
+    setSearchInput(e.target.value)
   }
 
   function handleClickClearInput() {
-    dispatch(changeSearchInput(''))
+    setSearchInput('')
   }
+
+  const isClearButtonVisible = searchInput.length > 0
 
   return (
     <Container onClick={handleClickRedirectToSearchPage}>
@@ -146,7 +133,7 @@ export default function SearchBar() {
         autoCorrect="off"
         maxLength={800}
         onChange={handleInputChange}
-        value={navigation.searchInput}
+        value={searchInput}
       />
     </Container>
   )

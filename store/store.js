@@ -103,14 +103,10 @@ const navigationSlice = createSlice({
   name: "navigation",
   initialState: {
     currentPage: '/',
-    searchInput: '',
   },
   reducers: {
     changeCurrentPage: (state, action) => {
       state.currentPage = action.payload
-    },
-    changeSearchInput: (state, action) => {
-      state.searchInput = action.payload
     },
   }
 })
