@@ -10,13 +10,14 @@ export const authOptions = {
       authorization: {
         url: "https://accounts.spotify.com/authorize?",
         params: {
-          scope: process.env.NEXT_PUBLIC_SCOPE
+          scope: process.env.NEXT_PUBLIC_SCOPE,
         }
       },
     })
   ],
   pages: {
     signIn: "/login",
+    error: "/404"
   },
   callbacks: {
     async jwt({ token, user, account }) {
