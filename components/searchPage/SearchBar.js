@@ -73,42 +73,33 @@ export default function SearchBar() {
   
   const [searchInput, setSearchInput] = useState('')
 
-  useEffect(() => {
-    // debouncedUpdateUrlWithSearchInput()
-    updateUrlWithSearchInput()
-  }, [searchInput])
-
-  useEffect(() => {
-    if (!router.pathname.startsWith('/search') && searchInput !== ''){
-      setSearchInput('')
-    }
-  }, [router.pathname, searchInput])
-  
-  function updateUrlWithSearchInput() {
+  function updateUrlWithSearchInput(searchInput) {
     if (!router.pathname.startsWith('/search'))
       return
     let currentSearchCategory = ''
     if (router.pathname.split('/').length >= 4 && searchInput !== '') {
       currentSearchCategory = '/' + router.pathname.split('/')[3]
     }
+    console.log(router)
     router.push(`/search/${searchInput}${currentSearchCategory}`)
-    console.log('updateUrlWithSearchInput')
   }
 
-  // const debouncedUpdateUrlWithSearchInput = useCallback(debounce(updateUrlWithSearchInput, 1000), [router.pathname, searchInput])
+  const debouncedUpdateUrlWithSearchInput = useCallback(debounce((searchInput) => updateUrlWithSearchInput(searchInput), 300), [])
+
+  useEffect(() => {
+    debouncedUpdateUrlWithSearchInput(searchInput)
+  }, [searchInput, debouncedUpdateUrlWithSearchInput])
+
+  useEffect(() => {
+    if (!router.pathname.startsWith('/search') && searchInput !== ''){
+      setSearchInput('')
+    }
+  }, [router.pathname, searchInput])
 
   function handleClickRedirectToSearchPage() {
     if (!router.pathname.startsWith('/search')) {
       router.push('/search')
     }
-  }
-
-  function handleInputChange(e) {
-    setSearchInput(e.target.value)
-  }
-
-  function handleClickClearInput() {
-    setSearchInput('')
   }
 
   const isClearButtonVisible = searchInput.length > 0
@@ -121,7 +112,7 @@ export default function SearchBar() {
         </SearchLogoContainer>
         {
           isClearButtonVisible && (
-          <ClearButton onClick={handleClickClearInput}>
+          <ClearButton onClick={() => setSearchInput('')}>
             <CrossLogo/>
           </ClearButton>
         )}
@@ -132,7 +123,7 @@ export default function SearchBar() {
         autoCapitalize="off"
         autoCorrect="off"
         maxLength={800}
-        onChange={handleInputChange}
+        onChange={(e) => setSearchInput(e.target.value)}
         value={searchInput}
       />
     </Container>
