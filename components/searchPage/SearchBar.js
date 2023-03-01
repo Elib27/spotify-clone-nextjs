@@ -74,14 +74,13 @@ export default function SearchBar() {
   const [searchInput, setSearchInput] = useState('')
 
   function updateUrlWithSearchInput(searchInput) {
-    if (!router.pathname.startsWith('/search'))
+    if (!router.asPath.startsWith('/search'))
       return
     let currentSearchCategory = ''
-    if (router.pathname.split('/').length >= 4 && searchInput !== '') {
-      currentSearchCategory = '/' + router.pathname.split('/')[3]
+    if (router.asPath.split('/').length >= 4 && searchInput !== '') {
+      currentSearchCategory = '/' + router.asPath.split('/')[3]
     }
-    console.log(router)
-    router.push(`/search/${searchInput}${currentSearchCategory}`)
+    router.replace(`/search/${searchInput}${currentSearchCategory}`)
   }
 
   const debouncedUpdateUrlWithSearchInput = useCallback(debounce((searchInput) => updateUrlWithSearchInput(searchInput), 300), [])
@@ -91,13 +90,13 @@ export default function SearchBar() {
   }, [searchInput, debouncedUpdateUrlWithSearchInput])
 
   useEffect(() => {
-    if (!router.pathname.startsWith('/search') && searchInput !== ''){
+    if (!router.asPath.startsWith('/search') && searchInput !== ''){
       setSearchInput('')
     }
-  }, [router.pathname, searchInput])
+  }, [router.asPath, searchInput])
 
   function handleClickRedirectToSearchPage() {
-    if (!router.pathname.startsWith('/search')) {
+    if (!router.asPath.startsWith('/search')) {
       router.push('/search')
     }
   }
