@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useSelector } from "react-redux"
+import { useRouter } from "next/router"
 import Link from "next/link"
 
 const PlaylistLabel = styled.p`
@@ -26,13 +26,12 @@ const Button = styled.button`
 
 export default function PlaylistButton({ name, id }) {
 
-  const navigation = useSelector(state => state.navigation)
-
+  const router = useRouter()
   return (
     <Link href={`/playlist/${id}`}>
       <Button>
         <PlaylistLabel
-          isSelected={navigation.currentPage === `/playlist/${id}`}
+          isSelected={router.asPath === `/playlist/${id}`}
         >
           {name}
         </PlaylistLabel>

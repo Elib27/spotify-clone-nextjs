@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { useSelector } from "react-redux"
+import { useRouter } from "next/router"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -48,19 +49,19 @@ const CreationLinkButton = styled.button`
 
 export default function CreationButton({ label, link, imageSrc, imageAlt, logoBackground }) {
 
-  const navigation = useSelector(state => state.navigation)
+  const router = useRouter()
 
   return (
     <Link href={link ?? '/'}>
       <CreationLinkButton>
         <LogoContainer
           logoBackground={logoBackground}
-          isSelected={navigation.currentPage === link}
+          isSelected={router.asPath === link}
         >
           <Image src={imageSrc} alt={imageAlt} width={12} height={12} />
         </LogoContainer>
         <LinkLabel
-          isSelected={navigation.currentPage === link}
+          isSelected={router.asPath === link}
         >
           {label}
         </LinkLabel>

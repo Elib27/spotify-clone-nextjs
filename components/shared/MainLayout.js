@@ -2,10 +2,6 @@ import styled from 'styled-components'
 import Sidebar from "../sideBar/SideBar"
 import MusicBar from "../musicBar/MusicBar"
 import PageHeader from './PageHeader'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
-import { changeCurrentPage } from '../../store/store'
 
 const MainWrapper = styled.div`
   display: grid;
@@ -50,27 +46,6 @@ const PageContainer = styled.div`
 `
 
 export default function MainLayout({ children }) {
-
-  const router = useRouter()
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    
-    function handleStop(url) {
-      dispatch(changeCurrentPage(url))
-    }
-    
-    handleStop(router.pathname)
-
-    router.events.on('routeChangeComplete', handleStop)
-    router.events.on('routeChangeError', handleStop)
-
-    return () => {
-      router.events.off('routeChangeComplete', handleStop)
-      router.events.off('routeChangeError', handleStop)
-    }
-
-  }, [router])
 
   return (
     <MainWrapper>

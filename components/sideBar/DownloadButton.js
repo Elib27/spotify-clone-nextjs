@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useSelector } from "react-redux"
+import { useRouter } from "next/router"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -47,16 +47,16 @@ const NavLinkButton = styled.button`
 
 export default function DownloadButton() {
 
-  const navigation = useSelector(state => state.navigation)
+  const router = useRouter()
 
   return (
     <Link href="/download">
       <NavLinkButton>
-        <LogoContainer isSelected={navigation.currentPage === "/download"}>
+        <LogoContainer isSelected={router.asPath === "/download"}>
             <Image src="/sideBar_logos/download.svg" alt="download button" width={24} height={24} />
         </LogoContainer>
         <LinkLabel
-          isSelected={navigation.currentPage === "/download"}
+          isSelected={router.asPath === "/download"}
         >
           Installer l&apos;appli
         </LinkLabel>

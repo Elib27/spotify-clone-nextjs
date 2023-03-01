@@ -1,6 +1,5 @@
 import styled from "styled-components"
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Pannel from "./AccountPannel"
@@ -123,7 +122,6 @@ const pagesWhereSubscribeButtonVisible = [
 export default function PageHeader() {
 
   const router = useRouter()
-  const navigation = useSelector(state => state.navigation)
 
   const [isPanelOpen, setIsPanelOpen] = useState(false)
 
@@ -148,8 +146,8 @@ export default function PageHeader() {
         <CentralContainer>
           <Link href="/">
             <HomeButton>
-              <HomeLogoContainer isHomePage={navigation.currentPage === '/'}>
-                {navigation.currentPage === '/' ? <HouseFullLogo /> : <HouseLogo />}
+              <HomeLogoContainer isHomePage={router.asPath === '/'}>
+                {router.asPath === '/' ? <HouseFullLogo /> : <HouseLogo />}
               </HomeLogoContainer>
             </HomeButton>
           </Link>
