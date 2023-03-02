@@ -28,6 +28,7 @@ const AccountMenu = styled.ul`
 const ButtonLabel = styled.span`
   width: 100%;
   font-size: 0.875rem;
+  line-height: 0.875rem;
   font-weight: 400;
   text-align: left;
   display: inline-block;
