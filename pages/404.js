@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import Image from 'next/image'
 import Link from 'next/link'
+import SEO from "../components/shared/SEO"
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -66,19 +67,22 @@ const HelpButton = styled.button`
 
 export default function Page404() {
   return (
-    <Wrapper>
-      <Container>
-        <Image src="/simple_spotify_logo.svg" alt="spotify logo" width={60} height={60} />
-        <Title>Page introuvable</Title>
-        <Description>Nous ne trouvons pas la page que vous recherchez.</Description>
-        <Link href="/">
-          <HomeButton>Accueil</HomeButton>
-        </Link>
-        <a href="https://support.spotify.com/fr/" target="_blank" rel="noreferrer">
-          <HelpButton>Aide</HelpButton>
-        </a>
-      </Container>
-    </Wrapper>
+    <>
+      <SEO title="Page introuvable" />
+      <Wrapper>
+        <Container>
+          <Image src="/simple_spotify_logo.svg" alt="spotify logo" width={60} height={60} />
+          <Title>Page introuvable</Title>
+          <Description>Nous ne trouvons pas la page que vous recherchez.</Description>
+          <Link href="/">
+            <HomeButton>Accueil</HomeButton>
+          </Link>
+          <a href="https://support.spotify.com/fr/" target="_blank" rel="noreferrer">
+            <HelpButton>Aide</HelpButton>
+          </a>
+        </Container>
+      </Wrapper>
+    </>
   )
 }
 

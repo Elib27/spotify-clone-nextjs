@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import Sidebar from "../sideBar/SideBar"
 import MusicBar from "../musicBar/MusicBar"
 import PageHeader from './PageHeader'
+import SEO from './SEO'
 
 const MainWrapper = styled.div`
   display: grid;
@@ -48,13 +49,16 @@ const PageContainer = styled.div`
 export default function MainLayout({ children }) {
 
   return (
-    <MainWrapper>
-      <PageHeader />
-      <Sidebar />
-      <PageContainer>
-        {children}
-      </PageContainer>
-      <MusicBar />
-    </MainWrapper>
+    <>
+      <SEO title="Spotify Clone" description="Spotify clone coded by BAS Eliot with Next JS." />
+      <MainWrapper>
+        <PageHeader />
+        <Sidebar />
+        <PageContainer>
+          {children}
+        </PageContainer>
+        <MusicBar />
+      </MainWrapper>
+    </>
   )
 }
