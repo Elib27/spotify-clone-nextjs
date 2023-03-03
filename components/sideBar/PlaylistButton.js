@@ -13,11 +13,12 @@ const PlaylistLabel = styled.p`
   text-overflow: ellipsis;
   ${({ isSelected }) => isSelected && `color: #fff;`}
 `
-const Button = styled.button`
+const PlaylistBtn = styled.div`
   height: 32px;
   width: 100%;
+  display: flex;
+  align-items: center;
   padding: 0 16px;
-  border: 0;
   background-color: transparent;
   &:hover ${PlaylistLabel}{
     color: #fff;
@@ -29,13 +30,13 @@ export default function PlaylistButton({ name, id }) {
   const router = useRouter()
   return (
     <Link href={`/playlist/${id}`}>
-      <Button>
+      <PlaylistBtn>
         <PlaylistLabel
           isSelected={router.asPath === `/playlist/${id}`}
         >
           {name}
         </PlaylistLabel>
-      </Button>
+      </PlaylistBtn>
     </Link>
   )
 }

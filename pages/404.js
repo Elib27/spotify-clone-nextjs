@@ -24,6 +24,7 @@ const Container = styled.div`
 `
 const Title = styled.h1`
   margin: 40px 0 16px 0;
+  letter-spacing: -1.5px;
   font-size: 3rem;
   font-weight: 700;
   line-height: 3rem;
@@ -33,10 +34,9 @@ const Description = styled.p`
   margin-bottom: 40px;
   font-weight: 500;
   font-size: 1rem;
-  letter-spacing: 0.25px;
   color: #fff;
 `
-const HomeButton = styled.button`
+const HomeButton = styled.div`
   background-color: #fff;
   border: 1px solid #878787;
   border-radius: 48px;
@@ -47,13 +47,12 @@ const HomeButton = styled.button`
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
+  &:hover {
+    transform: scale(1.04);
+  }
 `
-const HelpLink = styled.a`
-  width: 100%;
-`
-const HelpButton = styled.button`
+const HelpButton = styled.div`
   background-color: transparent;
-  border: none;
   width: 100%;
   white-space: nowrap;
   font-size: 1rem;

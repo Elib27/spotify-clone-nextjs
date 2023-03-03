@@ -31,11 +31,10 @@ const LeftContainer = styled.div`
   flex-wrap: nowrap;
   align-items: center;
 `
-const LogoButton = styled.button`
+const LogoButton = styled.div`
   height: 32px;
   width: 32px;
   color: #fff;
-  border: none;
   background-color: transparent;
   cursor: pointer;
 `
@@ -54,13 +53,12 @@ const HomeLogoContainer = styled.div`
     opacity: 1;
   `}
 `
-const HomeButton = styled.button`
+const HomeButton = styled.div`
   height: 48px;
   width: 48px;
   background-color: #242424;
   border-radius: 50%;
   color: #fff;
-  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,11 +76,13 @@ const RightContainer = styled.div`
   align-items: center;
   gap: 32px;
 `
-const SubscribeButton = styled.button`
+const SubscribeButton = styled.div`
   height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 0.875rem;
   font-weight: 700;
-  outline: none;
   background-color: transparent;
   border: 1px solid #727272;
   color: #fff;

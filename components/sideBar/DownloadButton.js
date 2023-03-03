@@ -28,14 +28,13 @@ const LogoContainer = styled.div`
     opacity: 1;
   `}
 `
-const NavLinkButton = styled.button`
+const NavLinkButton = styled.div`
   height: 40px;
   width: 100%;
   padding: 0 16px;
   display: flex;
   align-items: center;
   background-color: transparent;
-  border: 0;
   cursor: pointer;
   &:hover ${LinkLabel}{
     color: #fff;

@@ -30,7 +30,7 @@ const LogoContainer = styled.div`
   transition: opacity 0.3s ease-out;
   ${({ isSelected }) => isSelected && `opacity: 1;`}
 `
-const CreationLinkButton = styled.button`
+const CreationLinkButton = styled.div`
   height: 40px;
   width: 100%;
   padding: 0 16px;

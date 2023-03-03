@@ -30,7 +30,7 @@ const DownloadLabel = styled.h3`
 const DownloadLink  = styled.a`
   text-decoration: none;
 `
-const DownloadButton = styled.button`
+const DownloadButton = styled.div`
   height: 48px;
   border-radius: 48px;
   font-size: 1rem;
@@ -38,7 +38,6 @@ const DownloadButton = styled.button`
   font-weight: 700;
   color: #000;
   background-color: #1ed760;
-  border: none;
   padding: 8px 32px;
   display: flex;
   justify-content: center;
