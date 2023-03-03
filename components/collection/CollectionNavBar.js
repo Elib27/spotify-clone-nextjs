@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { useState, useEffect} from 'react'
 import { useRouter } from 'next/router'
 import CollectionNavButton from './CollectionNavButton'
 
