@@ -4,26 +4,31 @@
   font-family: 'CircularSp';
   src: url('/fonts/CircularSp-Bold-fe1cfc14b7498b187c78fa72fb72d148.woff2') format('woff2');
   font-weight: 700;
+  font-display: swap;
 }
 @font-face {
   font-family: 'CircularSp';
   src: url('/fonts/CircularSp-Book-4eaffdf96f4c6f984686e93d5d9cb325.woff2') format('woff2');
   font-weight: 400;
+  font-display: swap;
 }
 @font-face {
   font-family: 'CircularSpTitle';
   src: url('/fonts/CircularSpTitle-Black-3f9afb402080d53345ca1850226ca724.woff2') format('woff2');
   font-weight: 900;
+  font-display: swap;
 }
 @font-face {
   font-family: 'CircularSpTitle';
   src: url('/fonts/CircularSpTitle-Bold-2fbf72b606d7f0b0f771ea4956a8b4d6.woff2') format('woff2');
   font-weight: 700;
+  font-display: swap;
 }
 @font-face {
   font-family: 'CircularSpTitle';
   src: url('/fonts/CircularSpTitle-Tall-Bold-69995af8079e90f1d15130df13ad0c60.woff2') format('woff2');
   font-weight: 200;
+  font-display: swap;
 }
 
 html,
