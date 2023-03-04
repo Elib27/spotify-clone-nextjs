@@ -91,21 +91,21 @@ export default function MusicControlsDisabled() {
     <MusicControlsContainer>
       <ControlsContainer>
         <SideContainer>
-          <DisabledControlButton disabled>
+          <DisabledControlButton disabled aria-label="Activer la lecture aléatoire" aria-disabled="true">
             <RandomMusicLogo />
           </DisabledControlButton>
-          <DisabledControlButton disabled>
+          <DisabledControlButton disabled aria-label="Musique précédente" aria-disabled="true">
             <PrevMusicLogo />
           </DisabledControlButton>
         </SideContainer>
-        <PlayButton disabled>
+        <PlayButton disabled aria-label="Lecture" aria-disabled="true">
           <PauseMusicLogo />
         </PlayButton>
         <SideContainer>
-          <DisabledControlButton disabled>
+          <DisabledControlButton disabled aria-label="Musique suivante" aria-disabled="true">
             <NextMusicLogo />
           </DisabledControlButton>
-          <DisabledControlButton disabled>
+          <DisabledControlButton disabled aria-label="Activer la répétition" aria-disabled="true">
             <LoopMusic1Logo />
           </DisabledControlButton>
         </SideContainer>

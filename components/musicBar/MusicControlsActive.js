@@ -323,6 +323,7 @@ export default function MusicControlsActive() {
                 isPlayingRandom={music.isPlayingRandom}
                 onClick={() => dispatch(togglePlayingRandom())}
                 data-hover={`${ music.isPlayingRandom ? 'Désactiver' : 'Activer'} la lecture aléatoire`}
+                aria-label={`${ music.isPlayingRandom ? 'Désactiver' : 'Activer'} la lecture aléatoire`}
               >
                 <RandomMusicLogo />
               </RandomButton>
@@ -330,6 +331,7 @@ export default function MusicControlsActive() {
               <ControlButton
                 onClick={() => audio.current.currentTime -= 15}
                 data-hover="Reculer de 15 secondes"
+                aria-label="Reculer de 15 secondes"
               >
                 <Prev15secLogo />
               </ControlButton>
@@ -338,6 +340,7 @@ export default function MusicControlsActive() {
           <ControlButton
             onClick={handleClickPrevMusic}
             data-hover="Précédent"
+            data-label="Musique précédente"
           >
             <PrevMusicLogo />
           </ControlButton>
@@ -345,6 +348,7 @@ export default function MusicControlsActive() {
         <PlayButton 
           onClick={() => dispatch(togglePlaying())}
           data-hover={music.isPlaying ? "Pause" : "Lecture"}
+          aria-label={music.isPlaying ? "Pause" : "Lecture"}
         >
           {music.isPlaying ? <PauseMusicLogo /> : <PlayMusicLogo />}
         </PlayButton>
@@ -352,6 +356,7 @@ export default function MusicControlsActive() {
           <ControlButton
             onClick={handleClickNextMusic}
             data-hover="Suivant"
+            aria-label="Musique suivante"
           >
             <NextMusicLogo />
           </ControlButton>
@@ -361,6 +366,7 @@ export default function MusicControlsActive() {
                 onClick={() => dispatch(incrementLoopMode())}
                 loopMode={music.loopMode}
                 data-hover={getLoopModeDataHover()}
+                aria-label={getLoopModeDataHover()}
               >
                 {music.loopMode === 'loop_2' ? <LoopMusic2Logo /> : <LoopMusic1Logo /> }
               </LoopButton>
@@ -368,6 +374,7 @@ export default function MusicControlsActive() {
               <ControlButton
                 onClick={() => audio.current.currentTime += 15}
                 data-hover="Avancer de 15 secondes"
+                aria-label="Avancer de 15 secondes"
               >
                   <Next15secLogo />
               </ControlButton>

@@ -137,14 +137,14 @@ export default function PageHeader() {
     <HeaderContainer>
       <MainNavBar>
         <LeftContainer>
-          <Link href="/">
+          <Link href="/" aria-label="accueil">
             <LogoButton>
               <SpotifyLogo height={32} width={32}/>
             </LogoButton>
           </Link>
         </LeftContainer>
         <CentralContainer>
-          <Link href="/">
+          <Link href="/" aria-label="accueil">
             <HomeButton>
               <HomeLogoContainer isHomePage={router.asPath === '/'}>
                 {router.asPath === '/' ? <HouseFullLogo /> : <HouseLogo />}
@@ -155,7 +155,7 @@ export default function PageHeader() {
         </CentralContainer>
         <RightContainer>
         { isSubscribeButtonVisible && (
-          <a href="https://www.spotify.com/fr/premium/" target="blank_" rel='noreferrer'>
+          <a href="https://www.spotify.com/fr/premium/" target="blank_" rel="noreferrer" aria-label="abonnements" >
             <SubscribeButton>S&apos;abonner</SubscribeButton>
           </a>
         )}
