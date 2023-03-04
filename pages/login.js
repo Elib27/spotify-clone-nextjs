@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import { signIn } from "next-auth/react"
-import SpotifyLogo from "../public/simple_spotify_logo.svg"
+import SEO from "../components/shared/SEO"
 import MusicBarsAnimation from "../components/auth/MusicBarsAnimation"
+import SpotifyLogo from "../public/simple_spotify_logo.svg"
 
 const MainContainer = styled.div`
   height: 100vh;
@@ -61,15 +62,17 @@ const AuthButton = styled.button`
 `
 
 export default function Login() {
-
   return (
-    <MainContainer>
-      <SpotifyLogo />
-      <Title>Spotify Clone by <TextGradient>BAS Eliot</TextGradient></Title>
-      <Subtitle>This website is a Spotify clone coded for training with Next JS.</Subtitle>
-      <AuthButton onClick={() => signIn("spotify")}>Connexion</AuthButton>
-      <MusicBarsAnimation />
-    </MainContainer>
+    <>
+      <SEO title="Spotify Clone - Login" />
+      <MainContainer>
+        <SpotifyLogo />
+        <Title>Spotify Clone by <TextGradient>BAS Eliot</TextGradient></Title>
+        <Subtitle>This website is a Spotify clone coded for training with Next JS.</Subtitle>
+        <AuthButton onClick={() => signIn("spotify")}>Connexion</AuthButton>
+        <MusicBarsAnimation />
+      </MainContainer>
+    </>
   )
 }
 
