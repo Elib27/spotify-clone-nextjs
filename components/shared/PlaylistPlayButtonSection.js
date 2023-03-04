@@ -25,7 +25,7 @@ const PlayButton = styled.button`
 function PlaylistPlayButtonSection({ handleButtonClick, isPlaying }) {
   return (
     <PlayMusicSection>
-      <PlayButton onClick={handleButtonClick}>
+      <PlayButton onClick={handleButtonClick} aria-label="Lecture/Pause">
         {isPlaying ? <PauseLogo /> : <PlayLogo />}
       </PlayButton>
     </PlayMusicSection>

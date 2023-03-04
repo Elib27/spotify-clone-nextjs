@@ -265,7 +265,7 @@ export default function TrackItem({
             )
           }
         </NumberContainer>
-        <PlayButtonContainer onClick={handleClickChangeCurrentMusicId}>
+        <PlayButtonContainer onClick={handleClickChangeCurrentMusicId} aria-label="Lecture/Pause">
           {isCurrentTrackPlaying ? <SmallPauseLogo /> : <SmallPlayLogo />}
         </PlayButtonContainer>
       </NumberRow>

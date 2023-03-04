@@ -152,7 +152,7 @@ export default function LikedPodcast({title, description, cover_url, podcast, da
         <Description>{description}</Description>
         <ControlsContainer>
           <ControlsLeftContainer>
-            <PlayButton>
+            <PlayButton aria-label="Lire la musique">
               <PlayLogo height={16} width={16} />
             </PlayButton>
             <TimeContainer>

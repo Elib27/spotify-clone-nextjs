@@ -69,7 +69,7 @@ export default function Login() {
         <SpotifyLogo />
         <Title>Spotify Clone by <TextGradient>BAS Eliot</TextGradient></Title>
         <Subtitle>This website is a Spotify clone coded for training with Next JS.</Subtitle>
-        <AuthButton onClick={() => signIn("spotify")}>Connexion</AuthButton>
+        <AuthButton onClick={() => signIn("spotify")} aria-label="Se connecter">Connexion</AuthButton>
         <MusicBarsAnimation />
       </MainContainer>
     </>

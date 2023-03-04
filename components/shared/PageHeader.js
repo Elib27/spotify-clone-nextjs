@@ -159,7 +159,7 @@ export default function PageHeader() {
             <SubscribeButton>S&apos;abonner</SubscribeButton>
           </a>
         )}
-          <AccountButton onClick={openPanel}>
+          <AccountButton onClick={openPanel} aria-label="Ouvrir les options du compte">
             <AvatarLogoContainer>
               <AvatarLogo width={16} height={16} alt="account button" />
             </AvatarLogoContainer>
