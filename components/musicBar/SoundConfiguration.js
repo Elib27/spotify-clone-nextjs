@@ -130,6 +130,7 @@ export default function SoundConfiguration() {
         <MicroButton
           isLyricsPannelOpen={isLyricsPannelOpen}
           onClick={() => setIsLyricsOpen(curr => !curr)}
+          aria-label="Lyrics"
         >
           <Microphone />
         </MicroButton>
@@ -138,6 +139,7 @@ export default function SoundConfiguration() {
       <WaitListButton
         isWaitListOpen={isWaitListOpen}
         onClick={() => setIsWaitListOpen(curr => !curr)}
+        aria-label="Wait list"
       >
         <WaitList />
       </WaitListButton>
@@ -145,7 +147,7 @@ export default function SoundConfiguration() {
         <Speaker />
       </Button>
       <VolumeBarContainer>
-        <Button onClick={handleClickToogleMute}>
+        <Button onClick={handleClickToogleMute} aria-label={volumeCategory === 'muted' ? 'unmute' : "mute"}>
           {volumeCategory === 'muted' && <MutedVolume />}
           {volumeCategory === 'low' && <LowVolume />}
           {volumeCategory === 'medium' && <MediumVolume />}
