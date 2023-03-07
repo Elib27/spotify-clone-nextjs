@@ -20,11 +20,29 @@ const Title = styled.h1`
   margin-top: 30px;
   text-align: center;
 `
-const TextGradient = styled.span`
+const TextGradient = styled.a`
   font-weight: 700;
   background: linear-gradient(320deg,#2174cb,#3ca2eb);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: inline-block;
+  position: relative;
+  &::after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    position: relative;
+    display: block;
+    left: 0;
+    bottom: 2px;
+    background: linear-gradient(320deg,#2174cb,#275678);
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-out;
+  }
+  &:hover::after {
+    transform: scaleX(1);
+  }
 `
 const Subtitle = styled.p`
   color: #fff;
@@ -67,7 +85,7 @@ export default function Login() {
       <SEO title="Spotify Clone - Login" />
       <MainContainer>
         <SpotifyLogo />
-        <Title>Spotify Clone by <TextGradient>BAS Eliot</TextGradient></Title>
+        <Title>Spotify Clone by <TextGradient href="https://github.com/Elib27/spotify-clone-nextjs" target="_blank">BAS Eliot</TextGradient></Title>
         <Subtitle>This website is a Spotify clone coded for training with Next JS.</Subtitle>
         <AuthButton onClick={() => signIn("spotify")} aria-label="Se connecter">Connexion</AuthButton>
         <MusicBarsAnimation />
