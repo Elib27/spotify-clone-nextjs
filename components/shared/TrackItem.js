@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeCurrentMusicId, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
+import { changeCurrentMusicId, changeCurrentPlaylist, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
 import Image from 'next/image'
 import FilledHeartLogo from '../../public/tracks_logos/heart.svg'
 import EmptyHeartLogo from '../../public/tracks_logos/empty_heart.svg'
@@ -227,6 +227,7 @@ export default function TrackItem({
         const data = await response.json()
         const tracksQueueIds = data.map(track => track.id)
         const currIndexInQueue = tracksQueueIds.indexOf(id)
+        dispatch(changeCurrentPlaylist('tracks'))
         dispatch(changeTracksQueue(tracksQueueIds))
         dispatch(changeMusicIndexInQueue(currIndexInQueue))
       }

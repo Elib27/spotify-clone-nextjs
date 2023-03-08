@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import { useSelector, useDispatch } from "react-redux"
+import { changeCurrentMusic, changeCurrentPlaylist, changeTracksQueue, changeMusicIndexInQueue, togglePlaying } from "../../store/store"
 import PlaylistPageLayout from "../../components/collection/PlaylistPageLayout"
 import TrackItem from "../../components/shared/TrackItem"
 import { convertMsToMinutesSeconds, convertMsToHourMinSecString } from "../../lib/convertTime"
@@ -8,6 +10,9 @@ import { convertMsToMinutesSeconds, convertMsToHourMinSecString } from "../../li
 export default function Playlist() {
   const router = useRouter()
   const { playlist_id } = router.query
+
+  const dispatch = useDispatch()
+  const music = useSelector(state => state.music)
 
   const [playlistInformations, setPlaylistInformations] = useState(null)
   const [likedTrackIds, setLikedTrackIds] = useState(null)
@@ -38,6 +43,18 @@ export default function Playlist() {
     await fetch(`/api/deleteLikedTracks?ids=${id}`)
   }
 
+  async function togglePlayingPlaylist() {
+    if (!playlistInformations) return
+    if (music.currentPlaylist !== playlist_id) {
+      dispatch(changeCurrentPlaylist(playlist_id))
+      dispatch(changeCurrentMusic(playlistInformations.tracks[0].id))
+      dispatch(changeTracksQueue(playlistInformations.tracks.map(track => track.id)))
+      dispatch(changeMusicIndexInQueue(0))
+    }
+    dispatch(togglePlaying())
+  }
+
+  const isPlaylistPlaying = music.currentPlaylist === playlist_id && music.isPlaying
   const playlistDurationMs = playlistInformations?.tracks && playlistInformations.tracks.reduce((acc, track) => acc + track.duration, 0)
 
   if (!playlistInformations) return
@@ -51,6 +68,8 @@ export default function Playlist() {
       likes={playlistInformations.followers}
       owner={playlistInformations.owner}
       playlistDuration={!!playlistDurationMs && convertMsToHourMinSecString(playlistDurationMs)}
+      isPlaying={isPlaylistPlaying}
+      togglePlaylistPlaying={togglePlayingPlaylist}
       background="#555555"
     >
       {playlistInformations.tracks.map((track, index) => (

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeCurrentMusicId, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
+import { changeCurrentMusicId, changeCurrentPlaylist, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
 import PlaylistHeader from '../../components/shared/PlaylistHeader'
 import PlaylistPlayButtonSection from '../../components/shared/PlaylistPlayButtonSection'
 import NoLikedTracksSection from '../../components/collection/NoLikedTracksSection'
@@ -51,8 +51,10 @@ export default function Tracks() {
   }
 
   function tooglePlaylingLikedMusic() {
-    if (!(likedTracks && likedTracks.map(track => track.id).includes(music.currentTrack.id)))
+    if (!likedTracks) return
+    if (music.currentPlaylist !== 'tracks')
     {
+      dispatch(changeCurrentPlaylist('tracks'))
       dispatch(changeCurrentMusicId(likedTracks[0].id))
       dispatch(changeTracksQueue(likedTracks.map(track => track.id)))
       dispatch(changeMusicIndexInQueue(0))
@@ -60,7 +62,7 @@ export default function Tracks() {
     dispatch(togglePlaying())
   }
 
-  const isLikedMusicPlaying = music.isPlaying && likedTracks && likedTracks.map(track => track.id).includes(music.currentTrack.id)
+  const isLikedMusicPlaying = music.currentPlaylist === 'tracks' && music.isPlaying && likedTracks
 
   if (!likedTracks) return
 

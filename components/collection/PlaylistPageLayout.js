@@ -20,7 +20,7 @@ const TracksWrapper = styled.div`
   padding: 0 32px 32px 32px;
 `
 
-function PlaylistPageLayout({ title, description, cover_url, background, owner, likes, tracks_number, playlistDuration, children }) {
+function PlaylistPageLayout({ title, description, cover_url, background, owner, likes, tracks_number, playlistDuration, isPlaying, togglePlaylistPlaying, children }) {
   return (
     <>
       <PlaylistHeader
@@ -35,12 +35,19 @@ function PlaylistPageLayout({ title, description, cover_url, background, owner, 
       />
       <MainContentWrapper>
         <BackgroundGradient color={background}/>
-        <PlaylistPlayButtonSection />
-        <TracksWrapper>
-          <LikedTracksContainer columnTitles={["#", "titre", "album ou podcast", "ajouté le"]}>
-            {children}
-          </LikedTracksContainer>
-        </TracksWrapper>
+        {!!tracks_number && (
+          <>
+            <PlaylistPlayButtonSection
+              isPlaying={isPlaying}
+              handleButtonClick={togglePlaylistPlaying}
+            />
+            <TracksWrapper>
+              <LikedTracksContainer columnTitles={["#", "titre", "album ou podcast", "ajouté le"]}>
+                {children}
+              </LikedTracksContainer>
+            </TracksWrapper>
+          </>
+        )}
       </MainContentWrapper>
     </>
   )
