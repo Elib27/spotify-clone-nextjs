@@ -101,9 +101,9 @@ export default function Tracks() {
                     duration={track.duration}
                     number={index + 1}
                     isLiked
+                    playlistId="tracks"
                     deleteLikedTrack={deleteLikedTrack}
                     addedDate={track.addedDate}
-                    isTracksPlaylist
                   />
                 ))}
               </TracksContainer>

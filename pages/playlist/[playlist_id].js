@@ -54,7 +54,7 @@ export default function Playlist() {
     dispatch(togglePlaying())
   }
 
-  const isPlaylistPlaying = music.currentPlaylist === playlist_id && music.isPlaying
+  const isPlaylistPlaying = (playlist_id === music.currentPlaylist) && music.isPlaying
   const playlistDurationMs = playlistInformations?.tracks && playlistInformations.tracks.reduce((acc, track) => acc + track.duration, 0)
 
   if (!playlistInformations) return
@@ -84,6 +84,7 @@ export default function Playlist() {
           duration={convertMsToMinutesSeconds(track.duration)}
           addedDate={track.added_date}
           number={index + 1}
+          playlistId={playlist_id}
           isLiked={likedTrackIds && likedTrackIds.includes(track.id)}
           deleteLikedTrack={deleteLikedTrack}
           addLikedTrack={addLikedTrack}

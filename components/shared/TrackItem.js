@@ -208,9 +208,9 @@ export default function TrackItem({
   number,
   addedDate,
   isLiked,
+  playlistId,
   deleteLikedTrack,
-  addLikedTrack,
-  isTracksPlaylist
+  addLikedTrack
 }) {
 
   const music = useSelector(state => state.music)
@@ -222,12 +222,11 @@ export default function TrackItem({
     }
     else {
       dispatch(changeCurrentMusicId(id))
-      if (isTracksPlaylist){
-        const response = await fetch(`/api/getLikedTracks`)
-        const data = await response.json()
-        const tracksQueueIds = data.map(track => track.id)
+      if (playlistId){
+        const tracks = await getTracks(playlistId)
+        const tracksQueueIds = tracks.map(track => track.id)
         const currIndexInQueue = tracksQueueIds.indexOf(id)
-        dispatch(changeCurrentPlaylist('tracks'))
+        dispatch(changeCurrentPlaylist(playlistId))
         dispatch(changeTracksQueue(tracksQueueIds))
         dispatch(changeMusicIndexInQueue(currIndexInQueue))
       }
@@ -237,6 +236,19 @@ export default function TrackItem({
         dispatch(changeTracksQueue(tracksQueueIds))
         dispatch(changeMusicIndexInQueue(0))
       }
+    }
+  }
+
+  async function getTracks(playlistId) {
+    if (playlistId === "tracks") {
+      const response = await fetch(`/api/getLikedTracks`)
+      const data = await response.json()
+      return data
+    }
+    else {
+      const response = await fetch(`/api/getPlaylist?playlist_id=${playlistId}`)
+      const data = await response.json()
+      return data.tracks
     }
   }
 
