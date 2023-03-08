@@ -2,14 +2,6 @@
 
 This website is a Spotify Clone where you can login with your spotify account and see your playlists, your top tracks, your recently played tracks, your followed artists and your library. You can also add liked tracks and listen to music with a custom player.
 
-The technologies used in this project are the following:
-- React
-- Next JS
-- NextAuth
-- Redux Toolkit
-- Styled Components
-- Spotify API
-
 ## Deployment
 
 You can visit the production deployment on Vercel with the following link:
@@ -23,6 +15,14 @@ The website will be able to :
 - read your top tracks
 - read your followed artists
 - read your private informations
+
+The technologies used in this project are the following:
+- React
+- Next JS
+- NextAuth
+- Redux Toolkit
+- Styled Components
+- Spotify API
 
 ## How to run locally
 
