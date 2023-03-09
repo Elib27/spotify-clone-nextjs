@@ -44,7 +44,8 @@ export default function Playlist() {
   }
 
   async function togglePlayingPlaylist() {
-    if (!playlistInformations) return
+    console.log(playlistInformations)
+    if (!playlistInformations || !playlistInformations.full_tracks) return
     if (music.currentPlaylist !== playlist_id) {
       dispatch(changeCurrentPlaylist(playlist_id))
       dispatch(changeCurrentMusic(playlistInformations.tracks[0].id))

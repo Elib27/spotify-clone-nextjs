@@ -30,6 +30,7 @@ export default async function handler(req, res) {
     followers: data?.followers?.total,
     owner: data?.owner?.display_name,
     tracks: tracks.filter(track => track.id),
+    full_tracks: data.tracks.items.reduce((acc, item) => acc && item.track.type === "track", true),
     id: data?.id,
   }
 
