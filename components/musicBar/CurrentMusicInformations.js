@@ -119,27 +119,43 @@ export default function CurrentMusicInformations() {
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
-  const [likedTracks, setLikedTracks] = useState(null)
-
-  async function getLikedTracks() {
-    const response = await fetch('/api/getLikedTracks')
-    const data = await response.json()
-    setLikedTracks(data)
-  }
-
-  async function getTrackInformations() {
-    if (!music.currentTrack.id) return
-    const response = await fetch(`/api/getTrackInformations?id=${music.currentTrack.id}`)
-    const data = await response.json()
-    dispatch(changeCurrentMusic(data))
-  }
+  const [likedTrackIds, setLikedTrackIds] = useState(null)
 
   useEffect(() => {
+    async function getLikedTracks() {
+      const response = await fetch('/api/getLikedTracks')
+      const data = await response.json()
+      const ids = data.map(track => track.id)
+      setLikedTrackIds(ids)
+    }
+    async function getTrackInformations() {
+      if (!music.currentTrack.id) return
+      const response = await fetch(`/api/getTrackInformations?id=${music.currentTrack.id}`)
+      const data = await response.json()
+      dispatch(changeCurrentMusic(data))
+    }
     getTrackInformations()
     getLikedTracks()
-  }, [music.currentTrack.id])
+  }, [music.currentTrack.id, dispatch])
 
-  const isLiked = likedTracks && likedTracks.map(track => track.id).includes(music.currentTrack.id)
+  async function toggleLikedTrack(id, isLiked) {
+    if (isLiked)
+      deleteLikedTrack(id)
+    else
+      addLikedTrack(id)
+  }
+
+  function deleteLikedTrack(id) {
+    setLikedTrackIds(prev => prev.filter(trackId => trackId !== id))
+    fetch(`/api/deleteLikedTracks?ids=${id}`)
+  }
+
+  async function addLikedTrack(id) {
+    setLikedTrackIds(prev => [...prev, id])
+    fetch(`/api/addLikedTracks?ids=${id}`)
+  }
+
+  const isLiked = likedTrackIds && likedTrackIds.includes(music.currentTrack.id)
 
   const artists = music.currentTrack.artists.map((artist, index) => (
     <span key={artist.id}>
@@ -167,13 +183,14 @@ export default function CurrentMusicInformations() {
       </MusicInformations>
       {music.currentTrack.soundType === 'track' ? (
         <HeartButton
+          onClick={() => toggleLikedTrack(music.currentTrack.id, isLiked)}
           isLiked={isLiked}
         >
           {isLiked ? <FilledHeartLogo /> : <EmptyHeartLogo />}
         </HeartButton>
       ):(
         <AddEpisodesButton
-        isLiked={isLiked}
+          isLiked={isLiked}
         >
           {isLiked ? <IsInEpisodes /> : <AddToEpisodes />}
         </AddEpisodesButton>
