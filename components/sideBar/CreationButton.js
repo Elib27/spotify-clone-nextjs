@@ -1,8 +1,12 @@
 import styled from "styled-components"
-import { useSelector } from "react-redux"
+import { useState } from "react"
+import { useSelector, useDispatch} from "react-redux"
+import { togglePlaying } from "../../store/store"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import Image from "next/image"
+import SoundLogo from "../../public/sideBar_logos/sound.svg"
+import PauseLogo from "../../public/musicBar_logos/pause_music.svg"
 
 const LinkLabel = styled.p`
   font-size: 0.875rem;
@@ -46,10 +50,30 @@ const CreationLinkButton = styled.div`
     opacity: 1;
   }
 `
+const SoundButton = styled.button`
+  height: 16px;
+  width: 16px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  margin-left: 16px;
+  color: #fff;
+`
 
-export default function CreationButton({ label, link, imageSrc, imageAlt, logoBackground }) {
+export default function CreationButton({ label, link, playlist, imageSrc, imageAlt, logoBackground }) {
 
   const router = useRouter()
+  const music = useSelector(state => state.music)
+  const dispatch = useDispatch()
+
+  const [isHovering, setIsHovering] = useState(false)
+
+  function handleClickPauseMusic() {
+    dispatch(togglePlaying())
+    setIsHovering(false)
+  }
+
+  const isPlayingTrack = !!playlist && music.currentPlaylist === playlist && music.isPlaying
 
   return (
     <Link href={link ?? '/'}>
@@ -65,6 +89,16 @@ export default function CreationButton({ label, link, imageSrc, imageAlt, logoBa
         >
           {label}
         </LinkLabel>
+        {isPlayingTrack && (
+          <SoundButton
+            aria-label="Lecture"
+            onClick={handleClickPauseMusic}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            {isHovering ? <PauseLogo /> : <SoundLogo />}
+          </SoundButton>
+        )}
       </CreationLinkButton>
     </Link>
   )

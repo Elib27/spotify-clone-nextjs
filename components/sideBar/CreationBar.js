@@ -32,6 +32,7 @@ export default function CreationBar() {
       <CreationButton 
         label="Titres likés"
         link="/collection/tracks"
+        playlist="tracks"
         imageSrc="/sideBar_logos/heart.svg"
         imageAlt="logo coeur titres likés"
         logoBackground="linear-gradient(135deg,#450af5,#c4efd9)"

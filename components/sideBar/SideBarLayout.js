@@ -14,7 +14,7 @@ position: relative;
 const Container = styled.div`
 display: flex;
 flex-direction: column;
-padding: 12px 8px 0 8px;
+padding: 12px 0 0 8px;
 height: 100%;
 width: 100%;
 `
