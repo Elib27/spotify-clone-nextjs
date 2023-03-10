@@ -15,20 +15,19 @@ export default function Tracks() {
   const router = useRouter()
   const { musicResearch } = router.query
 
-  async function getLikedTracksIds() {
-    const response = await fetch('/api/getLikedTracks')
-    const data = await response.json()
-    const ids = data.map(track => track.id)
-    setLikedTrackIds(ids)
-  }
-
-  async function refreshTracks(){
-    const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks`)
-    const data = await response.json()
-    setTracksData(data)
-  }
-  
   useEffect(() => {
+    async function getLikedTracksIds() {
+      const response = await fetch('/api/getLikedTracks')
+      const data = await response.json()
+      const ids = data.map(track => track.id)
+      setLikedTrackIds(ids)
+    }
+  
+    async function refreshTracks(){
+      const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks`)
+      const data = await response.json()
+      setTracksData(data)
+    }
     refreshTracks()
     getLikedTracksIds()
   }, [musicResearch])
@@ -65,6 +64,7 @@ export default function Tracks() {
             number={index + 1}
             addLikedTrack={addLikedTrack}
             deleteLikedTrack={deleteLikedTrack}
+            playlistId=""
             isLiked={likedTrackIds && likedTrackIds.includes(track.id)}
             addedDate={null}
           />

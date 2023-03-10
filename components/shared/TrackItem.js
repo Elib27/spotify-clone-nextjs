@@ -217,13 +217,16 @@ export default function TrackItem({
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
+  const isSelected = (id === music.currentTrack.id) && (playlistId === music.currentPlaylist)
+  const isCurrentTrackPlaying = music.isPlaying && isSelected
+
   async function handleClickChangeCurrentMusicId() {
-    if (id === music.currentTrack.id) {
+    if (isSelected) {
       dispatch(togglePlaying())
     }
     else {
       dispatch(changeCurrentMusicId(id))
-      if (playlistId){
+      if (!!playlistId){
         const tracks = await getTracks(playlistId)
         const tracksQueueIds = tracks.map(track => track.id)
         const currIndexInQueue = tracksQueueIds.indexOf(id)
@@ -235,6 +238,7 @@ export default function TrackItem({
         const response = await fetch(`/api/getTracksQueue?seed_tracks=${id}`)
         const tracksQueueIds = await response.json()
         dispatch(changeTracksQueue(tracksQueueIds))
+        dispatch(changeCurrentPlaylist(""))
         dispatch(changeMusicIndexInQueue(0))
       }
     }
@@ -260,8 +264,6 @@ export default function TrackItem({
       addLikedTrack(id)
   }
 
-  const isCurrentTrackPlaying = (id === music.currentTrack.id) && music.isPlaying
-
   return (
     <Container suppColumn={addedDate}>
       <NumberRow>
@@ -275,7 +277,7 @@ export default function TrackItem({
                 width={14}
                 />
             ) : (
-              <Number isPlaying={id === music.currentTrack.id}>{number}</Number>
+              <Number isPlaying={isSelected}>{number}</Number>
             )
           }
         </NumberContainer>
@@ -293,7 +295,7 @@ export default function TrackItem({
         </TracksCover>
         <TracksInformations>
           <TrackTitle
-            isPlaying={id === music.currentTrack.id}
+            isPlaying={isSelected}
           >
             {title}
           </TrackTitle>
