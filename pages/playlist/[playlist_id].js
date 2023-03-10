@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { useSelector, useDispatch } from "react-redux"
-import { changeCurrentMusic, changeCurrentPlaylist, changeTracksQueue, changeMusicIndexInQueue, togglePlaying } from "../../store/store"
+import { changeCurrentMusicId, changeCurrentPlaylist, changeTracksQueue, changeMusicIndexInQueue, togglePlaying } from "../../store/store"
 import PlaylistPageLayout from "../../components/collection/PlaylistPageLayout"
 import TrackItem from "../../components/shared/TrackItem"
 import { convertMsToMinutesSeconds, convertMsToHourMinSecString } from "../../lib/convertTime"
@@ -47,7 +47,7 @@ export default function Playlist() {
     if (!playlistInformations || !playlistInformations.full_tracks) return
     if (music.currentPlaylist !== playlist_id) {
       dispatch(changeCurrentPlaylist(playlist_id))
-      dispatch(changeCurrentMusic(playlistInformations.tracks[0].id))
+      dispatch(changeCurrentMusicId(playlistInformations.tracks[0].id))
       dispatch(changeTracksQueue(playlistInformations.tracks.map(track => track.id)))
       dispatch(changeMusicIndexInQueue(0))
     }
