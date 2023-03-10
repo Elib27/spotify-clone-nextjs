@@ -210,7 +210,8 @@ export default function TrackItem({
   isLiked,
   playlistId,
   deleteLikedTrack,
-  addLikedTrack
+  addLikedTrack,
+  playDisabled
 }) {
 
   const music = useSelector(state => state.music)
@@ -278,7 +279,11 @@ export default function TrackItem({
             )
           }
         </NumberContainer>
-        <PlayButtonContainer onClick={handleClickChangeCurrentMusicId} aria-label="Lecture/Pause">
+        <PlayButtonContainer
+          onClick={handleClickChangeCurrentMusicId}
+          aria-label={isCurrentTrackPlaying ? "Pause" : "Lecture"}
+          disabled={playDisabled}
+        >
           {isCurrentTrackPlaying ? <SmallPauseLogo /> : <SmallPlayLogo />}
         </PlayButtonContainer>
       </NumberRow>

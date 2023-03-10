@@ -44,7 +44,6 @@ export default function Playlist() {
   }
 
   async function togglePlayingPlaylist() {
-    console.log(playlistInformations)
     if (!playlistInformations || !playlistInformations.full_tracks) return
     if (music.currentPlaylist !== playlist_id) {
       dispatch(changeCurrentPlaylist(playlist_id))
@@ -89,6 +88,7 @@ export default function Playlist() {
           isLiked={likedTrackIds && likedTrackIds.includes(track.id)}
           deleteLikedTrack={deleteLikedTrack}
           addLikedTrack={addLikedTrack}
+          playDisabled={!playlistInformations.full_tracks}
         />
       ))
       }
