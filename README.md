@@ -1,6 +1,6 @@
 # NEXT JS Spotify Clone
 
-This website is a Spotify Clone where you can login with your spotify account and see your playlists, your top tracks, your recently played tracks, your followed artists and your library. You can also add liked tracks and listen to music with a custom player.
+This website is a Spotify Clone where you can login with your spotify account and see your playlists, your top tracks, your recently played tracks, your followed artists and your library. You can also add liked tracks and listen to music with a custom player. You can listen to music in a playlist only if the playlist if full of tracks (no podcasts).
 
 ## Deployment
 
