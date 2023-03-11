@@ -66,6 +66,9 @@ const CardImageContainer = styled.div`
   ${({isRoundImage}) => isRoundImage && `
     border-radius: 50%;
   `}
+  img {
+    object-fit: cover;
+  }
 `
 const CardTitle = styled.div`
   font-size: 1rem;

@@ -61,6 +61,9 @@ const CardImageContainer = styled.div`
   ${({isRoundImage}) => isRoundImage && `
     border-radius: 50%;
   `}
+  img {
+    object-fit: cover;
+  }
 `
 const DefaultAvatarLogoContainer = styled.div`
   height: 100%;

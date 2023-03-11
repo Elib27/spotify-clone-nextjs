@@ -49,6 +49,9 @@ const ImageContainer = styled.div`
   aspect-ratio: 1;
   position: relative;
   box-shadow: 0 8px 24px rgb(0 0 0 / 50%);
+  img {
+    object-fit: cover;
+  }
 `
 const LogoContainer = styled.div`
   height: 100%;
