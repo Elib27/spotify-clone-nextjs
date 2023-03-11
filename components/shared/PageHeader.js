@@ -1,7 +1,9 @@
 import styled from "styled-components"
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { useSession } from "next-auth/react"
 import Link from 'next/link'
+import Image from "next/image"
 import Pannel from "./AccountPannel"
 import SearchBar from '../searchPage/SearchBar'
 import SpotifyLogo from '../../public/header_logos/spotify_logo.svg'
@@ -104,13 +106,18 @@ const AccountButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   cursor: pointer;
   &:hover {
     border-color: #2a2a2a;
   }
-`
-const AvatarLogoContainer = styled.div`
-  height: 20px;
+  svg {
+    margin-bottom: 2px;
+  }
+  img {
+    border-radius: 50%;
+    object-fit: cover;
+  }
 `
 
 const pagesWhereSubscribeButtonVisible = [
@@ -122,6 +129,8 @@ const pagesWhereSubscribeButtonVisible = [
 export default function PageHeader() {
 
   const router = useRouter()
+
+  const {data: session} = useSession()
 
   const [isPanelOpen, setIsPanelOpen] = useState(false)
 
@@ -160,9 +169,12 @@ export default function PageHeader() {
           </a>
         )}
           <AccountButton onClick={openPanel} aria-label="Ouvrir les options du compte">
-            <AvatarLogoContainer>
-              <AvatarLogo width={16} height={16} alt="account button" />
-            </AvatarLogoContainer>
+            {session?.user?.image ? (
+                <Image src={session?.user?.image} draggable="false" fill alt="photo de profil"/>
+              ) : (
+                <AvatarLogo width={16} height={16} alt="account button" />
+              )
+            }
           </AccountButton>
         </RightContainer>
         {isPanelOpen && <Pannel setIsPanelOpen={setIsPanelOpen} />}
