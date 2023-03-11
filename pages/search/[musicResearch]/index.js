@@ -1,9 +1,9 @@
 import styled from "styled-components"
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/router"
+import useResizeObserver from "../../../hooks/useResizeObserver"
 import MainLayout from "../../../components/shared/MainLayout"
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
-import useResizeObserver from "../../../hooks/useResizeObserver"
 import BestResult from "../../../components/searchPage/BestResult"
 import TrackResults from "../../../components/searchPage/TrackResults"
 import SearchResultSection from "../../../components/searchPage/SearchResultSection"
@@ -26,6 +26,7 @@ export default function SearchResult() {
   const router = useRouter()
   const { musicResearch } = router.query
 
+  const WIDTH_LIMIT = 200
   const containerRef = useRef(null)
   const dimensions = useResizeObserver(containerRef)
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(4)
@@ -51,7 +52,7 @@ export default function SearchResult() {
 
   useEffect(() => {
     const { width } = dimensions || {width: 900}
-    const cardsNumber = Math.floor(width / 230)
+    const cardsNumber = Math.floor(width / WIDTH_LIMIT)
     if (cardsNumber >= 3 && cardsNumber <= 9) {
       setCardsNumberPerRow(cardsNumber)
     }
