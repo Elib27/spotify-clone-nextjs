@@ -13,8 +13,6 @@ const ShortcutSection = styled.section`
 
 export default function HomeShorcuts() {
 
-  // fetch playlists et recently played => artists
-  
   const containerRef = useRef(null)
   const dimensions = useResizeObserver(containerRef)
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(3)
