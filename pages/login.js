@@ -56,6 +56,7 @@ const AuthButton = styled.button`
   font-size: 1.25rem;
   font-weight: 700;
   border-radius: 50px;
+  border: 0;
   padding: 10px 30px;
   margin-top: 30px;
   cursor: pointer;
