@@ -206,11 +206,13 @@ export default function MusicControlsActive() {
   function setRandomMusic() {
     const randomIndex = randomInteger(0, music.tracksQueue.length - 1)
     dispatch(changeMusicIndexInQueue(randomIndex))
+    dispatch(changeCurrentMusicId(music.tracksQueue[randomIndex]))
   }
 
   function handleClickPrevMusic() {
     if (music.musicIndexInQueue > 0 && music.time <= 3) {
       dispatch(changeMusicIndexInQueue(music.musicIndexInQueue - 1))
+      dispatch(changeCurrentMusicId(music.tracksQueue[music.musicIndexInQueue - 1]))
     }
     else {
       resetMusic()
@@ -223,6 +225,7 @@ export default function MusicControlsActive() {
     }
     else {
       dispatch(changeMusicIndexInQueue(music.musicIndexInQueue + 1))
+      dispatch(changeCurrentMusicId(music.tracksQueue[music.musicIndexInQueue + 1]))
     }
     if (music.loopMode === 'loop_2') {
       dispatch(changeLoopMode('loop_1'))
@@ -233,10 +236,6 @@ export default function MusicControlsActive() {
     const currMusicIndex = calculateCurrentMusicIndex(music.currentTrack.id, MAX_CPFREE_MUSIC_INDEX.current)
     setCurrentCpFreeMusicIndex(currMusicIndex)
   }, [music.currentTrack.id])
-
-  useEffect(() => {
-    dispatch(changeCurrentMusicId(music.tracksQueue[music.musicIndexInQueue]))
-  }, [music.musicIndexInQueue])
 
   function updateCurrentTime() {
     if (audio.current && !isProgressionBarMoving) {
