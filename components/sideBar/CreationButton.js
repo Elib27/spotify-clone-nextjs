@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useState } from "react"
-import { useSelector, useDispatch} from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { togglePlaying } from "../../store/store"
 import { useRouter } from "next/router"
 import Link from "next/link"

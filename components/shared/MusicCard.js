@@ -58,7 +58,7 @@ const CardImageContainer = styled.div`
   box-shadow: 0 8px 24px rgb(0 0 0 / 50%);
   position: relative;
   overflow: hidden;
-  ${({isRoundImage}) => isRoundImage && `
+  ${({ isRoundImage }) => isRoundImage && `
     border-radius: 50%;
   `}
   img {
@@ -96,20 +96,20 @@ const CardSubTitle = styled.div`
   text-overflow: ellipsis;
 `
 
-export default function MusicCard({cover_url, title, description, isRoundImage, noPlayingButton}) {
+export default function MusicCard({ cover_url, title, description, isRoundImage, noPlayingButton }) {
   return (
     <CardContainer>
       <CardImageWrapper>
         <CardImageContainer isRoundImage={isRoundImage}>
           {
             cover_url ?
-            (
-              <Image src={cover_url} alt="song cover" fill />
-            ):(
-              <DefaultAvatarLogoContainer>
-                <DefaultAvatarLogo height="64" width="64"/>
-              </DefaultAvatarLogoContainer>
-            )
+              (
+                <Image src={cover_url} alt="song cover" fill />
+              ) : (
+                <DefaultAvatarLogoContainer>
+                  <DefaultAvatarLogo height="64" width="64" />
+                </DefaultAvatarLogoContainer>
+              )
           }
         </CardImageContainer>
         {!noPlayingButton && (

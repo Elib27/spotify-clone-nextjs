@@ -23,6 +23,7 @@ const Title = styled.h1`
 const TextGradient = styled.a`
   font-weight: 700;
   background: linear-gradient(320deg,#2174cb,#3ca2eb);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;

@@ -14,7 +14,7 @@ async function addLikedTracks(acces_token, ids) {
 }
 
 export default async function handler(req, res) {
-  
+
   const { ids } = req.query
   const { accessToken } = await getServerSession(req, res, authOptions)
 

@@ -31,12 +31,12 @@ export default function TrackResults({ tracks, likedTracksIds }) {
           if (index < 4) {
             return (
               <Track
-                title={track.title} 
+                title={track.title}
                 artist={track.artist}
                 cover_url={track.cover_url}
                 duration={convertMsToMinutesSeconds(track.duration)}
                 explicit={track.explicit}
-                isLiked = {likedTracksIds && likedTracksIds.includes(track.id)}
+                isLiked={likedTracksIds && likedTracksIds.includes(track.id)}
                 key={track.id}
               />
             )

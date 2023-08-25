@@ -3,13 +3,13 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "./auth/[...nextauth]"
 
 export default async function handler(req, res) {
-  
+
   const { accessToken } = await getServerSession(req, res, authOptions)
 
   const response = await getLikedPodcasts(accessToken)
   const data = await response.json()
 
-  const likedPodcasts= data.items.map(item => ({
+  const likedPodcasts = data.items.map(item => ({
     name: item.show?.name,
     artist: item.show?.publisher,
     image: item.show?.images?.[1]?.url ?? item.album?.images?.[0]?.url,

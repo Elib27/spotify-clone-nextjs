@@ -26,11 +26,11 @@ export default async function handle(req, res) {
     return bestResultIndex
   }
 
-  function convertMsToMinutes(timeInMs){
+  function convertMsToMinutes(timeInMs) {
     return Math.ceil(timeInMs / (1000 * 60))
   }
 
-  function convertPodcastDate(dateInNumbers){
+  function convertPodcastDate(dateInNumbers) {
 
     const monthNames = ['Janv.', 'Févr.', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.']
     const currentDate = new Date()
@@ -56,14 +56,14 @@ export default async function handle(req, res) {
     artist: data[closerCategory]?.items[0]?.artist,
     link: data[closerCategory]?.items[0]?.external_urls.spotify
   }
-  
+
   const tracks = data.tracks.items.map((item) => ({
-      title: item.name,
-      artist: item.artists?.[0]?.name,
-      duration: item.duration_ms,
-      cover_url: item.album?.images?.[1]?.url,
-      explicit: item?.explicit,
-      id: item?.id
+    title: item.name,
+    artist: item.artists?.[0]?.name,
+    duration: item.duration_ms,
+    cover_url: item.album?.images?.[1]?.url,
+    explicit: item?.explicit,
+    id: item?.id
   }))
   const artists = data.artists.items.map((item) => ({
     name: item?.name,

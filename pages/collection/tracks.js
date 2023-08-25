@@ -52,8 +52,7 @@ export default function Tracks() {
 
   function tooglePlaylingLikedMusic() {
     if (!likedTracks) return
-    if (music.currentPlaylist !== 'tracks')
-    {
+    if (music.currentPlaylist !== 'tracks') {
       dispatch(changeCurrentPlaylist('tracks'))
       dispatch(changeCurrentMusicId(likedTracks[0].id))
       dispatch(changeTracksQueue(likedTracks.map(track => track.id)))
@@ -74,12 +73,12 @@ export default function Tracks() {
         background="#523b9f"
         owner="eliot"
         tracks_number={likedTracks.length}
-        />
+      />
       <MainContentWrapper>
         <BackgroundGradient />
         {likedTracks.length === 0 ? (
           <NoLikedTracksSection />
-        ):(
+        ) : (
           <>
             <PlaylistPlayButtonSection
               handleButtonClick={tooglePlaylingLikedMusic}

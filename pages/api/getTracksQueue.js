@@ -5,7 +5,7 @@ import getTrackRecommendations from "../../lib/spotify/getTrackRecommendations"
 export default async function handler(req, res) {
 
   const { accessToken } = await getServerSession(req, res, authOptions)
-  
+
   const seed_tracks = req.query?.seed_tracks
   const seed_artists = req.query?.seed_artists
   const seed_genres = req.query?.seed_genres

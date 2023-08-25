@@ -26,7 +26,7 @@ export default function Playlists() {
       const data = await response.json()
       setAlbumsData(data)
     }
-    
+
     getFirstTracks()
 
   }, [musicResearch])
@@ -34,7 +34,7 @@ export default function Playlists() {
   if (!albumsData) return (null)
 
   if (!albumsData?.length) {
-    return (<NoResults searchValue={musicResearch}/>)
+    return (<NoResults searchValue={musicResearch} />)
   }
 
   return (

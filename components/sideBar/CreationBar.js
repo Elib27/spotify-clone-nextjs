@@ -15,7 +15,7 @@ export default function CreationBar() {
 
   return (
     <div>
-      <NavButton 
+      <NavButton
         label="Bibliothèque"
         link="/collection/playlists"
         imageSrc="/sideBar_logos/books.svg"
@@ -23,13 +23,13 @@ export default function CreationBar() {
         imageAlt="library link button"
         isActive={pagesWhereFullBooks.includes(router.pathname)}
       />
-      <CreationButton 
+      <CreationButton
         label="Créer une playlist"
         imageSrc="/sideBar_logos/cross.svg"
         imageAlt="logo créer une playlist"
         logoBackground="#fff"
       />
-      <CreationButton 
+      <CreationButton
         label="Titres likés"
         link="/collection/tracks"
         playlist="tracks"

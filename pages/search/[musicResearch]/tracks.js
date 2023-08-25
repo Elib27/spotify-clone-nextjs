@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from "next/router"
 import MainLayout from '../../../components/shared/MainLayout'
 import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
@@ -22,8 +22,8 @@ export default function Tracks() {
       const ids = data.map(track => track.id)
       setLikedTrackIds(ids)
     }
-  
-    async function refreshTracks(){
+
+    async function refreshTracks() {
       const response = await fetch(`/api/getSearchResults/${musicResearch}/tracks`)
       const data = await response.json()
       setTracksData(data)
@@ -41,11 +41,11 @@ export default function Tracks() {
     setLikedTrackIds(prev => prev.filter(trackId => trackId !== id))
     await fetch(`/api/deleteLikedTracks?ids=${id}`)
   }
-  
+
   if (!tracksData) return (null)
 
   if (!tracksData?.length) {
-    return (<NoResults searchValue={musicResearch}/>)
+    return (<NoResults searchValue={musicResearch} />)
   }
 
   return (

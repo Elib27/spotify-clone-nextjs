@@ -63,7 +63,7 @@ const CardImageContainer = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
-  ${({isRoundImage}) => isRoundImage && `
+  ${({ isRoundImage }) => isRoundImage && `
     border-radius: 50%;
   `}
   img {
@@ -89,14 +89,14 @@ const CardSubTitle = styled.div`
   padding-bottom: 8px;
 `
 
-export default function PlaylistCard({cover_url, title, description, isRoundImage, noPlayingButton}) {
+export default function PlaylistCard({ cover_url, title, description, isRoundImage, noPlayingButton }) {
   return (
     <CardContainer>
       <CardImageWrapper>
         <CardImageContainer isRoundImage={isRoundImage}>
           {cover_url ? (
-            <Image src={cover_url} alt="song cover" fill draggable="false"/>
-          ):(
+            <Image src={cover_url} alt="song cover" fill draggable="false" />
+          ) : (
             <DoubleNoteLogo />
           )}
         </CardImageContainer>

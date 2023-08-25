@@ -34,7 +34,7 @@ function PlaylistPageLayout({ title, description, cover_url, background, owner, 
         playlistDuration={playlistDuration}
       />
       <MainContentWrapper>
-        <BackgroundGradient color={background}/>
+        <BackgroundGradient color={background} />
         {!!tracks_number && (
           <>
             <PlaylistPlayButtonSection

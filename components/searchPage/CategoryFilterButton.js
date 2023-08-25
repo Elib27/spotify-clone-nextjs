@@ -15,7 +15,7 @@ const FilterButton = styled.div`
   background-color: #232323;
   transition: background-color 0.2s ease 0s, color 0.2s ease 0s;
   line-height: 1.72;
-  ${({isSelected}) => isSelected ? `
+  ${({ isSelected }) => isSelected ? `
     background-color: #fff;
     color: #000;
   ` : `
@@ -25,7 +25,7 @@ const FilterButton = styled.div`
   `}
 `
 
-export default function CategoryFilterButton({title, link, isSelected}) {
+export default function CategoryFilterButton({ title, link, isSelected }) {
 
   return (
     <Link href={link}>

@@ -41,14 +41,14 @@ const ScreenButton = styled.button`
 `
 const HeartButton = styled(ScreenButton)`
   margin-top: 0;
-  ${({isLiked}) => isLiked && `
+  ${({ isLiked }) => isLiked && `
     color: #1db954;
     opacity: 1;
   `}
 `
 const AddEpisodesButton = styled(ScreenButton)`
   margin-top: 0;
-  ${({isLiked}) => isLiked && `
+  ${({ isLiked }) => isLiked && `
     opacity: 1;
   `}
 `
@@ -175,7 +175,7 @@ export default function CurrentMusicInformations() {
   return (
     <Container>
       <CurrentMusicCover>
-        <Image src={music.currentTrack.image} alt={`${music.currentTrack.album || music.currentTrack.name} cover`} fill/>
+        <Image src={music.currentTrack.image} alt={`${music.currentTrack.album || music.currentTrack.name} cover`} fill />
       </CurrentMusicCover>
       <MusicInformations>
         <MusicTitle>{music.currentTrack.name}</MusicTitle>
@@ -188,7 +188,7 @@ export default function CurrentMusicInformations() {
         >
           {isLiked ? <FilledHeartLogo /> : <EmptyHeartLogo />}
         </HeartButton>
-      ):(
+      ) : (
         <AddEpisodesButton
           isLiked={isLiked}
         >

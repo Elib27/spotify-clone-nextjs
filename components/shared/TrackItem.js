@@ -21,7 +21,7 @@ const Number = styled.div`
   font-size: 1rem;
   font-weight: 400;
   color: #b3b3b3;
-  ${({isPlaying}) => isPlaying && `
+  ${({ isPlaying }) => isPlaying && `
     color: #1ed760 !important;
   `}
 `
@@ -47,7 +47,7 @@ const TrackArtist = styled.span`
 const LikeContainer = styled.div`
   height: 16px;
   width: 16px;
-  ${({isLiked}) => isLiked ? `
+  ${({ isLiked }) => isLiked ? `
     color: #1ed760;
     opacity: 1 !important;
   ` : `
@@ -65,7 +65,7 @@ const Container = styled.div`
   width: 100%;
   padding: 0 16px;
   display: grid;
-  ${({suppColumn}) => suppColumn ? `
+  ${({ suppColumn }) => suppColumn ? `
     grid-template-columns: 16px 6fr 4fr 3fr minmax(120px, 1fr);
   ` : `
     grid-template-columns: 16px 4fr 2fr minmax(120px,1fr);
@@ -133,7 +133,7 @@ const TrackTitle = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  ${({isPlaying}) => isPlaying && `
+  ${({ isPlaying }) => isPlaying && `
     color: #1ed760 !important;
   `}
 `
@@ -226,7 +226,7 @@ export default function TrackItem({
     }
     else {
       dispatch(changeCurrentMusicId(id))
-      if (!!playlistId){
+      if (!!playlistId) {
         const tracks = await getTracks(playlistId)
         const tracksQueueIds = tracks.map(track => track.id)
         const currIndexInQueue = tracksQueueIds.indexOf(id)
@@ -275,7 +275,7 @@ export default function TrackItem({
                 alt='music playing sound levels animation'
                 height={14}
                 width={14}
-                />
+              />
             ) : (
               <Number isPlaying={isSelected}>{number}</Number>
             )
@@ -291,7 +291,7 @@ export default function TrackItem({
       </NumberRow>
       <TitleRow>
         <TracksCover>
-          <Image src={cover_url} width={40} height={40} alt="album cover"/>
+          <Image src={cover_url} width={40} height={40} alt="album cover" />
         </TracksCover>
         <TracksInformations>
           <TrackTitle
@@ -318,7 +318,7 @@ export default function TrackItem({
           isLiked={isLiked}
           onClick={() => toggleLikedTrack(id, isLiked)}
         >
-          { isLiked ? <FilledHeartLogo /> : <EmptyHeartLogo />}
+          {isLiked ? <FilledHeartLogo /> : <EmptyHeartLogo />}
         </LikeContainer>
         <DurationRow>
           <DurationContainer>

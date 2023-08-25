@@ -39,7 +39,7 @@ const SearchTracksLink = styled.div`
 export default function NoLikedTracksSection() {
   return (
     <Container>
-      <Image src="/tracks_logos/music_note.svg" width={64} height={64} alt="music note"/>
+      <Image src="/tracks_logos/music_note.svg" width={64} height={64} alt="music note" />
       <Title>Les titres que vous likez apparaissent ici</Title>
       <SubTitle>Sauvegardez des titres en appuyant sur l&apos;icône de cœur.</SubTitle>
       <Link href="/search">

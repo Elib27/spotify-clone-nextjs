@@ -20,7 +20,7 @@ const PlaylistsContainer = styled.div`
   grid-gap: 24px;
 `
 
-export default function CollectionPageContainer({title, children}) {
+export default function CollectionPageContainer({ title, children }) {
   return (
     <Container>
       <Title>{title}</Title>

@@ -192,11 +192,11 @@ export default function MusicControlsActive() {
     if (audio.current) {
       audio.current.addEventListener('loadedmetadata', () => {
         dispatch(changeDuration(Math.floor(audio.current.duration)))
-      }, {once: true})
+      }, { once: true })
     }
   }
 
-  function resetMusic(){
+  function resetMusic() {
     audio.current.currentTime = 0
     dispatch(changeTime(0))
     updateMusicDuration()
@@ -257,7 +257,7 @@ export default function MusicControlsActive() {
   }, [music.time, music.duration, music.loopMode])
 
   useEffect(() => {
-    async function firstMusicLoad(){
+    async function firstMusicLoad() {
       const { url, maxIndex } = await getCopyrightFreeTrack(currentCpFreeMusicIndex)
       MAX_CPFREE_MUSIC_INDEX.current = maxIndex
       setCurrentCpFreeMusicLink(url)
@@ -271,7 +271,7 @@ export default function MusicControlsActive() {
     if (audio.current) {
       music.isPlaying ? audio.current.play() : audio.current.pause()
     }
-  },[music.isPlaying])
+  }, [music.isPlaying])
 
   useEffect(() => {
     async function changeMusic() {
@@ -287,19 +287,19 @@ export default function MusicControlsActive() {
   }, [currentCpFreeMusicLink])
 
   useEffect(() => {
-    if(audio.current) {
+    if (audio.current) {
       audio.current.volume = (music.volume / 100) ** 3
     }
   }, [music.volume])
 
   useEffect(() => {
-    if(audio.current && !isProgressionBarMoving) {
+    if (audio.current && !isProgressionBarMoving) {
       audio.current.currentTime = music.time
     }
   }, [isProgressionBarMoving])
 
   function getLoopModeDataHover() {
-    switch(music.loopMode) {
+    switch (music.loopMode) {
       case 'no_loop':
         return 'Activer la répétition'
       case 'loop_1':
@@ -316,13 +316,13 @@ export default function MusicControlsActive() {
     <MusicControlsContainer>
       <ControlsContainer>
         <SideContainer>
-        { music.currentTrack.soundType === 'track' ? 
+          {music.currentTrack.soundType === 'track' ?
             (
               <RandomButton
                 isPlayingRandom={music.isPlayingRandom}
                 onClick={() => dispatch(togglePlayingRandom())}
-                data-hover={`${ music.isPlayingRandom ? 'Désactiver' : 'Activer'} la lecture aléatoire`}
-                aria-label={`${ music.isPlayingRandom ? 'Désactiver' : 'Activer'} la lecture aléatoire`}
+                data-hover={`${music.isPlayingRandom ? 'Désactiver' : 'Activer'} la lecture aléatoire`}
+                aria-label={`${music.isPlayingRandom ? 'Désactiver' : 'Activer'} la lecture aléatoire`}
               >
                 <RandomMusicLogo />
               </RandomButton>
@@ -335,7 +335,7 @@ export default function MusicControlsActive() {
                 <Prev15secLogo />
               </ControlButton>
             )
-        }
+          }
           <ControlButton
             onClick={handleClickPrevMusic}
             data-hover="Précédent"
@@ -344,7 +344,7 @@ export default function MusicControlsActive() {
             <PrevMusicLogo />
           </ControlButton>
         </SideContainer>
-        <PlayButton 
+        <PlayButton
           onClick={() => dispatch(togglePlaying())}
           data-hover={music.isPlaying ? "Pause" : "Lecture"}
           aria-label={music.isPlaying ? "Pause" : "Lecture"}
@@ -359,7 +359,7 @@ export default function MusicControlsActive() {
           >
             <NextMusicLogo />
           </ControlButton>
-          { music.currentTrack.soundType === 'track' ? 
+          {music.currentTrack.soundType === 'track' ?
             (
               <LoopButton
                 onClick={() => dispatch(incrementLoopMode())}
@@ -367,7 +367,7 @@ export default function MusicControlsActive() {
                 data-hover={getLoopModeDataHover()}
                 aria-label={getLoopModeDataHover()}
               >
-                {music.loopMode === 'loop_2' ? <LoopMusic2Logo /> : <LoopMusic1Logo /> }
+                {music.loopMode === 'loop_2' ? <LoopMusic2Logo /> : <LoopMusic1Logo />}
               </LoopButton>
             ) : (
               <ControlButton
@@ -375,7 +375,7 @@ export default function MusicControlsActive() {
                 data-hover="Avancer de 15 secondes"
                 aria-label="Avancer de 15 secondes"
               >
-                  <Next15secLogo />
+                <Next15secLogo />
               </ControlButton>
             )
           }

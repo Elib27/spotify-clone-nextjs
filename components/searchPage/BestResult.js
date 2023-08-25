@@ -64,7 +64,7 @@ const CardContainer = styled.div`
 const ImageContainer = styled.div`
   height: 92px;
   width: 92px;
-  ${({isRound}) => isRound ? 'border-radius: 50%;' : 'border-radius: 4px;'}
+  ${({ isRound }) => isRound ? 'border-radius: 50%;' : 'border-radius: 4px;'}
   overflow: hidden;
   position: relative;
 `
@@ -93,13 +93,13 @@ const ResultCategory = styled.div`
   line-height: 1.6;
 `
 
-export default function BestResult({title, category, cover_url}) {
+export default function BestResult({ title, category, cover_url }) {
   return (
     <Container>
       <TopTitle>Meilleur résultat</TopTitle>
       <CardContainer>
         <ImageContainer isRound={category === 'artiste'}>
-          <Image src={cover_url} fill alt="result cover"/>
+          <Image src={cover_url} fill alt="result cover" />
         </ImageContainer>
         <div>
           <CardTitle>{title}</CardTitle>

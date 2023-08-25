@@ -4,7 +4,7 @@ import { authOptions } from "./auth/[...nextauth]"
 const ENDPOINT = 'https://api.spotify.com/v1/me/tracks'
 
 async function deleteLikedTracks(access_token, ids) {
-    
+
   await fetch(`${ENDPOINT}?ids=${ids}`, {
     method: 'DELETE',
     headers: {

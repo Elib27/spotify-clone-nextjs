@@ -24,7 +24,7 @@ const musicSlice = createSlice({
   },
   reducers: {
     changeCurrentMusic(state, action) {
-      state.currentTrack = {...state.currentTrack, ...action.payload}
+      state.currentTrack = { ...state.currentTrack, ...action.payload }
     },
     changeCurrentMusicId(state, action) {
       state.currentTrack.id = action.payload
@@ -45,7 +45,7 @@ const musicSlice = createSlice({
       state.loopMode = action.payload
     },
     incrementLoopMode: (state) => {
-      switch(state.loopMode) {
+      switch (state.loopMode) {
         case 'no_loop':
           state.loopMode = 'loop_1'
           break

@@ -30,7 +30,7 @@ const TracksSectionColumnTitle = styled.div`
   }
 `
 
-export default function TracksContainer({columnTitles, children}) {
+export default function TracksContainer({ columnTitles, children }) {
   return (
     <div>
       <TracksSectionColumns>
@@ -44,7 +44,7 @@ export default function TracksContainer({columnTitles, children}) {
           <DurationLogo />
         </TracksSectionColumnTitle>
       </TracksSectionColumns>
-      { children }
+      {children}
     </div>
   )
 }

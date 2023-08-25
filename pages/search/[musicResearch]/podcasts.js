@@ -31,24 +31,24 @@ export default function Podcasts() {
 
   }, [musicResearch])
 
-if (!podcastResults) return (null)
+  if (!podcastResults) return (null)
 
-if (!podcastResults?.length) {
-  return (<NoResults searchValue={musicResearch}/>)
-}
+  if (!podcastResults?.length) {
+    return (<NoResults searchValue={musicResearch} />)
+  }
 
-return (
-  <PodcastsContainer>
-    {podcastResults.map((podcast) => (
-      <MusicCard
-        title={podcast.name}
-        cover_url={podcast.cover_url}
-        description={podcast.publisher}
-        key={podcast.id}
-      />
-    ))}
-  </PodcastsContainer>
-)
+  return (
+    <PodcastsContainer>
+      {podcastResults.map((podcast) => (
+        <MusicCard
+          title={podcast.name}
+          cover_url={podcast.cover_url}
+          description={podcast.publisher}
+          key={podcast.id}
+        />
+      ))}
+    </PodcastsContainer>
+  )
 }
 
 Podcasts.getLayout = function getLayout(page) {

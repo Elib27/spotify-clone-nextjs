@@ -64,7 +64,7 @@ const ExtendedMenuButton = styled(MenuButton)`
 export default function AccountPannel({ setIsPanelOpen }) {
 
   const panel = useRef(null)
-  
+
   useEffect(() => {
 
     function handleClickOutside(e) {
@@ -72,7 +72,7 @@ export default function AccountPannel({ setIsPanelOpen }) {
         setIsPanelOpen(false)
       }
     }
-  
+
     document.addEventListener("click", handleClickOutside)
     return () => {
       document.removeEventListener("click", handleClickOutside)
@@ -94,7 +94,7 @@ export default function AccountPannel({ setIsPanelOpen }) {
           <MenuButton>
             <ButtonLabel>Profil</ButtonLabel>
           </MenuButton>
-        </li> 
+        </li>
         <li>
           <ExtendedMenuButton>
             <ButtonLabel>Passer à Premium</ButtonLabel>
@@ -112,7 +112,7 @@ export default function AccountPannel({ setIsPanelOpen }) {
           <MenuButton onClick={signOut}>
             <ButtonLabel>Déconnexion</ButtonLabel>
           </MenuButton>
-        </li> 
+        </li>
       </AccountMenu>
     </PannelContainer>
   )

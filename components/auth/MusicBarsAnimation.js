@@ -31,25 +31,25 @@ const Bar = styled.li`
   border-top-right-radius: 8px;
   background-color: #1ed760;
   animation: ${barAnimation} 2s ease-in-out infinite reverse;
-  animation-delay: ${({delay}) => delay}s;
+  animation-delay: ${({ delay }) => delay}s;
 `
 
 export default function MusicBarsAnimation() {
-  
+
   const container = useRef(null)
   const bars = useRef([])
   const [barsNumber, setBarsNumber] = useState(0)
   const containerDimensions = useResizeObserver(container)
 
   useEffect(() => {
-    const { width } = containerDimensions || {width: 1200}
+    const { width } = containerDimensions || { width: 1200 }
     const barsNum = Math.round(width / 28)
     setBarsNumber(barsNum)
   }, [containerDimensions])
 
   useEffect(() => {
     const MAX_BARS = 50
-    bars.current = Array(MAX_BARS).fill(null).map((_, i) => <Bar key={i} delay={-(Math.random() * 2)}/>)
+    bars.current = Array(MAX_BARS).fill(null).map((_, i) => <Bar key={i} delay={-(Math.random() * 2)} />)
   }, [])
 
   return (

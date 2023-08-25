@@ -10,7 +10,7 @@ const PlaylistContainer = styled.div`
   /* Firefox */
   scrollbar-color: rgba(255,255,255,0.3);
   scrollbar-width: thin;
-  ${({isScrollBarVisible}) => !isScrollBarVisible && `scrollbar-color: rgba(18,18,18,1);`}
+  ${({ isScrollBarVisible }) => !isScrollBarVisible && `scrollbar-color: rgba(18,18,18,1);`}
   /* Chrome, Edge, and Safari */
   &::-webkit-scrollbar {
     width: 16px;
@@ -22,7 +22,7 @@ const PlaylistContainer = styled.div`
     min-height: 30px;
     border: 2px solid transparent;
     background-color: rgba(255,255,255,0.3);
-    ${({isScrollBarVisible}) => !isScrollBarVisible && `background-color: rgba(18,18,18,1);`}
+    ${({ isScrollBarVisible }) => !isScrollBarVisible && `background-color: rgba(18,18,18,1);`}
     background-clip: content-box;
     transition: background-color 0.2s ease-in-out;
     z-index: 9999;

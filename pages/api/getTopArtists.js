@@ -3,9 +3,9 @@ import { authOptions } from "./auth/[...nextauth]"
 import getTopArtists from "../../lib/spotify/getTopArtists"
 
 export default async function handler(req, res) {
-  
+
   const { accessToken } = await getServerSession(req, res, authOptions)
-  
+
   const response = await getTopArtists(accessToken)
   const data = await response.json()
 

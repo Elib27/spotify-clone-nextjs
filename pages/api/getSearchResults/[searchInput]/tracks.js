@@ -11,8 +11,8 @@ export default async function handle(req, res) {
     getSearchTracks(accessToken, searchInput, 0),
     getSearchTracks(accessToken, searchInput, 50)
   ])
-  .then(responses => Promise.all(responses.map(res => res.json())))
-  .then(data => {return data})
+    .then(responses => Promise.all(responses.map(res => res.json())))
+    .then(data => { return data })
 
   function convertMsInMinSecs(timeToConvertInMs) {
     if (!timeToConvertInMs) return null
@@ -23,7 +23,7 @@ export default async function handle(req, res) {
 
   const combinedResults = [...tracksData[0].tracks.items, ...tracksData[1].tracks.items]
   const ids = combinedResults.map(track => track.id)
-  const NoDuplicatedTrackResults = combinedResults.filter(({id}, index) => !ids.includes(id, index + 1))
+  const NoDuplicatedTrackResults = combinedResults.filter(({ id }, index) => !ids.includes(id, index + 1))
 
   const trackResults = NoDuplicatedTrackResults.map((item) => ({
     name: item?.name,

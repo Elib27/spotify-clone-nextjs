@@ -29,13 +29,13 @@ export default function Playlists() {
 
   useEffect(() => {
     Promise.all([
-      getPlaylists(), 
+      getPlaylists(),
       getLikedTracks(),
     ])
-    .then((data) => {
-      setPlaylists(data[0])
-      setLikedTracks(data[1])
-    })
+      .then((data) => {
+        setPlaylists(data[0])
+        setLikedTracks(data[1])
+      })
   }, [])
 
   if (!(playlists && likedTracks)) return

@@ -27,7 +27,7 @@ const DownloadLabel = styled.h3`
   padding-bottom: 24px;
   color: #fff;
 `
-const DownloadLink  = styled.a`
+const DownloadLink = styled.a`
   text-decoration: none;
 `
 const DownloadButton = styled.div`
@@ -51,7 +51,7 @@ const DownloadButton = styled.div`
 
 export default function Download() {
 
-  const [downloadLink, setDownloadLink ] = useState('windows')
+  const [downloadLink, setDownloadLink] = useState('windows')
 
   useEffect(() => {
     const platform = window.navigator.platform
@@ -74,7 +74,7 @@ export default function Download() {
     <Container>
       <MiddleContainer>
         <ImageContainer>
-          <Image src="/mac_computer.png" width={640} height={396} alt="spotify app on a laptop"/>
+          <Image src="/mac_computer.png" width={640} height={396} alt="spotify app on a laptop" />
         </ImageContainer>
         <DownloadLabel>Écoutez la musique que vous aimez en toute simplicité. Téléchargez l&apos;appli Spotify pour votre ordinateur.</DownloadLabel>
         <DownloadLink href={`https://www.spotify.com/fr/download/${downloadLink}`} target="_blank" rel='noreferrer'>

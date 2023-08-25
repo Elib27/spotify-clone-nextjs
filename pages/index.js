@@ -16,7 +16,7 @@ export default function Home() {
   const [newAlbumReleases, setNewAlbumReleases] = useState(null)
 
   useEffect(() => {
-    const { width } = dimensions || {width: 900}
+    const { width } = dimensions || { width: 900 }
     let cardsNumber = Math.floor(width / WIDTH_LIMIT)
     if (cardsNumber < 2) cardsNumber = 2
     else if (cardsNumber > 9) cardsNumber = 9
@@ -28,7 +28,7 @@ export default function Home() {
       const response = await fetch('/api/getRecentlyPlayed')
       const data = await response.json()
       const albumsIds = data.map(track => track.album.id)
-      const recentlyPlayedAlbumsData = data.map(track => track.album).filter(({id}, index) => !albumsIds.includes(id, index + 1))
+      const recentlyPlayedAlbumsData = data.map(track => track.album).filter(({ id }, index) => !albumsIds.includes(id, index + 1))
       setRecentlyPlayedAlbums(recentlyPlayedAlbumsData)
     }
     async function getFavoriteArtists() {
@@ -54,13 +54,13 @@ export default function Home() {
           const data = await response.json()
           return data
         }
-        Promise.all(Array.from(favoriteArtists.slice(0,4), ({ id }) => getRecommandedArtistsFromId(id)))
-        .then((data) => {
-          const artists = data.map(arr => arr.slice(0, 4)).flat()
-          const artistsIds = artists.map(artist => artist.id)
-          const noDuplicatedArtists = artists.filter(({id}, index) => !artistsIds.includes(id, index + 1))
-          setRecommandedArtists(noDuplicatedArtists)
-        })
+        Promise.all(Array.from(favoriteArtists.slice(0, 4), ({ id }) => getRecommandedArtistsFromId(id)))
+          .then((data) => {
+            const artists = data.map(arr => arr.slice(0, 4)).flat()
+            const artistsIds = artists.map(artist => artist.id)
+            const noDuplicatedArtists = artists.filter(({ id }, index) => !artistsIds.includes(id, index + 1))
+            setRecommandedArtists(noDuplicatedArtists)
+          })
       }
     }
     getRecommandedArtists()
@@ -71,8 +71,8 @@ export default function Home() {
       <div ref={containerRef}>
         {recentlyPlayedAlbums && (
           <HomeSection
-              title="Écoutés récemment"
-              cardsNumberPerRow={cardsNumberPerRow}
+            title="Écoutés récemment"
+            cardsNumberPerRow={cardsNumberPerRow}
           >
             {recentlyPlayedAlbums.map((album, index) => (
               index < (cardsNumberPerRow) && (

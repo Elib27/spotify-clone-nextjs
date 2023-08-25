@@ -4,7 +4,7 @@ import Image from 'next/image'
 const Container = styled.div`
   width: 100%;
   aspect-ratio: 1;
-  background-color: ${({cardBackgroundColor}) => cardBackgroundColor};
+  background-color: ${({ cardBackgroundColor }) => cardBackgroundColor};
   border-radius: 8px;
   position: relative;
   overflow: hidden;
@@ -40,7 +40,7 @@ const CardImage = styled.div`
   }
 `
 
-export default function SearchCard({title, cardBackgroundColor, imageSrc}) {
+export default function SearchCard({ title, cardBackgroundColor, imageSrc }) {
   return (
     <Container
       cardBackgroundColor={cardBackgroundColor}
@@ -49,7 +49,7 @@ export default function SearchCard({title, cardBackgroundColor, imageSrc}) {
         {title}
       </CardTitle>
       <CardImage>
-        <Image src={imageSrc} alt={title} fill/>
+        <Image src={imageSrc} alt={title} fill />
       </CardImage>
     </Container>
   )

@@ -138,7 +138,7 @@ const DeleteFromEpisodesButton = styled.button`
   color: #1ed760;
 `
 
-export default function LikedPodcast({title, description, cover_url, podcast, date, duration}) {
+export default function LikedPodcast({ title, description, cover_url, podcast, date, duration }) {
   return (
     <Container>
       <LeftContainer>

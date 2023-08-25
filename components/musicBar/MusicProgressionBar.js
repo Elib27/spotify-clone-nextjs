@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef} from "react"
+import { useState, useEffect, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { changeTime } from '../../store/store'
 import styled from "styled-components"
@@ -15,7 +15,7 @@ const MusicProgressionBarFill = styled(MusicProgressionBarBackground)`
   background-color: #fff;
   width: 100%;
   transform: translateX(calc(var(--progression-bar-fill) - 100%));
-  ${({active}) => active && `
+  ${({ active }) => active && `
     background-color: #1db954;
   `}
 `
@@ -33,7 +33,7 @@ const MusicBarCircle = styled.div`
   z-index: 100;
   display: none;
   user-select: none;
-  ${({active}) => active && `
+  ${({ active }) => active && `
     display: block;
   `}
 `
@@ -59,12 +59,12 @@ const MusicProgressionBarWrapper = styled.div`
   position: relative;
 `
 
-export default function MusicProgressionBar({isProgressionBarMoving, setIsProgressionBarMoving}) {
+export default function MusicProgressionBar({ isProgressionBarMoving, setIsProgressionBarMoving }) {
 
   const [progressionPercentage, setProgressionPercentage] = useState(0)
   const barContainer = useRef(null)
 
-  const music = useSelector( state => state.music)
+  const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
   function convertPercentageToTimeInSec(percentage, duration) {
@@ -85,7 +85,7 @@ export default function MusicProgressionBar({isProgressionBarMoving, setIsProgre
   }
 
   useEffect(() => {
-    if (!isProgressionBarMoving){
+    if (!isProgressionBarMoving) {
       setProgressionPercentage(music.time / music.duration * 100)
     }
   }, [music.time, music.duration, isProgressionBarMoving])
@@ -116,14 +116,14 @@ export default function MusicProgressionBar({isProgressionBarMoving, setIsProgre
     return () => {
       barContainer.current.removeEventListener('mousedown', handleMouseDown)
     }
-  },[])
+  }, [])
 
   return (
     <ProgressionBar ref={barContainer}>
       <MusicBarCircle active={isProgressionBarMoving} />
       <MusicProgressionBarWrapper>
         <MusicProgressionBarBackground />
-        <MusicProgressionBarFill active={isProgressionBarMoving}/>
+        <MusicProgressionBarFill active={isProgressionBarMoving} />
       </MusicProgressionBarWrapper>
     </ProgressionBar>
   )

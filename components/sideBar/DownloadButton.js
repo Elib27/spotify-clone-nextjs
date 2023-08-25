@@ -52,7 +52,7 @@ export default function DownloadButton() {
     <Link href="/download">
       <NavLinkButton>
         <LogoContainer isSelected={router.asPath === "/download"}>
-            <Image src="/sideBar_logos/download.svg" alt="download button" width={24} height={24} />
+          <Image src="/sideBar_logos/download.svg" alt="download button" width={24} height={24} />
         </LogoContainer>
         <LinkLabel
           isSelected={router.asPath === "/download"}

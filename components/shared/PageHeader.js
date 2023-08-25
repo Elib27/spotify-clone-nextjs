@@ -51,7 +51,7 @@ const HomeLogoContainer = styled.div`
   height: 24px;
   width: 24px;
   opacity: 0.7;
-  ${({isHomePage}) => isHomePage && `
+  ${({ isHomePage }) => isHomePage && `
     opacity: 1;
   `}
 `
@@ -130,7 +130,7 @@ export default function PageHeader() {
 
   const router = useRouter()
 
-  const {data: session} = useSession()
+  const { data: session } = useSession()
 
   const [isPanelOpen, setIsPanelOpen] = useState(false)
 
@@ -139,7 +139,7 @@ export default function PageHeader() {
       setIsPanelOpen(true)
     }, 0)
   }
-  
+
   const isSubscribeButtonVisible = pagesWhereSubscribeButtonVisible.includes(router.pathname) || router.pathname.startsWith('/playlist/')
 
   return (
@@ -148,7 +148,7 @@ export default function PageHeader() {
         <LeftContainer>
           <Link href="/" aria-label="accueil">
             <LogoButton>
-              <SpotifyLogo height={32} width={32}/>
+              <SpotifyLogo height={32} width={32} />
             </LogoButton>
           </Link>
         </LeftContainer>
@@ -163,17 +163,17 @@ export default function PageHeader() {
           <SearchBar />
         </CentralContainer>
         <RightContainer>
-        { isSubscribeButtonVisible && (
-          <a href="https://www.spotify.com/fr/premium/" target="blank_" rel="noreferrer" aria-label="abonnements" >
-            <SubscribeButton>S&apos;abonner</SubscribeButton>
-          </a>
-        )}
+          {isSubscribeButtonVisible && (
+            <a href="https://www.spotify.com/fr/premium/" target="blank_" rel="noreferrer" aria-label="abonnements" >
+              <SubscribeButton>S&apos;abonner</SubscribeButton>
+            </a>
+          )}
           <AccountButton onClick={openPanel} aria-label="Ouvrir les options du compte">
             {session?.user?.image ? (
-                <Image src={session?.user?.image} draggable="false" fill alt="photo de profil"/>
-              ) : (
-                <AvatarLogo width={16} height={16} alt="account button" />
-              )
+              <Image src={session?.user?.image} draggable="false" fill alt="photo de profil" />
+            ) : (
+              <AvatarLogo width={16} height={16} alt="account button" />
+            )
             }
           </AccountButton>
         </RightContainer>

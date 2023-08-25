@@ -4,7 +4,7 @@ import getPlaylist from "../../lib/spotify/getPlaylist"
 import convertDateToAddedDate from "../../lib/convertDateToAddedDate"
 
 export default async function handler(req, res) {
-  
+
   const { accessToken } = await getServerSession(req, res, authOptions)
 
   const { playlist_id } = req.query

@@ -3,7 +3,7 @@ import { authOptions } from "./auth/[...nextauth]"
 import getFollowedArtists from "../../lib/spotify/getFollowedArtists"
 
 export default async function handler(req, res) {
-  
+
   const { accessToken } = await getServerSession(req, res, authOptions)
 
   const response = await getFollowedArtists(accessToken)

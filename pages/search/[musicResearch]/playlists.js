@@ -26,30 +26,30 @@ export default function Playlists() {
       const data = await response.json()
       setPlaylistsData(data)
     }
-    
+
     getFirstPlaylists()
 
   }, [musicResearch])
 
 
-if (!playlistsData) return (null)
+  if (!playlistsData) return (null)
 
-if (!playlistsData?.length) {
-  return (<NoResults searchValue={musicResearch}/>)
-}
+  if (!playlistsData?.length) {
+    return (<NoResults searchValue={musicResearch} />)
+  }
 
-return (
-  <PlaylistsContainer>
-    {playlistsData.map((playlist) => (
-      <MusicCard
-        title={playlist.name}
-        cover_url={playlist.cover_url}
-        description={`Par ${playlist.owner}`}
-        key={playlist.id}
-      />
-    ))}
-  </PlaylistsContainer>
-)
+  return (
+    <PlaylistsContainer>
+      {playlistsData.map((playlist) => (
+        <MusicCard
+          title={playlist.name}
+          cover_url={playlist.cover_url}
+          description={`Par ${playlist.owner}`}
+          key={playlist.id}
+        />
+      ))}
+    </PlaylistsContainer>
+  )
 }
 
 Playlists.getLayout = function getLayout(page) {

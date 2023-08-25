@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useState, useEffect, useCallback} from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import debounce from '../../lib/debounce.js'
 import SearchLogo from '../../public/header_logos/search.svg'
@@ -70,7 +70,7 @@ const ClearButton = styled.button`
 export default function SearchBar() {
 
   const router = useRouter()
-  
+
   const [searchInput, setSearchInput] = useState('')
 
   function updateUrlWithSearchInput(searchInput) {
@@ -90,7 +90,7 @@ export default function SearchBar() {
   }, [searchInput, debouncedUpdateUrlWithSearchInput])
 
   useEffect(() => {
-    if (!router.pathname.startsWith('/search') && searchInput !== ''){
+    if (!router.pathname.startsWith('/search') && searchInput !== '') {
       setSearchInput('')
     }
   }, [router.pathname, searchInput])
@@ -111,10 +111,10 @@ export default function SearchBar() {
         </SearchLogoContainer>
         {
           isClearButtonVisible && (
-          <ClearButton onClick={() => setSearchInput('')}>
-            <CrossLogo/>
-          </ClearButton>
-        )}
+            <ClearButton onClick={() => setSearchInput('')}>
+              <CrossLogo />
+            </ClearButton>
+          )}
       </SearchBarHoverContainer>
       <SearchInput
         placeholder="Que souhaitez-vous écouter ?"

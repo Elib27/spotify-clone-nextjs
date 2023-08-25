@@ -28,7 +28,7 @@ const Resizer = styled.div`
   right: -4.5px;
   cursor: col-resize;
   z-index: 1;
-  ${({isResizeBarVisible}) => isResizeBarVisible && `
+  ${({ isResizeBarVisible }) => isResizeBarVisible && `
     opacity: 1;
   `}
   &:hover {

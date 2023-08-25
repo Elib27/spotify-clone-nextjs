@@ -115,8 +115,8 @@ export default function SoundConfiguration() {
   }
 
   function handleClickToogleMute() {
-    if(volumeCategory === 'muted') {
-      dispatch(changeVolume(music.prevVolume === 0 ? 50 : music.prevVolume ))
+    if (volumeCategory === 'muted') {
+      dispatch(changeVolume(music.prevVolume === 0 ? 50 : music.prevVolume))
     }
     else {
       dispatch(changePrevVolume(music.volume))
@@ -134,7 +134,7 @@ export default function SoundConfiguration() {
         >
           <Microphone />
         </MicroButton>
-        )
+      )
       }
       <WaitListButton
         isWaitListOpen={isWaitListOpen}

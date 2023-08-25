@@ -155,7 +155,7 @@ const DurationContainer = styled.div`
   text-align: center;
 `
 
-export default function BestResultsTrack({ title, artist, cover_url, explicit, duration, isLiked, key}) {
+export default function BestResultsTrack({ title, artist, cover_url, explicit, duration, isLiked, key }) {
   return (
     <Container key={key}>
       <TitleContainer>
@@ -163,7 +163,7 @@ export default function BestResultsTrack({ title, artist, cover_url, explicit, d
           <PlayButtonContainer>
             <PlayLogo />
           </PlayButtonContainer>
-          <Image src={cover_url} width={40} height={40} alt="track cover"/>
+          <Image src={cover_url} width={40} height={40} alt="track cover" />
         </TrackCover>
         <TracksInformations>
           <TrackTitle>{title}</TrackTitle>

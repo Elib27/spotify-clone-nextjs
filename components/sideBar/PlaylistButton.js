@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { useRouter } from "next/router"
 import { useState } from "react"
-import { useSelector, useDispatch} from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { togglePlaying } from "../../store/store"
 import Link from "next/link"
 import SoundLogo from "../../public/sideBar_logos/sound_small.svg"
@@ -41,7 +41,7 @@ const SoundButton = styled.button`
   color: #fff;
 `
 
-export default function PlaylistButton({ name, id}) {
+export default function PlaylistButton({ name, id }) {
 
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()

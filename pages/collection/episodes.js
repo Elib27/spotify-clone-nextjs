@@ -81,7 +81,7 @@ export default function Episodes() {
         owner="eliot"
         tracks_number={savedEpisodes.length}
         isEpisodesCollection
-        />
+      />
       <MainContentWrapper>
         <BackgroundGradient />
         <PlaylistPlayButtonSection />
@@ -96,7 +96,7 @@ export default function Episodes() {
                 cover_url={episode.image}
                 date={episode.release_date}
                 duration={episode.duration}
-                />
+              />
             </Wrapper>
           ))}
         </PodcastsContainer>

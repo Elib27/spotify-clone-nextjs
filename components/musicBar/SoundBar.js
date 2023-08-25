@@ -66,7 +66,7 @@ export default function SoundBar() {
 
   const [barCircleActive, setBarCircleActive] = useState(false)
   const soundBarContainer = useRef(null)
-  
+
   function updateProgressionBar(e) {
     const barWidth = soundBarContainer.current.offsetWidth
     const barOffset = soundBarContainer.current.getBoundingClientRect().left

@@ -18,7 +18,7 @@ const NoResultsMainMessage = styled.h1`
 const NoResultsSubMessage = styled.p`
   padding: 10px 0 30px;
 `
-export default function NoResults({searchValue}) {
+export default function NoResults({ searchValue }) {
   return (
     <NoResultsContainer>
       <NoResultsMainMessage>

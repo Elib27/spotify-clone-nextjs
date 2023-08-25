@@ -26,15 +26,15 @@ export default function Artists() {
       const data = await response.json()
       setArtistsData(data)
     }
-    
+
     getFirstArtists()
 
   }, [musicResearch])
-  
+
   if (!artistsData) return (null)
 
   if (!artistsData?.length) {
-    return (<NoResults searchValue={musicResearch}/>)
+    return (<NoResults searchValue={musicResearch} />)
   }
 
   return (

@@ -6,7 +6,7 @@ import { store } from '../store/store'
 
 function MyApp({
   Component,
-  pageProps: {session, ...pageProps}
+  pageProps: { session, ...pageProps }
 }) {
 
   const getLayout = Component.getLayout || ((page) => <MainLayout>{page}</MainLayout>)

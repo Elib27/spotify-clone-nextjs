@@ -16,7 +16,7 @@ const NavButton = styled.div`
   `}
 `
 
-export default function CollectionNavButton({ buttonName, pageName, isSelected}) {
+export default function CollectionNavButton({ buttonName, pageName, isSelected }) {
 
   return (
     <Link href={pageName}>

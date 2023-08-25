@@ -51,7 +51,7 @@ export default function SearchResult() {
   }, [musicResearch])
 
   useEffect(() => {
-    const { width } = dimensions || {width: 900}
+    const { width } = dimensions || { width: 900 }
     const cardsNumber = Math.floor(width / WIDTH_LIMIT)
     if (cardsNumber >= 3 && cardsNumber <= 9) {
       setCardsNumberPerRow(cardsNumber)
@@ -59,9 +59,9 @@ export default function SearchResult() {
   }, [dimensions])
 
   if (!fetchedData) return (null)
-  
-  if (fetchedData && !fetchedData?.bestResult?.title){
-    return (<NoResults searchValue={musicResearch}/>)
+
+  if (fetchedData && !fetchedData?.bestResult?.title) {
+    return (<NoResults searchValue={musicResearch} />)
   }
 
   return (
@@ -73,10 +73,10 @@ export default function SearchResult() {
       />
       {
         fetchedData?.tracks?.length > 0 && (
-        <TrackResults
-          tracks={fetchedData.tracks}
-          likedTracksIds={likedTracksIds.current}
-        />)
+          <TrackResults
+            tracks={fetchedData.tracks}
+            likedTracksIds={likedTracksIds.current}
+          />)
       }
       <SearchResultSection
         title="Artistes"

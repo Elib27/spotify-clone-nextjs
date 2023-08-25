@@ -38,7 +38,7 @@ const CardContainer = styled.div`
   transition: background-color 0.3s ease;
   cursor: pointer;
   gap: 20px;
-  ${({isEpisodes}) => isEpisodes ? `
+  ${({ isEpisodes }) => isEpisodes ? `
     background: linear-gradient(.316turn,#00644e 50.57%,#27856a);
   ` : `
     background: linear-gradient(149.46deg,#450af5,#8e8ee5 99.16%);
@@ -94,7 +94,7 @@ const CardSubTitle = styled.div`
   line-height: 1.6;
 `
 
-export default function PlaylistBigCard({tracks, tracksNumber, isEpisodes}) {
+export default function PlaylistBigCard({ tracks, tracksNumber, isEpisodes }) {
 
   const Subtitle = `${tracksNumber} ${isEpisodes ? 'épisode' : 'titre'}${tracksNumber > 1 ? 's' : ''} ${isEpisodes ? '' : tracksNumber > 1 ? 'likés' : 'liké'}`
 

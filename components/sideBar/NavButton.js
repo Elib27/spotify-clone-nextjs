@@ -37,7 +37,7 @@ const LogoContainer = styled.div`
   }
 `
 
-export default function NavButton({ label, link, imageSrc, imageSrcSelected, imageAlt, isActive}) {
+export default function NavButton({ label, link, imageSrc, imageSrcSelected, imageAlt, isActive }) {
 
   const imageSource = isActive ? imageSrcSelected : imageSrc
 
