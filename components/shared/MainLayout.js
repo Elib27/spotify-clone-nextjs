@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import Sidebar from "../sideBar/SideBar"
-import MusicBar from "../musicBar/MusicBar"
+import Sidebar from "@/components/sideBar/SideBar"
+import MusicBar from "@/components/musicBar/MusicBar"
 import PageHeader from './PageHeader'
 import SEO from './SEO'
 

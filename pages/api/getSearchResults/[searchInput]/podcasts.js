@@ -1,6 +1,6 @@
-import getSearchPodcasts from '../../../../lib/spotify/getSearchPodcasts'
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "../../auth/[...nextauth]"
+import getSearchPodcasts from '@/lib/spotify/getSearchPodcasts'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
 
 export default async function handle(req, res) {
 

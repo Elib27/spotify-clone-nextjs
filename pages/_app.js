@@ -1,8 +1,8 @@
-import '../styles/globals.css'
-import MainLayout from '../components/shared/MainLayout'
-import { SessionProvider } from "next-auth/react"
+import '@/styles/globals.css'
+import MainLayout from '@/components/shared/MainLayout'
+import { SessionProvider } from 'next-auth/react'
 import { Provider } from 'react-redux'
-import { store } from '../store/store'
+import { store } from '@/store/store'
 
 function MyApp({
   Component,

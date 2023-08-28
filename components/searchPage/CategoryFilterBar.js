@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useRouter, useState } from "next/router"
+import { useRouter } from "next/router"
 import CategoryFilterButton from "./CategoryFilterButton"
 
 const BarContainer = styled.div`

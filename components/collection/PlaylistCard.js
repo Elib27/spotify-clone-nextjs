@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Image from 'next/image'
-import PlayLogo from '../../public/tracks_logos/play_logo_small.svg'
-import DoubleNoteLogo from '../../public/tracks_logos/double_music_note.svg'
+import PlayLogo from '@/public/tracks_logos/play_logo_small.svg'
+import DoubleNoteLogo from '@/public/tracks_logos/double_music_note.svg'
 
 const PlayButton = styled.button`
   height: 48px;

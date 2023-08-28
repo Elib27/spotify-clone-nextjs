@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import PlayLogo from '../../public/tracks_logos/play_logo.svg'
-import PauseLogo from '../../public/tracks_logos/pause_logo.svg'
+import PlayLogo from '@/public/tracks_logos/play_logo.svg'
+import PauseLogo from '@/public/tracks_logos/pause_logo.svg'
 
 const PlayMusicSection = styled.section`
   padding: 24px 32px;

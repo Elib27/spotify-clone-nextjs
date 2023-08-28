@@ -10,19 +10,19 @@ import {
   changeDuration,
   changeCurrentMusicId,
   changeMusicIndexInQueue,
-} from '../../store/store'
-import { convertSecondsToMinutesSeconds } from '../../lib/convertTime'
+} from '@/store/store'
+import { convertSecondsToMinutesSeconds } from '@/lib/convertTime'
 import styled from 'styled-components'
-import randomInteger from '../../lib/randomInteger'
-import RandomMusicLogo from '../../public/musicBar_logos/random_music.svg'
-import PrevMusicLogo from '../../public/musicBar_logos/prev_music.svg'
-import NextMusicLogo from '../../public/musicBar_logos/next_music.svg'
-import PlayMusicLogo from '../../public/musicBar_logos/play_music.svg'
-import PauseMusicLogo from '../../public/musicBar_logos/pause_music.svg'
-import LoopMusic1Logo from '../../public/musicBar_logos/loop_music1.svg'
-import LoopMusic2Logo from '../../public/musicBar_logos/loop_music2.svg'
-import Next15secLogo from '../../public/musicBar_logos/next15s.svg'
-import Prev15secLogo from '../../public/musicBar_logos/prev15s.svg'
+import randomInteger from '@/lib/randomInteger'
+import RandomMusicLogo from '@/public/musicBar_logos/random_music.svg'
+import PrevMusicLogo from '@/public/musicBar_logos/prev_music.svg'
+import NextMusicLogo from '@/public/musicBar_logos/next_music.svg'
+import PlayMusicLogo from '@/public/musicBar_logos/play_music.svg'
+import PauseMusicLogo from '@/public/musicBar_logos/pause_music.svg'
+import LoopMusic1Logo from '@/public/musicBar_logos/loop_music1.svg'
+import LoopMusic2Logo from '@/public/musicBar_logos/loop_music2.svg'
+import Next15secLogo from '@/public/musicBar_logos/next15s.svg'
+import Prev15secLogo from '@/public/musicBar_logos/prev15s.svg'
 
 import MusicProgressionBar from "./MusicProgressionBar"
 

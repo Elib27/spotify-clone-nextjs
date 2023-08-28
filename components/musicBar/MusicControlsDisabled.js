@@ -1,10 +1,10 @@
 
 import styled from "styled-components"
-import RandomMusicLogo from '../../public/musicBar_logos/random_music.svg'
-import PrevMusicLogo from '../../public/musicBar_logos/prev_music.svg'
-import NextMusicLogo from '../../public/musicBar_logos/next_music.svg'
-import PauseMusicLogo from '../../public/musicBar_logos/pause_music.svg'
-import LoopMusic1Logo from '../../public/musicBar_logos/loop_music1.svg'
+import RandomMusicLogo from '@/public/musicBar_logos/random_music.svg'
+import PrevMusicLogo from '@/public/musicBar_logos/prev_music.svg'
+import NextMusicLogo from '@/public/musicBar_logos/next_music.svg'
+import PauseMusicLogo from '@/public/musicBar_logos/pause_music.svg'
+import LoopMusic1Logo from '@/public/musicBar_logos/loop_music1.svg'
 
 const MusicControlsContainer = styled.div`
   display: flex;

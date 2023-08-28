@@ -1,7 +1,7 @@
 import styled from "styled-components"
-import PlaylistHeader from "../shared/PlaylistHeader"
-import PlaylistPlayButtonSection from "../shared/PlaylistPlayButtonSection"
-import LikedTracksContainer from '../collection/LikedTracksContainer'
+import PlaylistHeader from "@/components/shared/PlaylistHeader"
+import PlaylistPlayButtonSection from "@/components/shared/PlaylistPlayButtonSection"
+import LikedTracksContainer from '@/components/collection/LikedTracksContainer'
 
 const MainContentWrapper = styled.div`
   position: relative;

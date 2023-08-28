@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/router'
-import debounce from '../../lib/debounce.js'
-import SearchLogo from '../../public/header_logos/search.svg'
-import CrossLogo from '../../public/header_logos/cross.svg'
+import debounce from '@/lib/debounce.js'
+import SearchLogo from '@/public/header_logos/search.svg'
+import CrossLogo from '@/public/header_logos/cross.svg'
 
 const SearchLogoContainer = styled.div`
   height: 24px;

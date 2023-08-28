@@ -1,8 +1,8 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "./auth/[...nextauth]"
-import getSavedEpisodes from "../../lib/spotify/getSavedEpisodes"
-import { convertMsToHourMinSecString } from "../../lib/convertTime"
-import convertToEpisodeReleaseDate from "../../lib/convertToEpisodeReleaseDate"
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import getSavedEpisodes from '@/lib/spotify/getSavedEpisodes'
+import { convertMsToHourMinSecString } from '@/lib/convertTime'
+import convertToEpisodeReleaseDate from '@/lib/convertToEpisodeReleaseDate'
 
 export default async function handler(req, res) {
 

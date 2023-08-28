@@ -1,10 +1,10 @@
 import styled from "styled-components"
 import { useState, useEffect } from 'react'
-import { useRouter } from "next/router"
-import MainLayout from "../../../components/shared/MainLayout"
-import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
-import MusicCard from "../../../components/shared/MusicCard"
-import NoResults from "../../../components/searchPage/NoResults"
+import { useRouter } from 'next/router'
+import MainLayout from '@/components/shared/MainLayout'
+import SearchResultLayout from '@/components/searchPage/SearchResultLayout'
+import MusicCard from '@/components/shared/MusicCard'
+import NoResults from '@/components/searchPage/NoResults'
 
 const AlbumsContainer = styled.div`
   height: 100%;

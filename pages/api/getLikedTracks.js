@@ -1,8 +1,8 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "./auth/[...nextauth]"
-import getLikedTracks from "../../lib/spotify/getLikedTracks"
-import { convertMsToMinutesSeconds } from "../../lib/convertTime"
-import convertDateToAddedDate from "../../lib/convertDateToAddedDate"
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import getLikedTracks from '@/lib/spotify/getLikedTracks'
+import { convertMsToMinutesSeconds } from '@/lib/convertTime'
+import convertDateToAddedDate from '@/lib/convertDateToAddedDate'
 
 
 export default async function handler(req, res) {

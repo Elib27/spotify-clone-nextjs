@@ -1,12 +1,12 @@
 import styled from "styled-components"
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { togglePlaying } from "../../store/store"
+import { togglePlaying } from "@/store/store"
 import { useRouter } from "next/router"
 import Link from "next/link"
 import Image from "next/image"
-import SoundLogo from "../../public/sideBar_logos/sound.svg"
-import PauseLogo from "../../public/musicBar_logos/pause_music.svg"
+import SoundLogo from "@/public/sideBar_logos/sound.svg"
+import PauseLogo from "@/public/musicBar_logos/pause_music.svg"
 
 const LinkLabel = styled.p`
   font-size: 0.875rem;

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import DurationLogo from '../../public/tracks_logos/time_logo.svg'
+import DurationLogo from '@/public/tracks_logos/time_logo.svg'
 
 const TracksSectionColumns = styled.div`
   height: 36px;

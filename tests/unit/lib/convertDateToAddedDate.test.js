@@ -1,4 +1,4 @@
-import convertDateToAddedDate from '../../../lib/convertDateToAddedDate'
+import convertDateToAddedDate from '@/lib/convertDateToAddedDate'
 
 describe('convertDateToAddedDate', () => {
   it('should return the correct formatted date', () => {

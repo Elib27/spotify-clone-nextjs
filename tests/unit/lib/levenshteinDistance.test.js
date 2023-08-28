@@ -1,4 +1,4 @@
-import levenshteinDistance from '../../../lib/levenshteinDistance'
+import levenshteinDistance from '@/lib/levenshteinDistance'
 
 describe('levenshteinDistance', () => {
   it('calculates the correct Levenshtein distance between two equal words', () => {

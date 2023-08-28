@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useRouter } from "next/router"
-import MainLayout from '../../../components/shared/MainLayout'
-import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
-import TracksContainer from "../../../components/searchPage/TracksContainer"
-import TrackItem from "../../../components/shared/TrackItem"
-import NoResults from "../../../components/searchPage/NoResults"
+import { useRouter } from 'next/router'
+import MainLayout from '@/components/shared/MainLayout'
+import SearchResultLayout from '@/components/searchPage/SearchResultLayout'
+import TracksContainer from '@/components/searchPage/TracksContainer'
+import TrackItem from '@/components/shared/TrackItem'
+import NoResults from '@/components/searchPage/NoResults'
 
 
 export default function Tracks() {

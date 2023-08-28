@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { useEffect } from 'react'
 import CurrentMusicInformations from "./CurrentMusicInformations"
 import MusicControls from "./MusicControls"
 import SoundConfiguration from "./SoundConfiguration"

@@ -2,11 +2,11 @@ import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusicId, changeCurrentPlaylist, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
 import Image from 'next/image'
-import FilledHeartLogo from '../../public/tracks_logos/heart.svg'
-import EmptyHeartLogo from '../../public/tracks_logos/empty_heart.svg'
-import OptionsLogo from '../../public/tracks_logos/options_logo.svg'
-import SmallPlayLogo from '../../public/tracks_logos/play_logo_small.svg'
-import SmallPauseLogo from '../../public/tracks_logos/pause_logo_small.svg'
+import FilledHeartLogo from '@/public/tracks_logos/heart.svg'
+import EmptyHeartLogo from '@/public/tracks_logos/empty_heart.svg'
+import OptionsLogo from '@/public/tracks_logos/options_logo.svg'
+import SmallPlayLogo from '@/public/tracks_logos/play_logo_small.svg'
+import SmallPauseLogo from '@/public/tracks_logos/pause_logo_small.svg'
 
 const OptionsContainer = styled.button`
   height: 16px;

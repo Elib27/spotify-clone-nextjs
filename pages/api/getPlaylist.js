@@ -1,7 +1,7 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "./auth/[...nextauth]"
-import getPlaylist from "../../lib/spotify/getPlaylist"
-import convertDateToAddedDate from "../../lib/convertDateToAddedDate"
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import getPlaylist from '@/lib/spotify/getPlaylist'
+import convertDateToAddedDate from '@/lib/convertDateToAddedDate'
 
 export default async function handler(req, res) {
 

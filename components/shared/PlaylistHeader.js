@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Image from "next/image"
-import FavoriteLogo from "../../public/tracks_logos/favorite_logo.svg"
-import DoubleMusicNote from "../../public/tracks_logos/double_music_note.svg"
+import FavoriteLogo from "@/public/tracks_logos/favorite_logo.svg"
+import DoubleMusicNote from "@/public/tracks_logos/double_music_note.svg"
 
 const Header = styled.div`
   height: clamp(340px, 30vh, 500px);

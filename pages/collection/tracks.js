@@ -1,12 +1,12 @@
 import styled from 'styled-components'
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeCurrentMusicId, changeCurrentPlaylist, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
-import PlaylistHeader from '../../components/shared/PlaylistHeader'
-import PlaylistPlayButtonSection from '../../components/shared/PlaylistPlayButtonSection'
-import NoLikedTracksSection from '../../components/collection/NoLikedTracksSection'
-import TracksContainer from '../../components/collection/LikedTracksContainer'
-import TrackItem from '../../components/shared/TrackItem'
+import { changeCurrentMusicId, changeCurrentPlaylist, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '@/store/store'
+import PlaylistHeader from '@/components/shared/PlaylistHeader'
+import PlaylistPlayButtonSection from '@/components/shared/PlaylistPlayButtonSection'
+import NoLikedTracksSection from '@/components/collection/NoLikedTracksSection'
+import TracksContainer from '@/components/collection/LikedTracksContainer'
+import TrackItem from '@/components/shared/TrackItem'
 
 const Container = styled.div`
   padding-bottom: 32px;

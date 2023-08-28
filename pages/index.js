@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
-import useResizeObserver from '../hooks/useResizeObserver'
-import HomeLayout from '../components/homePage/HomeLayout'
-import HomeSection from '../components/homePage/HomeSection'
-import MusicCard from '../components/shared/MusicCard'
+import useResizeObserver from '@/hooks/useResizeObserver'
+import HomeLayout from '@/components/homePage/HomeLayout'
+import HomeSection from '@/components/homePage/HomeSection'
+import MusicCard from '@/components/shared/MusicCard'
 
 export default function Home() {
 

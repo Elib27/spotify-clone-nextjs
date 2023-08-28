@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import MainLayout from "../../components/shared/MainLayout"
-import CollectionLayout from "../../components/collection/CollectionLayout"
-import CollectionPageContainer from "../../components/collection/CollectionPageContainer"
-import PlaylistCard from "../../components/collection/PlaylistCard"
+import MainLayout from '@/components/shared/MainLayout'
+import CollectionLayout from '@/components/collection/CollectionLayout'
+import CollectionPageContainer from '@/components/collection/CollectionPageContainer'
+import PlaylistCard from '@/components/collection/PlaylistCard'
 
 export default function Albums() {
 

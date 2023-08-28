@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useEffect, useState, useRef } from 'react'
-import useResizeObserver from '../../hooks/useResizeObserver'
+import useResizeObserver from '@/hooks/useResizeObserver'
 import ShortcutButton from './ShortcutButton'
 
 const ShortcutSection = styled.section`

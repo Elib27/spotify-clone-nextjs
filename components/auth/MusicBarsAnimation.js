@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components"
 import { useEffect, useState, useRef } from "react"
-import useResizeObserver from "../../hooks/useResizeObserver"
+import useResizeObserver from "@/hooks/useResizeObserver"
 
 const Container = styled.ul`
   height: clamp(30px, 10vh, 60px);

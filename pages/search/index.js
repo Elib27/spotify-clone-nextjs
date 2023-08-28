@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import SearchCard from '../../components/searchPage/SearchCard'
-import SearchCategories from '../../data/search_categories.json'
+import SearchCard from '@/components/searchPage/SearchCard'
+import SearchCategories from '@/data/search_categories.json'
 
 const Container = styled.div`
   width: 100%;

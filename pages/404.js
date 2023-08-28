@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Image from 'next/image'
 import Link from 'next/link'
-import SEO from "../components/shared/SEO"
+import SEO from "@/components/shared/SEO"
 
 const Wrapper = styled.div`
   height: 100vh;

@@ -1,12 +1,12 @@
 import styled from "styled-components"
 import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from 'react-redux'
-import { changeCurrentMusic } from '../../store/store'
+import { changeCurrentMusic } from '@/store/store'
 import Image from "next/image"
-import FilledHeartLogo from '../../public/tracks_logos/heart.svg'
-import EmptyHeartLogo from '../../public/tracks_logos/empty_heart.svg'
-import AddToEpisodes from '../../public/musicBar_logos/add_to_episodes_logo.svg'
-import IsInEpisodes from '../../public/musicBar_logos/added_to_episodes_logo.svg'
+import FilledHeartLogo from '@/public/tracks_logos/heart.svg'
+import EmptyHeartLogo from '@/public/tracks_logos/empty_heart.svg'
+import AddToEpisodes from '@/public/musicBar_logos/add_to_episodes_logo.svg'
+import IsInEpisodes from '@/public/musicBar_logos/added_to_episodes_logo.svg'
 
 const Container = styled.div`
   width: 30%;

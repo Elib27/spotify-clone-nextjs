@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import PlaylistHeader from "../../components/shared/PlaylistHeader"
-import LikedPodcast from "../../components/collection/LikedPodcast"
-import PlaylistPlayButtonSection from "../../components/shared/PlaylistPlayButtonSection"
+import PlaylistHeader from '@/components/shared/PlaylistHeader'
+import LikedPodcast from '@/components/collection/LikedPodcast'
+import PlaylistPlayButtonSection from '@/components/shared/PlaylistPlayButtonSection'
 
 const Container = styled.div`
   padding-bottom: 32px;

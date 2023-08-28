@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Image from 'next/image'
-import PlayLogo from '../../public/tracks_logos/play_logo_small.svg'
+import PlayLogo from '@/public/tracks_logos/play_logo_small.svg'
 
 const Container = styled.div`
   grid-column: span 2;

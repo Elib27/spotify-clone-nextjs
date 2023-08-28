@@ -1,4 +1,4 @@
-import Tracks from '../../../data/musics_catalog.json'
+import Tracks from '@/data/musics_catalog.json'
 
 export default async function handler(req, res) {
   const { index } = req.query

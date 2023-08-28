@@ -1,14 +1,14 @@
 import styled from "styled-components"
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/router"
-import useResizeObserver from "../../../hooks/useResizeObserver"
-import MainLayout from "../../../components/shared/MainLayout"
-import SearchResultLayout from "../../../components/searchPage/SearchResultLayout"
-import BestResult from "../../../components/searchPage/BestResult"
-import TrackResults from "../../../components/searchPage/TrackResults"
-import SearchResultSection from "../../../components/searchPage/SearchResultSection"
-import MusicCard from "../../../components/shared/MusicCard"
-import NoResults from "../../../components/searchPage/NoResults"
+import useResizeObserver from '@/hooks/useResizeObserver'
+import MainLayout from '@/components/shared/MainLayout'
+import SearchResultLayout from '@/components/searchPage/SearchResultLayout'
+import BestResult from '@/components/searchPage/BestResult'
+import TrackResults from '@/components/searchPage/TrackResults'
+import SearchResultSection from '@/components/searchPage/SearchResultSection'
+import MusicCard from '@/components/shared/MusicCard'
+import NoResults from '@/components/searchPage/NoResults'
 
 const Container = styled.div`
   display: grid;

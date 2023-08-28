@@ -1,6 +1,6 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "./auth/[...nextauth]"
-import getRawTrackInformations from "../../lib/spotify/getRawTrackInformations"
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import getRawTrackInformations from '@/lib/spotify/getRawTrackInformations'
 
 export default async function handler(req, res) {
 

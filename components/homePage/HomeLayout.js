@@ -1,4 +1,4 @@
-import PageContainer from '../shared/PageContainer'
+import PageContainer from '@/components/shared/PageContainer'
 import WelcomeMessage from './WelcomeMessage'
 import HomeShorcuts from './HomeShorcuts'
 

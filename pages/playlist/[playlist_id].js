@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-import { useSelector, useDispatch } from "react-redux"
-import { changeCurrentMusicId, changeCurrentPlaylist, changeTracksQueue, changeMusicIndexInQueue, togglePlaying } from "../../store/store"
-import PlaylistPageLayout from "../../components/collection/PlaylistPageLayout"
-import TrackItem from "../../components/shared/TrackItem"
-import { convertMsToMinutesSeconds, convertMsToHourMinSecString } from "../../lib/convertTime"
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeCurrentMusicId, changeCurrentPlaylist, changeTracksQueue, changeMusicIndexInQueue, togglePlaying } from '@/store/store'
+import PlaylistPageLayout from '@/components/collection/PlaylistPageLayout'
+import TrackItem from '@/components/shared/TrackItem'
+import { convertMsToMinutesSeconds, convertMsToHourMinSecString } from '@/lib/convertTime'
 
 
 export default function Playlist() {

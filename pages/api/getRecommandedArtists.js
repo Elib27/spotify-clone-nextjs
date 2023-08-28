@@ -1,6 +1,6 @@
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "./auth/[...nextauth]"
-import getRecommandedArtists from "../../lib/spotify/getRecommandedArtists"
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import getRecommandedArtists from '@/lib/spotify/getRecommandedArtists'
 
 export default async function handler(req, res) {
 

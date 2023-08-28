@@ -3,13 +3,13 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useSession } from "next-auth/react"
 import Link from 'next/link'
-import Image from "next/image"
+import Image from 'next/image'
 import Pannel from "./AccountPannel"
-import SearchBar from '../searchPage/SearchBar'
-import SpotifyLogo from '../../public/header_logos/spotify_logo.svg'
-import HouseLogo from '../../public/header_logos/house.svg'
-import HouseFullLogo from '../../public/header_logos/house_full.svg'
-import AvatarLogo from '../../public/header_logos/default_avatar.svg'
+import SearchBar from '@/components/searchPage/SearchBar'
+import SpotifyLogo from '@/public/header_logos/spotify_logo.svg'
+import HouseLogo from '@/public/header_logos/house.svg'
+import HouseFullLogo from '@/public/header_logos/house_full.svg'
+import AvatarLogo from '@/public/header_logos/default_avatar.svg'
 
 const HeaderContainer = styled.header`
   background-color: #000;

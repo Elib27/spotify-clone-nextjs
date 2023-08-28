@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { changeTime } from '../../store/store'
+import { changeTime } from '@/store/store'
 import styled from "styled-components"
 
 const MusicProgressionBarBackground = styled.div`
