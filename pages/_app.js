@@ -3,6 +3,9 @@ import MainLayout from '@/components/shared/MainLayout'
 import { SessionProvider } from 'next-auth/react'
 import { Provider } from 'react-redux'
 import { store } from '@/store/store'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient()
 
 function MyApp({
   Component,
@@ -14,7 +17,9 @@ function MyApp({
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
-        {getLayout(<Component {...pageProps} />)}
+        <QueryClientProvider client={queryClient}>
+          {getLayout(<Component {...pageProps} />)}
+        </QueryClientProvider>
       </Provider>
     </SessionProvider>
   )
