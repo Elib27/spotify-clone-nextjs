@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 import { useEffect, useState, useRef } from 'react'
 import useResizeObserver from '@/hooks/useResizeObserver'
+import deduplicateDataById from '@/lib/deduplicateDataById'
 import ShortcutButton from './ShortcutButton'
+import usePlaylists from '@/hooks/usePlaylists'
+import useRecentlyPlayedTracks from '@/hooks/useRecentlyPlayedTracks'
 
 const ShortcutSection = styled.section`
   width: 100%;
@@ -16,8 +19,9 @@ export default function HomeShorcuts() {
   const containerRef = useRef(null)
   const dimensions = useResizeObserver(containerRef)
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(3)
-  const [playlists, setPlaylists] = useState(null)
-  const [recentlyPlayed, setRecentlyPlayed] = useState(null)
+
+  const { data: playlists } = usePlaylists(10)
+  const { data: recentlyPlayedTracks } = useRecentlyPlayedTracks(10)
 
   useEffect(() => {
     const { width } = dimensions || { width: 900 }
@@ -29,40 +33,21 @@ export default function HomeShorcuts() {
     }
   }, [dimensions])
 
-  useEffect(() => {
-    async function getPlaylists() {
-      const response = await fetch('/api/getPlaylists')
-      const data = await response.json()
-      const ids = data.map(track => track.id)
-      const noDuplicatedData = data.filter(({ id }, index) => !ids.includes(id, index + 1))
-      setPlaylists(noDuplicatedData)
-    }
-    async function getRecentlyPlayed() {
-      const response = await fetch('/api/getRecentlyPlayed')
-      const data = await response.json()
-      const ids = data.map(track => track.id)
-      const noDuplicatedData = data.filter(({ id }, index) => !ids.includes(id, index + 1))
-      setRecentlyPlayed(noDuplicatedData)
-    }
-    getPlaylists()
-    getRecentlyPlayed()
-  }, [])
-
   let playlistsLength = 2
-  let recentlyPlayedlength = 3
+  let recentlyPlayedTrackslength = 3
 
-  if (playlists && recentlyPlayed) {
+  if (playlists && recentlyPlayedTracks) {
     if (playlists.length + playlists.length < 6) {
       playlistsLength = playlists.length
-      recentlyPlayedlength = playlists.length
+      recentlyPlayedTrackslength = playlists.length
     }
     else if (playlists.length < 2) {
       playlistsLength = playlists.length
-      recentlyPlayedlength = 6 - playlists.length
+      recentlyPlayedTrackslength = 6 - playlists.length
     }
-    else if (recentlyPlayed.length < 3) {
-      recentlyPlayedlength = recentlyPlayed.length
-      playlistsLength = 6 - recentlyPlayed.length
+    else if (recentlyPlayedTracks.length < 3) {
+      recentlyPlayedTrackslength = recentlyPlayedTracks.length
+      playlistsLength = 6 - recentlyPlayedTracks.length
     }
   }
 
@@ -78,7 +63,7 @@ export default function HomeShorcuts() {
           isEpisodesCollection
         />
       )}
-      {playlists && playlists.slice(0, playlistsLength).map(playlist => (
+      {playlists && deduplicateDataById(playlists).slice(0, playlistsLength).map(playlist => (
         <ShortcutButton
           title={playlist.name}
           link={`/playlist/${playlist.id}`}
@@ -86,7 +71,7 @@ export default function HomeShorcuts() {
           key={playlist.id}
         />
       ))}
-      {recentlyPlayed && recentlyPlayed.slice(0, recentlyPlayedlength).map(track => (
+      {recentlyPlayedTracks && deduplicateDataById(recentlyPlayedTracks).slice(0, recentlyPlayedTrackslength).map(track => (
         <ShortcutButton
           title={track.name}
           cover_url={track.album.image}
