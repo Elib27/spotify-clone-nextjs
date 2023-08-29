@@ -4,10 +4,10 @@ describe('convertDateToAddedDate', () => {
   it('should return the correct formatted date', () => {
     expect(convertDateToAddedDate('2017-05-26')).toBe('26 mai 2017')
   });
-  it('should return the correct formatted date', () => {
+  it('should return the correct formatted date : 7 nov. 2022', () => {
     expect(convertDateToAddedDate('2022-11-07')).toBe('7 nov. 2022')
   });
-  it('should return the correct formatted date', () => {
+  it('should return the correct formatted date : 1 janv. 200', () => {
     expect(convertDateToAddedDate('2003-01-01')).toBe('1 janv. 2003')
   });
   it('should convert a date to "il y a x heures" when between 1 hour and 1 day ago', () => {

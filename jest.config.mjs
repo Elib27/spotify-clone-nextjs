@@ -7,7 +7,10 @@ const createJestConfig = nextJest({
 /** @type {import('jest').Config} */
 const config = {
   testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: ['./setup-jest.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleNameMapper: {
+    '^.+\\.(svg)$': '<rootDir>/__mocks__/svgr.js',
+  },
 }
 
 export default createJestConfig(config)

@@ -1,9 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import '@testing-library/jest-dom'
 import mockRouter from 'next-router-mock';
 import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
-
-// Mock the useRouter hook
 
 import CollectionNavBar from '@/components/collection/CollectionNavBar'
 

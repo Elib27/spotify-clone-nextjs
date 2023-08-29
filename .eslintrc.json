@@ -1,5 +1,12 @@
 {
-  "extends": "next/core-web-vitals",
+  "env": {
+    "jest/globals": true
+  },
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:jest/recommended"
+  ],
+  "plugins": ["jest"],
   "rules": {
     "react/display-name": "off"
   }
