@@ -1,8 +1,8 @@
-import styled from "styled-components"
-import { signIn } from "next-auth/react"
-import SEO from "@/components/shared/SEO"
-import MusicBarsAnimation from "@/components/auth/MusicBarsAnimation"
-import SpotifyLogo from "@/public/simple_spotify_logo.svg"
+import styled from 'styled-components'
+import { signIn } from 'next-auth/react'
+import SEO from '@/components/shared/SEO'
+import MusicBarsAnimation from '@/components/auth/MusicBarsAnimation'
+import SpotifyLogo from '@/public/simple_spotify_logo.svg'
 
 const MainContainer = styled.div`
   height: 100vh;
@@ -29,7 +29,7 @@ const TextGradient = styled.a`
   display: inline-block;
   position: relative;
   &::after {
-    content: "";
+    content: '';
     width: 100%;
     height: 2px;
     position: relative;
@@ -64,7 +64,7 @@ const AuthButton = styled.button`
   position: relative;
   overflow: hidden;
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -84,12 +84,12 @@ const AuthButton = styled.button`
 export default function Login() {
   return (
     <>
-      <SEO title="Spotify Clone - Login" />
+      <SEO title='Spotify Clone - Login' />
       <MainContainer>
         <SpotifyLogo />
-        <Title>Spotify Clone by <TextGradient href="https://github.com/Elib27/spotify-clone-nextjs" target="_blank">BAS Eliot</TextGradient></Title>
+        <Title>Spotify Clone by <TextGradient href='https://github.com/Elib27/spotify-clone-nextjs' target='_blank'>BAS Eliot</TextGradient></Title>
         <Subtitle>This website is a Spotify clone coded for training with Next JS.</Subtitle>
-        <AuthButton onClick={() => signIn("spotify")} aria-label="Se connecter">Connexion</AuthButton>
+        <AuthButton onClick={() => signIn('spotify')} aria-label='Se connecter'>Connexion</AuthButton>
         <MusicBarsAnimation />
       </MainContainer>
     </>

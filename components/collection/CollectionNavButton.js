@@ -9,7 +9,7 @@ const NavButton = styled.div`
   padding: 11.5px 16px;
   line-height: 1.6;
   cursor: pointer;
-  ${({ isSelected }) => isSelected ? `
+  ${({ $isSelected }) => $isSelected ? `
     background-color: #333;
     ` : `
     background-color: transparent;
@@ -20,7 +20,7 @@ export default function CollectionNavButton({ buttonName, pageName, isSelected }
 
   return (
     <Link href={pageName}>
-      <NavButton isSelected={isSelected}>
+      <NavButton $isSelected={isSelected}>
         {buttonName}
       </NavButton>
     </Link>

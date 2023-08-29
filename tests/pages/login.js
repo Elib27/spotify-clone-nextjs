@@ -6,8 +6,7 @@ import Login from '@/pages/login'
 //   it('renders the login', () => {
 //     render(<Login />)
 
-//     expect(screen.getByText(/Spotify Clone by BAS Eliot/)).toBeInTheDocument();
-
+//     expect(screen.getByText('Spotify Clone by ')).toBeInTheDocument();
 
 //   })
 // })
