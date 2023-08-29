@@ -8,9 +8,7 @@ const createJestConfig = nextJest({
 const config = {
   testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  moduleNameMapper: {
-    '^.+\\.(svg)$': '<rootDir>/__mocks__/svgr.js',
-  },
+  verbose: true,
 }
 
 export default createJestConfig(config)
