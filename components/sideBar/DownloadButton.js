@@ -3,6 +3,9 @@ import { useRouter } from "next/router"
 import Link from "next/link"
 import Image from "next/image"
 
+const Styledlink = styled(Link)`
+  width: 100%;
+`
 const LinkLabel = styled.p`
   font-size: 0.875rem;
   margin-left: 16px;
@@ -49,7 +52,7 @@ export default function DownloadButton() {
   const router = useRouter()
 
   return (
-    <Link href="/download">
+    <Styledlink href="/download">
       <NavLinkButton>
         <LogoContainer $isSelected={router.asPath === "/download"}>
           <Image src="/sideBar_logos/download.svg" alt="download button" width={24} height={24} />
@@ -60,6 +63,6 @@ export default function DownloadButton() {
           Installer l&apos;appli
         </LinkLabel>
       </NavLinkButton>
-    </Link>
+    </Styledlink>
   )
 }
