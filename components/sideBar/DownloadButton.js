@@ -15,7 +15,7 @@ const LinkLabel = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  ${({ isSelected }) => isSelected && `
+  ${({ $isSelected }) => $isSelected && `
     color: #fff;
   `}
 `
@@ -24,7 +24,7 @@ const LogoContainer = styled.div`
   height: 24px;
   flex-shrink: 0;
   transition: opacity 0.3s ease-in-out;
-  ${({ isSelected }) => isSelected && `
+  ${({ $isSelected }) => $isSelected && `
     opacity: 1;
   `}
 `
@@ -51,11 +51,11 @@ export default function DownloadButton() {
   return (
     <Link href="/download">
       <NavLinkButton>
-        <LogoContainer isSelected={router.asPath === "/download"}>
+        <LogoContainer $isSelected={router.asPath === "/download"}>
           <Image src="/sideBar_logos/download.svg" alt="download button" width={24} height={24} />
         </LogoContainer>
         <LinkLabel
-          isSelected={router.asPath === "/download"}
+          $isSelected={router.asPath === "/download"}
         >
           Installer l&apos;appli
         </LinkLabel>

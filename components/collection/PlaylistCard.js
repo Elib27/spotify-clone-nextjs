@@ -63,7 +63,7 @@ const CardImageContainer = styled.div`
   align-items: center;
   position: relative;
   overflow: hidden;
-  ${({ isRoundImage }) => isRoundImage && `
+  ${({ $isRoundImage }) => $isRoundImage && `
     border-radius: 50%;
   `}
   img {
@@ -93,7 +93,7 @@ export default function PlaylistCard({ cover_url, title, description, isRoundIma
   return (
     <CardContainer>
       <CardImageWrapper>
-        <CardImageContainer isRoundImage={isRoundImage}>
+        <CardImageContainer $isRoundImage={isRoundImage}>
           {cover_url ? (
             <Image src={cover_url} alt="song cover" fill draggable="false" />
           ) : (

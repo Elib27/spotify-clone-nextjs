@@ -89,7 +89,7 @@ const ControlButton = styled.button`
   }
 `
 const RandomButton = styled(ControlButton)`
-  ${({ isPlayingRandom }) => isPlayingRandom && `
+  ${({ $isPlayingRandom }) => $isPlayingRandom && `
     color: #1db954;
     opacity: 1;
     &::after {
@@ -107,7 +107,7 @@ const RandomButton = styled(ControlButton)`
   `}
 `
 const LoopButton = styled(ControlButton)`
-  ${({ loopMode }) => (loopMode !== 'no_loop') && `
+  ${({ $loopMode }) => ($loopMode !== 'no_loop') && `
     color: #1db954;
     opacity: 1;
     &::after {
@@ -319,7 +319,7 @@ export default function MusicControlsActive() {
           {music.currentTrack.soundType === 'track' ?
             (
               <RandomButton
-                isPlayingRandom={music.isPlayingRandom}
+                $isPlayingRandom={music.isPlayingRandom}
                 onClick={() => dispatch(togglePlayingRandom())}
                 data-hover={`${music.isPlayingRandom ? 'Désactiver' : 'Activer'} la lecture aléatoire`}
                 aria-label={`${music.isPlayingRandom ? 'Désactiver' : 'Activer'} la lecture aléatoire`}
@@ -363,7 +363,7 @@ export default function MusicControlsActive() {
             (
               <LoopButton
                 onClick={() => dispatch(incrementLoopMode())}
-                loopMode={music.loopMode}
+                $loopMode={music.loopMode}
                 data-hover={getLoopModeDataHover()}
                 aria-label={getLoopModeDataHover()}
               >

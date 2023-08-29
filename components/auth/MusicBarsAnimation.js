@@ -31,7 +31,7 @@ const Bar = styled.li`
   border-top-right-radius: 8px;
   background-color: #1ed760;
   animation: ${barAnimation} 2s ease-in-out infinite reverse;
-  animation-delay: ${({ delay }) => delay}s;
+  animation-delay: ${({ $delay }) => $delay}s;
 `
 
 export default function MusicBarsAnimation() {
@@ -49,7 +49,7 @@ export default function MusicBarsAnimation() {
 
   useEffect(() => {
     const MAX_BARS = 50
-    bars.current = Array(MAX_BARS).fill(null).map((_, i) => <Bar key={i} delay={-(Math.random() * 2)} />)
+    bars.current = Array(MAX_BARS).fill(null).map((_, i) => <Bar key={i} $delay={-(Math.random() * 2)} />)
   }, [])
 
   return (

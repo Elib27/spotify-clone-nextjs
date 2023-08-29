@@ -6,7 +6,7 @@ import ShortcutButton from './ShortcutButton'
 const ShortcutSection = styled.section`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(${({ cardsNumberPerRow }) => cardsNumberPerRow}, minmax(222px, 1fr));
+  grid-template-columns: repeat(${({ $cardsNumberPerRow }) => $cardsNumberPerRow}, minmax(222px, 1fr));
   grid-gap: 16px 24px;
   padding-bottom: 20px;
 `
@@ -69,7 +69,7 @@ export default function HomeShorcuts() {
   return (
     <ShortcutSection
       ref={containerRef}
-      cardsNumberPerRow={cardsNumberPerRow}
+      $cardsNumberPerRow={cardsNumberPerRow}
     >
       {playlists && (
         <ShortcutButton

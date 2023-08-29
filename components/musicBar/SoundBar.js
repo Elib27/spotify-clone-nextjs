@@ -15,7 +15,7 @@ const SoundProgressionBarFill = styled(SoundProgressionBarBackground)`
   background-color: #fff;
   width: 100%;
   transform: translateX(calc(var(--sound-progression-bar-fill) - 100%));
-  ${({ active }) => active && `
+  ${({ $active }) => $active && `
     background-color: #1db954;
   `}
 `
@@ -33,7 +33,7 @@ const SoundBarCircle = styled.div`
   z-index: 100;
   display: none;
   user-select: none;
-  ${({ active }) => active && `
+  ${({ $active }) => $active && `
     display: block;
   `}
 `
@@ -113,10 +113,10 @@ export default function SoundBar() {
 
   return (
     <SoundProgressionBar ref={soundBarContainer}>
-      <SoundBarCircle active={barCircleActive} />
+      <SoundBarCircle $active={barCircleActive} />
       <SoundProgressionBarWrapper>
         <SoundProgressionBarBackground />
-        <SoundProgressionBarFill active={barCircleActive} />
+        <SoundProgressionBarFill $active={barCircleActive} />
       </SoundProgressionBarWrapper>
     </SoundProgressionBar>
   )

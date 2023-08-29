@@ -16,7 +16,7 @@ const SectionTitle = styled.h2`
 `
 const SectionContent = styled.div`
   display: grid;
-  grid-template-columns: repeat(${({ cardsNumberPerRow }) => cardsNumberPerRow || '4'}, minmax(0, 1fr));
+  grid-template-columns: repeat(${({ $cardsNumberPerRow }) => $cardsNumberPerRow || '4'}, minmax(0, 1fr));
   grid-template-rows: 1fr;
   grid-gap: 24px;
   overflow: hidden;
@@ -31,7 +31,7 @@ export default function SearchResultSection({ title, children, cardsNumberPerRow
       <SectionHeader>
         <SectionTitle>{title}</SectionTitle>
       </SectionHeader>
-      <SectionContent cardsNumberPerRow={cardsNumberPerRow}>
+      <SectionContent $cardsNumberPerRow={cardsNumberPerRow}>
         {children}
       </SectionContent>
     </Container>

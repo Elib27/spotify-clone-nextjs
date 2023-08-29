@@ -58,7 +58,7 @@ const CardImageContainer = styled.div`
   box-shadow: 0 8px 24px rgb(0 0 0 / 50%);
   position: relative;
   overflow: hidden;
-  ${({ isRoundImage }) => isRoundImage && `
+  ${({ $isRoundImage }) => $isRoundImage && `
     border-radius: 50%;
   `}
   img {
@@ -100,7 +100,7 @@ export default function MusicCard({ cover_url, title, description, isRoundImage,
   return (
     <CardContainer>
       <CardImageWrapper>
-        <CardImageContainer isRoundImage={isRoundImage}>
+        <CardImageContainer $isRoundImage={isRoundImage}>
           {
             cover_url ?
               (

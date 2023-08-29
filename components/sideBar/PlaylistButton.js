@@ -16,7 +16,7 @@ const PlaylistLabel = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  ${({ isSelected }) => isSelected && `color: #fff;`}
+  ${({ $isSelected }) => $isSelected && `color: #fff;`}
 `
 const PlaylistBtn = styled.div`
   height: 32px;
@@ -60,7 +60,7 @@ export default function PlaylistButton({ name, id }) {
     <Link href={`/playlist/${id}`}>
       <PlaylistBtn>
         <PlaylistLabel
-          isSelected={router.asPath === `/playlist/${id}`}
+          $isSelected={router.asPath === `/playlist/${id}`}
         >
           {name}
         </PlaylistLabel>

@@ -45,7 +45,7 @@ const Button = styled.button`
   }
   `
 const MicroButton = styled(Button)`
-  ${({ isLyricsPannelOpen }) => isLyricsPannelOpen && `
+  ${({ $isLyricsPannelOpen }) => $isLyricsPannelOpen && `
     color: #1db954;
     opacity: 1;
     &::after {
@@ -64,7 +64,7 @@ const MicroButton = styled(Button)`
   `}
 `
 const WaitListButton = styled(Button)`
-  ${({ isWaitListOpen }) => isWaitListOpen && `
+  ${({ $isWaitListOpen }) => $isWaitListOpen && `
     color: #1db954;
     opacity: 1;
     &::after {
@@ -128,7 +128,7 @@ export default function SoundConfiguration() {
     <Container>
       {music.soundType === 'music' && (
         <MicroButton
-          isLyricsPannelOpen={isLyricsPannelOpen}
+          $isLyricsPannelOpen={isLyricsPannelOpen}
           onClick={() => setIsLyricsOpen(curr => !curr)}
           aria-label="Lyrics"
         >
@@ -137,7 +137,7 @@ export default function SoundConfiguration() {
       )
       }
       <WaitListButton
-        isWaitListOpen={isWaitListOpen}
+        $isWaitListOpen={isWaitListOpen}
         onClick={() => setIsWaitListOpen(curr => !curr)}
         aria-label="Wait list"
       >

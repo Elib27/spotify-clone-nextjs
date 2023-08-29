@@ -14,7 +14,7 @@ const LinkLabel = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  ${({ isSelected }) => isSelected && `color: #fff;`}
+  ${({ $isSelected }) => $isSelected && `color: #fff;`}
 `
 const NavLinkButton = styled.div`
   height: 40px;
@@ -48,7 +48,7 @@ export default function NavButton({ label, link, imageSrc, imageSrcSelected, ima
           <Image src={imageSource} alt={imageAlt} width={24} height={24} />
         </LogoContainer>
         <LinkLabel
-          isSelected={isActive}
+          $isSelected={isActive}
         >
           {label}
         </LinkLabel>

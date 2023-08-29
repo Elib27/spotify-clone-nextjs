@@ -15,7 +15,7 @@ const MusicProgressionBarFill = styled(MusicProgressionBarBackground)`
   background-color: #fff;
   width: 100%;
   transform: translateX(calc(var(--progression-bar-fill) - 100%));
-  ${({ active }) => active && `
+  ${({ $active }) => $active && `
     background-color: #1db954;
   `}
 `
@@ -33,7 +33,7 @@ const MusicBarCircle = styled.div`
   z-index: 100;
   display: none;
   user-select: none;
-  ${({ active }) => active && `
+  ${({ $active }) => $active && `
     display: block;
   `}
 `
@@ -120,10 +120,10 @@ export default function MusicProgressionBar({ isProgressionBarMoving, setIsProgr
 
   return (
     <ProgressionBar ref={barContainer}>
-      <MusicBarCircle active={isProgressionBarMoving} />
+      <MusicBarCircle $active={isProgressionBarMoving} />
       <MusicProgressionBarWrapper>
         <MusicProgressionBarBackground />
-        <MusicProgressionBarFill active={isProgressionBarMoving} />
+        <MusicProgressionBarFill $active={isProgressionBarMoving} />
       </MusicProgressionBarWrapper>
     </ProgressionBar>
   )

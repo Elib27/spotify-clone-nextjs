@@ -41,14 +41,14 @@ const ScreenButton = styled.button`
 `
 const HeartButton = styled(ScreenButton)`
   margin-top: 0;
-  ${({ isLiked }) => isLiked && `
+  ${({ $isLiked }) => $isLiked && `
     color: #1db954;
     opacity: 1;
   `}
 `
 const AddEpisodesButton = styled(ScreenButton)`
   margin-top: 0;
-  ${({ isLiked }) => isLiked && `
+  ${({ $isLiked }) => $isLiked && `
     opacity: 1;
   `}
 `
@@ -184,13 +184,13 @@ export default function CurrentMusicInformations() {
       {music.currentTrack.soundType === 'track' ? (
         <HeartButton
           onClick={() => toggleLikedTrack(music.currentTrack.id, isLiked)}
-          isLiked={isLiked}
+          $isLiked={isLiked}
         >
           {isLiked ? <FilledHeartLogo /> : <EmptyHeartLogo />}
         </HeartButton>
       ) : (
         <AddEpisodesButton
-          isLiked={isLiked}
+          $isLiked={isLiked}
         >
           {isLiked ? <IsInEpisodes /> : <AddToEpisodes />}
         </AddEpisodesButton>

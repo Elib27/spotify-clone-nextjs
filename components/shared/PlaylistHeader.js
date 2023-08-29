@@ -8,7 +8,7 @@ const Header = styled.div`
   width: 100%;
   margin-top: -94px;
   padding: 0 32px 24px;
-  ${({ background }) => `background: linear-gradient(${background} 10%, rgba(0,0,0,0.6) 160%);`}
+  ${({ $background }) => `background: linear-gradient(${$background} 10%, rgba(0,0,0,0.6) 160%);`}
   display: flex;
   align-items: flex-end;  
 `
@@ -25,7 +25,7 @@ const HeaderImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  ${({ isEpisodesCollection }) => isEpisodesCollection && `
+  ${({ $isEpisodesCollection }) => $isEpisodesCollection && `
     background-color: #056952;
     color: #1ed760;
     border-radius: 4px;
@@ -86,8 +86,8 @@ const Separator = styled.span`
 
 export default function PlaylistHeader({ title, cover_url, background, owner, likes, playlistDuration, tracks_number, isEpisodesCollection }) {
   return (
-    <Header background={background}>
-      <HeaderImageContainer isEpisodesCollection={isEpisodesCollection}>
+    <Header $background={background}>
+      <HeaderImageContainer $isEpisodesCollection={isEpisodesCollection}>
         {isEpisodesCollection ? (
           <FavoriteLogoContainer>
             <FavoriteLogo />

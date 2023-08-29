@@ -51,7 +51,7 @@ const HomeLogoContainer = styled.div`
   height: 24px;
   width: 24px;
   opacity: 0.7;
-  ${({ isHomePage }) => isHomePage && `
+  ${({ $isHomePage }) => $isHomePage && `
     opacity: 1;
   `}
 `
@@ -155,7 +155,7 @@ export default function PageHeader() {
         <CentralContainer>
           <Link href="/" aria-label="accueil">
             <HomeButton>
-              <HomeLogoContainer isHomePage={router.asPath === '/'}>
+              <HomeLogoContainer $isHomePage={router.asPath === '/'}>
                 {router.asPath === '/' ? <HouseFullLogo /> : <HouseLogo />}
               </HomeLogoContainer>
             </HomeButton>

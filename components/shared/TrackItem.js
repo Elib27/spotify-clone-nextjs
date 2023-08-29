@@ -21,7 +21,7 @@ const Number = styled.div`
   font-size: 1rem;
   font-weight: 400;
   color: #b3b3b3;
-  ${({ isPlaying }) => isPlaying && `
+  ${({ $isPlaying }) => $isPlaying && `
     color: #1ed760 !important;
   `}
 `
@@ -65,7 +65,7 @@ const Container = styled.div`
   width: 100%;
   padding: 0 16px;
   display: grid;
-  ${({ suppColumn }) => suppColumn ? `
+  ${({ $suppColumn }) => $suppColumn ? `
     grid-template-columns: 16px 6fr 4fr 3fr minmax(120px, 1fr);
   ` : `
     grid-template-columns: 16px 4fr 2fr minmax(120px,1fr);
@@ -133,7 +133,7 @@ const TrackTitle = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  ${({ isPlaying }) => isPlaying && `
+  ${({ $isPlaying }) => $isPlaying && `
     color: #1ed760 !important;
   `}
 `
@@ -265,7 +265,7 @@ export default function TrackItem({
   }
 
   return (
-    <Container suppColumn={addedDate}>
+    <Container $suppColumn={addedDate}>
       <NumberRow>
         <NumberContainer>
           {
@@ -277,7 +277,7 @@ export default function TrackItem({
                 width={14}
               />
             ) : (
-              <Number isPlaying={isSelected}>{number}</Number>
+              <Number $isPlaying={isSelected}>{number}</Number>
             )
           }
         </NumberContainer>
@@ -295,7 +295,7 @@ export default function TrackItem({
         </TracksCover>
         <TracksInformations>
           <TrackTitle
-            isPlaying={isSelected}
+            $isPlaying={isSelected}
           >
             {title}
           </TrackTitle>
@@ -315,7 +315,7 @@ export default function TrackItem({
       )}
       <LastRow>
         <LikeContainer
-          isLiked={isLiked}
+          $isLiked={isLiked}
           onClick={() => toggleLikedTrack(id, isLiked)}
         >
           {isLiked ? <FilledHeartLogo /> : <EmptyHeartLogo />}

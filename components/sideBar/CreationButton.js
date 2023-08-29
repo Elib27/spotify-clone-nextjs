@@ -11,7 +11,7 @@ import PauseLogo from "@/public/musicBar_logos/pause_music.svg"
 const LinkLabel = styled.p`
   font-size: 0.875rem;
   margin-left: 16px;
-  color: ${({ active }) => active ? "#fff" : '#b3b3b3'};
+  color: ${({ $active }) => $active ? "#fff" : '#b3b3b3'};
   font-weight: 700;
   width: 100%;
   text-align: left;
@@ -19,7 +19,7 @@ const LinkLabel = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  ${({ isSelected }) => isSelected && `color: #fff;`}
+  ${({ $isSelected }) => $isSelected && `color: #fff;`}
 `
 const LogoContainer = styled.div`
   height: 24px;
@@ -29,10 +29,10 @@ const LogoContainer = styled.div`
   align-items: center;
   flex-shrink: 0;
   border-radius: 2px;
-  background: ${({ logoBackground }) => logoBackground};
-  opacity: ${({ active }) => active ? 1 : 0.7};
+  background: ${({ $logoBackground }) => $logoBackground};
+  opacity: ${({ $active }) => $active ? 1 : 0.7};
   transition: opacity 0.3s ease-out;
-  ${({ isSelected }) => isSelected && `opacity: 1;`}
+  ${({ $isSelected }) => $isSelected && `opacity: 1;`}
 `
 const CreationLinkButton = styled.div`
   height: 40px;
@@ -79,13 +79,13 @@ export default function CreationButton({ label, link, playlist, imageSrc, imageA
     <Link href={link ?? '/'}>
       <CreationLinkButton>
         <LogoContainer
-          logoBackground={logoBackground}
-          isSelected={router.asPath === link}
+          $logoBackground={logoBackground}
+          $isSelected={router.asPath === link}
         >
           <Image src={imageSrc} alt={imageAlt} width={12} height={12} />
         </LogoContainer>
         <LinkLabel
-          isSelected={router.asPath === link}
+          $isSelected={router.asPath === link}
         >
           {label}
         </LinkLabel>
