@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import { useEffect, useState, useRef } from 'react'
 import useResizeObserver from '@/hooks/useResizeObserver'
-import deduplicateDataById from '@/lib/deduplicateDataById'
-import ShortcutButton from './ShortcutButton'
 import usePlaylists from '@/hooks/usePlaylists'
 import useRecentlyPlayedTracks from '@/hooks/useRecentlyPlayedTracks'
+import deduplicateDataById from '@/lib/deduplicateDataById'
+import ShortcutButton from './ShortcutButton'
 
 const ShortcutSection = styled.section`
   width: 100%;

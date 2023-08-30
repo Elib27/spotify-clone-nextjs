@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import useFollowedArtists from "@/hooks/useFollowedArtist"
 import MainLayout from '@/components/shared/MainLayout'
 import CollectionLayout from '@/components/collection/CollectionLayout'
 import CollectionPageContainer from '@/components/collection/CollectionPageContainer'
@@ -6,17 +6,7 @@ import PlaylistCard from '@/components/collection/PlaylistCard'
 
 export default function Artists() {
 
-  const [followedArtists, setFollowedArtists] = useState(null)
-
-  async function getFollowedArtists() {
-    const response = await fetch('/api/getFollowedArtists')
-    const data = await response.json()
-    setFollowedArtists(data)
-  }
-
-  useEffect(() => {
-    getFollowedArtists()
-  }, [])
+  const { data: followedArtists } = useFollowedArtists()
 
   if (!followedArtists) return null
 

@@ -6,7 +6,9 @@ export default async function handler(req, res) {
 
   const { accessToken } = await getServerSession(req, res, authOptions)
 
-  const response = await getFollowedArtists(accessToken)
+  const { limit } = req.query
+
+  const response = await getFollowedArtists(accessToken, limit)
   const data = await response.json()
 
   const followedArtists = data.artists.items.map(item => ({

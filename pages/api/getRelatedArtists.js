@@ -1,13 +1,14 @@
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
-import getRecommandedArtists from '@/lib/spotify/getRecommandedArtists'
+import getRelatedArtists from '@/lib/spotify/getRelatedArtists'
 
 export default async function handler(req, res) {
 
-  const { artist_id } = req.query
   const { accessToken } = await getServerSession(req, res, authOptions)
 
-  const data = await getRecommandedArtists(accessToken, artist_id)
+  const { artist_id } = req.query
+
+  const data = await getRelatedArtists(accessToken, artist_id)
 
   const recommandedArtists = data.artists.map(item => ({
     name: item?.name,

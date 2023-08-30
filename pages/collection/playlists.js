@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import usePlaylists from "@/hooks/usePlaylists"
 import MainLayout from '@/components/shared/MainLayout'
 import CollectionPageContainer from '@/components/collection/CollectionPageContainer'
 import PlaylistBigCard from '@/components/collection/PlaylistBigCard'
@@ -8,14 +9,9 @@ import CollectionLayout from '@/components/collection/CollectionLayout'
 
 export default function Playlists() {
 
-  const [playlists, setPlaylists] = useState(null)
   const [likedTracks, setLikedTracks] = useState(null)
 
-  async function getPlaylists() {
-    const response = await fetch('/api/getPlaylists')
-    const data = await response.json()
-    return data
-  }
+  const { data: playlists } = usePlaylists(30)
 
   async function getLikedTracks() {
     const response = await fetch('/api/getLikedTracks')
@@ -29,11 +25,9 @@ export default function Playlists() {
 
   useEffect(() => {
     Promise.all([
-      getPlaylists(),
       getLikedTracks(),
     ])
       .then((data) => {
-        setPlaylists(data[0])
         setLikedTracks(data[1])
       })
   }, [])

@@ -1,5 +1,6 @@
 import styled from "styled-components"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import usePlaylists from "@/hooks/usePlaylists"
 import PlaylistButton from "./PlaylistButton"
 
 const PlaylistContainer = styled.div`
@@ -34,17 +35,9 @@ const PlaylistContainer = styled.div`
 
 export default function PlaylistBar() {
 
-  const [playlists, setPlaylists] = useState(null)
   const [isScrollBarVisible, setIsScrollBarVisible] = useState(false)
 
-  useEffect(() => {
-    async function getPlaylists() {
-      const response = await fetch('/api/getPlaylists')
-      const data = await response.json()
-      setPlaylists(data)
-    }
-    getPlaylists()
-  }, [])
+  const { data: playlists } = usePlaylists(30)
 
   if (!playlists) return
 
