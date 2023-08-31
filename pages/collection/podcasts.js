@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import useSavedEpisodes from "@/hooks/useSavedEpisodes"
+import useLikedPodcasts from "@/hooks/useLikedPodcasts"
 import MainLayout from '@/components/shared/MainLayout'
 import CollectionPageContainer from '@/components/collection/CollectionPageContainer'
 import PlaylistBigCard from '@/components/collection/PlaylistBigCard'
@@ -7,29 +8,13 @@ import CollectionLayout from '@/components/collection/CollectionLayout'
 
 export default function Podcasts() {
 
-  const [likedPodcasts, setLikedPodcasts] = useState(null)
-  const [savedEpisodes, setSavedEpisodes] = useState(null)
+  const { data: savedEpisodesData } = useSavedEpisodes()
+  const { data: likedPodcasts } = useLikedPodcasts()
 
-  async function getLikedPodcasts() {
-    const response = await fetch('/api/getLikedPodcasts')
-    const data = await response.json()
-    setLikedPodcasts(data)
-  }
-
-  async function getSavedEpisodes() {
-    const response = await fetch('/api/getSavedEpisodes')
-    const data = await response.json()
-    const savedEpisodes = data.map(episode => ({
-      title: episode.podcast,
-      artist: episode.name
-    }))
-    setSavedEpisodes(savedEpisodes)
-  }
-
-  useEffect(() => {
-    getLikedPodcasts()
-    getSavedEpisodes()
-  }, [])
+  const savedEpisodes = savedEpisodesData?.map(episode => ({
+    title: episode.podcast,
+    artist: episode.name
+  }))
 
   if (!(likedPodcasts)) return
 

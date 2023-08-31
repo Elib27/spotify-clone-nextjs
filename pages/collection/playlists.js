@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
+import useLikedTracks from "@/hooks/useLikedTracks"
 import usePlaylists from "@/hooks/usePlaylists"
+import useSavedEpisodes from "@/hooks/useSavedEpisodes"
 import MainLayout from '@/components/shared/MainLayout'
 import CollectionPageContainer from '@/components/collection/CollectionPageContainer'
 import PlaylistBigCard from '@/components/collection/PlaylistBigCard'
@@ -9,28 +10,14 @@ import CollectionLayout from '@/components/collection/CollectionLayout'
 
 export default function Playlists() {
 
-  const [likedTracks, setLikedTracks] = useState(null)
-
   const { data: playlists } = usePlaylists(30)
+  const { data: likedTracksData } = useLikedTracks()
+  const { data: savedEpisodes } = useSavedEpisodes()
 
-  async function getLikedTracks() {
-    const response = await fetch('/api/getLikedTracks')
-    const data = await response.json()
-    const likedTracks = data.map(track => ({
-      title: track.name,
-      artist: track.artist.join(', '),
-    }))
-    return likedTracks
-  }
-
-  useEffect(() => {
-    Promise.all([
-      getLikedTracks(),
-    ])
-      .then((data) => {
-        setLikedTracks(data[1])
-      })
-  }, [])
+  const likedTracks = likedTracksData?.map(track => ({
+    title: track.name,
+    artist: track.artist.join(', '),
+  }))
 
   if (!(playlists && likedTracks)) return
 
@@ -43,7 +30,7 @@ export default function Playlists() {
       <PlaylistCard
         title="Vos épisodes"
         cover_url="/episodes_cover.jpg"
-        description="42 épisodes"
+        description={`${savedEpisodes?.length} épisodes`}
       />
       {playlists.map(playlist => (
         <PlaylistCard

@@ -8,7 +8,9 @@ export default async function handler(req, res) {
 
   const { accessToken } = await getServerSession(req, res, authOptions)
 
-  const response = await getSavedEpisodes(accessToken)
+  const { limit } = req.query
+
+  const response = await getSavedEpisodes(accessToken, limit)
   const data = await response.json()
 
   const savedEpisodes = data.items.map(item => ({

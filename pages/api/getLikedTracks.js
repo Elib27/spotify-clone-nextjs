@@ -9,7 +9,9 @@ export default async function handler(req, res) {
 
   const { accessToken } = await getServerSession(req, res, authOptions)
 
-  const response = await getLikedTracks(accessToken)
+  const { limit } = req.query
+
+  const response = await getLikedTracks(accessToken, limit)
   const data = await response.json()
 
   const likedTracks = data.items.map(item => ({
