@@ -6,9 +6,9 @@ async function getLikedTracks(limit) {
   return data
 }
 
-export default function useLikedTracks(limit = 50) {
+export default function useLikedTracks() {
   return useQuery({
-    queryKey: ['likedTracks', limit],
-    queryFn: () => getLikedTracks(limit)
+    queryKey: ['likedTracks'],
+    queryFn: () => getLikedTracks(50)
   })
 }

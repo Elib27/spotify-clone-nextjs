@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import useLikedTracks from '@/hooks/useLikedTracks'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import useDeleteLikedTracks from '@/hooks/useDeleteLikedTracks'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusicId, changeCurrentPlaylist, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '@/store/store'
 import PlaylistHeader from '@/components/shared/PlaylistHeader'
@@ -34,18 +34,9 @@ export default function Tracks() {
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
-  const queryClient = useQueryClient();
+  const { data: likedTracks } = useLikedTracks()
 
-  const { data: likedTracks } = useLikedTracks(50)
-
-  const { mutate: deleteLikedTrack } = useMutation({
-    mutationFn: (id) => fetch(`/api/deleteLikedTracks?ids=${id}`),
-    onSuccess: (data, variables) => {
-      console.log(data, variables)
-      queryClient.setQueryData(['likedTracks', 50], (tracks) => tracks?.filter(track => track.id !== variables.id))
-      queryClient.invalidateQueries([likedTracks, 50])
-    }
-  })
+  const { mutate: deleteLikedTrack } = useDeleteLikedTracks()
 
   function tooglePlaylingLikedMusic() {
     if (!likedTracks) return

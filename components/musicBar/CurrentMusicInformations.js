@@ -1,5 +1,8 @@
 import styled from "styled-components"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import useLikedTracks from "@/hooks/useLikedTracks"
+import useDeleteLikedTracks from "@/hooks/useDeleteLikedTracks"
+import useAddLikedTracks from "@/hooks/useAddLikedTracks"
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusic } from '@/store/store'
 import Image from "next/image"
@@ -41,6 +44,10 @@ const ScreenButton = styled.button`
 `
 const HeartButton = styled(ScreenButton)`
   margin-top: 0;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.04);
+  }
   ${({ $isLiked }) => $isLiked && `
     color: #1db954;
     opacity: 1;
@@ -119,15 +126,14 @@ export default function CurrentMusicInformations() {
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
-  const [likedTrackIds, setLikedTrackIds] = useState(null)
+
+  const { data: likedTracks, refetch: updateLikedTracks } = useLikedTracks()
+  const { mutate: deleteLikedTrack } = useDeleteLikedTracks()
+  const { mutateAsync: addLikedTrack } = useAddLikedTracks()
+
+  const likedTrackIds = likedTracks?.map(track => track.id)
 
   useEffect(() => {
-    async function getLikedTracks() {
-      const response = await fetch('/api/getLikedTracks')
-      const data = await response.json()
-      const ids = data.map(track => track.id)
-      setLikedTrackIds(ids)
-    }
     async function getTrackInformations() {
       if (!music.currentTrack.id) return
       const response = await fetch(`/api/getTrackInformations?id=${music.currentTrack.id}`)
@@ -135,27 +141,16 @@ export default function CurrentMusicInformations() {
       dispatch(changeCurrentMusic(data))
     }
     getTrackInformations()
-    getLikedTracks()
   }, [music.currentTrack.id, dispatch])
 
   async function toggleLikedTrack(id, isLiked) {
     if (isLiked)
       deleteLikedTrack(id)
     else
-      addLikedTrack(id)
+      addLikedTrack(id).then(() => updateLikedTracks())
   }
 
-  function deleteLikedTrack(id) {
-    setLikedTrackIds(prev => prev.filter(trackId => trackId !== id))
-    fetch(`/api/deleteLikedTracks?ids=${id}`)
-  }
-
-  async function addLikedTrack(id) {
-    setLikedTrackIds(prev => [...prev, id])
-    fetch(`/api/addLikedTracks?ids=${id}`)
-  }
-
-  const isLiked = likedTrackIds && likedTrackIds.includes(music.currentTrack.id)
+  const isLiked = likedTrackIds?.includes(music.currentTrack.id)
 
   const artists = music.currentTrack.artists.map((artist, index) => (
     <span key={artist.id}>

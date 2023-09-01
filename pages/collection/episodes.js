@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import useSavedEpisodes from "@/hooks/useSavedEpisodes"
 import styled from "styled-components"
 import PlaylistHeader from '@/components/shared/PlaylistHeader'
 import LikedPodcast from '@/components/collection/LikedPodcast'
@@ -19,23 +19,6 @@ const BackgroundGradient = styled.div`
   position: absolute;
   z-index: -1;
   pointer-events: none;
-`
-const PlayMusicSection = styled.section`
-  padding: 24px 32px;
-`
-const PlayButton = styled.div`
-  height: 56px;
-  width: 56px;
-  background-color: #1ed760;
-  border-radius: 50%;
-  color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #000;
-  &:hover {
-    transform: scale(1.04);
-  }
 `
 const PodcastsContainer = styled.section`
   padding: 0 16px;
@@ -60,16 +43,9 @@ const Wrapper = styled.div`
 
 export default function Episodes() {
 
-  const [savedEpisodes, setSavedEpisodes] = useState(null)
+  // const [savedEpisodes, setSavedEpisodes] = useState(null)
 
-  useEffect(() => {
-    async function getSavedEpisodes() {
-      const response = await fetch('/api/getSavedEpisodes')
-      const data = await response.json()
-      setSavedEpisodes(data)
-    }
-    getSavedEpisodes()
-  }, [])
+  const { data: savedEpisodes } = useSavedEpisodes()
 
   if (!savedEpisodes) return
 

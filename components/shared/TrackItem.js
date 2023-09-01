@@ -47,7 +47,12 @@ const TrackArtist = styled.span`
 const LikeContainer = styled.div`
   height: 16px;
   width: 16px;
-  ${({ isLiked }) => isLiked ? `
+  margin-right: 16px;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.04);
+  }
+  ${({ $isLiked }) => $isLiked ? `
     color: #1ed760;
     opacity: 1 !important;
   ` : `
@@ -57,7 +62,6 @@ const LikeContainer = styled.div`
       opacity: 1 !important;
     }
   `}
-  margin-right: 16px;
 `
 const NumberContainer = styled.div``
 const Container = styled.div`
@@ -221,9 +225,7 @@ export default function TrackItem({
   const isCurrentTrackPlaying = music.isPlaying && isSelected
 
   async function handleClickChangeCurrentMusicId() {
-    if (isSelected) {
-      dispatch(togglePlaying())
-    }
+    if (isSelected) dispatch(togglePlaying())
     else {
       dispatch(changeCurrentMusicId(id))
       if (!!playlistId) {
