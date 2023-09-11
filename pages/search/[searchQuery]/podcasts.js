@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import useSearchResults from "@/hooks/useSearchResults"
 import MainLayout from '@/components/shared/MainLayout'
 import SearchResultLayout from '@/components/searchPage/SearchResultLayout'
 import MusicCard from '@/components/shared/MusicCard'
@@ -15,31 +15,21 @@ const PodcastsContainer = styled.div`
 `
 
 export default function Podcasts() {
-  const [podcastResults, setPodcastResults] = useState(null)
 
   const router = useRouter()
-  const { musicResearch } = router.query
+  const { searchQuery } = router.query
 
-  useEffect(() => {
-    async function getFirstPodcasts() {
-      const response = await fetch(`/api/getSearchResults/${musicResearch}/podcasts`)
-      const data = await response.json()
-      setPodcastResults(data)
-    }
+  const { data: podcasts } = useSearchResults('podcasts', searchQuery)
 
-    getFirstPodcasts()
+  if (!podcasts) return (null)
 
-  }, [musicResearch])
-
-  if (!podcastResults) return (null)
-
-  if (!podcastResults?.length) {
-    return (<NoResults searchValue={musicResearch} />)
+  if (!podcasts?.length) {
+    return (<NoResults searchValue={searchQuery} />)
   }
 
   return (
     <PodcastsContainer>
-      {podcastResults.map((podcast) => (
+      {podcasts.map((podcast) => (
         <MusicCard
           title={podcast.name}
           cover_url={podcast.cover_url}

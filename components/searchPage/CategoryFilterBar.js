@@ -28,39 +28,39 @@ const FiltersContainer = styled.div`
 export default function CategoryFilterBar() {
 
   const router = useRouter()
-  const { musicResearch } = router.query
+  const { searchQuery } = router.query
 
   return (
     <BarContainer>
       <FiltersContainer>
         <CategoryFilterButton
           title="Tout"
-          link={`/search/${musicResearch}`}
+          link={`/search/${searchQuery}`}
           isSelected={router.pathname.split('/').length <= 3}
         />
         <CategoryFilterButton
           title="Titres"
-          link={`/search/${musicResearch}/tracks`}
+          link={`/search/${searchQuery}/tracks`}
           isSelected={router.pathname.split('/')[3] === 'tracks'}
         />
         <CategoryFilterButton
           title="Artistes"
-          link={`/search/${musicResearch}/artists`}
+          link={`/search/${searchQuery}/artists`}
           isSelected={router.pathname.split('/')[3] === 'artists'}
         />
         <CategoryFilterButton
           title="Playlists"
-          link={`/search/${musicResearch}/playlists`}
+          link={`/search/${searchQuery}/playlists`}
           isSelected={router.pathname.split('/')[3] === 'playlists'}
         />
         <CategoryFilterButton
           title="Albums"
-          link={`/search/${musicResearch}/albums`}
+          link={`/search/${searchQuery}/albums`}
           isSelected={router.pathname.split('/')[3] === 'albums'}
         />
         <CategoryFilterButton
           title="Podcasts et émissions"
-          link={`/search/${musicResearch}/podcasts`}
+          link={`/search/${searchQuery}/podcasts`}
           isSelected={router.pathname.split('/')[3] === 'podcasts'}
         />
       </FiltersContainer>

@@ -2,6 +2,8 @@ import styled from "styled-components"
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/router"
 import useResizeObserver from '@/hooks/useResizeObserver'
+import useLikedTracks from "@/hooks/useLikedTracks"
+import useSearchResults from "@/hooks/useSearchResults"
 import MainLayout from '@/components/shared/MainLayout'
 import SearchResultLayout from '@/components/searchPage/SearchResultLayout'
 import BestResult from '@/components/searchPage/BestResult'
@@ -24,31 +26,17 @@ const Container = styled.div`
 export default function SearchResult() {
 
   const router = useRouter()
-  const { musicResearch } = router.query
+  const { searchQuery } = router.query
 
   const WIDTH_LIMIT = 200
   const containerRef = useRef(null)
   const dimensions = useResizeObserver(containerRef)
   const [cardsNumberPerRow, setCardsNumberPerRow] = useState(4)
 
-  const [fetchedData, setFetchedData] = useState(null)
-  const likedTracksIds = useRef(null)
+  const { data: likedTracks } = useLikedTracks()
+  const likedTracksIds = likedTracks?.map(track => track.id)
 
-  useEffect(() => {
-    async function fetchResults() {
-      const response = await fetch(`/api/getSearchResults/${musicResearch}`)
-      const data = await response.json()
-      setFetchedData(data[0])
-    }
-    async function getLikedTracksIds() {
-      const response = await fetch('/api/getLikedTracks')
-      const data = await response.json()
-      const ids = data.map(track => track.id)
-      likedTracksIds.current = ids;
-    }
-    fetchResults()
-    getLikedTracksIds()
-  }, [musicResearch])
+  const { data: searchResults } = useSearchResults('all', searchQuery)
 
   useEffect(() => {
     const { width } = dimensions || { width: 900 }
@@ -58,32 +46,33 @@ export default function SearchResult() {
     }
   }, [dimensions])
 
-  if (!fetchedData) return (null)
 
-  if (fetchedData && !fetchedData?.bestResult?.title) {
-    return (<NoResults searchValue={musicResearch} />)
+  if (!searchResults) return (null)
+
+  if (searchResults && !searchResults?.bestResult?.title) {
+    return (<NoResults searchValue={searchQuery} />)
   }
 
   return (
     <Container ref={containerRef}>
       <BestResult
-        title={fetchedData?.bestResult.title}
-        category={fetchedData?.bestResult.category}
-        cover_url={fetchedData?.bestResult.image}
+        title={searchResults?.bestResult.title}
+        category={searchResults?.bestResult.category}
+        cover_url={searchResults?.bestResult.image}
       />
       {
-        fetchedData?.tracks?.length > 0 && (
+        searchResults?.tracks?.length > 0 && (
           <TrackResults
-            tracks={fetchedData.tracks}
+            tracks={searchResults.tracks}
             likedTracksIds={likedTracksIds.current}
           />)
       }
       <SearchResultSection
         title="Artistes"
-        data={fetchedData?.artists}
+        data={searchResults?.artists}
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {fetchedData?.artists && fetchedData.artists.map((artist, index) => (
+        {searchResults?.artists && searchResults.artists.map((artist, index) => (
           index < (cardsNumberPerRow) && (
             <MusicCard
               title={artist.name}
@@ -97,10 +86,10 @@ export default function SearchResult() {
       </SearchResultSection>
       <SearchResultSection
         title="Albums"
-        data={fetchedData?.albums}
+        data={searchResults?.albums}
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {fetchedData?.albums.map((album, index) => (
+        {searchResults?.albums.map((album, index) => (
           index < (cardsNumberPerRow) && (
             <MusicCard
               title={album.name}
@@ -113,10 +102,10 @@ export default function SearchResult() {
       </SearchResultSection>
       <SearchResultSection
         title="Playlists"
-        data={fetchedData?.playlists}
+        data={searchResults?.playlists}
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {fetchedData?.playlists && fetchedData.playlists.map((playlist, index) => (
+        {searchResults?.playlists && searchResults.playlists.map((playlist, index) => (
           index < (cardsNumberPerRow) && (
             <MusicCard
               title={playlist.name}
@@ -129,10 +118,10 @@ export default function SearchResult() {
       </SearchResultSection>
       <SearchResultSection
         title="Podcasts"
-        data={fetchedData?.podcasts}
+        data={searchResults?.podcasts}
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {fetchedData?.podcasts && fetchedData.podcasts.map((podcast, index) => (
+        {searchResults?.podcasts && searchResults.podcasts.map((podcast, index) => (
           index < (cardsNumberPerRow) && (
             <MusicCard
               title={podcast.name}
@@ -145,10 +134,10 @@ export default function SearchResult() {
       </SearchResultSection>
       <SearchResultSection
         title="Episodes"
-        data={fetchedData?.episodes}
+        data={searchResults?.episodes}
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {fetchedData?.episodes && fetchedData.episodes.map((episode, index) => (
+        {searchResults?.episodes && searchResults.episodes.map((episode, index) => (
           index < (cardsNumberPerRow) && (
             <MusicCard
               title={episode.name}

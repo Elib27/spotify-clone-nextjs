@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import useLikedTracks from '@/hooks/useLikedTracks'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusicId, changeCurrentPlaylist, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
 import Image from 'next/image'
@@ -259,12 +260,7 @@ export default function TrackItem({
     }
   }
 
-  async function toggleLikedTrack(id, isLiked) {
-    if (isLiked)
-      deleteLikedTrack(id)
-    else
-      addLikedTrack(id)
-  }
+  const toggleLikedTrack = (id, isLiked) => isLiked ? deleteLikedTrack(id) : addLikedTrack(id)
 
   return (
     <Container $suppColumn={addedDate}>

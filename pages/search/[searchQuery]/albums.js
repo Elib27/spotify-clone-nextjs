@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import useSearchResults from "@/hooks/useSearchResults"
 import MainLayout from '@/components/shared/MainLayout'
 import SearchResultLayout from '@/components/searchPage/SearchResultLayout'
 import MusicCard from '@/components/shared/MusicCard'
@@ -15,31 +15,22 @@ const AlbumsContainer = styled.div`
 `
 
 export default function Playlists() {
-  const [albumsData, setAlbumsData] = useState(null)
 
   const router = useRouter()
-  const { musicResearch } = router.query
+  const { searchQuery } = router.query
 
-  useEffect(() => {
-    async function getFirstTracks() {
-      const response = await fetch(`/api/getSearchResults/${musicResearch}/albums`)
-      const data = await response.json()
-      setAlbumsData(data)
-    }
+  const { data: albums } = useSearchResults('albums', searchQuery)
 
-    getFirstTracks()
 
-  }, [musicResearch])
+  if (!albums) return (null)
 
-  if (!albumsData) return (null)
-
-  if (!albumsData?.length) {
-    return (<NoResults searchValue={musicResearch} />)
+  if (!albums?.length) {
+    return (<NoResults searchValue={searchQuery} />)
   }
 
   return (
     <AlbumsContainer>
-      {albumsData.map((album) => (
+      {albums.map((album) => (
         <MusicCard
           title={album.name}
           cover_url={album.cover_url}

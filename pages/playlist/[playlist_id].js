@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react'
+import useLikedTracks from '@/hooks/useLikedTracks'
+import useDeleteLikedTracks from '@/hooks/useDeleteLikedTracks'
+import useAddLikedTracks from '@/hooks/useAddLikedTracks'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusicId, changeCurrentPlaylist, changeTracksQueue, changeMusicIndexInQueue, togglePlaying } from '@/store/store'
@@ -15,7 +18,12 @@ export default function Playlist() {
   const music = useSelector(state => state.music)
 
   const [playlistInformations, setPlaylistInformations] = useState(null)
-  const [likedTrackIds, setLikedTrackIds] = useState(null)
+
+  const { data: likedTracks } = useLikedTracks()
+  const likedTrackIds = likedTracks?.map(track => track.id)
+
+  const { mutate: deleteLikedTrack } = useDeleteLikedTracks()
+  const { mutateAsync: addLikedTrack } = useAddLikedTracks()
 
   useEffect(() => {
     async function getPlaylist() {
@@ -23,25 +31,8 @@ export default function Playlist() {
       const data = await response.json()
       setPlaylistInformations(data)
     }
-    async function getLikedTracksIds() {
-      const response = await fetch('/api/getLikedTracks')
-      const data = await response.json()
-      const ids = data.map(track => track.id)
-      setLikedTrackIds(ids)
-    }
-    getLikedTracksIds()
     getPlaylist()
   }, [playlist_id])
-
-  async function addLikedTrack(id) {
-    setLikedTrackIds(prev => [...prev, id])
-    await fetch(`/api/addLikedTracks?ids=${id}`)
-  }
-
-  async function deleteLikedTrack(id) {
-    setLikedTrackIds(prev => prev.filter(trackId => trackId !== id))
-    await fetch(`/api/deleteLikedTracks?ids=${id}`)
-  }
 
   async function togglePlayingPlaylist() {
     if (!playlistInformations || !playlistInformations.full_tracks) return

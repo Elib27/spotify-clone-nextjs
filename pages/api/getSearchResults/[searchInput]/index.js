@@ -106,5 +106,5 @@ export default async function handle(req, res) {
     tracks
   }
 
-  res.status(200).json([searchResults, data])
+  res.status(200).json(searchResults)
 }

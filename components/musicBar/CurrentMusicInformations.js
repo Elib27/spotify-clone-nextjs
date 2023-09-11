@@ -127,7 +127,7 @@ export default function CurrentMusicInformations() {
   const dispatch = useDispatch()
 
 
-  const { data: likedTracks, refetch: updateLikedTracks } = useLikedTracks()
+  const { data: likedTracks } = useLikedTracks()
   const { mutate: deleteLikedTrack } = useDeleteLikedTracks()
   const { mutateAsync: addLikedTrack } = useAddLikedTracks()
 
@@ -143,12 +143,7 @@ export default function CurrentMusicInformations() {
     getTrackInformations()
   }, [music.currentTrack.id, dispatch])
 
-  async function toggleLikedTrack(id, isLiked) {
-    if (isLiked)
-      deleteLikedTrack(id)
-    else
-      addLikedTrack(id).then(() => updateLikedTracks())
-  }
+  const toggleLikedTrack = (id, isLiked) => isLiked ? deleteLikedTrack(id) : addLikedTrack(id)
 
   const isLiked = likedTrackIds?.includes(music.currentTrack.id)
 

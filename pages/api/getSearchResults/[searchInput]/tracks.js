@@ -1,4 +1,5 @@
 import getSearchTracks from '@/lib/spotify/getSearchTracks'
+import deduplicateDataById from '@/lib/deduplicateDataById'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 
@@ -22,10 +23,9 @@ export default async function handle(req, res) {
   }
 
   const combinedResults = [...tracksData[0].tracks.items, ...tracksData[1].tracks.items]
-  const ids = combinedResults.map(track => track.id)
-  const NoDuplicatedTrackResults = combinedResults.filter(({ id }, index) => !ids.includes(id, index + 1))
+  const deduplicatedTrackResults = deduplicateDataById(combinedResults)
 
-  const trackResults = NoDuplicatedTrackResults.map((item) => ({
+  const trackResults = deduplicatedTrackResults.map((item) => ({
     name: item?.name,
     artist: item?.artists?.[0]?.name,
     duration: convertMsInMinSecs(item?.duration_ms),
