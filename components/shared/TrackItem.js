@@ -1,8 +1,11 @@
 import styled from 'styled-components'
-import useLikedTracks from '@/hooks/useLikedTracks'
+import Image from 'next/image'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusicId, changeCurrentPlaylist, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
-import Image from 'next/image'
+import { useEffect } from 'react'
+import usePlaylist from '@/hooks/usePlaylist'
+import useLikedTracks from '@/hooks/useLikedTracks'
+import useTracksQueue from '@/hooks/useTracksQueue'
 import FilledHeartLogo from '@/public/tracks_logos/heart.svg'
 import EmptyHeartLogo from '@/public/tracks_logos/empty_heart.svg'
 import OptionsLogo from '@/public/tracks_logos/options_logo.svg'
@@ -223,41 +226,39 @@ export default function TrackItem({
   const dispatch = useDispatch()
 
   const isSelected = (id === music.currentTrack.id) && (playlistId === music.currentPlaylist)
-  const isCurrentTrackPlaying = music.isPlaying && isSelected
+  const isCurrentTrackPlaying = isSelected && music.isPlaying
 
-  async function handleClickChangeCurrentMusicId() {
+  const { data: likedTracks } = useLikedTracks()
+  const { data: playlist } = usePlaylist(playlistId)
+  const { data: tracksQueue, refetch: getTracksQueue } = useTracksQueue(id)
+
+  useEffect(() => {
+    if (!!tracksQueue && isSelected) {
+      dispatch(changeTracksQueue(tracksQueue))
+      dispatch(changeCurrentPlaylist(""))
+      dispatch(changeMusicIndexInQueue(0))
+    }
+  }, [tracksQueue, isSelected, dispatch])
+
+  function handleClickChangeCurrentMusicId() {
     if (isSelected) dispatch(togglePlaying())
     else {
       dispatch(changeCurrentMusicId(id))
-      if (!!playlistId) {
-        const tracks = await getTracks(playlistId)
+      if (playlistId) {
+        const tracks = getLikedOrPlaylistTracks(playlistId)
         const tracksQueueIds = tracks.map(track => track.id)
         const currIndexInQueue = tracksQueueIds.indexOf(id)
         dispatch(changeCurrentPlaylist(playlistId))
         dispatch(changeTracksQueue(tracksQueueIds))
         dispatch(changeMusicIndexInQueue(currIndexInQueue))
       }
-      else {
-        const response = await fetch(`/api/getTracksQueue?seed_tracks=${id}`)
-        const tracksQueueIds = await response.json()
-        dispatch(changeTracksQueue(tracksQueueIds))
-        dispatch(changeCurrentPlaylist(""))
-        dispatch(changeMusicIndexInQueue(0))
-      }
+      else getTracksQueue()
     }
   }
 
-  async function getTracks(playlistId) {
-    if (playlistId === "tracks") {
-      const response = await fetch(`/api/getLikedTracks`)
-      const data = await response.json()
-      return data
-    }
-    else {
-      const response = await fetch(`/api/getPlaylist?playlist_id=${playlistId}`)
-      const data = await response.json()
-      return data.tracks
-    }
+  function getLikedOrPlaylistTracks(playlistId) {
+    if (playlistId === "tracks") return likedTracks
+    return playlist.tracks
   }
 
   const toggleLikedTrack = (id, isLiked) => isLiked ? deleteLikedTrack(id) : addLikedTrack(id)

@@ -15,7 +15,7 @@ export default function useDeleteLikedTracks() {
       queryClient.setQueryData(['likedTracks'], previousLikedTracks)
     },
     onSettled: () => {
-      queryClient.refetchQueries({ queryKey: ['likedTracks'] })
+      queryClient.invalidateQueries({ queryKey: ['likedTracks'] })
     }
   })
 }

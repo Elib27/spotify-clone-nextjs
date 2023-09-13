@@ -18,22 +18,22 @@ export default function Tracks() {
   const { data: likedTracks } = useLikedTracks()
   const likedTrackIds = likedTracks?.map(track => track.id)
 
-  const { data: tracksData } = useSearchResults('tracks', searchQuery)
+  const { data: tracks } = useSearchResults('tracks', searchQuery)
 
   const { mutate: addLikedTrack } = useAddLikedTracks()
   const { mutate: deleteLikedTrack } = useDeleteLikedTracks()
 
 
-  if (!tracksData) return (null)
+  if (!tracks) return (null)
 
-  if (!tracksData?.length) {
+  if (!tracks?.length) {
     return (<NoResults searchValue={searchQuery} />)
   }
 
   return (
     <TracksContainer columnTitles={['#', 'titre', 'album']} >
       {
-        tracksData.map((track, index) => (
+        tracks.map((track, index) => (
           <TrackItem
             key={track.id}
             title={track.name}
@@ -44,9 +44,9 @@ export default function Tracks() {
             explicit={track.explicit}
             duration={track.duration}
             number={index + 1}
+            playlistId=""
             addLikedTrack={addLikedTrack}
             deleteLikedTrack={deleteLikedTrack}
-            playlistId=""
             isLiked={likedTrackIds && likedTrackIds.includes(track.id)}
             addedDate={null}
           />
