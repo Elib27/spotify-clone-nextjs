@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import Image from 'next/image'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusicId, changeCurrentPlaylist, changeMusicIndexInQueue, changeTracksQueue, togglePlaying } from '../../store/store'
-import { useEffect } from 'react'
 import usePlaylist from '@/hooks/usePlaylist'
 import useLikedTracks from '@/hooks/useLikedTracks'
 import useTracksQueue from '@/hooks/useTracksQueue'
@@ -230,17 +229,9 @@ export default function TrackItem({
 
   const { data: likedTracks } = useLikedTracks()
   const { data: playlist } = usePlaylist(playlistId)
-  const { data: tracksQueue, refetch: getTracksQueue } = useTracksQueue(id)
+  const { refetch: getTracksQueue } = useTracksQueue(id)
 
-  useEffect(() => {
-    if (!!tracksQueue && isSelected) {
-      dispatch(changeTracksQueue(tracksQueue))
-      dispatch(changeCurrentPlaylist(""))
-      dispatch(changeMusicIndexInQueue(0))
-    }
-  }, [tracksQueue, isSelected, dispatch])
-
-  function handleClickChangeCurrentMusicId() {
+  async function handleClickChangeCurrentMusicId() {
     if (isSelected) dispatch(togglePlaying())
     else {
       dispatch(changeCurrentMusicId(id))
@@ -252,7 +243,12 @@ export default function TrackItem({
         dispatch(changeTracksQueue(tracksQueueIds))
         dispatch(changeMusicIndexInQueue(currIndexInQueue))
       }
-      else getTracksQueue()
+      else {
+        const { data: tracksQueue } = await getTracksQueue()
+        dispatch(changeTracksQueue(tracksQueue))
+        dispatch(changeCurrentPlaylist(""))
+        dispatch(changeMusicIndexInQueue(0))
+      }
     }
   }
 

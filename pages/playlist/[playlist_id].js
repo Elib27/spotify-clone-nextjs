@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
-import useLikedTracks from '@/hooks/useLikedTracks'
-import useDeleteLikedTracks from '@/hooks/useDeleteLikedTracks'
-import useAddLikedTracks from '@/hooks/useAddLikedTracks'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusicId, changeCurrentPlaylist, changeTracksQueue, changeMusicIndexInQueue, togglePlaying } from '@/store/store'
+import useLikedTracks from '@/hooks/useLikedTracks'
+import useDeleteLikedTracks from '@/hooks/useDeleteLikedTracks'
+import useAddLikedTracks from '@/hooks/useAddLikedTracks'
+import usePlaylist from '@/hooks/usePlaylist'
 import PlaylistPageLayout from '@/components/collection/PlaylistPageLayout'
 import TrackItem from '@/components/shared/TrackItem'
 import { convertMsToMinutesSeconds, convertMsToHourMinSecString } from '@/lib/convertTime'
@@ -17,7 +17,7 @@ export default function Playlist() {
   const dispatch = useDispatch()
   const music = useSelector(state => state.music)
 
-  const [playlistInformations, setPlaylistInformations] = useState(null)
+  const { data: playlist } = usePlaylist(playlist_id)
 
   const { data: likedTracks } = useLikedTracks()
   const likedTrackIds = likedTracks?.map(track => track.id)
@@ -25,45 +25,36 @@ export default function Playlist() {
   const { mutate: deleteLikedTrack } = useDeleteLikedTracks()
   const { mutateAsync: addLikedTrack } = useAddLikedTracks()
 
-  useEffect(() => {
-    async function getPlaylist() {
-      const response = await fetch(`/api/getPlaylist?playlist_id=${playlist_id}`)
-      const data = await response.json()
-      setPlaylistInformations(data)
-    }
-    getPlaylist()
-  }, [playlist_id])
-
-  async function togglePlayingPlaylist() {
-    if (!playlistInformations || !playlistInformations.full_tracks) return
+  function togglePlayingPlaylist() {
+    if (!playlist || !playlist.full_tracks) return
     if (music.currentPlaylist !== playlist_id) {
       dispatch(changeCurrentPlaylist(playlist_id))
-      dispatch(changeCurrentMusicId(playlistInformations.tracks[0].id))
-      dispatch(changeTracksQueue(playlistInformations.tracks.map(track => track.id)))
+      dispatch(changeCurrentMusicId(playlist.tracks[0].id))
+      dispatch(changeTracksQueue(playlist.tracks.map(track => track.id)))
       dispatch(changeMusicIndexInQueue(0))
     }
     dispatch(togglePlaying())
   }
 
   const isPlaylistPlaying = (playlist_id === music.currentPlaylist) && music.isPlaying
-  const playlistDurationMs = playlistInformations?.tracks && playlistInformations.tracks.reduce((acc, track) => acc + track.duration, 0)
+  const playlistDurationMs = playlist?.tracks && playlist.tracks.reduce((acc, track) => acc + track.duration, 0)
 
-  if (!playlistInformations) return
+  if (!playlist) return
 
   return (
     <PlaylistPageLayout
-      title={playlistInformations.name}
-      description={playlistInformations.description}
-      cover_url={playlistInformations.image}
-      tracks_number={playlistInformations.tracks.length}
-      likes={playlistInformations.followers}
-      owner={playlistInformations.owner}
+      title={playlist.name}
+      description={playlist.description}
+      cover_url={playlist.image}
+      tracks_number={playlist.tracks.length}
+      likes={playlist.followers}
+      owner={playlist.owner}
       playlistDuration={!!playlistDurationMs && convertMsToHourMinSecString(playlistDurationMs)}
       isPlaying={isPlaylistPlaying}
       togglePlaylistPlaying={togglePlayingPlaylist}
       background="#555555"
     >
-      {playlistInformations.tracks.map((track, index) => (
+      {playlist.tracks.map((track, index) => (
         <TrackItem
           title={track.name}
           artist={track.artist}
@@ -79,7 +70,7 @@ export default function Playlist() {
           isLiked={likedTrackIds && likedTrackIds.includes(track.id)}
           deleteLikedTrack={deleteLikedTrack}
           addLikedTrack={addLikedTrack}
-          playDisabled={!playlistInformations.full_tracks}
+          playDisabled={!playlist.full_tracks}
         />
       ))
       }
