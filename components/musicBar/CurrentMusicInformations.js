@@ -1,11 +1,12 @@
 import styled from "styled-components"
 import { useEffect } from "react"
-import useLikedTracks from "@/hooks/useLikedTracks"
-import useDeleteLikedTracks from "@/hooks/useDeleteLikedTracks"
-import useAddLikedTracks from "@/hooks/useAddLikedTracks"
 import { useSelector, useDispatch } from 'react-redux'
 import { changeCurrentMusic } from '@/store/store'
 import Image from "next/image"
+import useLikedTracks from "@/hooks/useLikedTracks"
+import useDeleteLikedTracks from "@/hooks/useDeleteLikedTracks"
+import useAddLikedTracks from "@/hooks/useAddLikedTracks"
+import useTrackInformations from "@/hooks/useTrackInformations"
 import FilledHeartLogo from '@/public/tracks_logos/heart.svg'
 import EmptyHeartLogo from '@/public/tracks_logos/empty_heart.svg'
 import AddToEpisodes from '@/public/musicBar_logos/add_to_episodes_logo.svg'
@@ -128,20 +129,17 @@ export default function CurrentMusicInformations() {
 
 
   const { data: likedTracks } = useLikedTracks()
+  const { data: trackInformations } = useTrackInformations(music.currentTrack.id)
+
   const { mutate: deleteLikedTrack } = useDeleteLikedTracks()
   const { mutateAsync: addLikedTrack } = useAddLikedTracks()
 
   const likedTrackIds = likedTracks?.map(track => track.id)
 
   useEffect(() => {
-    async function getTrackInformations() {
-      if (!music.currentTrack.id) return
-      const response = await fetch(`/api/getTrackInformations?id=${music.currentTrack.id}`)
-      const data = await response.json()
-      dispatch(changeCurrentMusic(data))
-    }
-    getTrackInformations()
-  }, [music.currentTrack.id, dispatch])
+    if (!trackInformations) return
+    dispatch(changeCurrentMusic(trackInformations))
+  }, [trackInformations, dispatch])
 
   const toggleLikedTrack = (id, isLiked) => isLiked ? deleteLikedTrack(id) : addLikedTrack(id)
 
