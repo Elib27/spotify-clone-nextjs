@@ -5,11 +5,8 @@ import styled from "styled-components"
 import Microphone from '@/public/musicBar_logos/microphone.svg'
 import WaitList from '@/public/musicBar_logos/wait_list.svg'
 import Speaker from '@/public/musicBar_logos/speaker.svg'
-import MutedVolume from '@/public/musicBar_logos/muted_volume.svg'
-import LowVolume from '@/public/musicBar_logos/low_volume.svg'
-import MediumVolume from '@/public/musicBar_logos/medium_volume.svg'
-import HighVolume from '@/public/musicBar_logos/high_volume.svg'
-import SoundBar from "./SoundBar"
+import SoundLogo from './SoundLogo'
+import SoundBar from './SoundBar'
 
 const Container = styled.div`
   width: 30%;
@@ -64,7 +61,7 @@ const MicroButton = styled(Button)`
   `}
 `
 const WaitListButton = styled(Button)`
-  ${({ $isWaitListOpen }) => $isWaitListOpen && `
+  ${({ $isQueueListOpen }) => $isQueueListOpen && `
     color: #1db954;
     opacity: 1;
     &::after {
@@ -89,34 +86,27 @@ const VolumeBarContainer = styled.div`
   position: relative;
 `
 
+function getVolumeCategory(volume) {
+  if (volume === 0) return 'muted'
+  if (volume <= 30) return 'low'
+  if (volume <= 65) return 'medium'
+  return 'high'
+}
+
 export default function SoundConfiguration() {
 
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
   const [isLyricsPannelOpen, setIsLyricsOpen] = useState(false)
-  const [isWaitListOpen, setIsWaitListOpen] = useState(false)
+  const [isQueueListOpen, setIsQueueListOpen] = useState(false)
 
   const volumeCategory = getVolumeCategory(music.volume)
 
-  function getVolumeCategory(volume) {
-    if (volume === 0) {
-      return 'muted'
-    }
-    else if ((volume > 0 && volume <= 30)) {
-      return 'low'
-    }
-    else if ((volume > 30 && volume <= 65)) {
-      return 'medium'
-    }
-    else {
-      return 'high'
-    }
-  }
-
   function handleClickToogleMute() {
     if (volumeCategory === 'muted') {
-      dispatch(changeVolume(music.prevVolume === 0 ? 50 : music.prevVolume))
+      const newVolume = music.prevVolume === 0 ? 50 : music.prevVolume
+      dispatch(changeVolume(newVolume))
     }
     else {
       dispatch(changePrevVolume(music.volume))
@@ -137,8 +127,8 @@ export default function SoundConfiguration() {
       )
       }
       <WaitListButton
-        $isWaitListOpen={isWaitListOpen}
-        onClick={() => setIsWaitListOpen(curr => !curr)}
+        $isQueueListOpen={isQueueListOpen}
+        onClick={() => setIsQueueListOpen(curr => !curr)}
         aria-label="Wait list"
       >
         <WaitList />
@@ -148,10 +138,7 @@ export default function SoundConfiguration() {
       </Button>
       <VolumeBarContainer>
         <Button onClick={handleClickToogleMute} aria-label={volumeCategory === 'muted' ? 'unmute' : "mute"}>
-          {volumeCategory === 'muted' && <MutedVolume />}
-          {volumeCategory === 'low' && <LowVolume />}
-          {volumeCategory === 'medium' && <MediumVolume />}
-          {volumeCategory === 'high' && <HighVolume />}
+          <SoundLogo volumeCategory={volumeCategory} />
         </Button>
         <SoundBar />
       </VolumeBarContainer>

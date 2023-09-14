@@ -67,49 +67,40 @@ export default function SoundBar() {
   const [barCircleActive, setBarCircleActive] = useState(false)
   const soundBarContainer = useRef(null)
 
-  function updateProgressionBar(e) {
-    const barWidth = soundBarContainer.current.offsetWidth
-    const barOffset = soundBarContainer.current.getBoundingClientRect().left
-    let newVolume = Math.floor((e.clientX - barOffset) / barWidth * 100)
-
-    if (newVolume < 0) {
-      newVolume = 0
-    }
-    else if (newVolume > 100) {
-      newVolume = 100
-    }
-
-    dispatch(changeVolume(newVolume))
-  }
-
   useEffect(() => {
-    soundBarContainer.current.style.setProperty("--sound-progression-bar-fill", music.volume + '%')
-  }, [music.volume])
 
-  function handleMouseMoveSound(e) {
-    updateProgressionBar(e)
-  }
+    function updateVolume(e) {
+      const barWidth = soundBarContainer.current.offsetWidth
+      const barOffset = soundBarContainer.current.getBoundingClientRect().left
+      let newVolume = Math.floor((e.clientX - barOffset) / barWidth * 100)
 
-  function handleMouseDownSound(e) {
-    setBarCircleActive(true)
-    updateProgressionBar(e)
-    document.addEventListener("mousemove", handleMouseMoveSound)
-  }
+      if (newVolume < 0) newVolume = 0
+      else if (newVolume > 100) newVolume = 100
 
-  function handleMouseUpSound() {
-    document.removeEventListener("mousemove", handleMouseMoveSound)
-    setBarCircleActive(false)
-  }
+      dispatch(changeVolume(newVolume))
+    }
+    function handleMouseDownSound(e) {
+      setBarCircleActive(true)
+      updateVolume(e)
+      document.addEventListener("mousemove", updateVolume)
+    }
+    function handleMouseUpSound() {
+      document.removeEventListener("mousemove", updateVolume)
+      setBarCircleActive(false)
+    }
 
-  useEffect(() => {
     const soundBarContainerRef = soundBarContainer.current
     soundBarContainerRef.addEventListener('mousedown', handleMouseDownSound)
     document.addEventListener('mouseup', handleMouseUpSound)
     return () => {
-      soundBarContainerRef.removeEventListener('mousedown', handleMouseDownSound) // PB ?
+      soundBarContainerRef.removeEventListener('mousedown', handleMouseDownSound)
       document.removeEventListener('mouseup', handleMouseUpSound)
     }
-  }, [])
+  }, [dispatch])
+
+  useEffect(() => {
+    soundBarContainer.current.style.setProperty("--sound-progression-bar-fill", music.volume + '%')
+  }, [music.volume])
 
   return (
     <SoundProgressionBar ref={soundBarContainer}>
