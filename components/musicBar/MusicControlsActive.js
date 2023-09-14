@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react"
+import styled from 'styled-components'
+import { useState, useEffect, useRef, useCallback } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {
   togglePlaying,
@@ -11,8 +12,8 @@ import {
   changeCurrentMusicId,
   changeMusicIndexInQueue,
 } from '@/store/store'
+import useCopyrightFreeTrack from "@/hooks/useCopyrightFreeTrack"
 import { convertSecondsToMinutesSeconds } from '@/lib/convertTime'
-import styled from 'styled-components'
 import randomInteger from '@/lib/randomInteger'
 import RandomMusicLogo from '@/public/musicBar_logos/random_music.svg'
 import PrevMusicLogo from '@/public/musicBar_logos/prev_music.svg'
@@ -159,55 +160,40 @@ const TimerContainer = styled.div`
   }
 `
 
+function calculateCurrentMusicIndex(id, maxIndex) {
+  if (!id || !maxIndex) return 0
+  const short_id = id.slice(-10)
+  const idSum = short_id.split('').reduce((acc, curr) => acc + curr.charCodeAt(0), 0);
+  const index = idSum % maxIndex
+  return index
+}
+
+
 export default function MusicControlsActive() {
 
   const [currentCpFreeMusicIndex, setCurrentCpFreeMusicIndex] = useState(0)
-  const [currentCpFreeMusicLink, setCurrentCpFreeMusicLink] = useState(null)
-  const [isProgressionBarMoving, setIsProgressionBarMoving] = useState(false)
-  const MAX_CPFREE_MUSIC_INDEX = useRef(70);
+  const [isProgressionBarDragged, setIsProgressionBarDragged] = useState(false)
 
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
   const audio = useRef(null)
 
-  async function getCopyrightFreeTrack(index) {
-    const response = await fetch(`/api/getCopyrightFreeTrack/${index}`)
-    const track = await response.json()
-    return track
-  }
+  const { data: currentCpFreeTrack } = useCopyrightFreeTrack(currentCpFreeMusicIndex)
 
-  function calculateCurrentMusicIndex(id, maxIndex) {
-    if (!id || !maxIndex) return 0
-    const short_id = id.slice(-10)
-    let idSum = 0
-    for (let i = 0; i < short_id.length; i++) {
-      idSum += short_id.charCodeAt(i)
+  const resetMusic = useCallback(() => {
+    function updateMusicDuration() {
+      if (audio.current) {
+        audio.current.addEventListener('loadedmetadata', () => {
+          dispatch(changeDuration(Math.floor(audio.current.duration)))
+        }, { once: true })
+      }
     }
-    const index = idSum % maxIndex
-    return index
-  }
-
-  function updateMusicDuration() {
-    if (audio.current) {
-      audio.current.addEventListener('loadedmetadata', () => {
-        dispatch(changeDuration(Math.floor(audio.current.duration)))
-      }, { once: true })
-    }
-  }
-
-  function resetMusic() {
     audio.current.currentTime = 0
     dispatch(changeTime(0))
     updateMusicDuration()
     dispatch(playMusic())
-  }
-
-  function setRandomMusic() {
-    const randomIndex = randomInteger(0, music.tracksQueue.length - 1)
-    dispatch(changeMusicIndexInQueue(randomIndex))
-    dispatch(changeCurrentMusicId(music.tracksQueue[randomIndex]))
-  }
+  }, [dispatch])
 
   function handleClickPrevMusic() {
     if (music.musicIndexInQueue > 0 && music.time <= 3) {
@@ -219,7 +205,15 @@ export default function MusicControlsActive() {
     }
   }
 
-  function handleClickNextMusic() {
+  const handleClickNextMusic = useCallback(() => {
+    function setRandomMusic() {
+      const randomIndex = randomInteger(0, music.tracksQueue.length - 1)
+      dispatch(changeMusicIndexInQueue(randomIndex))
+      dispatch(changeCurrentMusicId(music.tracksQueue[randomIndex]))
+    }
+
+    if (music.loopMode === 'loop_2') dispatch(changeLoopMode('loop_1'))
+
     if (music.isPlayingRandom || music.musicIndexInQueue >= music.tracksQueue.length - 1) {
       setRandomMusic()
     }
@@ -227,45 +221,24 @@ export default function MusicControlsActive() {
       dispatch(changeMusicIndexInQueue(music.musicIndexInQueue + 1))
       dispatch(changeCurrentMusicId(music.tracksQueue[music.musicIndexInQueue + 1]))
     }
-    if (music.loopMode === 'loop_2') {
-      dispatch(changeLoopMode('loop_1'))
-    }
-  }
-
-  useEffect(() => {
-    const currMusicIndex = calculateCurrentMusicIndex(music.currentTrack.id, MAX_CPFREE_MUSIC_INDEX.current)
-    setCurrentCpFreeMusicIndex(currMusicIndex)
-  }, [music.currentTrack.id])
+  }, [dispatch, music.isPlayingRandom, music.loopMode, music.musicIndexInQueue, music.tracksQueue])
 
   function updateCurrentTime() {
-    if (audio.current && !isProgressionBarMoving) {
-      if (music.time !== Math.floor(audio.current.currentTime)) {
-        dispatch(changeTime(Math.floor(audio.current.currentTime)))
-      }
-    }
+    if (!audio.current || isProgressionBarDragged) return
+    dispatch(changeTime(Math.floor(audio.current.currentTime)))
   }
 
   useEffect(() => {
-    if (music.time === music.duration) {
-      if (music.loopMode === 'loop_2') {
-        resetMusic()
-      }
-      else {
-        handleClickNextMusic()
-      }
-    }
-  }, [music.time, music.duration, music.loopMode])
+    if (!music.currentTrack.id || !currentCpFreeTrack?.maxIndex) return
+    const currMusicIndex = calculateCurrentMusicIndex(music.currentTrack.id, currentCpFreeTrack.maxIndex)
+    setCurrentCpFreeMusicIndex(currMusicIndex)
+  }, [music.currentTrack.id, currentCpFreeTrack])
 
   useEffect(() => {
-    async function firstMusicLoad() {
-      const { url, maxIndex } = await getCopyrightFreeTrack(currentCpFreeMusicIndex)
-      MAX_CPFREE_MUSIC_INDEX.current = maxIndex
-      setCurrentCpFreeMusicLink(url)
-      updateMusicDuration()
-      updateCurrentTime()
-    }
-    firstMusicLoad()
-  }, [])
+    if (music.time !== music.duration) return
+    if (music.loopMode === 'loop_2') resetMusic()
+    else handleClickNextMusic()
+  }, [music.time, music.duration, music.loopMode, resetMusic, handleClickNextMusic])
 
   useEffect(() => {
     if (audio.current) {
@@ -274,17 +247,9 @@ export default function MusicControlsActive() {
   }, [music.isPlaying])
 
   useEffect(() => {
-    async function changeMusic() {
-      const { url } = await getCopyrightFreeTrack(currentCpFreeMusicIndex)
-      setCurrentCpFreeMusicLink(url)
-    }
-    changeMusic()
-  }, [currentCpFreeMusicIndex])
-
-  useEffect(() => {
     resetMusic()
     audio.current.play()
-  }, [currentCpFreeMusicLink])
+  }, [currentCpFreeTrack, resetMusic])
 
   useEffect(() => {
     if (audio.current) {
@@ -293,10 +258,10 @@ export default function MusicControlsActive() {
   }, [music.volume])
 
   useEffect(() => {
-    if (audio.current && !isProgressionBarMoving) {
+    if (audio.current && !isProgressionBarDragged) {
       audio.current.currentTime = music.time
     }
-  }, [isProgressionBarMoving])
+  }, [isProgressionBarDragged])
 
   function getLoopModeDataHover() {
     switch (music.loopMode) {
@@ -381,12 +346,13 @@ export default function MusicControlsActive() {
           }
         </SideContainer>
       </ControlsContainer>
-      <audio ref={audio} src={currentCpFreeMusicLink} onTimeUpdate={updateCurrentTime}></audio>
+      <audio ref={audio} src={currentCpFreeTrack?.url} onTimeUpdate={updateCurrentTime}></audio>
       <MusicProgressionBarContainer>
         <TimerContainer>{timeInMinSecs}</TimerContainer>
         <MusicProgressionBar
-          isProgressionBarMoving={isProgressionBarMoving}
-          setIsProgressionBarMoving={setIsProgressionBarMoving}
+          audio={audio}
+          isProgressionBarDragged={isProgressionBarDragged}
+          setIsProgressionBarDragged={setIsProgressionBarDragged}
         />
         <TimerContainer>{durationInMinSecs}</TimerContainer>
       </MusicProgressionBarContainer>

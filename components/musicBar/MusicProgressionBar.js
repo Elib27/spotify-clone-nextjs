@@ -59,7 +59,11 @@ const MusicProgressionBarWrapper = styled.div`
   position: relative;
 `
 
-export default function MusicProgressionBar({ isProgressionBarMoving, setIsProgressionBarMoving }) {
+function convertPercentageToTimeInSec(percentage, duration) {
+  return Math.floor((percentage * duration) / 100)
+}
+
+export default function MusicProgressionBar({ isProgressionBarDragged, setIsProgressionBarDragged }) {
 
   const [progressionPercentage, setProgressionPercentage] = useState(0)
   const barContainer = useRef(null)
@@ -67,63 +71,57 @@ export default function MusicProgressionBar({ isProgressionBarMoving, setIsProgr
   const music = useSelector(state => state.music)
   const dispatch = useDispatch()
 
-  function convertPercentageToTimeInSec(percentage, duration) {
-    return Math.floor((percentage * duration) / 100)
-  }
-
   function updateProgressionBar(e) {
     const barWidth = barContainer.current.offsetWidth;
     const barOffset = barContainer.current.getBoundingClientRect().left;
     let newProgressionPercentage = (e.clientX - barOffset) / barWidth * 100;
-    if (newProgressionPercentage < 0) {
-      newProgressionPercentage = 0;
-    }
-    else if (newProgressionPercentage > 100) {
-      newProgressionPercentage = 100;
-    }
+
+    if (newProgressionPercentage < 0) newProgressionPercentage = 0;
+    else if (newProgressionPercentage > 100) newProgressionPercentage = 100;
+
     setProgressionPercentage(newProgressionPercentage);
   }
 
   useEffect(() => {
-    if (!isProgressionBarMoving) {
+    function handleMouseDown(e) {
+      setIsProgressionBarDragged(true)
+      updateProgressionBar(e)
+      document.addEventListener("mousemove", updateProgressionBar)
+    }
+    function handleMouseUp() {
+      document.removeEventListener("mousemove", updateProgressionBar)
+      setIsProgressionBarDragged(false)
+    }
+
+    const barContainerCopy = barContainer.current
+    barContainerCopy.addEventListener('mousedown', handleMouseDown)
+    document.addEventListener('mouseup', handleMouseUp)
+
+    return () => {
+      barContainerCopy.removeEventListener('mousedown', handleMouseDown)
+      document.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [setIsProgressionBarDragged])
+
+  useEffect(() => {
+    if (!isProgressionBarDragged) {
       setProgressionPercentage(music.time / music.duration * 100)
     }
-  }, [music.time, music.duration, isProgressionBarMoving])
+    else {
+      dispatch(changeTime(convertPercentageToTimeInSec(progressionPercentage, music.duration)))
+    }
+  }, [music.time, music.duration, isProgressionBarDragged, dispatch, progressionPercentage])
 
   useEffect(() => {
     barContainer.current.style.setProperty("--progression-bar-fill", progressionPercentage + '%')
-    dispatch(changeTime(convertPercentageToTimeInSec(progressionPercentage, music.duration)))
-  }, [progressionPercentage, music.duration])
-
-  function handleMouseMove(e) {
-    updateProgressionBar(e)
-  }
-
-  function handleMouseDown(e) {
-    setIsProgressionBarMoving(true)
-    updateProgressionBar(e)
-    document.addEventListener("mousemove", handleMouseMove)
-  }
-
-  function handleMouseUp(e) {
-    document.removeEventListener("mousemove", handleMouseMove)
-    setIsProgressionBarMoving(false)
-  }
-
-  useEffect(() => {
-    barContainer.current.addEventListener('mousedown', handleMouseDown)
-    document.addEventListener('mouseup', handleMouseUp)
-    return () => {
-      barContainer.current.removeEventListener('mousedown', handleMouseDown)
-    }
-  }, [])
+  }, [progressionPercentage])
 
   return (
     <ProgressionBar ref={barContainer}>
-      <MusicBarCircle $active={isProgressionBarMoving} />
+      <MusicBarCircle $active={isProgressionBarDragged} />
       <MusicProgressionBarWrapper>
         <MusicProgressionBarBackground />
-        <MusicProgressionBarFill $active={isProgressionBarMoving} />
+        <MusicProgressionBarFill $active={isProgressionBarDragged} />
       </MusicProgressionBarWrapper>
     </ProgressionBar>
   )
