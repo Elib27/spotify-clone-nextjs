@@ -49,7 +49,7 @@ export default function SearchResult() {
 
   if (!searchResults) return (null)
 
-  if (searchResults && !searchResults?.bestResult?.title) {
+  if (!searchResults?.bestResult?.title) {
     return (<NoResults searchValue={searchQuery} />)
   }
 
@@ -64,24 +64,23 @@ export default function SearchResult() {
         searchResults?.tracks?.length > 0 && (
           <TrackResults
             tracks={searchResults.tracks}
-            likedTracksIds={likedTracksIds.current}
-          />)
+            likedTracksIds={likedTracksIds}
+          />
+        )
       }
       <SearchResultSection
         title="Artistes"
         data={searchResults?.artists}
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {searchResults?.artists && searchResults.artists.map((artist, index) => (
-          index < (cardsNumberPerRow) && (
-            <MusicCard
-              title={artist.name}
-              description="Artiste"
-              cover_url={artist.image}
-              isRoundImage
-              key={artist.id}
-            />
-          )
+        {searchResults?.artists && searchResults.artists.slice(0, cardsNumberPerRow).map((artist) => (
+          <MusicCard
+            title={artist.name}
+            description="Artiste"
+            cover_url={artist.image}
+            isRoundImage
+            key={artist.id}
+          />
         ))}
       </SearchResultSection>
       <SearchResultSection
@@ -89,15 +88,13 @@ export default function SearchResult() {
         data={searchResults?.albums}
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {searchResults?.albums.map((album, index) => (
-          index < (cardsNumberPerRow) && (
-            <MusicCard
-              title={album.name}
-              description={album.description}
-              cover_url={album.image}
-              key={album.id}
-            />
-          )
+        {searchResults?.albums && searchResults.albums.slice(0, cardsNumberPerRow).map((album) => (
+          <MusicCard
+            title={album.name}
+            description={album.description}
+            cover_url={album.image}
+            key={album.id}
+          />
         ))}
       </SearchResultSection>
       <SearchResultSection
@@ -105,15 +102,13 @@ export default function SearchResult() {
         data={searchResults?.playlists}
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {searchResults?.playlists && searchResults.playlists.map((playlist, index) => (
-          index < (cardsNumberPerRow) && (
-            <MusicCard
-              title={playlist.name}
-              description={`Par ${playlist.author}`}
-              cover_url={playlist.image}
-              key={playlist.id}
-            />
-          )
+        {searchResults?.playlists && searchResults.playlists.slice(0, cardsNumberPerRow).map((playlist) => (
+          <MusicCard
+            title={playlist.name}
+            description={`Par ${playlist.author}`}
+            cover_url={playlist.image}
+            key={playlist.id}
+          />
         ))}
       </SearchResultSection>
       <SearchResultSection
@@ -121,15 +116,13 @@ export default function SearchResult() {
         data={searchResults?.podcasts}
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {searchResults?.podcasts && searchResults.podcasts.map((podcast, index) => (
-          index < (cardsNumberPerRow) && (
-            <MusicCard
-              title={podcast.name}
-              description={podcast.author}
-              cover_url={podcast.image}
-              key={podcast.id}
-            />
-          )
+        {searchResults?.podcasts && searchResults.podcasts.slice(0, cardsNumberPerRow).map((podcast) => (
+          <MusicCard
+            title={podcast.name}
+            description={podcast.author}
+            cover_url={podcast.image}
+            key={podcast.id}
+          />
         ))}
       </SearchResultSection>
       <SearchResultSection
@@ -137,15 +130,13 @@ export default function SearchResult() {
         data={searchResults?.episodes}
         cardsNumberPerRow={cardsNumberPerRow}
       >
-        {searchResults?.episodes && searchResults.episodes.map((episode, index) => (
-          index < (cardsNumberPerRow) && (
-            <MusicCard
-              title={episode.name}
-              description={`${episode.publicationDate} · ${episode.duration} Min`}
-              cover_url={episode.image}
-              key={episode.id}
-            />
-          )
+        {searchResults?.episodes && searchResults.episodes.slice(0, cardsNumberPerRow).map((episode) => (
+          <MusicCard
+            title={episode.name}
+            description={`${episode.publicationDate} · ${episode.duration} Min`}
+            cover_url={episode.image}
+            key={episode.id}
+          />
         ))}
       </SearchResultSection>
     </Container>

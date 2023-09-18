@@ -41,7 +41,6 @@ const CardContainer = styled.div`
   &:hover {
     background-color: #262626;
     ${PlayButtonAnimationContainer} {
-      pointer-events: auto;
       opacity: 1;
       transform: translateY(0);
     }

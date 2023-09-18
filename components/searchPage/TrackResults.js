@@ -27,21 +27,17 @@ export default function TrackResults({ tracks, likedTracksIds }) {
     <Container>
       <TopTitle>Titres</TopTitle>
       <TracksContainer>
-        {tracks.map((track, index) => {
-          if (index < 4) {
-            return (
-              <Track
-                title={track.title}
-                artist={track.artist}
-                cover_url={track.cover_url}
-                duration={convertMsToMinutesSeconds(track.duration)}
-                explicit={track.explicit}
-                isLiked={likedTracksIds && likedTracksIds.includes(track.id)}
-                key={track.id}
-              />
-            )
-          }
-        })}
+        {tracks.slice(0, 4).map((track) => (
+          <Track
+            title={track.title}
+            artist={track.artist}
+            cover_url={track.cover_url}
+            duration={convertMsToMinutesSeconds(track.duration)}
+            explicit={track.explicit}
+            isLiked={likedTracksIds && likedTracksIds.includes(track.id)}
+            key={track.id}
+          />
+        ))}
       </TracksContainer>
     </Container>
   )

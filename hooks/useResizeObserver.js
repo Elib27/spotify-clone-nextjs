@@ -17,7 +17,7 @@ export default function useResizeObserver(refToObserve) {
     return () => {
       observer.disconnect()
     }
-  }, [refToObserve.current])
+  }, [refToObserve])
 
   return dimensions
 }
