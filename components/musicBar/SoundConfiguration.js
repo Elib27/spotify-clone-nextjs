@@ -29,6 +29,7 @@ const Button = styled.button`
   opacity: 0.7;
   flex-shrink: 0;
   position: relative;
+  cursor: pointer;
   &:hover {
     transform: scale(1.04);
     opacity: 1;
@@ -40,28 +41,7 @@ const Button = styled.button`
   &:last-of-type:hover {
     transform: scale(1);
   }
-  `
-const MicroButton = styled(Button)`
-  ${({ $isLyricsPannelOpen }) => $isLyricsPannelOpen && `
-    color: #1db954;
-    opacity: 1;
-    &::after {
-      content: "";
-      background-color: #1db954;
-      height: 4px;
-      width: 4px;
-      display: block;
-      inline-size: 16px;
-      border-radius: 50%;
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      transform: translateX(-50%);
-    }
-  `}
-`
-const WaitListButton = styled(Button)`
-  ${({ $isQueueListOpen }) => $isQueueListOpen && `
+  ${({ $isActive }) => $isActive && `
     color: #1db954;
     opacity: 1;
     &::after {
@@ -116,23 +96,22 @@ export default function SoundConfiguration() {
 
   return (
     <Container>
-      {music.soundType === 'music' && (
-        <MicroButton
-          $isLyricsPannelOpen={isLyricsPannelOpen}
+      {music.currentTrack.soundType === 'track' && (
+        <Button
+          $isActive={isLyricsPannelOpen}
           onClick={() => setIsLyricsOpen(curr => !curr)}
           aria-label="Lyrics"
         >
           <Microphone />
-        </MicroButton>
-      )
-      }
-      <WaitListButton
-        $isQueueListOpen={isQueueListOpen}
+        </Button>
+      )}
+      <Button
+        $isActive={isQueueListOpen}
         onClick={() => setIsQueueListOpen(curr => !curr)}
         aria-label="Wait list"
       >
         <WaitList />
-      </WaitListButton>
+      </Button>
       <Button>
         <Speaker />
       </Button>
