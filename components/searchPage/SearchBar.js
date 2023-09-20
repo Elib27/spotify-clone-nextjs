@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import debounce from '@/lib/debounce.js'
 import SearchLogo from '@/public/header_logos/search.svg'
@@ -73,21 +73,23 @@ export default function SearchBar() {
 
   const [searchInput, setSearchInput] = useState('')
 
-  function updateUrlWithSearchInput(searchInput) {
-    if (!router.pathname.startsWith('/search'))
-      return
+  const updateUrlWithSearchInput = useCallback((searchInput, router) => {
+    if (!router.pathname.startsWith('/search')) return
     let currentSearchCategory = ''
     if (router.pathname.split('/').length >= 4 && searchInput !== '') {
       currentSearchCategory = '/' + router.pathname.split('/')[3]
     }
     router.replace(`/search/${searchInput}${currentSearchCategory}`)
-  }
+  }, [])
 
-  const debouncedUpdateUrlWithSearchInput = useCallback(debounce((searchInput) => updateUrlWithSearchInput(searchInput), 300), [router.pathname])
+  const debouncedUpdateUrlWithSearchInput = useMemo(
+    () => debounce((searchInput, router) => updateUrlWithSearchInput(searchInput, router), 300),
+    [updateUrlWithSearchInput]
+  )
 
   useEffect(() => {
-    debouncedUpdateUrlWithSearchInput(searchInput)
-  }, [searchInput, debouncedUpdateUrlWithSearchInput])
+    debouncedUpdateUrlWithSearchInput(searchInput, router)
+  }, [searchInput, debouncedUpdateUrlWithSearchInput]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!router.pathname.startsWith('/search') && searchInput !== '') {
@@ -104,17 +106,16 @@ export default function SearchBar() {
   const isClearButtonVisible = searchInput.length > 0
 
   return (
-    <Container onClick={handleClickRedirectToSearchPage}>
+    <Container>
       <SearchBarHoverContainer>
         <SearchLogoContainer>
           <SearchLogo />
         </SearchLogoContainer>
-        {
-          isClearButtonVisible && (
-            <ClearButton onClick={() => setSearchInput('')}>
-              <CrossLogo />
-            </ClearButton>
-          )}
+        {isClearButtonVisible && (
+          <ClearButton onClick={() => setSearchInput('')}>
+            <CrossLogo />
+          </ClearButton>
+        )}
       </SearchBarHoverContainer>
       <SearchInput
         placeholder="Que souhaitez-vous écouter ?"
@@ -124,6 +125,7 @@ export default function SearchBar() {
         maxLength={800}
         onChange={(e) => setSearchInput(e.target.value)}
         value={searchInput}
+        onFocus={handleClickRedirectToSearchPage}
       />
     </Container>
   )
