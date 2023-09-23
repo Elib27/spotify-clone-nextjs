@@ -236,9 +236,10 @@ export default function MusicControlsActive() {
 
   useEffect(() => {
     if (music.time !== music.duration) return
+    dispatch(changeTime(0));
     if (music.loopMode === 'loop_2') resetMusic()
     else handleClickNextMusic()
-  }, [music.time, music.duration, music.loopMode, resetMusic, handleClickNextMusic])
+  }, [music.time, music.duration, music.loopMode, resetMusic, handleClickNextMusic, dispatch])
 
   useEffect(() => {
     if (audio.current) {
