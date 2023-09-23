@@ -75,7 +75,7 @@ export default function HomeShorcuts() {
         <ShortcutButton
           title={track.name}
           cover_url={track.album.image}
-          link={`/album/${track.album.id}`}
+          link="/"
           key={track.id}
         />
       ))}
