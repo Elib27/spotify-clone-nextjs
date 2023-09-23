@@ -98,7 +98,7 @@ export default function BestResult({ title, category, cover_url }) {
       <TopTitle>Meilleur résultat</TopTitle>
       <CardContainer>
         <ImageContainer $isRound={category === 'artiste'}>
-          <Image src={cover_url} fill alt="result cover" />
+          <Image src={cover_url} sizes="10vw" fill alt="result cover" />
         </ImageContainer>
         <div>
           <CardTitle>{title}</CardTitle>

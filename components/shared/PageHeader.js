@@ -170,7 +170,7 @@ export default function PageHeader() {
           )}
           <AccountButton onClick={openPanel} aria-label="Ouvrir les options du compte">
             {session?.user?.image ? (
-              <Image src={session?.user?.image} draggable="false" fill alt="photo de profil" />
+              <Image src={session?.user?.image} sizes="5vw" draggable="false" fill alt="photo de profil" />
             ) : (
               <AvatarLogo width={16} height={16} alt="account button" />
             )

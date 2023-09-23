@@ -95,7 +95,7 @@ export default function PlaylistCard({ cover_url, title, description, isRoundIma
       <CardImageWrapper>
         <CardImageContainer $isRoundImage={isRoundImage}>
           {cover_url ? (
-            <Image src={cover_url} alt="song cover" fill draggable="false" />
+            <Image src={cover_url} sizes="25vw" alt="song cover" fill draggable="false" />
           ) : (
             <DoubleNoteLogo />
           )}

@@ -49,7 +49,7 @@ export default function SearchCard({ title, cardBackgroundColor, imageSrc }) {
         {title}
       </CardTitle>
       <CardImage>
-        <Image src={imageSrc} alt={title} fill />
+        <Image src={imageSrc} sizes="10vw" alt={title} fill />
       </CardImage>
     </Container>
   )

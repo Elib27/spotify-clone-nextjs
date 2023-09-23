@@ -163,7 +163,7 @@ export default function CurrentMusicInformations() {
   return (
     <Container>
       <CurrentMusicCover>
-        <Image src={music.currentTrack.image} alt={`${music.currentTrack.album || music.currentTrack.name} cover`} fill />
+        <Image src={music.currentTrack.image} sizes="8vw" alt={`${music.currentTrack.album ?? music.currentTrack.name} cover`} fill />
       </CurrentMusicCover>
       <MusicInformations>
         <MusicTitle>{music.currentTrack.name}</MusicTitle>

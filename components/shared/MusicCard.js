@@ -103,7 +103,7 @@ export default function MusicCard({ cover_url, title, description, isRoundImage,
           {
             cover_url ?
               (
-                <Image src={cover_url} alt="song cover" fill />
+                <Image src={cover_url} sizes="10vw" alt="song cover" fill />
               ) : (
                 <DefaultAvatarLogoContainer>
                   <DefaultAvatarLogo height="64" width="64" />
