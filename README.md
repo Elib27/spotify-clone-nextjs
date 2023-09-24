@@ -21,6 +21,7 @@ The technologies used in this project are the following:
 - Next JS
 - NextAuth
 - Redux Toolkit
+- React Query
 - Styled Components
 - Spotify API
 
