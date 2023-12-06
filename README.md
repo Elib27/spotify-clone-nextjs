@@ -1,14 +1,18 @@
-# NEXT JS Spotify Clone
+# Next.js Spotify Clone
 
-This website is a Spotify Clone where you can login with your spotify account and see your playlists, your top tracks, your recently played tracks, your followed artists and your library. You can also add liked tracks and listen to music with a custom player. You can listen to music in a playlist only if the playlist if full of tracks (no podcasts).
+This website is a Spotify Clone where you can log in with your spotify account and listen to music, see your playlists, top tracks, recently played tracks, followed artists, library, etc.
+
+Test it here: [Spotify Clone](https://spotify-clone-nextjs-elib27.vercel.app)
+
+![Spotify Clone](spotify_clone.png)
 
 ## Deployment
 
 You can visit the production deployment on Vercel with the following link:
 
-https://spotify-clone-nextjs-elib27.vercel.app
+[Spotify Clone](https://spotify-clone-nextjs-elib27.vercel.app)
 
-The website will be able to :
+The website requires the following permissions:
 - read your playlists (collaborative and private)
 - read and modify your library
 - read your recently played tracks
@@ -17,17 +21,16 @@ The website will be able to :
 - read your private informations
 
 The technologies used in this project are the following:
-- React
-- Next JS
+- Next.js
 - NextAuth
 - Redux Toolkit
-- React Query
+- TanStack Query
 - Styled Components
 - Spotify API
 
 ## How to run locally
 
-If you want to run this project locally, you will have to follow these steps:
+If you want to run this project locally, follow these steps:
 
 1. Clone the repository
 
