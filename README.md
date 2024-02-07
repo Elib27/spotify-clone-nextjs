@@ -2,7 +2,7 @@
 
 This website is a Spotify Clone where you can log in with your spotify account and listen to music, see your playlists, top tracks, recently played tracks, followed artists, library, etc.
 
-Test it here: [Spotify Clone](https://spotify-clone-nextjs-elib27.vercel.app)
+Test it here: [Spotify Clone](https://spotify-clone-nextjs-elib27.vercel.app) (You now need to be whitelisted to connect)
 
 ![Spotify Clone](spotify_clone.png)
 
