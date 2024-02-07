@@ -3,6 +3,7 @@ import { signIn } from 'next-auth/react'
 import SEO from '@/components/shared/SEO'
 import MusicBarsAnimation from '@/components/auth/MusicBarsAnimation'
 import SpotifyLogo from '@/public/simple_spotify_logo.svg'
+import AuthWarningPannel from '@/components/auth/AuthWarningPannel'
 
 const MainContainer = styled.div`
   height: 100vh;
@@ -90,6 +91,7 @@ export default function Login() {
         <Title>Spotify Clone by <TextGradient href='https://github.com/Elib27/spotify-clone-nextjs' target='_blank'>BAS Eliot</TextGradient></Title>
         <Subtitle>This website is a Spotify clone coded for training with Next JS.</Subtitle>
         <AuthButton onClick={() => signIn('spotify')} aria-label='Se connecter'>Connexion</AuthButton>
+        <AuthWarningPannel />
         <MusicBarsAnimation />
       </MainContainer>
     </>
