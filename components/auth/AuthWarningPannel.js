@@ -58,7 +58,7 @@ export default function AuthWarningPannel() {
   return (
     <>
       <Pannel>
-        <Title>Warning: You need to be white-listed</Title>
+        <Title>Warning: You need to be whitelisted</Title>
         <Description>
           Spotify Application in developer mode now needs a white list to work.
           If you want to test this application, please contact me at <u><a href="mailto:eliot.bas@orange.fr">eliot.bas@orange.fr</a></u> so I can add you to the white list.
