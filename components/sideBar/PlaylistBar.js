@@ -9,9 +9,9 @@ const PlaylistContainer = styled.div`
   overflow-y: scroll;
   padding: 8px 0;
   /* Firefox */
-  scrollbar-color: rgba(255,255,255,0.3);
+  scrollbar-color: rgba(255,255,255,0.3) transparent ;
   scrollbar-width: thin;
-  ${({ $isScrollBarVisible }) => !$isScrollBarVisible && `scrollbar-color: rgba(18,18,18,1);`}
+  ${({ $isScrollBarVisible }) => !$isScrollBarVisible && `scrollbar-color: transparent rgba(18,18,18,1);`}
   /* Chrome, Edge, and Safari */
   &::-webkit-scrollbar {
     width: 16px;

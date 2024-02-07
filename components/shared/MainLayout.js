@@ -24,7 +24,7 @@ const PageContainer = styled.div`
   position: relative;
   border-radius: 8px;
   /* Firefox */
-  scrollbar-color: rgba(255,255,255,0.3);
+  scrollbar-color: rgba(255,255,255,0.3) transparent;
   scrollbar-width: thin;
   /* Chrome, Edge, and Safari */
   &::-webkit-scrollbar {
